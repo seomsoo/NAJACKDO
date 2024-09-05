@@ -81,7 +81,7 @@ public class User  extends BaseEntity {
 	@Column(name = "user_id")
 	private Long id;
 
-	@Column(name = "user_name", nullable = false)
+	@Column(name = "username", nullable = false)
 	private String username;
 
 	@Column(name = "gender", nullable = false)
@@ -125,14 +125,16 @@ public class User  extends BaseEntity {
 	private int mannerScore = 50;
 
 	public static User createUser(String username, String name, char gender, ProviderType providerType,
-		String providerId) {
+		String providerId, String profileImage) {
 		User user = new User();
 		user.username = username;
 		user.name = name;
+		user.nickName = name;
 		user.email = username;
 		user.gender = gender;
 		user.providerType = providerType;
 		user.providerId = providerId;
+		user.profileImage = profileImage;
 		return user;
 	}
 

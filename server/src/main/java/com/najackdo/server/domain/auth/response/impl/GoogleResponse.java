@@ -37,4 +37,9 @@ public class GoogleResponse implements OAuth2Response {
 		return "F";
 	}
 
+	@Override
+	public String getProfileImage() {
+		return "";
+	}
+
 }

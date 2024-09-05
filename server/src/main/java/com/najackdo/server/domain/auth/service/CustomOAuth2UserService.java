@@ -47,7 +47,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 				oauth2Response.getName(),
 				oauth2Response.getGender().charAt(0),
 				oauth2Response.getProvider(),
-				oauth2Response.getProviderId()
+				oauth2Response.getProviderId(),
+				oauth2Response.getProfileImage()
 			));
 		});
 

@@ -37,6 +37,6 @@ out/
 .vscode/
 data/
 
-application-auth.properties
+/src/main/resources/application-auth.properties
 
 .env
