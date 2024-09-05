@@ -16,7 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "book_rental_history")
+@Table(name = "rental_log")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RentalLog {
