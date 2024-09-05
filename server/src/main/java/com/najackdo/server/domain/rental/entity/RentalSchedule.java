@@ -1,6 +1,7 @@
 package com.najackdo.server.domain.rental.entity;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,4 +35,7 @@ public class RentalSchedule {
 
 	@Column(name = "return_location")
 	private String returnLocation;
+
+	@Column(name = "created_at", nullable = false)
+	private LocalDateTime createdAt;
 }

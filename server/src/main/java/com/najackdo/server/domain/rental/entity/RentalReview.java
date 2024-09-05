@@ -1,6 +1,8 @@
-package com.najackdo.server.domain.user.entity;
+package com.najackdo.server.domain.rental.entity;
 
 import java.time.LocalDateTime;
+
+import com.najackdo.server.domain.user.entity.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,33 +13,33 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "cash_log")
 @Getter
-@NoArgsConstructor
-public class CashLog {
+@Table(name = "rental_review")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class RentalReview {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "cash_log_id", nullable = false)
+	@Column(name = "rental_review_id")
 	private Long id;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "rental_id", nullable = false)
+	private Rental rental;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 
-	@Column(name = "change")
-	private Integer change;
-
-	@Column(name = "log_type")
-	private String logType;
-
-	@Column(name = "result_cash")
-	private Integer resultCash;
+	@Column(name = "review_items", nullable = false)
+	private ReviewItems reviewItems;
 
 	@Column(name = "created_at", nullable = false)
 	private LocalDateTime createdAt;
+
 }
