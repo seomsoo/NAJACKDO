@@ -11,6 +11,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -29,11 +30,11 @@ public class RentalReservation {
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@Column(name = "user_id", nullable = false)
+	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@Column(name = "user_book_id", nullable = false)
+	@JoinColumn(name = "user_book_id", nullable = false)
 	private UserBook userBook;
 
 	@Column(name = "reservation_date", nullable = false)
