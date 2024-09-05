@@ -1,11 +1,11 @@
 {
-  "short_name": "댕구르르",
-  "name": "댕구르르르르르르, 댕구르르",
-  "description": "댕구르르르르르르",
+  "short_name": "나의 작은 도서관",
+  "name": "나의 작은 도서관, 나작도",
+  "description": "나의 작은 도서관",
   "icons": [
     {
-      "src": "images/icons/favicon-196x196.png",
-      "sizes": "196x196",
+      "src": "images/icons/favicon-32x32.png",
+      "sizes": "32x32",
       "type": "image/png"
     }
   ],

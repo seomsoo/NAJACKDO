@@ -51,7 +51,8 @@
     "format:fix": "prettier --write ./src",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org najackdo --project javascript-react ./build && sentry-cli sourcemaps upload --org najackdo --project javascript-react ./build"
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org najackdo --project javascript-react ./build && sentry-cli sourcemaps upload --org najackdo --project javascript-react ./build",
+    "dev": "react-scripts start"
   },
   "eslintConfig": {
     "extends": [
