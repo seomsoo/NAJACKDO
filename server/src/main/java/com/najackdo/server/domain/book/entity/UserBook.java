@@ -58,7 +58,6 @@ public class UserBook {
 
 	@Column(name = "book_status", nullable = false)
 	@Enumerated(EnumType.STRING)
-	@ColumnDefault("UNAVAILABLE")
 	private BookStatus bookStatus = UNAVAILABLE;
 
 	@Column(name = "is_deleted", nullable = false)

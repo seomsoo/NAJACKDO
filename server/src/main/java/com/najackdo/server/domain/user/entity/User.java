@@ -1,6 +1,7 @@
 package com.najackdo.server.domain.user.entity;
 
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.annotations.ColumnDefault;
 
@@ -28,16 +29,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
 
-	@OneToMany(mappedBy = "follower", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
-	private List<InterestUser> interestFollowers;
+	@OneToMany(mappedBy = "following", fetch = FetchType.LAZY)
+	private Set<InterestUser> followingUsers;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
-	private List<InterestUser> interestUsers;
+	@OneToMany(mappedBy = "follower", fetch = FetchType.LAZY)
+	private Set<InterestUser> followerUsers;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<SurveyResult> surveyResults;
