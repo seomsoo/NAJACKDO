@@ -14,6 +14,8 @@ import com.najackdo.server.domain.rental.entity.RentalReservation;
 import com.najackdo.server.domain.survey.entity.SurveyResult;
 
 import jakarta.persistence.CascadeType;
+import com.najackdo.server.core.entity.BaseEntity;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -22,17 +24,27 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Entity
-@Table(name = "users")
-@Getter
+@Table(
+	name = "users",
+	uniqueConstraints = {@UniqueConstraint(columnNames = "username")},
+	indexes = {
+		@Index(name = "index_user_username", columnList = "username")
+	}
+)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+@Getter
+public class User  extends BaseEntity {
 
 	@OneToMany(mappedBy = "following", fetch = FetchType.LAZY)
 	private Set<InterestUser> followingUsers;
@@ -70,13 +82,16 @@ public class User {
 	private Long id;
 
 	@Column(name = "user_name", nullable = false)
-	private String userName;
+	private String username;
 
 	@Column(name = "gender", nullable = false)
-	private String gender;
+	private char gender;
 
 	@Column(name = "age", nullable = false)
 	private int age;
+
+	@Column(nullable = false)
+	private String name;
 
 	@Column(name = "nick_name", nullable = false)
 	private String nickName;
@@ -88,15 +103,15 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private ProviderType providerType;
 
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	private RoleType roleType = RoleType.USER;
+
 	@Column(name = "provider_id", nullable = false)
 	private String providerId;
 
 	@Column(name = "profile_image")
 	private String profileImage;
-
-	@Column(name = "role_type", nullable = false)
-	@Enumerated(EnumType.STRING)
-	private RoleType roleType;
 
 	@Column(name = "cash")
 	@ColumnDefault("0")
@@ -108,5 +123,21 @@ public class User {
 	@Column(name = "manner_score")
 	@ColumnDefault("50")
 	private int mannerScore = 50;
+
+	public static User createUser(String username, String name, char gender, ProviderType providerType,
+		String providerId) {
+		User user = new User();
+		user.username = username;
+		user.name = name;
+		user.email = username;
+		user.gender = gender;
+		user.providerType = providerType;
+		user.providerId = providerId;
+		return user;
+	}
+
+	public void delete() {
+		this.isDeleted = true;
+	}
 
 }
