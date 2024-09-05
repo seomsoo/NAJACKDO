@@ -37,6 +37,6 @@ out/
 .vscode/
 data/
 
-application-secret.properties
+application-auth.properties
 
 .env
