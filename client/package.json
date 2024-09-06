@@ -13,6 +13,7 @@
     "@types/jest": "^27.5.2",
     "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",
+    "axios": "^1.7.7",
     "class-variance-authority": "^0.7.0",
     "client": "file:",
     "clsx": "^2.1.1",
@@ -44,7 +45,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && npm run sentry:sourcemaps",
+    "build": "react-scripts build",
     "test": "react-scripts jest",
     "eject": "react-scripts eject",
     "format": "prettier --check ./src",
