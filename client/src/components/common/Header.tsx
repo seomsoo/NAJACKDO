@@ -1,6 +1,6 @@
 import { IoIosSearch } from "react-icons/io";
 import { IoCartOutline, IoNotificationsOutline } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const nav = useNavigate();
@@ -16,9 +16,15 @@ const Header = () => {
         나의 작은 도서관
       </span>
       <div className="flex flex-row">
-        <IoIosSearch size={27} color="#545454" className="me-1" />
-        <IoCartOutline size={27} color="#545454" className="me-1" />
-        <IoNotificationsOutline size={27} color="#545454" />
+        <Link to="/search">
+          <IoIosSearch size={27} color="#545454" className="me-1" />
+        </Link>
+        <Link to="/cart">
+          <IoCartOutline size={27} color="#545454" className="me-1" />
+        </Link>
+        <Link to="/alarm">
+          <IoNotificationsOutline size={27} color="#545454" />
+        </Link>
       </div>
     </header>
   );
