@@ -1,6 +1,6 @@
 import Footer from "components/common/Footer";
 import Header from "components/common/Header";
-import FooterRoute from "components/routes/FooterRoute";
+import MainRoute from "components/routes/MainRoute";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 
@@ -14,7 +14,7 @@ function App() {
     <div className="App relative">
       <Header />
       <Routes>
-        <Route path="/*" element={<FooterRoute />} />
+        <Route path="/*" element={<MainRoute />} />
       </Routes>
       <Footer />
     </div>
