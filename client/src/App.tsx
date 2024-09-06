@@ -1,9 +1,6 @@
-import ChattingPage from "components/ChattingPage";
-import HomePage from "components/HomePage";
-import LibraryPage from "components/LibraryPage";
-import LocationPage from "components/LocationPage";
-import ProfilePage from "components/ProfilePage";
 import Footer from "components/common/Footer";
+import Header from "components/common/Header";
+import FooterRoute from "components/routes/FooterRoute";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 
@@ -15,12 +12,9 @@ function App() {
 
   return (
     <div className="App relative">
+      <Header />
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/location" element={<LocationPage />} />
-        <Route path="/library" element={<LibraryPage />} />
-        <Route path="/chat" element={<ChattingPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/*" element={<FooterRoute />} />
       </Routes>
       <Footer />
     </div>
