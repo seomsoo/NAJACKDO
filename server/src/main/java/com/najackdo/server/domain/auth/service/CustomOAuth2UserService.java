@@ -10,11 +10,13 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.najackdo.server.core.constants.S3Const;
 import com.najackdo.server.domain.auth.response.CustomOAuth2User;
 import com.najackdo.server.domain.auth.response.CustomOAuthUserFactory;
 import com.najackdo.server.domain.auth.response.OAuth2Response;
 import com.najackdo.server.domain.user.entity.ProviderType;
 import com.najackdo.server.domain.user.entity.User;
+import com.najackdo.server.domain.user.event.S3UploadEvent;
 import com.najackdo.server.domain.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -42,13 +44,19 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		AtomicBoolean isNew = new AtomicBoolean(false);
 		User user = userRepository.findByUsername(username).orElseGet(() -> {
 			isNew.set(true);
+
+			String profileImage = oauth2Response.getProfileImage();
+			if (S3Const.BASIC_PROFILE_IMAGE.equals(profileImage)) {
+				profileImage = null;
+			}
+
 			return userRepository.save(User.createUser(
 				username,
 				oauth2Response.getName(),
 				oauth2Response.getGender().charAt(0),
 				oauth2Response.getProvider(),
 				oauth2Response.getProviderId(),
-				oauth2Response.getProfileImage()
+				profileImage
 			));
 		});
 
