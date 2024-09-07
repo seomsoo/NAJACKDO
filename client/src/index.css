@@ -64,7 +64,28 @@
     @apply border-border;
   }
   body {
-    @apply bg-[#F8F6F3] text-foreground pretendard;
+    @apply bg-[#F8F6F3] pretendard;
+  }
+}
+
+/* 데스크톱 화면에서의 스타일 */
+@media (min-width: 431px) {
+  :root {
+    height: 100vh;
+    max-width: 430px;
+    max-height: 932px;
+    margin-left: auto;
+    margin-right: auto;
+    border-left: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+  }
+}
+
+/* 모바일 화면에서의 스타일 */
+@media (max-width: 430px) {
+  :root {
+    width: screen;
+    height: screen;
   }
 }
 
@@ -84,10 +105,22 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "HakgyoansimNadeuriTTF-B";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimNadeuriTTF-B.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
 .pretendard {
   font-family: "Pretendard-Regular", sans-serif;
 }
 
 .maplestory {
   font-family: "MaplestoryOTFBold", sans-serif;
+}
+
+.hakgyo {
+  font-family: "HakgyoansimNadeuriTTF-B", sans-serif;
 }
