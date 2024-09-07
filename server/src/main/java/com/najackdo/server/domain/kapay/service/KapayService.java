@@ -49,9 +49,9 @@ public class KapayService {
 			.totalAmount(1100)
 			.taxFreeAmount(0)
 			.vatAmount(100)
-			.approvalUrl(sampleHost + "/approve/" + agent + "/" + openType)
-			.cancelUrl(sampleHost + "/cancel/" + agent + "/" + openType)
-			.failUrl(sampleHost + "/fail/" + agent + "/" + openType)
+			.approvalUrl(sampleHost + "api/v1/kapay/approve/" + agent + "/" + openType)
+			.cancelUrl(sampleHost + "api/v1/kapay/cancel/" + agent + "/" + openType)
+			.failUrl(sampleHost + "api/v1/kapay/fail/" + agent + "/" + openType)
 			.build();
 
 		// 요청 전송
