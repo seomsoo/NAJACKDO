@@ -1,5 +1,9 @@
 import { IoIosSearch } from "react-icons/io";
-import { IoCartOutline, IoNotificationsOutline } from "react-icons/io5";
+import {
+  IoCartOutline,
+  IoLibrary,
+  IoNotificationsOutline,
+} from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
@@ -7,14 +11,17 @@ const Header = () => {
 
   return (
     <header className="flex flex-row justify-between items-center p-3">
-      <span
-        className="maplestory text-[#5F6F52] text-xl"
-        onClick={() => {
-          nav("/");
-        }}
-      >
-        나의 작은 도서관
-      </span>
+      <div className="flex flex-row items-center">
+        <IoLibrary size={35} color="#C0C78C" />
+        <span
+          className="maplestory text-[#5F6F52] text-2xl ml-2"
+          onClick={() => {
+            nav("/");
+          }}
+        >
+          나의 작은 도서관
+        </span>
+      </div>
       <div className="flex flex-row">
         <Link to="/search">
           <IoIosSearch size={27} color="#545454" className="me-1" />
