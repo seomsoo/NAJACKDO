@@ -1,10 +1,13 @@
 package com.najackdo.server.domain.kapay.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.najackdo.server.core.response.SuccessResponse;
 import com.najackdo.server.domain.kapay.dto.ReadyResponse;
@@ -24,6 +27,7 @@ public class KapayController {
 		@PathVariable String agent,
 		@PathVariable String openType
 	) {
+		System.out.println("ready");
 		ReadyResponse readyResponse = kapayService.ready(agent, openType);
 		System.out.println("readyResponse = " + readyResponse);
 		String redirectUrl = getRedirectUrl(agent, openType, readyResponse);
@@ -32,21 +36,34 @@ public class KapayController {
 	}
 
 	@GetMapping("/approve/{agent}/{openType}")
-	public SuccessResponse<String> approve(
+	public RedirectView approve(
 		@PathVariable String agent,
 		@PathVariable String openType,
 		@RequestParam("pg_token") String pgToken
 	) {
-		String approveResponse = kapayService.approve(pgToken).toString();
-		return SuccessResponse.of(approveResponse);
+
+		ResponseEntity<?> approveResponseEntity = kapayService.approve(pgToken);
+		HttpStatus statusCode = (HttpStatus)approveResponseEntity.getStatusCode();
+
+		boolean isSuccess = statusCode == HttpStatus.OK;
+
+		if (isSuccess) {
+			return new RedirectView("http://localhost:3000/kapay-approve"); // Replace with your frontend URL
+		} else {
+			return new RedirectView("http://localhost:3000/kapay-fail"); // Replace with your frontend URL
+		}
 	}
 
 	@GetMapping("/cancel/{agent}/{openType}")
-	public SuccessResponse<String> cancel(
+	public RedirectView cancel(
 		@PathVariable String agent,
 		@PathVariable String openType
 	) {
-		return SuccessResponse.of(String.format("%s/%s/cancel", agent, openType));
+		System.out.println("cancel");
+
+		String redirectUrl = "http://localhost:3000/kapay-cancel"; // Replace with your frontend URL
+
+		return new RedirectView(redirectUrl);
 	}
 
 	@GetMapping("/fail/{agent}/{openType}")
@@ -54,6 +71,7 @@ public class KapayController {
 		@PathVariable String agent,
 		@PathVariable String openType
 	) {
+		System.out.println("fail");
 		return SuccessResponse.of(String.format("%s/%s/fail", agent, openType));
 	}
 
