@@ -1,11 +1,9 @@
 import { Input } from "components/ui/input";
-import RecentSearch from "page/search/components/RecentSearch";
-import RecommendBook from "page/search/components/RecommendBook";
-import RecommendSearch from "page/search/components/RecommendSearch";
+import SearchResultBook from "page/search/components/SearchResultBook";
 import { IoIosArrowBack, IoIosSearch } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
-const SearchPage = () => {
+const SearchResultPage = () => {
   const navigate = useNavigate();
   const goSearchResult = () => {
     navigate("/search/result");
@@ -23,11 +21,16 @@ const SearchPage = () => {
           <IoIosSearch size={25} color="#545454" />
         </div>
       </div>
-      <RecommendSearch />
-      <RecentSearch />
-      <RecommendBook />
+      <div className="ml-1 mt-4">
+        <span>총 352개의 검색 결과가 있습니다.</span>
+      </div>
+      <SearchResultBook />
+      <SearchResultBook />
+      <SearchResultBook />
+      <SearchResultBook />
+      <SearchResultBook />
     </div>
   );
 };
 
-export default SearchPage;
+export default SearchResultPage;
