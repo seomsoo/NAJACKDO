@@ -8,7 +8,7 @@ const Footer = () => {
   const location = useLocation().pathname.split("/")[1];
 
   return (
-    <footer className="fixed bottom-0 w-screen max-w-[430px] border-t-[1px] pt-3 flex flex-row justify-around pb-7">
+    <footer className="fixed bg-[#F8F6F3] bottom-0 w-screen max-w-[430px] border-t-[1px] pt-3 flex flex-row justify-around pb-7">
       <Link to="/" className="flex flex-col items-center">
         <GoHomeFill size={25} color={location === "" ? "#79AC78" : "#545454"} />
         <span className="text-xs pt-1">홈</span>

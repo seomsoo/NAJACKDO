@@ -18,6 +18,7 @@ const RecommendSearch = () => {
         <RecommendSearchText />
         <RecommendSearchText />
         <RecommendSearchText />
+        <RecommendSearchText />
       </div>
     </div>
   );
