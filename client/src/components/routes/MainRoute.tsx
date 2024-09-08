@@ -1,5 +1,8 @@
 import AlarmPage from "page/alarm/page/AlarmPage";
 import ChattingPage from "page/chatting/page/ChattingPage";
+import KaPayApprovePage from "page/kapay/page/KaPayApprovePage";
+import KaPayCancelPage from "page/kapay/page/KaPayCancelPage";
+import KaPayPage from "page/kapay/page/KaPayPage";
 import CartPage from "page/library/page/CartPage";
 import LibraryPage from "page/library/page/LibraryPage";
 import LocationPage from "page/location/page/LocationPage";
@@ -21,6 +24,10 @@ const MainRoute = () => {
       <Route path="/search/result" element={<SearchResultPage />} />
       <Route path="/cart" element={<CartPage />} />
       <Route path="/alarm" element={<AlarmPage />} />
+      <Route path="/kapay" element={<KaPayPage />} />
+      <Route path="/kapay/approve" element={<KaPayApprovePage />} />
+      <Route path="/kapay/cancel" element={<KaPayCancelPage />} />
+      <Route path="/kapay/fail" element={<KaPayCancelPage />} />
     </Routes>
   );
 };
