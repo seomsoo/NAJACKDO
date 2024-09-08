@@ -1,5 +1,6 @@
 import { Input } from "components/ui/input";
 import RecentSearch from "page/search/components/RecentSearch";
+import RecommendBook from "page/search/components/RecommendBook";
 import RecommendSearch from "page/search/components/RecommendSearch";
 import { IoIosArrowBack, IoIosSearch } from "react-icons/io";
 
@@ -13,6 +14,7 @@ const SearchPage = () => {
       </div>
       <RecommendSearch />
       <RecentSearch />
+      <RecommendBook />
     </div>
   );
 };
