@@ -6,6 +6,7 @@ import KaPayPage from "page/kapay/page/KaPayPage";
 import CartPage from "page/library/page/CartPage";
 import LibraryPage from "page/library/page/LibraryPage";
 import LocationPage from "page/location/page/LocationPage";
+import LoginPage from "page/login/page/LoginPage";
 import MainPage from "page/main/page/MainPage";
 import ProfilePage from "page/profile/page/ProfilePage";
 import SearchPage from "page/search/page/SearchPage";
@@ -24,6 +25,7 @@ const MainRoute = () => {
       <Route path="/search/result" element={<SearchResultPage />} />
       <Route path="/cart" element={<CartPage />} />
       <Route path="/alarm" element={<AlarmPage />} />
+      <Route path="/login" element={<LoginPage />} />
       <Route path="/kapay" element={<KaPayPage />} />
       <Route path="/kapay/approve" element={<KaPayApprovePage />} />
       <Route path="/kapay/cancel" element={<KaPayCancelPage />} />
