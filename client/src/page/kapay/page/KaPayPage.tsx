@@ -41,6 +41,9 @@ const KapayPage = () => {
   );
 
   const handleClick = () => {
+    console.log("Redirect URL: ", redirectUrl);
+    console.log("Device Type: ", deviceType);
+    console.log("Open Type: ", openType);
     if (redirectUrl) {
       if (deviceType === "pc") {
         const width = 426;

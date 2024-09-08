@@ -48,9 +48,9 @@ public class KapayController {
 		boolean isSuccess = statusCode == HttpStatus.OK;
 
 		if (isSuccess) {
-			return new RedirectView("http://localhost:3000/kapay-approve"); // Replace with your frontend URL
+			return new RedirectView("http://localhost:3000/kapay/approve");
 		} else {
-			return new RedirectView("http://localhost:3000/kapay-fail"); // Replace with your frontend URL
+			return new RedirectView("http://localhost:3000/kapay/fail");
 		}
 	}
 
@@ -61,18 +61,18 @@ public class KapayController {
 	) {
 		System.out.println("cancel");
 
-		String redirectUrl = "http://localhost:3000/kapay-cancel"; // Replace with your frontend URL
+		String redirectUrl = "http://localhost:3000/kapay/cancel";
 
 		return new RedirectView(redirectUrl);
 	}
 
 	@GetMapping("/fail/{agent}/{openType}")
-	public SuccessResponse<String> fail(
+	public RedirectView fail(
 		@PathVariable String agent,
 		@PathVariable String openType
 	) {
 		System.out.println("fail");
-		return SuccessResponse.of(String.format("%s/%s/fail", agent, openType));
+		return new RedirectView("http://localhost:3000/kapay/fail");
 	}
 
 	private String getRedirectUrl(String agent, String openType, ReadyResponse readyResponse) {
