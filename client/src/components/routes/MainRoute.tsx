@@ -9,6 +9,8 @@ import LocationPage from "page/location/page/LocationPage";
 import LoginPage from "page/login/page/LoginPage";
 import MainPage from "page/main/page/MainPage";
 import ProfilePage from "page/profile/page/ProfilePage";
+import GradePage from "page/profile/page/GradePage";
+import LeafPage from "page/profile/page/LeafPage";
 import SearchPage from "page/search/page/SearchPage";
 import SearchResultPage from "page/search/page/SearchResultPage";
 import { Route, Routes } from "react-router-dom";
@@ -21,6 +23,8 @@ const MainRoute = () => {
       <Route path="/library" element={<LibraryPage />} />
       <Route path="/chat" element={<ChattingPage />} />
       <Route path="/profile" element={<ProfilePage />} />
+      <Route path="/profile/grade" element={<GradePage />} />
+      <Route path="/profile/leaf" element={<LeafPage />} />
       <Route path="/search" element={<SearchPage />} />
       <Route path="/search/result" element={<SearchResultPage />} />
       <Route path="/cart" element={<CartPage />} />
