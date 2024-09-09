@@ -1,5 +1,6 @@
 package com.najackdo.server.domain.notification.entity;
 
+import com.najackdo.server.core.entity.TimeEntity;
 import com.najackdo.server.domain.user.entity.User;
 
 import jakarta.persistence.Column;
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "notification")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Notification {
+public class Notification extends TimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

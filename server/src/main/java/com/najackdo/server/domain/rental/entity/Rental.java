@@ -1,6 +1,7 @@
 package com.najackdo.server.domain.rental.entity;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 import com.najackdo.server.domain.user.entity.User;
 
@@ -41,10 +42,10 @@ public class Rental {
 	private User loner;
 
 	@Column(name = "rental_start_date")
-	private Date rentalStartDate;
+	private LocalDateTime rentalStartDate;
 
 	@Column(name = "rental_end_date")
-	private Date rentalEndDate;
+	private LocalDateTime rentalEndDate;
 
 	@Column(name = "rental_period")
 	private Integer rentalPeriod;

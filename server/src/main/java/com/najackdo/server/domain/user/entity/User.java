@@ -16,6 +16,7 @@ import com.najackdo.server.domain.survey.entity.SurveyResult;
 
 import jakarta.persistence.CascadeType;
 import com.najackdo.server.core.entity.BaseEntity;
+import com.najackdo.server.domain.user.dto.UserData;
 import com.najackdo.server.domain.user.event.S3UploadEvent;
 
 import jakarta.persistence.Column;
@@ -47,37 +48,6 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class User  extends BaseEntity {
-
-	@OneToMany(mappedBy = "following", fetch = FetchType.LAZY)
-	private Set<InterestUser> followingUsers;
-
-	@OneToMany(mappedBy = "follower", fetch = FetchType.LAZY)
-	private Set<InterestUser> followerUsers;
-
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
-	private List<SurveyResult> surveyResults;
-
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
-	private List<BookMark> bookMarks;
-
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
-	private List<RentalReservation> rentalReservations;
-
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
-	private List<Notification> notifications;
-
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
-	private List<CashLog> cashLogs;
-
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	private List<Cart> bookCarts;
-
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	private List<UserBook> userBooks;
-
-	@OneToMany(mappedBy = "loner", fetch = FetchType.LAZY)
-	private List<Rental> bookRentals;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
@@ -90,7 +60,7 @@ public class User  extends BaseEntity {
 	private char gender;
 
 	@Column(name = "age", nullable = false)
-	private int age;
+	private short age;
 
 	@Column(nullable = false)
 	private String name;
@@ -126,6 +96,36 @@ public class User  extends BaseEntity {
 	@ColumnDefault("50")
 	private int mannerScore = 50;
 
+	// @OneToMany(mappedBy = "following", fetch = FetchType.LAZY)
+	// private Set<InterestUser> followingUsers;
+	//
+	// @OneToMany(mappedBy = "follower", fetch = FetchType.LAZY)
+	// private Set<InterestUser> followerUsers;
+	//
+	// @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+	// private List<SurveyResult> surveyResults;
+	//
+	// @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+	// private List<BookMark> bookMarks;
+	//
+	// @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+	// private List<RentalReservation> rentalReservations;
+	//
+	// @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+	// private List<Notification> notifications;
+	//
+	// @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+	// private List<CashLog> cashLogs;
+	//
+	// @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	// private List<Cart> bookCarts;
+	//
+	// @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	// private List<UserBook> userBooks;
+	//
+	// @OneToMany(mappedBy = "loner", fetch = FetchType.LAZY)
+	// private List<Rental> bookRentals;
+
 	public static User createUser(String username, String name, char gender, ProviderType providerType,
 		String providerId, String profileImage) {
 		User user = new User();
@@ -137,7 +137,6 @@ public class User  extends BaseEntity {
 		user.providerType = providerType;
 		user.providerId = providerId;
 		user.profileImage = profileImage;
-
 		return user;
 	}
 
@@ -149,4 +148,9 @@ public class User  extends BaseEntity {
 		this.profileImage = profileImage;
 	}
 
+	public void updateInfo(UserData.Update update){
+		this.nickName = update.getNickname();
+		this.age = update.getAge();
+		this.gender = update.getGender();
+	}
 }

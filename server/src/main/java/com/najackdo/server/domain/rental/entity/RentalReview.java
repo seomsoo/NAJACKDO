@@ -2,6 +2,7 @@ package com.najackdo.server.domain.rental.entity;
 
 import java.time.LocalDateTime;
 
+import com.najackdo.server.core.entity.TimeEntity;
 import com.najackdo.server.domain.user.entity.User;
 
 import jakarta.persistence.Column;
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(name = "rental_review")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RentalReview {
+public class RentalReview extends TimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +40,5 @@ public class RentalReview {
 	@Column(name = "review_items", nullable = false)
 	private ReviewItems reviewItems;
 
-	@Column(name = "created_at", nullable = false)
-	private LocalDateTime createdAt;
 
 }

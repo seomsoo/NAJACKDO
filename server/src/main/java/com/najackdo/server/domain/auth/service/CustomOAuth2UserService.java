@@ -27,7 +27,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 	private final UserRepository userRepository;
-	private final ApplicationEventPublisher publisher;
 
 	@Transactional
 	@Override

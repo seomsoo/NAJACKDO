@@ -2,6 +2,8 @@ package com.najackdo.server.domain.user.entity;
 
 import java.time.LocalDateTime;
 
+import com.najackdo.server.core.entity.TimeEntity;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -18,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "cash_log")
 @Getter
 @NoArgsConstructor
-public class CashLog {
+public class CashLog extends TimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +40,4 @@ public class CashLog {
 	@Column(name = "result_cash")
 	private Integer resultCash;
 
-	@Column(name = "created_at", nullable = false)
-	private LocalDateTime createdAt;
 }
