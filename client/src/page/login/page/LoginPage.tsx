@@ -6,7 +6,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "components/ui/carousel";
-import Kakao from "page/login/components/Kakao";
+import KakaoLogin from "page/login/components/KakaoLogin";
 import OnBoarding from "page/login/components/OnBoarding";
 import { useEffect, useState } from "react";
 import { FaCircle } from "react-icons/fa";
@@ -85,7 +85,7 @@ const LoginPage = () => {
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
-      <Kakao />
+      <KakaoLogin />
     </div>
   );
 };

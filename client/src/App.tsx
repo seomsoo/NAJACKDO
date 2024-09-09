@@ -8,16 +8,19 @@ function App() {
   const location = useLocation();
   const currentPath = location.pathname;
 
-  const popupPaths = ["/kapay/approve", "/kapay/cancel", "/kapay/fail"];
-  const hideHeaderPaths = ["/login"];
-  const isPopup = window.opener !== null && !window.opener.closed;
-  const shouldHideHeaderFooter =
-    (popupPaths.includes(currentPath) && isPopup) ||
-    hideHeaderPaths.includes(currentPath);
+  console.log(currentPath);
 
+  const popupPaths = ["/kapay/approve", "/kapay/cancel", "/kapay/fail"];
+  const showHeaderPaths = ["/", "/search"];
+
+  console.log(showHeaderPaths.includes(currentPath));
+  const isPopup = window.opener !== null && !window.opener.closed;
+  const shouldHideHeaderFooter = popupPaths.includes(currentPath) && isPopup;
   return (
     <div className="pb-[86px] relative">
-      {!shouldHideHeaderFooter && <Header />}
+      {!shouldHideHeaderFooter && showHeaderPaths.includes(currentPath) && (
+        <Header />
+      )}
       <Routes>
         <Route path="/*" element={<MainRoute />} />
       </Routes>
