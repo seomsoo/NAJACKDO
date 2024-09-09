@@ -1,26 +1,42 @@
 package com.najackdo.server.domain.user.service;
 
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.event.TransactionPhase;
+import org.springframework.transaction.event.TransactionalEventListener;
 
-import com.najackdo.server.domain.user.entity.CashLogType;
-import com.najackdo.server.domain.user.event.CashEvent;
+import com.najackdo.server.domain.user.entity.CashLog;
+import com.najackdo.server.domain.user.event.CashLogPaymentEvent;
+import com.najackdo.server.domain.user.repository.CashLogRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class CashLogService {
 
-	@Transactional
-	@EventListener
-	public void handleCashEvent(CashEvent event) {
+	private final CashLogRepository cashLogRepository;
 
-		Long userId = event.getUser().getId();
-		Integer cash = event.getCash();
-		CashLogType logType = event.getLogType();
+	@TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void cashLogPaymentEvent(CashLogPaymentEvent event) {
+
+		log.info("cashLogPaymentEvent");
+
+		CashLog cashLog = CashLog.create(
+			event.getUser(),
+			event.getCash(),
+			event.getResultCash(),
+			event.getLogType()
+		);
+
+		log.info("cashLog: {}", cashLog);
+
+		cashLogRepository.save(cashLog);
 
 	}
 

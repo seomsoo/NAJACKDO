@@ -8,8 +8,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class CashEvent {
+public class CashLogPaymentEvent {
 	private User user;
 	private Integer cash;
+	private Integer resultCash;
 	private CashLogType logType;
 }
