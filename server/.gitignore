@@ -38,5 +38,6 @@ out/
 data/
 
 /src/main/resources/application-auth.properties
+/src/main/resources/najackdo-firestore-adminsdk.json
 
 .env
