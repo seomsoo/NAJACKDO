@@ -15,6 +15,7 @@ import SearchPage from "page/search/page/SearchPage";
 import SearchResultPage from "page/search/page/SearchResultPage";
 import { Route, Routes } from "react-router-dom";
 import BookDetailPage from "page/library/page/BookDetailPage";
+import SurveyPage from 'page/login/page/SurveyPage';
 
 const MainRoute = () => {
   return (
@@ -36,6 +37,7 @@ const MainRoute = () => {
       <Route path="/kapay/cancel" element={<KaPayCancelPage />} />
       <Route path="/kapay/fail" element={<KaPayCancelPage />} />
       <Route path="/bookdetail" element={<BookDetailPage />} />
+      <Route path='/survey' element={<SurveyPage />} />
     </Routes>
   );
 };
