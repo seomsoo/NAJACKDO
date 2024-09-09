@@ -1,7 +1,5 @@
 package com.najackdo.server.domain.kapay.controller;
 
-import static com.najackdo.server.domain.user.entity.CashLogType.*;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,30 +13,31 @@ import com.najackdo.server.core.annotation.CurrentUser;
 import com.najackdo.server.core.response.SuccessResponse;
 import com.najackdo.server.domain.kapay.dto.ReadyResponse;
 import com.najackdo.server.domain.kapay.service.KapayService;
-import com.najackdo.server.domain.user.entity.CashLogType;
 import com.najackdo.server.domain.user.entity.User;
-import com.najackdo.server.domain.user.event.CashEvent;
+import com.najackdo.server.domain.user.repository.UserRepository;
 
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/kapay")
 public class KapayController {
 
 	private final KapayService kapayService;
+	private final UserRepository userRepository;
 
 	@GetMapping("/ready/{agent}/{openType}")
 	public SuccessResponse<String> ready(
+		@CurrentUser User user,
 		@PathVariable String agent,
 		@PathVariable String openType,
 		@RequestParam("itemName") String itemName,
 		@RequestParam("totalAmount") Integer totalAmount
 	) {
-		System.out.println("ready");
+
 		ReadyResponse readyResponse = kapayService.ready(agent, openType, itemName, totalAmount);
-		System.out.println("readyResponse = " + readyResponse);
 		String redirectUrl = getRedirectUrl(agent, openType, readyResponse);
 
 		return SuccessResponse.of(redirectUrl);
@@ -49,19 +48,11 @@ public class KapayController {
 		@CurrentUser User user,
 		@PathVariable String agent,
 		@PathVariable String openType,
-		@RequestParam("pg_token") String pgToken,
-		HttpServletResponse response
+		@RequestParam("pg_token") String pgToken
 	) {
+		ResponseEntity<?> approveResponseEntity = kapayService.approve(pgToken, user);
 
-		ResponseEntity<?> approveResponseEntity = kapayService.approve(pgToken);
-		HttpStatus statusCode = (HttpStatus)approveResponseEntity.getStatusCode();
-
-		boolean isSuccess = statusCode == HttpStatus.OK;
-
-		if (isSuccess) {
-			CashLogType logType = PAYMENT;
-			CashEvent cashEvent = new CashEvent(user, 1000, logType);
-
+		if (approveResponseEntity.getStatusCode() == HttpStatus.OK) {
 			return new RedirectView("http://localhost:3000/kapay/approve");
 		} else {
 			return new RedirectView("http://localhost:3000/kapay/fail");

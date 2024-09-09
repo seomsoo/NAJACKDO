@@ -1,6 +1,4 @@
-// src/page/kapay/page/KapayPage.tsx
 import React, { useEffect, useState } from "react";
-import { useQuery } from "react-query";
 import axios from "axios";
 import { Button } from "components/ui/button";
 
@@ -31,27 +29,29 @@ const KapayPage = () => {
     setOpenType(detectedDeviceType === "mobile" ? "redirect" : "popup");
   }, []);
 
-  const { data, error, isLoading } = useQuery(
-    ["kapay", "ready", deviceType, openType, itemName, totalAmount],
-    () =>
-      axios.get(`http://localhost:8080/api/v1/kapay/ready/${deviceType}/${openType}`, {
-        params: {
-          itemName,
-          totalAmount,
-        },
-      }),
-    {
-      enabled: !!deviceType && !!openType && totalAmount !== null,
-      onSuccess: (data) => {
-        setRedirectUrl(data.data.data);
-      },
-    }
-  );
-
-  const payButtonClick = (itemName: string, amount: number) => {
+  const payButtonClick = async (itemName: string, amount: number) => {
     setItemName(itemName);
     setTotalAmount(amount);
-    if (redirectUrl) {
+
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/v1/kapay/ready/${deviceType}/${openType}`,
+        {
+          params: {
+            itemName,
+            totalAmount: amount,
+          },
+        }
+      );
+
+      const redirectUrl = response.data.data;
+      setRedirectUrl(redirectUrl);
+
+      if (!redirectUrl) {
+        console.error("Redirect URL이 설정되지 않았습니다.");
+        return;
+      }
+
       if (deviceType === "pc") {
         const width = 426;
         const height = 510;
@@ -64,16 +64,18 @@ const KapayPage = () => {
           `width=${width},height=${height},left=${left},top=${top},toolbar=no`
         );
 
-        if (popup) {
-          popup.location.href = redirectUrl;
-        } else {
+        if (!popup) {
           console.error("Popup을 열 수 없습니다!");
+          return;
         }
-      } else {
-        window.location.replace(redirectUrl);
+
+        popup.location.href = redirectUrl;
+        return;
       }
-    } else {
-      console.error("Redirect URL is not set.");
+
+      window.location.replace(redirectUrl);
+    } catch (error) {
+      console.error("결제 준비 요청 중 오류가 발생했습니다.", error);
     }
   };
 

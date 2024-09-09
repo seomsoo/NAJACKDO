@@ -1,25 +1,37 @@
 package com.najackdo.server.domain.kapay.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.najackdo.server.core.exception.BaseException;
 import com.najackdo.server.core.exception.ErrorCode;
 import com.najackdo.server.core.response.ErrorResponse;
-import com.najackdo.server.core.response.SuccessResponse;
 import com.najackdo.server.domain.kapay.dto.ApproveRequest;
+import com.najackdo.server.domain.kapay.dto.ApproveResponse;
 import com.najackdo.server.domain.kapay.dto.ReadyRequest;
 import com.najackdo.server.domain.kapay.dto.ReadyResponse;
+import com.najackdo.server.domain.user.entity.User;
+import com.najackdo.server.domain.user.event.UserPaymentEvent;
+import com.najackdo.server.domain.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
+@Slf4j
 public class KapayService {
 
 	@Value("${kakaopay.api.secret.key}")
@@ -33,6 +45,11 @@ public class KapayService {
 
 	private String tid;
 
+	private final ApplicationEventPublisher publisher;
+	//! 테스트에서만 사용
+	private final UserRepository userRepository;
+
+	//!=================
 	public ReadyResponse ready(String agent, String openType, String itemName, Integer totalAmount) {
 		// 요청 헤더 설정
 		HttpHeaders headers = new HttpHeaders();
@@ -67,7 +84,8 @@ public class KapayService {
 		return response.getBody();
 	}
 
-	public ResponseEntity<?> approve(String pgToken) {
+	@Transactional
+	public ResponseEntity<?> approve(String pgToken, User user) {
 		try {
 			// 요청 헤더 설정
 			HttpHeaders headers = new HttpHeaders();
@@ -91,13 +109,41 @@ public class KapayService {
 				String.class
 			);
 
-			// 승인 결과 반환
-			return ResponseEntity.ok(SuccessResponse.of(response.getBody()));
+			ObjectMapper objectMapper = new ObjectMapper();
+			ApproveResponse approveResponse = objectMapper.readValue(response.getBody(), ApproveResponse.class);
+
+			if (approveResponse != null) {
+				user = userRepository.findById(1L)
+					.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_USER));
+				Integer totalAmount = approveResponse.getAmount().getTotal(); // 결제 금액
+				log.info("totalAmount: {}", totalAmount);
+				publisher.publishEvent(new UserPaymentEvent(user, totalAmount));
+			}
+
+			return ResponseEntity.ok(approveResponse);
 
 		} catch (HttpStatusCodeException ex) {
+			log.error("KakaoPay API error1: {}", ex.getResponseBodyAsString());
+			String responseBody = ex.getResponseBodyAsString();
+			ObjectMapper objectMapper = new ObjectMapper();
+			JsonNode jsonNode;
+			try {
+				jsonNode = objectMapper.readTree(responseBody);
+			} catch (JsonProcessingException e) {
+				log.error("Error processing JSON: {}", e.getMessage());
+				return ResponseEntity.status(ex.getStatusCode())
+					.body(ErrorResponse.of(ErrorCode.KAKAO_PAY_API_ERROR, "Error processing JSON", null));
+			}
+
+			JsonNode extrasNode = jsonNode.get("extras");
+			String errorMessage =
+				jsonNode.has("error_message") ? jsonNode.get("error_message").asText() : "Unknown error";
+
+			// ErrorResponse 생성 시 extras 필드를 포함
 			return ResponseEntity.status(ex.getStatusCode())
-				.body(ErrorResponse.of(ErrorCode.KAKAO_PAY_API_ERROR, ex.getResponseBodyAsString()));
+				.body(ErrorResponse.of(ErrorCode.KAKAO_PAY_API_ERROR, errorMessage, extrasNode));
 		} catch (Exception ex) {
+			log.error("KakaoPay API error2: {}", ex.getMessage());
 			return ResponseEntity.status(500).body(ErrorResponse.of(ErrorCode.SERVER_ERROR, ex.getMessage()));
 		}
 	}
