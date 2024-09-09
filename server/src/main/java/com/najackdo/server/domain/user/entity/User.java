@@ -5,7 +5,7 @@ import java.util.Set;
 
 import org.hibernate.annotations.ColumnDefault;
 
-import com.najackdo.server.core.constants.S3Const;
+import com.najackdo.server.core.entity.BaseEntity;
 import com.najackdo.server.domain.book.entity.BookMark;
 import com.najackdo.server.domain.book.entity.UserBook;
 import com.najackdo.server.domain.cart.entity.Cart;
@@ -15,9 +15,6 @@ import com.najackdo.server.domain.rental.entity.RentalReservation;
 import com.najackdo.server.domain.survey.entity.SurveyResult;
 
 import jakarta.persistence.CascadeType;
-import com.najackdo.server.core.entity.BaseEntity;
-import com.najackdo.server.domain.user.event.S3UploadEvent;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -46,7 +43,7 @@ import lombok.extern.slf4j.Slf4j;
 )
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class User  extends BaseEntity {
+public class User extends BaseEntity {
 
 	@OneToMany(mappedBy = "following", fetch = FetchType.LAZY)
 	private Set<InterestUser> followingUsers;
@@ -149,4 +146,14 @@ public class User  extends BaseEntity {
 		this.profileImage = profileImage;
 	}
 
+	public void addCash(Integer cash) {
+		this.cash += cash;
+	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+			"id=" + id +
+			", username='" + username + '}';
+	}
 }
