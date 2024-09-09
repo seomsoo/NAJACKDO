@@ -5,6 +5,7 @@ import KaPayCancelPage from "page/kapay/page/KaPayCancelPage";
 import KaPayPage from "page/kapay/page/KaPayPage";
 import CartPage from "page/library/page/CartPage";
 import LibraryPage from "page/library/page/LibraryPage";
+import MyFavoritePage from "page/library/page/MyFavoritePage";
 import LocationPage from "page/location/page/LocationPage";
 import LoginPage from "page/login/page/LoginPage";
 import MainPage from "page/main/page/MainPage";
@@ -23,10 +24,11 @@ const MainRoute = () => {
       <Route path="/" element={<MainPage />} />
       <Route path="/location" element={<LocationPage />} />
       <Route path="/library" element={<LibraryPage />} />
+      <Route path="/library/my-favorite" element={<MyFavoritePage />} />
       <Route path="/chat" element={<ChattingPage />} />
       <Route path="/profile" element={<ProfilePage />} />
-      <Route path="/profile/grade" element={<GradePage />} />
-      <Route path="/profile/leaf" element={<LeafPage />} />
+      <Route path="/profile/my-grade" element={<GradePage />} />
+      <Route path="/profile/my-leaf" element={<LeafPage />} />
       <Route path="/search" element={<SearchPage />} />
       <Route path="/search/result" element={<SearchResultPage />} />
       <Route path="/cart" element={<CartPage />} />
