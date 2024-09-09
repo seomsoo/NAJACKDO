@@ -1,7 +1,7 @@
 import React from 'react';
-import UserInfo from '../component/UserInfo';
-import Grade from '../component/Grade';
-import BarGraph from '../component/BarGraph';
+import UserInfo from '../components/UserInfo';
+import Grade from '../components/Grade';
+import BarGraph from '../components/BarGraph';
 import { IoIosArrowForward } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
 

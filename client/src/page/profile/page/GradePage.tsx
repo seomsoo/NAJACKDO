@@ -1,5 +1,5 @@
 import { IoIosArrowBack } from "react-icons/io";
-import Review from "../component/Review";
+import Review from "../components/Review";
 
 import { useNavigate } from 'react-router-dom';
 

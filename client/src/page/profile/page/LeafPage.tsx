@@ -1,5 +1,5 @@
 import { IoIosArrowBack } from "react-icons/io";
-import History from "../component/History";
+import History from "../components/History";
 
 import { useNavigate } from 'react-router-dom';
 

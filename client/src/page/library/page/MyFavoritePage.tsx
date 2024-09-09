@@ -3,8 +3,8 @@ import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "components/ui/tabs";
-import FavoriteBookcase from "../component/FavoriteBookcase";
-import FavoriteBook from "../component/FavoriteBook";
+import FavoriteBookcase from "../components/FavoriteBookcase";
+import FavoriteBook from "../components/FavoriteBook";
 
 const MyFavoritePage = () => {
   const navigate = useNavigate();

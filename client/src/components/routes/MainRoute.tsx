@@ -7,6 +7,7 @@ import CartPage from "page/library/page/CartPage";
 import LibraryPage from "page/library/page/LibraryPage";
 import MyFavoritePage from "page/library/page/MyFavoritePage";
 import LocationPage from "page/location/page/LocationPage";
+import LocationSettingPage from "page/location/page/LocationSettingPage";
 import LoginPage from "page/login/page/LoginPage";
 import MainPage from "page/main/page/MainPage";
 import ProfilePage from "page/profile/page/ProfilePage";
@@ -23,6 +24,7 @@ const MainRoute = () => {
     <Routes>
       <Route path="/" element={<MainPage />} />
       <Route path="/location" element={<LocationPage />} />
+      <Route path="/location/setting" element={<LocationSettingPage />} />
       <Route path="/library" element={<LibraryPage />} />
       <Route path="/library/my-favorite" element={<MyFavoritePage />} />
       <Route path="/chat" element={<ChattingPage />} />
