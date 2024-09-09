@@ -18,6 +18,7 @@ import SearchResultPage from "page/search/page/SearchResultPage";
 import { Route, Routes } from "react-router-dom";
 import BookDetailPage from "page/library/page/BookDetailPage";
 import SurveyPage from 'page/login/page/SurveyPage';
+import AuthCallBack from "page/login/page/AuthCallbackPage";
 
 const MainRoute = () => {
   return (
@@ -36,6 +37,7 @@ const MainRoute = () => {
       <Route path="/cart" element={<CartPage />} />
       <Route path="/alarm" element={<AlarmPage />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/auth/callback" element={<AuthCallBack />}/>
       <Route path="/kapay" element={<KaPayPage />} />
       <Route path="/kapay/approve" element={<KaPayApprovePage />} />
       <Route path="/kapay/cancel" element={<KaPayCancelPage />} />
