@@ -1,9 +1,9 @@
 package com.najackdo.server.domain.user.repository;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -27,4 +27,15 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	//  */
 	// @Query("SELECT u FROM User u  WHERE u.id = :userId")
 	// Optional<User> findUserWithProfileById(@Param("userId") Long userId);
+
+	/**
+	 * 사용자 ID로 사용자 캐쉬 정보 업데이트
+	 *
+	 * @param userId 사용자 ID
+	 * @param cash 사용자 캐쉬
+	 *
+	 */
+	@Modifying
+	@Query("UPDATE User u SET u.cash = :cash WHERE u.id = :userId")
+	void updateUserCash(@Param("userId") Long userId, @Param("cash") Integer cash);
 }

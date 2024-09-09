@@ -7,6 +7,8 @@ import { Button } from "components/ui/button";
 const KapayPage = () => {
   const [deviceType, setDeviceType] = useState<string>("");
   const [openType, setOpenType] = useState<string>("");
+  const [itemName, setItemName] = useState<string>("책잎");
+  const [totalAmount, setTotalAmount] = useState<number | null>(null);
   const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
 
   useEffect(() => {
@@ -30,20 +32,25 @@ const KapayPage = () => {
   }, []);
 
   const { data, error, isLoading } = useQuery(
-    ["kapay", "ready", deviceType, openType],
-    () => axios.get(`http://localhost:8080/api/v1/kapay/ready/${deviceType}/${openType}`),
+    ["kapay", "ready", deviceType, openType, itemName, totalAmount],
+    () =>
+      axios.get(`http://localhost:8080/api/v1/kapay/ready/${deviceType}/${openType}`, {
+        params: {
+          itemName,
+          totalAmount,
+        },
+      }),
     {
-      enabled: !!deviceType && !!openType,
+      enabled: !!deviceType && !!openType && totalAmount !== null,
       onSuccess: (data) => {
         setRedirectUrl(data.data.data);
       },
     }
   );
 
-  const handleClick = () => {
-    console.log("Redirect URL: ", redirectUrl);
-    console.log("Device Type: ", deviceType);
-    console.log("Open Type: ", openType);
+  const payButtonClick = (itemName: string, amount: number) => {
+    setItemName(itemName);
+    setTotalAmount(amount);
     if (redirectUrl) {
       if (deviceType === "pc") {
         const width = 426;
@@ -73,7 +80,9 @@ const KapayPage = () => {
   return (
     <div>
       <h1>KaPay</h1>
-      <Button onClick={handleClick}>카카오페이 테스트</Button>
+      <Button onClick={() => payButtonClick("5000 책잎", 5000)}>5000 책잎 (5000원)</Button>
+      <Button onClick={() => payButtonClick("10000 책잎", 10000)}>10000 책잎 (10000원)</Button>
+      <Button onClick={() => payButtonClick("15000 책잎", 15000)}>15000 책잎 (15000원)</Button>
     </div>
   );
 };

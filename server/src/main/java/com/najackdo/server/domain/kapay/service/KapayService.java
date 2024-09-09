@@ -33,7 +33,7 @@ public class KapayService {
 
 	private String tid;
 
-	public ReadyResponse ready(String agent, String openType) {
+	public ReadyResponse ready(String agent, String openType, String itemName, Integer totalAmount) {
 		// 요청 헤더 설정
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "DEV_SECRET_KEY " + kakaopaySecretKey);
@@ -44,9 +44,9 @@ public class KapayService {
 			.cid(cid)
 			.partnerOrderId("1")
 			.partnerUserId("1")
-			.itemName("상품명")
+			.itemName(itemName)
 			.quantity(1)
-			.totalAmount(1100)
+			.totalAmount(totalAmount)
 			.taxFreeAmount(0)
 			.vatAmount(100)
 			.approvalUrl(sampleHost + "/api/v1/kapay/approve/" + agent + "/" + openType)
