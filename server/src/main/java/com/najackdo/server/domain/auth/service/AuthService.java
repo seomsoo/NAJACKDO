@@ -22,10 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AuthService {
 	private final JWTService jwtService;
 	private final AuthCacheRepository authCacheRepository;
-	// private final MattermostConfirmService mattermostConfirmService;
 	private final UserRepository userRepository;
-	private final ApplicationEventPublisher publisher;
-	// private final CampusRepository campusRepository;
 
 	@Transactional
 	public void signOut(User user, String refreshToken) {
@@ -34,9 +31,6 @@ public class AuthService {
 		}
 		authCacheRepository.save(getSignOutKey(user.getUsername()), refreshToken);
 	}
-
-	// public Boolean isUserAuthenticated(User user) {return userRepository.isUserAuthenticated(user.getId());}
-
 
 	public JwtToken refresh(String refreshToken) {
 		try {
