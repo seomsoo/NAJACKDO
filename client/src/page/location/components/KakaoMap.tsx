@@ -10,32 +10,31 @@ const KakaoMap = () => {
   useEffect(() => {
     const mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
-        center: new window.kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-        level: 3
+        center: new window.kakao.maps.LatLng(35.204095, 126.807187), // 지도의 중심좌표
+        level: 6
     }; 
 
     const map = new window.kakao.maps.Map(mapContainer, mapOption);
 
     if (navigator.geolocation) {
     
-      // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+      // 현위치
       navigator.geolocation.getCurrentPosition(function(position) {
           
-          var lat = position.coords.latitude; // 위도
-          var lon = position.coords.longitude; // 경도
+          var lat = position.coords.latitude;
+          var lon = position.coords.longitude;
           
-          var locPosition = new window.kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-              message = '<div style="padding:5px;">여기에 계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다
+          var locPosition = new window.kakao.maps.LatLng(lat, lon),
+              message = '<div style="padding:5px;">현 위치</div>'; // infowindow
           
-          // 마커와 인포윈도우를 표시합니다
           displayMarker(locPosition, message);
               
         });
       
-  } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+  } else { 
       
-      var locPosition = new window.kakao.maps.LatLng(33.450701, 126.570667),    
-          message = 'geolocation을 사용할수 없어요..'
+      var locPosition = new window.kakao.maps.LatLng(35.204095, 126.8071876),    
+          message = '현재 위치 조회에 실패했습니다.'
           
       displayMarker(locPosition, message);
 
@@ -45,45 +44,43 @@ const KakaoMap = () => {
     console.log(locPosition.Ma)
     console.log(locPosition.La)
 
-    // 마커를 생성합니다
     var marker = new window.kakao.maps.Marker({  
         map: map, 
         position: locPosition
     }); 
     
-    var iwContent = message, // 인포윈도우에 표시할 내용
+    var iwContent = message,
         iwRemoveable = true;
 
-    // 인포윈도우를 생성합니다
+
     var infowindow = new window.kakao.maps.InfoWindow({
         content : iwContent,
         removable : iwRemoveable
     });
     
-    // 인포윈도우를 마커위에 표시합니다 
     infowindow.open(map, marker);
     
-    // 지도 중심좌표를 접속위치로 변경합니다
     map.setCenter(locPosition);
+
+    // polygon - 행정동 값 받아서 바꾸기
     var polygonPath = [
-      new window.kakao.maps.LatLng(locPosition.Ma - 0.001, locPosition.La + 0.001),
-      new window.kakao.maps.LatLng(locPosition.Ma + 0.0005, locPosition.La + 0.0015),
-      new window.kakao.maps.LatLng(locPosition.Ma + 0.001, locPosition.La + 0.001),
-      new window.kakao.maps.LatLng(locPosition.Ma + 0.001, locPosition.La - 0.001),
-      new window.kakao.maps.LatLng(locPosition.Ma - 0.001, locPosition.La - 0.001),
-      new window.kakao.maps.LatLng(locPosition.Ma - 0.001, locPosition.La + 0.001),
+      new window.kakao.maps.LatLng(locPosition.Ma - 0.01, locPosition.La + 0.01),
+      new window.kakao.maps.LatLng(locPosition.Ma + 0.005, locPosition.La + 0.015),
+      new window.kakao.maps.LatLng(locPosition.Ma + 0.01, locPosition.La + 0.01),
+      new window.kakao.maps.LatLng(locPosition.Ma + 0.01, locPosition.La - 0.01),
+      new window.kakao.maps.LatLng(locPosition.Ma - 0.01, locPosition.La - 0.01),
+      new window.kakao.maps.LatLng(locPosition.Ma - 0.01, locPosition.La + 0.01),
 
     ];
   
-    // 지도에 표시할 다각형을 생성합니다
     var polygon = new window.kakao.maps.Polygon({
         path:polygonPath, // 그려질 다각형의 좌표 배열입니다
-        strokeWeight: 3, // 선의 두께입니다
-        strokeColor: '#39DE2A', // 선의 색깔입니다
-        strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-        strokeStyle: 'longdash', // 선의 스타일입니다
-        fillColor: '#A2FF99', // 채우기 색깔입니다
-        fillOpacity: 0.7 // 채우기 불투명도 입니다
+        strokeWeight: 2, // 선의 두께
+        strokeColor: '#B0A695', // 선의 색깔
+        strokeOpacity: 1, // 선의 불투명도
+        strokeStyle: 'solid', // 선의 스타일
+        fillColor: '#B0A695', // 채우기
+        fillOpacity: 0.2 // 채우기 불투명도
     });
     
     // 지도에 다각형을 표시합니다

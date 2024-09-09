@@ -3,8 +3,8 @@ import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "components/ui/tabs";
-import FavoriteBookcase from "../components/FavoriteBookcase";
-import FavoriteBook from "../components/FavoriteBook";
+import BookcaseContainer from "../components/BookcaseContainer";
+import BookContainer from "../components/BookContainer";
 
 const MyFavoritePage = () => {
   const navigate = useNavigate();
@@ -64,12 +64,16 @@ const MyFavoritePage = () => {
         </TabsList>
         <TabsContent value="bookcase">
           {bookcaseArray.map((item, index) => {
-            return <FavoriteBookcase key={index} name={item.name} imageArray={item.imageArray} />
+            return (
+              <div className="mx-3 my-5 bg-white/30 shadow rounded-lg p-4">
+                <BookcaseContainer key={index} name={item.name} imageArray={item.imageArray} />
+              </div>
+            )
           })}
         </TabsContent>
         <TabsContent value="book">
           {bookArray.map((item, index) => {
-            return <FavoriteBook key={index} title={item.title} author={item.author} rating={item.rating} detail={item.detail} image={item.image} />
+            return <BookContainer key={index} title={item.title} author={item.author} rating={item.rating} detail={item.detail} image={item.image} />
           })}
         </TabsContent>
       </Tabs>

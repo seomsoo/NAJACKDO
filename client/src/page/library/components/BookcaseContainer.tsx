@@ -5,11 +5,11 @@ import { useState } from "react";
 
 
 
-interface FavoriteBookcaseProps {
+interface BookcaseContainerProps {
   name: string,
   imageArray: string[]
 }
-const FavoriteBookcase = ({ name, imageArray }: FavoriteBookcaseProps) => {
+const BookcaseContainer = ({ name, imageArray }: BookcaseContainerProps) => {
   const [heart, setHeart] = useState(false);
 
   const handleHeart = () => {
@@ -17,7 +17,7 @@ const FavoriteBookcase = ({ name, imageArray }: FavoriteBookcaseProps) => {
   }
 
   return (
-    <div className="mx-3 my-5 bg-white/30 shadow rounded-lg p-4">
+    <>
       <div className="flex flex-row justify-between">
         <p className="text-[15px] font-medium font-['Pretendard'] mb-2">{name}님의 책장</p>
         <div onClick={handleHeart}>
@@ -39,8 +39,9 @@ const FavoriteBookcase = ({ name, imageArray }: FavoriteBookcaseProps) => {
           })}
         </CarouselContent>
       </Carousel>
-    </div>
+    </>
+
   );
 };
 
-export default FavoriteBookcase;
+export default BookcaseContainer;

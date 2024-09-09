@@ -5,14 +5,14 @@ import { useState } from "react";
 
 
 
-interface FavoriteBookProps {
+interface BookContainerProps {
   title: string,
   author: string,
   rating: number,
   detail: string,
   image: string
 }
-const FavoriteBook = ({ title, author, rating, detail, image }: FavoriteBookProps) => {
+const BookContainer = ({ title, author, rating, detail, image }: BookContainerProps) => {
   const [heart, setHeart] = useState(false);
 
   const handleHeart = () => {
@@ -21,7 +21,7 @@ const FavoriteBook = ({ title, author, rating, detail, image }: FavoriteBookProp
 
   return (
     <div className="my-5 grid grid-rows-3 grid-flow-col gap-3">
-      <img className="row-span-3 w-[100px]" src={image} alt="Favoritebook" />
+      <img className="row-span-3 w-[100px]" src={image} alt="BookContainer" />
       <div className="col-span-2 mt-1">
         <div className="flex flex-row justify-between">
           <p className="text-[15px] font-semibold">{title}</p>
@@ -41,4 +41,4 @@ const FavoriteBook = ({ title, author, rating, detail, image }: FavoriteBookProp
   );
 };
 
-export default FavoriteBook;
+export default BookContainer;
