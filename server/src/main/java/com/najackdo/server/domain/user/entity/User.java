@@ -1,34 +1,18 @@
 package com.najackdo.server.domain.user.entity;
 
-import java.util.List;
-import java.util.Set;
-
 import org.hibernate.annotations.ColumnDefault;
 
-import com.najackdo.server.core.constants.S3Const;
-import com.najackdo.server.domain.book.entity.BookMark;
-import com.najackdo.server.domain.book.entity.UserBook;
-import com.najackdo.server.domain.cart.entity.Cart;
-import com.najackdo.server.domain.notification.entity.Notification;
-import com.najackdo.server.domain.rental.entity.Rental;
-import com.najackdo.server.domain.rental.entity.RentalReservation;
-import com.najackdo.server.domain.survey.entity.SurveyResult;
-
-import jakarta.persistence.CascadeType;
 import com.najackdo.server.core.entity.BaseEntity;
 import com.najackdo.server.domain.user.dto.UserData;
-import com.najackdo.server.domain.user.event.S3UploadEvent;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AccessLevel;
@@ -152,5 +136,15 @@ public class User  extends BaseEntity {
 		this.nickName = update.getNickname();
 		this.age = update.getAge();
 		this.gender = update.getGender();
+	}
+	public void addCash(Integer cash) {
+		this.cash += cash;
+	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+			"id=" + id +
+			", username='" + username + '}';
 	}
 }
