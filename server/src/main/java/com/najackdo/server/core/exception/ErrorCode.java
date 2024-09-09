@@ -28,6 +28,9 @@ public enum ErrorCode {
 	INVALID_RESPONSE(3002, HttpStatus.BAD_REQUEST, "유효하지 않은 응답입니다."),
 	APPROVAL_FAILURE(3003, HttpStatus.PAYMENT_REQUIRED, "결제 승인에 실패하였습니다."),
 
+	// Survey
+	NOT_FOUND_SURVEY_RESULT(4000, HttpStatus.NOT_FOUND, "없는 설문입니다."),
+
 
 	// S3
 	EMPTY_FILE(8000, HttpStatus.BAD_REQUEST, "파일이 비어있습니다."),

@@ -34,6 +34,11 @@ public class SurveyResult {
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 
-	@Column(name = "servey_result", nullable = false)
-	private Boolean surveyResult;
+
+	public static SurveyResult of(User user, SurveyQuestion surveyQuestion) {
+		SurveyResult surveyResult = new SurveyResult();
+		surveyResult.user = user;
+		surveyResult.surveyQuestion = surveyQuestion;
+		return surveyResult;
+	}
 }
