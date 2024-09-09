@@ -1,16 +1,22 @@
 import { IoIosArrowBack } from "react-icons/io";
 import Review from "../component/Review";
 
+import { useNavigate } from 'react-router-dom';
+
 const GradePage = () => {
-  const reviewArray = [
+    const navigate = useNavigate();
+    const goBack = () => {
+        navigate(-1);
+      };
+    const reviewArray = [
     {count : 1, comment : "시간 약속을 안 지켜요."},
     {count : 22, comment : "시간 약속을 안 지켜요."},
     {count : 3, comment : "시간 약속을 안 지켜요."},
   ]
 
   return (
-    <div>
-      <button>
+    <div className='px-[24px]'>
+      <button onClick={goBack}>
         <IoIosArrowBack />
       </button>
       <div className="flex flex-row justify-start">

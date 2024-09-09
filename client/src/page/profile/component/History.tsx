@@ -16,7 +16,7 @@ const History = ({date, name, detail, leaf}: HistoryProps) => {
   }
 
   return (
-    <div className="mt-3 flex felx-row px-4">
+    <div className="mt-3 flex felx-row">
       <p className="w-[55px] font-['Pretendard'] text-[16px]">{date}</p>
       <div className="w-[260px] flex flex-col justify-start">
         <p className="text-[16px] font-['Pretendard'] mr-2">{name}</p>
