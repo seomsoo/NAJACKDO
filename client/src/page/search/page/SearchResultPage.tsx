@@ -10,7 +10,7 @@ const SearchResultPage = () => {
   };
 
   return (
-    <div className="mx-4 mt-3">
+    <div className="mx-4 mt-8">
       <div className="flex flex-row items-center relative">
         <IoIosArrowBack size={25} color="#545454" className="mr-2" />
         <Input

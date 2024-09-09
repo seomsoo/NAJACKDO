@@ -5,7 +5,10 @@ const MainPage = () => {
   return (
     <div>
       <h1>Main</h1>
-      <button onClick={() => nav("/login")}>login</button>
+      <div className="flex flex-col">
+        <button onClick={() => nav("/login")}>login</button>
+        <button onClick={() => nav("/bookdetail")}>bookdetail</button>
+      </div>
     </div>
   );
 };
