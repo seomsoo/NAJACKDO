@@ -9,6 +9,7 @@ import static com.najackdo.server.domain.rental.entity.QRental.*;
 import static com.najackdo.server.domain.rental.entity.QRentalLog.*;
 import static com.najackdo.server.domain.rental.entity.QRentalReview.*;
 import static com.najackdo.server.domain.user.entity.QCashLog.*;
+import static com.najackdo.server.domain.user.entity.QInterestUser.*;
 import static com.najackdo.server.domain.user.entity.QUser.*;
 
 import java.util.List;
@@ -99,6 +100,7 @@ public class UserQueryRepositoryImpl implements UserQueryRepository {
 
 	@Override
 	public List<UserData.CashLogResponse> findUserCashLog(Long userId) {
+
 		return queryFactory
 			.selectFrom(cashLog)
 			.where(cashLog.user.id.eq(userId))
@@ -108,4 +110,19 @@ public class UserQueryRepositoryImpl implements UserQueryRepository {
 			.map(UserData.CashLogResponse::of)
 			.collect(Collectors.toList());
 	}
+
+	@Override
+	public List<UserData.InterestResponse> findUserInterest(Long userId) {
+
+		List<String> followingUsers = queryFactory
+			.select(interestUser.follower.nickName)
+			.from(interestUser)
+			.where(interestUser.following.id.eq(userId))
+			.fetch();
+
+		// ! 여기서 부터
+		
+		return List.of();
+	}
+
 }

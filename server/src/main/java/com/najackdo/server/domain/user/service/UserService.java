@@ -71,4 +71,8 @@ public class UserService {
 	public List<UserData.CashLogResponse> getUserCashLog(User user) {
 		return userQueryRepository.findUserCashLog(user.getId());
 	}
+
+	public List<UserData.InterestResponse> getUserInterest(User user) {
+		return userQueryRepository.findUserInterest(user.getId());
+	}
 }

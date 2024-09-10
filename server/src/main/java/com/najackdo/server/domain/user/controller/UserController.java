@@ -58,4 +58,13 @@ public class UserController {
 	public SuccessResponse<List<UserData.CashLogResponse>> getUserCashLog(@CurrentUser User user) {
 		return SuccessResponse.of(userService.getUserCashLog(user));
 	}
+
+	/**
+	 * 찜한 책장 목록 조회 API
+	 */
+	@GetMapping("/interest")
+	public SuccessResponse<List<UserData.InterestResponse>> getUserInterest(@CurrentUser User user) {
+		return SuccessResponse.of(userService.getUserInterest(user));
+	}
+
 }
