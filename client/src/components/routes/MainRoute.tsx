@@ -16,6 +16,7 @@ import SurveyPage from "page/login/page/SurveyPage";
 import MainPage from "page/main/page/MainPage";
 import GradePage from "page/profile/page/GradePage";
 import LeafPage from "page/profile/page/LeafPage";
+import LeafChargePage from "page/profile/page/LeafChargePage";
 import ProfilePage from "page/profile/page/ProfilePage";
 import SearchPage from "page/search/page/SearchPage";
 import SearchResultPage from "page/search/page/SearchResultPage";
@@ -33,6 +34,7 @@ const MainRoute = () => {
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="/profile/my-grade" element={<GradePage />} />
       <Route path="/profile/my-leaf" element={<LeafPage />} />
+      <Route path="/profile/my-leaf/charge" element={<LeafChargePage />} />
       <Route path="/search" element={<SearchPage />} />
       <Route path="/search/result" element={<SearchResultPage />} />
       <Route path="/cart" element={<CartPage />} />
