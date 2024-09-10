@@ -1,5 +1,8 @@
 package com.najackdo.server.domain.user.controller;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,4 +39,23 @@ public class UserController {
 		return SuccessResponse.empty();
 	}
 
+	/**
+	 * 유저 정보 조회 API
+	 * @param user
+	 * @return UserData.Response
+	 */
+	@GetMapping("/info")
+	public SuccessResponse<UserData.InfoResponse> getUserInfo(@CurrentUser User user) {
+		return SuccessResponse.of(userService.getUserInfo(user));
+	}
+
+	/**
+	 * 유저 캐시 로그 조회 API
+	 * @param user
+	 * @return UserData.CashLogResponse
+	 */
+	@GetMapping("/cashlog")
+	public SuccessResponse<List<UserData.CashLogResponse>> getUserCashLog(@CurrentUser User user) {
+		return SuccessResponse.of(userService.getUserCashLog(user));
+	}
 }

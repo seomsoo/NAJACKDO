@@ -45,7 +45,7 @@ public class KapayService {
 
 	private String tid;
 
-	private final ApplicationEventPublisher publisher;
+	private final ApplicationEventPublisher eventPublisher;
 	//! 테스트에서만 사용
 	private final UserRepository userRepository;
 
@@ -117,7 +117,7 @@ public class KapayService {
 					.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_USER));
 				Integer totalAmount = approveResponse.getAmount().getTotal(); // 결제 금액
 				log.info("totalAmount: {}", totalAmount);
-				publisher.publishEvent(new UserPaymentEvent(user, totalAmount));
+				eventPublisher.publishEvent(new UserPaymentEvent(user, totalAmount));
 			}
 
 			return ResponseEntity.ok(approveResponse);

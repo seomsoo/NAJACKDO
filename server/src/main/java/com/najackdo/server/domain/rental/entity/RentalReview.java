@@ -1,12 +1,12 @@
 package com.najackdo.server.domain.rental.entity;
 
-import java.time.LocalDateTime;
-
 import com.najackdo.server.core.entity.TimeEntity;
 import com.najackdo.server.domain.user.entity.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -38,7 +38,7 @@ public class RentalReview extends TimeEntity {
 	private User user;
 
 	@Column(name = "review_items", nullable = false)
+	@Enumerated(EnumType.STRING)
 	private ReviewItems reviewItems;
-
 
 }
