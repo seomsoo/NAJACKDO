@@ -9,6 +9,7 @@ const MainPage = () => {
         <button onClick={() => nav("/login")}>login</button>
         <button onClick={() => nav("/bookdetail")}>bookdetail</button>
         <button onClick={() => nav("/bookdetail/rental")}>rentalbookdetail</button>
+        <button onClick={() => nav("/book/apply")}>bookapply</button>
       </div>
     </div>
   );

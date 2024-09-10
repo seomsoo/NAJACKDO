@@ -3,6 +3,7 @@ import ChattingPage from "page/chatting/page/ChattingPage";
 import KaPayApprovePage from "page/kapay/page/KaPayApprovePage";
 import KaPayCancelPage from "page/kapay/page/KaPayCancelPage";
 import KaPayPage from "page/kapay/page/KaPayPage";
+import BookApplyPage from "page/library/page/BookApplyPage";
 import BookDetailPage from "page/library/page/BookDetailPage";
 import CartPage from "page/library/page/CartPage";
 import LibraryPage from "page/library/page/LibraryPage";
@@ -47,6 +48,7 @@ const MainRoute = () => {
       <Route path="/kapay/fail" element={<KaPayCancelPage />} />
       <Route path="/bookdetail" element={<BookDetailPage />} />
       <Route path="/bookdetail/rental" element={<RentalBookDetailPage />} />
+      <Route path="/book/apply" element={<BookApplyPage />} />
       <Route path="/survey" element={<SurveyPage />} />
     </Routes>
   );
