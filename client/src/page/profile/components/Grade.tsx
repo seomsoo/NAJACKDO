@@ -9,7 +9,7 @@ const Grade = ({ degree, color }: GradeProps) => {
   return (
     <div className="relative w-[300px]">
       <div
-        className="text-[10px] font-normal font-['Pretendard'] mb-2"
+        className="text-[10px] font-normal  mb-2"
         style={{ marginLeft: `${3 * degree - 4}px`, color: color }}
       >
         {degree}점

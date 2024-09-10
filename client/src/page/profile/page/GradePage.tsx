@@ -15,13 +15,13 @@ const GradePage = () => {
   ]
 
   return (
-    <div className='px-[24px]'>
+    <div className='mx-[25px] mt-6'>
       <button onClick={goBack}>
         <IoIosArrowBack />
       </button>
-      <div className="flex flex-row justify-start">
-        <p className="text-xl font-semibold font-['Pretendard']">{"서민수"}님의&nbsp;</p>
-        <p className="text-xl font-semibold font-['Pretendard'] text-[#79AC78]">신뢰 나무</p>
+      <div className="flex flex-row justify-start my-5">
+        <p className="text-xl font-semibold ">{"서민수"}님의&nbsp;</p>
+        <p className="text-xl font-semibold  text-[#79AC78]">신뢰 나무</p>
       </div>
 
       {/* 신뢰 나무 */}
@@ -30,11 +30,11 @@ const GradePage = () => {
           <img className="rounded-full" src="https://placehold.co/120x120" alt="grade-bg" />
         </div>
       </div>
-      <p className="mt-3 mb-3 text-center text-xl font-medium font-['Pretendard']">{"55점"}</p>
+      <p className="mt-3 mb-3 text-center text-xl font-medium ">{"55점"}</p>
 
       <div className="mt-3 flex justify-center">
         <div className="w-[340px] p-3 rounded-lg bg-[#79AC78]/20">
-          <p className="text-[15px] font-medium font-['Pretendard']">받은 매너 칭찬</p>
+          <p className="text-[15px] font-medium ">받은 매너 칭찬</p>
           {reviewArray.map((item, index) => {
             return <Review key={index} count={item.count} comment={item.comment}/>
           })}
@@ -43,7 +43,7 @@ const GradePage = () => {
 
       <div className="mt-3 flex justify-center">
         <div className="w-[340px] p-3 rounded-lg bg-[#B99470]/20">
-          <p className="text-[15px] font-medium font-['Pretendard']">받은 비매너</p>
+          <p className="text-[15px] font-medium ">받은 비매너</p>
           {reviewArray.map((item, index) => {
             return <Review key={index} count={item.count} comment={item.comment}/>
           })}

@@ -19,7 +19,7 @@ const BookcaseContainer = ({ name, imageArray }: BookcaseContainerProps) => {
   return (
     <>
       <div className="flex flex-row justify-between">
-        <p className="text-[15px] font-medium font-['Pretendard'] mb-2">{name}님의 책장</p>
+        <p className="text-[15px] font-medium  mb-2">{name}님의 책장</p>
         <div onClick={handleHeart}>
           {heart ? (
             <IoHeartOutline size={15} color="#D96363" />
