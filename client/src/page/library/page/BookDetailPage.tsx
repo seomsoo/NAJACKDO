@@ -1,3 +1,4 @@
+import AddCartDrawer from "page/library/components/AddCartDrawer";
 import BookInfo from "page/library/components/BookInfo";
 import CenterCropImage from "page/library/components/CenterCropImage";
 import DetailRecommendBook from "page/library/components/DetailRecommendBook";
@@ -36,6 +37,9 @@ const BookDetailPage = () => {
         <BookInfo book={bookData} />
         <RentableBook />
         <DetailRecommendBook />
+      </div>
+      <div className="fixed bg-[#F8F6F3] bottom-0 w-screen max-w-[430px] border-t-[1px] h-[86px]">
+        <AddCartDrawer />
       </div>
     </div>
   );
