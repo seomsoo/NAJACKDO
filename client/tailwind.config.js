@@ -17,6 +17,9 @@ module.exports = {
   		}
   	},
   	extend: {
+			boxShadow: {
+        'book-shadow': '0 11px 20px rgba(0, 0, 0, 0.7)', // 부드러운 그림자
+      },
   		colors: {
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',

@@ -1,4 +1,4 @@
-import useSurveyStore from 'store/useSurveyStore'; // Zustand 상태 가져오기
+import useSurveyStore from 'store/useSurveyStore';
 
 const interestOptions = [
   { id: 1, name: '시', icon: '✏️' },
@@ -25,9 +25,8 @@ const interestOptions = [
 ];
 
 const Interest = () => {
-  const { interests: selectedInterests, setInterests } = useSurveyStore(); // 상태 이름을 변경하여 충돌 방지
+  const { interests: selectedInterests, setInterests } = useSurveyStore();
 
-  // 관심 분야 선택 토글 함수
   const toggleInterest = (interest: string) => {
     if (selectedInterests.includes(interest)) {
       setInterests(selectedInterests.filter((item) => item !== interest)); // 선택 해제
