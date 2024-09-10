@@ -1,16 +1,10 @@
-import React, { useState } from 'react';
+import useSurveyStore from 'store/useSurveyStore';
 
 const Gender = () => {
-  const [selectedGender, setSelectedGender] = useState<string | null>(null);
+  const { gender, setGender } = useSurveyStore();
 
-  const handleSelectGender = (gender: string) => {
-    setSelectedGender(gender);
-  };
-
-  const getButtonClass = (gender: string) => {
-    return `border-4 rounded-full  ${
-      selectedGender === gender ? 'border-[#a6b37d]' : 'border-transparent'
-    }`;
+  const getButtonClass = (selected: string) => {
+    return `border-4 rounded-full ${gender === selected ? 'border-[#a6b37d]' : 'border-transparent'}`;
   };
 
   return (
@@ -21,20 +15,20 @@ const Gender = () => {
         <span>더 좋은 책과 문장을 추천드리기 위해 활용됩니다.</span>
       </div>
 
-      <div className='grid grid-cols-2 gap-14 mt-28 w-full max-w-sm'>
-        <div className='flex flex-col items-center gap-4 '>
+      <div className='grid grid-cols-2  mt-28 w-full max-w-sm'>
+        <div className='flex flex-col items-center gap-4'>
           <button
+            onClick={() => setGender('male')}
             className={getButtonClass('male')}
-            onClick={() => handleSelectGender('male')}
           >
-            <img src='/images/survey/male.png' alt='male'/>
+            <img src='/images/survey/male.png' alt='male' />
           </button>
           <span className='text-xl font-semibold'>남성</span>
         </div>
-        <div className='flex flex-col items-center gap-4 '>
+        <div className='flex flex-col items-center gap-4'>
           <button
+            onClick={() => setGender('female')}
             className={getButtonClass('female')}
-            onClick={() => handleSelectGender('female')}
           >
             <img src='/images/survey/female.png' alt='female' />
           </button>
