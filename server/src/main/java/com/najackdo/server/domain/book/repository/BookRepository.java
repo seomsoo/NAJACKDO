@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Long>{
 
-    @Query("SELECT b FROM Book b WHERE b.title LIKE concat('%', :keyword, '%')")
+    @Query("SELECT b FROM Book b WHERE b.title LIKE concat('%', :title, '%')")
     Book findFirstByTitle(@Param("title") String title);
 }
