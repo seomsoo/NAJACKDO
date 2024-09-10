@@ -66,6 +66,9 @@
   body {
     @apply bg-[#F8F6F3] pretendard;
   }
+  html {
+    padding-bottom: 0px !important;
+  }
 }
 
 /* 데스크톱 화면에서의 스타일 */
