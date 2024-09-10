@@ -8,6 +8,7 @@ const MainPage = () => {
       <div className="flex flex-col">
         <button onClick={() => nav("/login")}>login</button>
         <button onClick={() => nav("/bookdetail")}>bookdetail</button>
+        <button onClick={() => nav("/bookdetail/rental")}>rentalbookdetail</button>
       </div>
     </div>
   );
