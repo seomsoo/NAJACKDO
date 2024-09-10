@@ -54,7 +54,7 @@ public interface UserQueryRepository {
 	 * 사용자 ID로 사용자 관심책장 조회
 	 *
 	 * @param id 사용자 ID
-	 * @return {@link List<UserData.InterestResponse>} 사용자 관심책장
+	 * @return {@link List< UserData.BookCase >} 사용자 관심책장
 	 */
-	List<UserData.InterestResponse> findUserInterest(Long id);
+	List<UserData.BookCase> findUserInterest(Long id);
 }

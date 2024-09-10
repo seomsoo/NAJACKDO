@@ -3,7 +3,6 @@ package com.najackdo.server.domain.user.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.najackdo.server.domain.book.entity.UserBook;
 import com.najackdo.server.domain.user.entity.CashLog;
 import com.najackdo.server.domain.user.entity.User;
 
@@ -84,16 +83,21 @@ public class UserData {
 	}
 
 	@Data
-	public static class InterestResponse {
+	public static class BookCase {
 
 		private String interestUserName;
-		private List<UserBook> books;
+		private List<String> bookFrontImgUrl;
 
-		public static InterestResponse of(String interestUserName, List<UserBook> books) {
-			InterestResponse response = new InterestResponse();
+		public static BookCase of(String interestUserName, List<String> bookImgUrl) {
+			BookCase response = new BookCase();
 			response.interestUserName = interestUserName;
-			response.books = books;
+			response.bookFrontImgUrl = bookImgUrl;
 			return response;
 		}
+	}
+
+	@Data
+	public static class InfoNameResponse {
+
 	}
 }

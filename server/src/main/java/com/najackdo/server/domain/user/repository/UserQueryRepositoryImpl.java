@@ -19,6 +19,7 @@ import org.springframework.stereotype.Repository;
 
 import com.najackdo.server.domain.rental.entity.ReviewItems;
 import com.najackdo.server.domain.user.dto.UserData;
+import com.najackdo.server.domain.user.entity.User;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -36,8 +37,8 @@ public class UserQueryRepositoryImpl implements UserQueryRepository {
 		NumberExpression<Double> rentalPeriodDiscountRate =
 			Expressions.numberTemplate(Double.class,
 				"case when {0} = 14 then 0.0 " +
-					"when {0} = 30 then 0.1 " +
-					"when {0} = 45 then 0.15 " +
+					"when {0} >= 30 then 0.1 " +
+					"when {0} >= 45 then 0.15 " +
 					"when {0} = 60 then 0.2 " +
 					"else 0.0 end",
 				rental.rentalPeriod);
@@ -112,17 +113,32 @@ public class UserQueryRepositoryImpl implements UserQueryRepository {
 	}
 
 	@Override
-	public List<UserData.InterestResponse> findUserInterest(Long userId) {
+	public List<UserData.BookCase> findUserInterest(Long userId) {
 
-		List<String> followingUsers = queryFactory
-			.select(interestUser.follower.nickName)
-			.from(interestUser)
+		List<UserData.BookCase> responses = queryFactory
+			.selectFrom(interestUser)
+			.join(interestUser.follower, user)
 			.where(interestUser.following.id.eq(userId))
-			.fetch();
+			.fetch()
+			.stream()
+			.map(interestUserEntity -> {
+				User followingUser = interestUserEntity.getFollower();
 
-		// ! 여기서 부터
-		
-		return List.of();
+				List<String> bookImgUrls = queryFactory
+					.select(userBookDetail.frontImagePath)
+					.from(userBook)
+					.join(userBook.userBookDetail, userBookDetail)
+					.where(userBook.user.id.eq(followingUser.getId()))
+					.fetch();
+
+				return UserData.BookCase.of(
+					followingUser.getUsername(),
+					bookImgUrls
+				);
+			})
+			.collect(Collectors.toList());
+
+		return responses;
 	}
 
 }

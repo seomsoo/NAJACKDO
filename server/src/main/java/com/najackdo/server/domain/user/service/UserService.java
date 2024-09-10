@@ -72,7 +72,7 @@ public class UserService {
 		return userQueryRepository.findUserCashLog(user.getId());
 	}
 
-	public List<UserData.InterestResponse> getUserInterest(User user) {
+	public List<UserData.BookCase> getUserInterest(User user) {
 		return userQueryRepository.findUserInterest(user.getId());
 	}
 }

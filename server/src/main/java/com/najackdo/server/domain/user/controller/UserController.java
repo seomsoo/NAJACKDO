@@ -52,7 +52,7 @@ public class UserController {
 	/**
 	 * 유저 캐시 로그 조회 API
 	 * @param user
-	 * @return UserData.CashLogResponse
+	 * @return List<UserData.CashLogResponse>
 	 */
 	@GetMapping("/cashlog")
 	public SuccessResponse<List<UserData.CashLogResponse>> getUserCashLog(@CurrentUser User user) {
@@ -61,10 +61,27 @@ public class UserController {
 
 	/**
 	 * 찜한 책장 목록 조회 API
+	 * @param user
+	 * @return List<UserData.InterestResponse>
 	 */
 	@GetMapping("/interest")
-	public SuccessResponse<List<UserData.InterestResponse>> getUserInterest(@CurrentUser User user) {
+	public SuccessResponse<List<UserData.BookCase>> getUserInterest(@CurrentUser User user) {
 		return SuccessResponse.of(userService.getUserInterest(user));
 	}
 
+	/**
+	 * 이름으로 책장 목록 조회 API
+	 * @param user
+	 * @return UserData.Response
+	 */
+
+	/**
+	 * 이름으로 다른 유저 정보 조회 API
+	 * @param user
+	 * @return UserData.Response
+	 */
+	// @GetMapping("/info/name")
+	// public SuccessResponse<UserData.InfoNameResponse> getUserInfoByName(@CurrentUser User user) {
+	// 	return SuccessResponse.of(userService.getUserInfoByName(user));
+	// }
 }
