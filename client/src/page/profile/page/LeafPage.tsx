@@ -7,7 +7,11 @@ const LeafPage = () => {
   const navigate = useNavigate();
   const goBack = () => {
       navigate(-1);
-    };
+  };
+  const goLeafCharge = () => {
+    navigate('/profile/my-leaf/charge');
+
+  }
   
   const myLeaf = 1200;
   const historyArray = [
@@ -26,11 +30,16 @@ const LeafPage = () => {
         <p className="text-xl font-semibold  text-[#79AC78]">신뢰 나무</p>
       </div>
 
-      <div className="p-3 rounded-t-lg bg-[#A6B37D]/50">
+      <div className="p-3 rounded-t-lg bg-[#A6B37D]/50 flex flex-row justify-between items-center">
         <div className="flex flex-row items-center">
           <IoIosLeaf size={30} color="#79AC78" />
           <p className="text-[25px] text-[#776B5D]">{myLeaf.toLocaleString()}</p>
         </div>
+        <button 
+          className="w-[62px] h-[23px] bg-[#F8F6F3] rounded-lg  text-[#5F6F52] text-[12px]"
+          onClick={goLeafCharge}
+        >충전하기</button>
+
       </div>
       <div className="w-[340px]">
         {historyArray.map((item, index) => {

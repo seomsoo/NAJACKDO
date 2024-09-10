@@ -1,9 +1,10 @@
 import React from 'react';
 import UserInfo from '../components/UserInfo';
 import Grade from '../components/Grade';
-import BarGraph from '../components/BarGraph';
+import LeafBarGraph from '../components/LeafBarGraph';
 import { IoIosArrowForward, IoIosLeaf } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
+import MannerBarGraph from '../components/MannerBarGraph';
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -31,7 +32,12 @@ const ProfilePage = () => {
           <p className="text-[15px] font-medium ">신뢰 나무</p>
           <IoIosArrowForward size={15}  color='black' />
         </div>
-        <Grade degree={55} color={"#79ac78"} />
+        <Grade degree={75} color={"#79ac78"} />
+        <div className='pt-9'>
+          <p className="text-[15px] font-medium ">받은 매너 평가</p>
+          <MannerBarGraph ratio={22/22} value={22} label={"good"} />
+          <MannerBarGraph ratio={2/22} value={2} label={"bad"} />
+        </div>
       </div>
       {/* 나의 책잎 */}
       <div onClick={goToLeaf} className="w-[340px] mx-auto my-6 bg-[#FAF9F7] shadow rounded-lg p-4">
@@ -43,11 +49,11 @@ const ProfilePage = () => {
           <IoIosLeaf size={20} color="#A6B37D" />
           <p className="text-[20px] text-[#776B5D]">{user.myLeaf.toLocaleString()}</p>
         </div>
-        <BarGraph ratio= {1500/1800} value={1500} label={"절약 책잎"} image='https://placehold.co/14x14' />
-        <BarGraph ratio= {1800/1800} value={1800} label={"모은 책잎"} image='https://placehold.co/14x14' />
+        <LeafBarGraph ratio= {1500/1800} value={1500} label={"절약 책잎"} />
+        <LeafBarGraph ratio= {1800/1800} value={1800} label={"모은 책잎"} />
       </div>
 
-      <button className='w-full h-[40px] mx-auto my-6 bg-[#776B5D] shadow rounded-lg  font-medium text-white'>로그아웃</button>
+      <button className='w-full h-[40px] mx-auto my-6 bg-[#776B5D] rounded-lg  font-medium text-white'>로그아웃</button>
     </div>
   );
 };
