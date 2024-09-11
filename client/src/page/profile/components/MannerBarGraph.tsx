@@ -16,7 +16,7 @@ const MannerBarGraph = ({ ratio, value, label }: MannerBarGraphProps) => {
   const { icon, color } = iconSettings[label] || iconSettings["good"];
   
   return (
-  <div className='flex flex-row justify-between items-center mt-4'>
+  <div className='flex flex-row justify-between items-center mt-4 w-[95%] mx-auto'>
     <div className='flex flex-row items-center'>
       {icon}&nbsp;
       <div
