@@ -28,35 +28,9 @@ public class BookQueryRepositoryImpl implements BookQueryRepository {
 
 	@Override
 	public List<BookData.BookCase> findBookCaseInterestByUser(User user) {
-
-		List<User> followerUsers = queryFactory
-			.select(interestUser.follower)
-			.from(interestUser)
-			.where(interestUser.following.eq(user))
-			.fetch();
-
-		List<Tuple> userBooksData = queryFactory
-			.select(userBook.user.username, userBook.id, book.cover, userBook.bookStatus)
-			.from(userBook)
-			.join(userBook.book, book)
-			.where(userBook.user.in(followerUsers))
-			.fetch();
-
-		// 결과를 유저별로 그룹화하여 BookCase로 변환
-		Map<String, List<BookData.DisplayBook>> userBooksMap = new HashMap<>();
-		for (Tuple row : userBooksData) {
-			String userName = row.get(userBook.user.username);
-			Long bookId = row.get(userBook.id);
-			String cover = row.get(book.cover);
-			BookStatus bookStatus = row.get(userBook.bookStatus);
-
-			BookData.DisplayBook displayBook = new BookData.DisplayBook();
-			displayBook.setBookId(bookId);
-			displayBook.setCover(cover);
-			displayBook.setBookStatus(bookStatus);
-
-			userBooksMap.computeIfAbsent(userName, k -> new ArrayList<>()).add(displayBook);
-		}
+		List<User> followerUsers = getFollowerUsers(user);
+		List<Tuple> userBooksData = getUserBooksData(followerUsers);
+		Map<String, List<BookData.DisplayBook>> userBooksMap = groupBooksByUser(userBooksData);
 
 		return userBooksMap.entrySet().stream()
 			.map(entry -> BookData.BookCase.of(entry.getKey(), entry.getValue()))
@@ -65,29 +39,64 @@ public class BookQueryRepositoryImpl implements BookQueryRepository {
 
 	@Override
 	public BookData.BookCase findBookCaseByNickName(String nickname) {
-		List<Tuple> userBooksData = queryFactory
+		List<Tuple> userBooksData = getUserBooksDataByNickname(nickname);
+		List<BookData.DisplayBook> displayBooks = convertToDisplayBooks(userBooksData);
+
+		return BookData.BookCase.of(nickname, displayBooks);
+	}
+
+	private List<User> getFollowerUsers(User user) {
+		return queryFactory
+			.select(interestUser.follower)
+			.from(interestUser)
+			.where(interestUser.following.eq(user))
+			.fetch();
+	}
+
+	private List<Tuple> getUserBooksData(List<User> users) {
+		return queryFactory
+			.select(userBook.user.username, userBook.id, book.cover, userBook.bookStatus)
+			.from(userBook)
+			.join(userBook.book, book)
+			.where(userBook.user.in(users))
+			.fetch();
+	}
+
+	private List<Tuple> getUserBooksDataByNickname(String nickname) {
+		return queryFactory
 			.select(userBook.user.username, userBook.id, book.cover, userBook.bookStatus)
 			.from(userBook)
 			.join(userBook.book, book)
 			.where(userBook.user.username.eq(nickname))
 			.fetch();
-
-		List<BookData.DisplayBook> displayBooks = userBooksData.stream()
-			.map(row -> {
-				Long bookId = row.get(userBook.id);
-				String cover = row.get(book.cover);
-				BookStatus bookStatus = row.get(userBook.bookStatus);
-
-				BookData.DisplayBook displayBook = new BookData.DisplayBook();
-				displayBook.setBookId(bookId);
-				displayBook.setCover(cover);
-				displayBook.setBookStatus(bookStatus);
-
-				return displayBook;
-			})
-			.collect(Collectors.toList());
-
-		return BookData.BookCase.of(nickname, displayBooks);
 	}
 
+	private Map<String, List<BookData.DisplayBook>> groupBooksByUser(List<Tuple> userBooksData) {
+		Map<String, List<BookData.DisplayBook>> userBooksMap = new HashMap<>();
+		for (Tuple row : userBooksData) {
+			String userName = row.get(userBook.user.username);
+			BookData.DisplayBook displayBook = makeDisplayBook(row);
+			userBooksMap.computeIfAbsent(userName, k -> new ArrayList<>()).add(displayBook);
+		}
+		return userBooksMap;
+	}
+
+	private List<BookData.DisplayBook> convertToDisplayBooks(List<Tuple> userBooksData) {
+		return userBooksData.stream()
+			.map(this::makeDisplayBook)
+			.collect(Collectors.toList());
+	}
+
+	private BookData.DisplayBook makeDisplayBook(Tuple row) {
+		Long bookId = row.get(userBook.id);
+		String cover = row.get(book.cover);
+		BookStatus bookStatus = row.get(userBook.bookStatus);
+
+		BookData.DisplayBook displayBook = new BookData.DisplayBook();
+		displayBook.setBookId(bookId);
+		displayBook.setCover(cover);
+		displayBook.setBookStatus(bookStatus);
+
+		return displayBook;
+	}
 }

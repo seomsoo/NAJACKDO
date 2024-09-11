@@ -50,6 +50,19 @@ public class UserData {
 			int saveCash,
 			int earnCash
 		) {
+			InfoResponse response = ofWithoutCash(user, locationName, goodReviewCount, badReviewCount);
+			response.cash = user.getCash();
+			response.saveCash = saveCash;
+			response.earnCash = earnCash;
+			return response;
+		}
+
+		public static InfoResponse ofWithoutCash(
+			User user,
+			String locationName,
+			Long goodReviewCount,
+			Long badReviewCount
+		) {
 			InfoResponse response = new InfoResponse();
 			response.nickname = user.getNickName();
 			response.profileImage = user.getProfileImage();
@@ -57,9 +70,6 @@ public class UserData {
 			response.mannerScore = user.getMannerScore();
 			response.goodReviewCount = goodReviewCount;
 			response.badReviewCount = badReviewCount;
-			response.cash = user.getCash();
-			response.saveCash = saveCash;
-			response.earnCash = earnCash;
 			return response;
 		}
 	}
@@ -82,8 +92,4 @@ public class UserData {
 		}
 	}
 
-	@Data
-	public static class InfoNameResponse {
-
-	}
 }

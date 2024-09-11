@@ -3,6 +3,7 @@ package com.najackdo.server.domain.user.controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,12 +61,12 @@ public class UserController {
 	}
 
 	/**
-	 * 이름으로 다른 유저 정보 조회 API
-	 * @param user
-	 * @return UserData.Response
+	 * 유저 닉네임으로 유저 정보 조회 API
+	 * @param nickname
+	 * @return {@link UserData.InfoResponse}
 	 */
-	// @GetMapping("/info/name")
-	// public SuccessResponse<UserData.InfoNameResponse> getUserInfoByName(@CurrentUser User user) {
-	// 	return SuccessResponse.of(userService.getUserInfoByName(user));
-	// }
+	@GetMapping("/info/{nickname}")
+	public SuccessResponse<UserData.InfoResponse> getUserInfoByNickName(@PathVariable String nickname) {
+		return SuccessResponse.of(userService.getUserInfoByNickName(nickname));
+	}
 }

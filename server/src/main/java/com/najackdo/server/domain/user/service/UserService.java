@@ -71,5 +71,14 @@ public class UserService {
 	public List<UserData.CashLogResponse> getUserCashLog(User user) {
 		return userQueryRepository.findUserCashLog(user.getId());
 	}
-	
+
+	public UserData.InfoResponse getUserInfoByNickName(String nickname) {
+		User user = userRepository.findByNickname(nickname)
+			.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_USER));
+		String locationName = userQueryRepository.findUserLocationName(user.getId());
+		Long goodReviewCount = userQueryRepository.countUserReviewsByItem(user.getId(), GOOD);
+		Long badReviewCount = userQueryRepository.countUserReviewsByItem(user.getId(), BAD);
+		return UserData.InfoResponse.ofWithoutCash(user, locationName, goodReviewCount,
+			badReviewCount);
+	}
 }

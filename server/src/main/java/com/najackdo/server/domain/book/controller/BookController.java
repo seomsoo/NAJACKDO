@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BookController {
 
 	private final BookService bookService;
-
+	
 	/**
 	 * 관심 책장 목록 조회 API
 	 *
