@@ -1,5 +1,5 @@
-name: najackdo-docker-compose
-version: '3.8'
+name: x-najackdo-docker-compose
+version: '3.3'
 
 services:
   database:
