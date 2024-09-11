@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.repository.query.Param;
 
 import com.najackdo.server.domain.rental.entity.ReviewItems;
-import com.najackdo.server.domain.user.dto.UserData;
 import com.najackdo.server.domain.user.dto.UserData.CashLogResponse;
 
 public interface UserQueryRepository {
@@ -50,11 +49,4 @@ public interface UserQueryRepository {
 	 */
 	List<CashLogResponse> findUserCashLog(Long userId);
 
-	/**
-	 * 사용자 ID로 사용자 관심책장 조회
-	 *
-	 * @param id 사용자 ID
-	 * @return {@link List< UserData.BookCase >} 사용자 관심책장
-	 */
-	List<UserData.BookCase> findUserInterest(Long id);
 }

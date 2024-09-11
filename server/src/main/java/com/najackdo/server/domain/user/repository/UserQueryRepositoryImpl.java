@@ -9,7 +9,6 @@ import static com.najackdo.server.domain.rental.entity.QRental.*;
 import static com.najackdo.server.domain.rental.entity.QRentalLog.*;
 import static com.najackdo.server.domain.rental.entity.QRentalReview.*;
 import static com.najackdo.server.domain.user.entity.QCashLog.*;
-import static com.najackdo.server.domain.user.entity.QInterestUser.*;
 import static com.najackdo.server.domain.user.entity.QUser.*;
 
 import java.util.List;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Repository;
 
 import com.najackdo.server.domain.rental.entity.ReviewItems;
 import com.najackdo.server.domain.user.dto.UserData;
-import com.najackdo.server.domain.user.entity.User;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -110,35 +108,6 @@ public class UserQueryRepositoryImpl implements UserQueryRepository {
 			.stream()
 			.map(UserData.CashLogResponse::of)
 			.collect(Collectors.toList());
-	}
-
-	@Override
-	public List<UserData.BookCase> findUserInterest(Long userId) {
-
-		List<UserData.BookCase> responses = queryFactory
-			.selectFrom(interestUser)
-			.join(interestUser.follower, user)
-			.where(interestUser.following.id.eq(userId))
-			.fetch()
-			.stream()
-			.map(interestUserEntity -> {
-				User followingUser = interestUserEntity.getFollower();
-
-				List<String> bookImgUrls = queryFactory
-					.select(userBookDetail.frontImagePath)
-					.from(userBook)
-					.join(userBook.userBookDetail, userBookDetail)
-					.where(userBook.user.id.eq(followingUser.getId()))
-					.fetch();
-
-				return UserData.BookCase.of(
-					followingUser.getUsername(),
-					bookImgUrls
-				);
-			})
-			.collect(Collectors.toList());
-
-		return responses;
 	}
 
 }

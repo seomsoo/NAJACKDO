@@ -83,20 +83,6 @@ public class UserData {
 	}
 
 	@Data
-	public static class BookCase {
-
-		private String interestUserName;
-		private List<String> bookFrontImgUrl;
-
-		public static BookCase of(String interestUserName, List<String> bookImgUrl) {
-			BookCase response = new BookCase();
-			response.interestUserName = interestUserName;
-			response.bookFrontImgUrl = bookImgUrl;
-			return response;
-		}
-	}
-
-	@Data
 	public static class InfoNameResponse {
 
 	}
