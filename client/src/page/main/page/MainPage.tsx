@@ -15,6 +15,8 @@ const MainPage = () => {
           myrentalbookdetail
         </button>
         <button onClick={() => nav("/apply")}>bookapply</button>
+        <button onClick={() => nav("/ai-check")}>ai-check</button>
+        <button onClick={() => nav("/ai-check/result")}>ai-check-result</button>
       </div>
     </div>
   );
