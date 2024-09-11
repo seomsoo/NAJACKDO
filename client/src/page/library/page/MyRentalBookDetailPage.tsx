@@ -1,8 +1,7 @@
-import AddCart from "page/library/components/AddCart";
-import BookRentalApply from "page/library/components/BookRentalApply";
 import RentalBookDetail from "page/library/components/RentalBookDetail";
+import UpdatePrice from "page/library/components/UpdatePrice";
 
-const RentalBookDetailPage = () => {
+const MyRentalBookDetailPage = () => {
   const book = {
     title: "안녕, 푸바오",
     author: ["장린 지음"],
@@ -16,11 +15,10 @@ const RentalBookDetailPage = () => {
     <div>
       <RentalBookDetail book={book} />
       <div className="fixed bg-[#F8F6F3] bottom-0 w-screen max-w-[430px] border-t-[1px] pt-3 flex flex-row justify-center pb-7">
-        <AddCart />
-        <BookRentalApply dayPrice={book.price / 100} />
+        <UpdatePrice price={book.price / 100} />
       </div>
     </div>
   );
 };
 
-export default RentalBookDetailPage;
+export default MyRentalBookDetailPage;

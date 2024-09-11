@@ -10,7 +10,11 @@ function App() {
 
   const popupPaths = ["/kapay/approve", "/kapay/cancel", "/kapay/fail"];
   const showHeaderPaths = ["/"];
-  const hideFooterPaths = ["/login", "/bookdetail", "/bookdetail/rental"];
+  const hideFooterPaths = [
+    "/login",
+    "/bookdetail/rental",
+    "/bookdetail/mybook",
+  ];
 
   const isPopup = window.opener !== null && !window.opener.closed;
   const shouldHideHeaderFooter = popupPaths.includes(currentPath) && isPopup;
