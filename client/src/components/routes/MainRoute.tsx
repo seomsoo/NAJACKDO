@@ -3,11 +3,14 @@ import ChattingPage from "page/chatting/page/ChattingPage";
 import KaPayApprovePage from "page/kapay/page/KaPayApprovePage";
 import KaPayCancelPage from "page/kapay/page/KaPayCancelPage";
 import KaPayPage from "page/kapay/page/KaPayPage";
+import ApplyPage from "page/library/page/ApplyPage";
 import BookApplyPage from "page/library/page/BookApplyPage";
 import BookDetailPage from "page/library/page/BookDetailPage";
+import BookcaseApplyPage from "page/library/page/BookcaseApplyPage";
 import CartPage from "page/library/page/CartPage";
 import LibraryPage from "page/library/page/LibraryPage";
 import MyFavoritePage from "page/library/page/MyFavoritePage";
+import MyRentalBookDetailPage from "page/library/page/MyRentalBookDetailPage";
 import RentalBookDetailPage from "page/library/page/RentalBookDetailPage";
 import LocationPage from "page/location/page/LocationPage";
 import LocationSettingPage from "page/location/page/LocationSettingPage";
@@ -16,13 +19,12 @@ import LoginPage from "page/login/page/LoginPage";
 import SurveyPage from "page/login/page/SurveyPage";
 import MainPage from "page/main/page/MainPage";
 import GradePage from "page/profile/page/GradePage";
-import LeafPage from "page/profile/page/LeafPage";
 import LeafChargePage from "page/profile/page/LeafChargePage";
+import LeafPage from "page/profile/page/LeafPage";
 import ProfilePage from "page/profile/page/ProfilePage";
 import SearchPage from "page/search/page/SearchPage";
 import SearchResultPage from "page/search/page/SearchResultPage";
 import { Route, Routes } from "react-router-dom";
-import MyRentalBookDetailPage from "page/library/page/MyRentalBookDetailPage";
 
 const MainRoute = () => {
   return (
@@ -50,7 +52,9 @@ const MainRoute = () => {
       <Route path="/bookdetail" element={<BookDetailPage />} />
       <Route path="/bookdetail/rental" element={<RentalBookDetailPage />} />
       <Route path="/bookdetail/mybook" element={<MyRentalBookDetailPage />} />
-      <Route path="/book/apply" element={<BookApplyPage />} />
+      <Route path="/apply" element={<ApplyPage />} />
+      <Route path="/apply/book" element={<BookApplyPage />} />
+      <Route path="/apply/bookcase" element={<BookcaseApplyPage />} />
       <Route path="/survey" element={<SurveyPage />} />
     </Routes>
   );
