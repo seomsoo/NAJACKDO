@@ -1,4 +1,5 @@
 import AlarmPage from "page/alarm/page/AlarmPage";
+import CartPage from "page/cart/page/CartPage";
 import ChattingPage from "page/chatting/page/ChattingPage";
 import KaPayApprovePage from "page/kapay/page/KaPayApprovePage";
 import KaPayCancelPage from "page/kapay/page/KaPayCancelPage";
@@ -7,7 +8,6 @@ import ApplyPage from "page/library/page/ApplyPage";
 import BookApplyPage from "page/library/page/BookApplyPage";
 import BookDetailPage from "page/library/page/BookDetailPage";
 import BookcaseApplyPage from "page/library/page/BookcaseApplyPage";
-import CartPage from "page/library/page/CartPage";
 import LibraryPage from "page/library/page/LibraryPage";
 import MyFavoritePage from "page/library/page/MyFavoritePage";
 import MyRentalBookDetailPage from "page/library/page/MyRentalBookDetailPage";
@@ -24,7 +24,6 @@ import LeafPage from "page/profile/page/LeafPage";
 import ProfilePage from "page/profile/page/ProfilePage";
 import SearchPage from "page/search/page/SearchPage";
 import SearchResultPage from "page/search/page/SearchResultPage";
-import CartPage from "page/cart/page/CartPage";
 
 import { Route, Routes } from "react-router-dom";
 
