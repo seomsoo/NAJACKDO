@@ -5,7 +5,6 @@ import KaPayCancelPage from "page/kapay/page/KaPayCancelPage";
 import KaPayPage from "page/kapay/page/KaPayPage";
 import BookApplyPage from "page/library/page/BookApplyPage";
 import BookDetailPage from "page/library/page/BookDetailPage";
-import CartPage from "page/library/page/CartPage";
 import LibraryPage from "page/library/page/LibraryPage";
 import MyFavoritePage from "page/library/page/MyFavoritePage";
 import RentalBookDetailPage from "page/library/page/RentalBookDetailPage";
@@ -21,6 +20,8 @@ import LeafChargePage from "page/profile/page/LeafChargePage";
 import ProfilePage from "page/profile/page/ProfilePage";
 import SearchPage from "page/search/page/SearchPage";
 import SearchResultPage from "page/search/page/SearchResultPage";
+import CartPage from "page/cart/page/CartPage";
+
 import { Route, Routes } from "react-router-dom";
 
 const MainRoute = () => {
@@ -38,7 +39,6 @@ const MainRoute = () => {
       <Route path="/profile/my-leaf/charge" element={<LeafChargePage />} />
       <Route path="/search" element={<SearchPage />} />
       <Route path="/search/result" element={<SearchResultPage />} />
-      <Route path="/cart" element={<CartPage />} />
       <Route path="/alarm" element={<AlarmPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/auth/callback" element={<AuthCallBack />} />
@@ -50,6 +50,7 @@ const MainRoute = () => {
       <Route path="/bookdetail/rental" element={<RentalBookDetailPage />} />
       <Route path="/book/apply" element={<BookApplyPage />} />
       <Route path="/survey" element={<SurveyPage />} />
+      <Route path="/cart" element={<CartPage />} />
     </Routes>
   );
 };
