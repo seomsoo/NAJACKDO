@@ -14,7 +14,7 @@ const MainPage = () => {
         <button onClick={() => nav("/bookdetail/mybook")}>
           myrentalbookdetail
         </button>
-        <button onClick={() => nav("/book/apply")}>bookapply</button>
+        <button onClick={() => nav("/apply")}>bookapply</button>
       </div>
     </div>
   );
