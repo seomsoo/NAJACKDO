@@ -10,7 +10,7 @@ interface LeafBarGraphProps {
 const LeafBarGraph = ({ ratio, value, label }: LeafBarGraphProps) => {
   return (
   <div>
-    <div className="grid grid-cols-12 gap-2 items-center mt-4">
+    <div className="grid grid-cols-12 gap-2 items-center mt-4 w-[95%] mx-auto">
       <p className="col-span-2 text-[10px] font-normal font-['Pretendard]">{label}</p>
       <div
         className="col-span-8 h-[6px] rounded-[2px] bg-[#B99470]"

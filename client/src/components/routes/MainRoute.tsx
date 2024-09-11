@@ -24,6 +24,8 @@ import LeafPage from "page/profile/page/LeafPage";
 import ProfilePage from "page/profile/page/ProfilePage";
 import SearchPage from "page/search/page/SearchPage";
 import SearchResultPage from "page/search/page/SearchResultPage";
+import CartPage from "page/cart/page/CartPage";
+
 import { Route, Routes } from "react-router-dom";
 
 const MainRoute = () => {
@@ -41,7 +43,6 @@ const MainRoute = () => {
       <Route path="/profile/my-leaf/charge" element={<LeafChargePage />} />
       <Route path="/search" element={<SearchPage />} />
       <Route path="/search/result" element={<SearchResultPage />} />
-      <Route path="/cart" element={<CartPage />} />
       <Route path="/alarm" element={<AlarmPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/auth/callback" element={<AuthCallBack />} />
@@ -56,6 +57,7 @@ const MainRoute = () => {
       <Route path="/apply/book" element={<BookApplyPage />} />
       <Route path="/apply/bookcase" element={<BookcaseApplyPage />} />
       <Route path="/survey" element={<SurveyPage />} />
+      <Route path="/cart" element={<CartPage />} />
     </Routes>
   );
 };
