@@ -22,6 +22,7 @@ import ProfilePage from "page/profile/page/ProfilePage";
 import SearchPage from "page/search/page/SearchPage";
 import SearchResultPage from "page/search/page/SearchResultPage";
 import { Route, Routes } from "react-router-dom";
+import MyRentalBookDetailPage from "page/library/page/MyRentalBookDetailPage";
 
 const MainRoute = () => {
   return (
@@ -48,6 +49,7 @@ const MainRoute = () => {
       <Route path="/kapay/fail" element={<KaPayCancelPage />} />
       <Route path="/bookdetail" element={<BookDetailPage />} />
       <Route path="/bookdetail/rental" element={<RentalBookDetailPage />} />
+      <Route path="/bookdetail/mybook" element={<MyRentalBookDetailPage />} />
       <Route path="/book/apply" element={<BookApplyPage />} />
       <Route path="/survey" element={<SurveyPage />} />
     </Routes>

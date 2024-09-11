@@ -66,14 +66,15 @@
   body {
     @apply bg-[#F8F6F3] pretendard;
   }
+  html {
+    padding-bottom: 0px !important;
+  }
 }
 
 /* 데스크톱 화면에서의 스타일 */
 @media (min-width: 431px) {
   :root {
-    height: 100vh;
-    max-width: 430px;
-    max-height: 932px;
+    width: 430px;
     margin-left: auto;
     margin-right: auto;
     border-left: 1px solid #e5e5e5;
