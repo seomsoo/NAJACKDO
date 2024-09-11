@@ -1,3 +1,4 @@
+
 import AlarmPage from "page/alarm/page/AlarmPage";
 import CartPage from "page/cart/page/CartPage";
 import ChattingPage from "page/chatting/page/ChattingPage";
@@ -24,6 +25,8 @@ import LeafPage from "page/profile/page/LeafPage";
 import ProfilePage from "page/profile/page/ProfilePage";
 import SearchPage from "page/search/page/SearchPage";
 import SearchResultPage from "page/search/page/SearchResultPage";
+import MyLibraryPage from 'page/library/page/MyLibraryPage';
+import HistoryPage from 'page/library/page/HistoryPage';
 
 import { Route, Routes } from "react-router-dom";
 
@@ -35,6 +38,8 @@ const MainRoute = () => {
       <Route path="/location/setting" element={<LocationSettingPage />} />
       <Route path="/library" element={<LibraryPage />} />
       <Route path="/library/my-favorite" element={<MyFavoritePage />} />
+      <Route path='/library/my-library' element={<MyLibraryPage />} />
+      <Route path='/library/my-history' element={<HistoryPage />} />
       <Route path="/chat" element={<ChattingPage />} />
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="/profile/my-grade" element={<GradePage />} />
