@@ -1,7 +1,7 @@
-import useSurveyStore from 'store/useSurveyStore'; // Zustand 상태 가져오기
+import useSurveyStore from 'store/useSurveyStore';
 
 const Age = () => {
-  const { age, setAge } = useSurveyStore(); // Zustand로 상태와 업데이트 함수 가져오기
+  const { age, setAge } = useSurveyStore();
 
   const getButtonClass = (selected: string) => {
     return `border rounded-full py-4 px-3 items-center flex flex-col gap-2 ${age === selected ? 'border-[#a6b37d]' : 'border-gray-200'}`;
