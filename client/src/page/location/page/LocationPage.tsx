@@ -34,12 +34,12 @@ const LocationPage = () => {
     <div className="mx-[25px]">
       <div className="flex flex-row justify-between mt-2 mb-6">
       <div>
-        <span className="text-[20px] font-semibold font-['Pretendard'] text-[#79AC78]">{user.location}</span>
-        <span className="text-[20px] font-semibold font-['Pretendard']">&nbsp;주변 책장</span>
+        <span className="text-[20px] font-semibold  text-[#79AC78]">{user.location}</span>
+        <span className="text-[20px] font-semibold ">&nbsp;주변 책장</span>
       </div>
       {/* <div className="flex flex-row justify-start">
-        <p className="text-[20px] font-semibold font-['Pretendard'] text-[#79AC78]">{user.location}</p>
-        <p className="text-[20px] font-semibold font-['Pretendard']">&nbsp;주변 책장</p>
+        <p className="text-[20px] font-semibold  text-[#79AC78]">{user.location}</p>
+        <p className="text-[20px] font-semibold ">&nbsp;주변 책장</p>
       </div> */}
         <IoSettingsOutline size={20} color="black" onClick={goToLocationSetting}/>
       </div>

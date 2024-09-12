@@ -4,7 +4,7 @@ interface CenterCropImageProps {
 
 const CenterCropImage = ({ imageUrl }: CenterCropImageProps) => {
   return (
-    <div className={`w-screen h-72 overflow-hidden absolute top-0 z-0`}>
+    <div className="w-full h-72 overflow-hidden absolute top-0 z-0 p-4">
       <img
         src={imageUrl}
         alt="배경 이미지"

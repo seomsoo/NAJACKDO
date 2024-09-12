@@ -17,6 +17,9 @@ module.exports = {
   		}
   	},
   	extend: {
+			boxShadow: {
+        'book-shadow': '0 11px 20px rgba(0, 0, 0, 0.7)', // 부드러운 그림자
+      },
   		colors: {
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
@@ -58,6 +61,14 @@ module.exports = {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		keyframes: {
+				fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        slideUp: {
+          '0%': { transform: 'translateY(50px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
   			'accordion-down': {
   				from: {
   					height: '0'
@@ -92,6 +103,8 @@ module.exports = {
   			}
   		},
   		animation: {
+				fadeIn: 'fadeIn 1.5s ease-in-out',
+        slideUp: 'slideUp 1.5s ease-in-out',
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out',
   			'accordion-down': 'accordion-down 0.2s ease-out',

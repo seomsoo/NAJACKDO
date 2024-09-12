@@ -1,7 +1,7 @@
 const DetailRecommendBook = () => {
   const bookData = [1, 2, 3, 4, 5, 6, 7, 8];
   return (
-    <div className="my-6">
+    <div className="mt-10 mb-6">
       <p className="font-bold mb-3">추천 도서</p>
       <div className="grid grid-cols-4 gap-3">
         {bookData.map((_, index) => {
