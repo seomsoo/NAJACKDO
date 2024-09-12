@@ -56,16 +56,15 @@ services:
     container_name: mongodb
     restart: always
     ports:
-      - 27017:27017
+      - "27017:27017"
     volumes:
       - ./mongodb:/data/db
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
     environment:
       - MONGO_INITDB_ROOT_USERNAME=najackdo
       - MONGO_INITDB_ROOT_PASSWORD=najackdo
       - MONGO_INITDB_DATABASE=najackdo
       - TZ=Asia/Seoul
-
-
 
 volumes:
   najackdo-db:
