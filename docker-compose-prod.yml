@@ -1,0 +1,71 @@
+version: '3.3'
+
+services:
+  database:
+    # image: postgres:16.3-alpine
+    image: postgis/postgis:16-3.4-alpine
+    container_name: najackdo-database
+    environment:
+      POSTGRES_USER: najackdo
+      POSTGRES_PASSWORD: najackdo
+      POSTGRES_DB: najackdo
+      TIMEZONE: Asia/Seoul
+    ports:
+      - "5432:5432"
+    volumes:
+      - najackdo-db:/var/lib/postgresql/data
+    networks:
+      - backendnet
+
+  database-admin:
+    container_name: database-admin
+    image: dpage/pgadmin4
+    ports:
+      - "5000:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "najackdo@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "najackdo"
+    restart: always
+    networks:
+      - backendnet
+
+  cache-database:
+    image: redis:7.4-rc2-alpine
+    container_name: najackdo-cache-database
+    ports:
+      - "6379:6379"
+    entrypoint: redis-server --requirepass najackdo --maxmemory 128mb
+    networks:
+      - backendnet
+  
+  server:
+    image: server
+    container_name: server
+    ports:
+      - "8081:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    depends_on:
+      - database
+      - database-admin
+      - cache-database
+    networks:
+      - backendnet
+
+  client:
+    image: client
+    container_name: client
+    ports:
+      - "3000:80"
+    depends_on:
+      - server
+    networks:
+      - backendnet
+
+volumes:
+  najackdo-db:
+   name: najackdo-db
+
+networks:
+  backendnet:
+    external: true

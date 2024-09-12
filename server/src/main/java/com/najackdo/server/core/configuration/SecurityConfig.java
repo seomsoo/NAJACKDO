@@ -39,7 +39,7 @@ public class SecurityConfig {
 		return httpSecurity
 			.cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
 				CorsConfiguration configuration = new CorsConfiguration();
-				configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+				configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://127.0.0.1:5500"));
 				configuration.setAllowedMethods(Collections.singletonList("*"));
 				configuration.setAllowCredentials(true);
 				configuration.setAllowedHeaders(Collections.singletonList("*"));
