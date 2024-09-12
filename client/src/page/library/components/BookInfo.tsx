@@ -10,14 +10,15 @@ interface BookInfoProps {
     content: string;
     price: number;
   };
+  rental?: boolean;
 }
 
-const BookInfo = ({ book }: BookInfoProps) => {
+const BookInfo = ({ book, rental }: BookInfoProps) => {
   return (
     <div>
       <div className="flex flex-row justify-between items-center">
         <p className="text-xl font-bold">{book.title}</p>
-        <IoHeartOutline size={25} />
+        {!rental && <IoHeartOutline size={25} />}
       </div>
       {book.author.map((author, index) => {
         return (

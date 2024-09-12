@@ -8,11 +8,13 @@ function App() {
   const location = useLocation();
   const currentPath = location.pathname;
 
-  console.log(currentPath);
-
   const popupPaths = ["/kapay/approve", "/kapay/cancel", "/kapay/fail"];
   const showHeaderPaths = ["/"];
-  const hideFooterPaths = ["/login"];
+  const hideFooterPaths = [
+    "/login",
+    "/bookdetail/rental",
+    "/bookdetail/mybook",
+  ];
 
   const isPopup = window.opener !== null && !window.opener.closed;
   const shouldHideHeaderFooter = popupPaths.includes(currentPath) && isPopup;

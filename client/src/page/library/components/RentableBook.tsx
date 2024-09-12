@@ -66,7 +66,7 @@ const RentableBook = () => {
   ];
 
   return (
-    <Accordion type="single" collapsible>
+    <Accordion type="single" collapsible className="mt-4">
       <AccordionItem value="item-1">
         <AccordionTrigger className="font-bold text-md">
           <p>대여 가능 도서</p>

@@ -1,17 +1,16 @@
 import React from 'react';
 import { IoLeaf } from "react-icons/io5";
 
-interface BarGraphProps {
+interface LeafBarGraphProps {
   ratio: number;
   value: number;
   label: string;
-  image: string;
 }
 
-const BarGraph = ({ ratio, value, label, image }: BarGraphProps) => {
+const LeafBarGraph = ({ ratio, value, label }: LeafBarGraphProps) => {
   return (
   <div>
-    <div className="grid grid-cols-12 gap-2 items-center mt-4">
+    <div className="grid grid-cols-12 gap-2 items-center mt-4 w-[95%] mx-auto">
       <p className="col-span-2 text-[10px] font-normal font-['Pretendard]">{label}</p>
       <div
         className="col-span-8 h-[6px] rounded-[2px] bg-[#B99470]"
@@ -26,4 +25,4 @@ const BarGraph = ({ ratio, value, label, image }: BarGraphProps) => {
   );
 };
 
-export default BarGraph;
+export default LeafBarGraph;

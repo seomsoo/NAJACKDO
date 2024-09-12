@@ -12,7 +12,7 @@ interface UserInfoProps {
 
 const UserInfo = ({ userName, userLocation, userImage, gradeImage }: UserInfoProps) => {
   return (
-    <div className="flex flex-row items-center ml-6">
+    <div className="flex flex-row items-center">
       <img src={userImage} alt="profile" className="h-68 w-68 rounded-full " />
       <div className='ml-3'>
         <div className='flex flex-row justify-start'>
