@@ -7,9 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,4 +21,18 @@ public class BookController {
 //    public SuccessResponse<List<UserBookData.Search>> index() {
 //        return SuccessResponse.of(userBooksService.getBooksByUserId("123"));
 //    }
+
+    @PostMapping("/registBooks")
+    public SuccessResponse<Void> registBooks(@RequestBody UserBookData.Create create) {
+        
+        return SuccessResponse.empty();
+    }
+
+    @GetMapping("/registBook/{ISBN}")
+    public SuccessResponse<Void> registBooks(@PathVariable String ISBN) {
+
+        return SuccessResponse.empty();
+    }
+
+
 }

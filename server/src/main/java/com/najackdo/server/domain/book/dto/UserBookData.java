@@ -5,10 +5,12 @@ import com.najackdo.server.domain.user.entity.User;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 
 import java.util.List;
 
 public class UserBookData {
+
     @Data
     public static class Search {
         private String title;
@@ -20,18 +22,18 @@ public class UserBookData {
         }
     }
 
-    @Data
+    @Getter
     @AllArgsConstructor
     public static class Create {
-        @NotNull
-        private User user;
+
         @NotNull
         private List<String> titles;
+
         @NotNull
         private int locationId;
 
-        public static Create of(User user, List<String> titles, int locationId) {
-            return new Create(user, titles, locationId);
+        public static Create of(List<String> titles, int locationId) {
+            return new Create(titles, locationId);
         }
     }
 
