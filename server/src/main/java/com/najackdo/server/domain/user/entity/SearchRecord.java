@@ -1,8 +1,8 @@
-package com.najackdo.server.domain.book.entity;
+package com.najackdo.server.domain.user.entity;
 
 import org.hibernate.annotations.ColumnDefault;
 
-import com.najackdo.server.domain.user.entity.User;
+import com.najackdo.server.domain.book.entity.Book;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

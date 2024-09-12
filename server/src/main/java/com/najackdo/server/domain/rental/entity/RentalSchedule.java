@@ -1,6 +1,10 @@
 package com.najackdo.server.domain.rental.entity;
 
 import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDateTime;
+
+import com.najackdo.server.core.entity.TimeEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "rental_schedule")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RentalSchedule {
+public class RentalSchedule extends TimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,4 +38,5 @@ public class RentalSchedule {
 
 	@Column(name = "return_location")
 	private String returnLocation;
+
 }

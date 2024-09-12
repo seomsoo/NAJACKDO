@@ -2,6 +2,7 @@ package com.najackdo.server.domain.location.entity;
 
 import java.sql.Date;
 
+import com.najackdo.server.core.entity.TimeEntity;
 import com.najackdo.server.domain.user.entity.User;
 
 import jakarta.persistence.Column;
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "activity_areas")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ActivityAreaSetting {
+public class ActivityAreaSetting extends TimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,10 +39,4 @@ public class ActivityAreaSetting {
 
 	@Column(name = "distance_meters", nullable = false)
 	private Integer distanceMeters;
-
-	@Column(name = "updated_at", nullable = false)
-	private Date updatedAt;
-
-	@Column(name = "created_at", nullable = false)
-	private Date createdAt;
 }

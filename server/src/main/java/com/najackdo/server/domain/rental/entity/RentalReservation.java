@@ -1,6 +1,7 @@
 package com.najackdo.server.domain.rental.entity;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 import com.najackdo.server.domain.book.entity.UserBook;
 import com.najackdo.server.domain.user.entity.User;
@@ -38,5 +39,5 @@ public class RentalReservation {
 	private UserBook userBook;
 
 	@Column(name = "reservation_date", nullable = false)
-	private Date reservationDate;
+	private LocalDateTime reservationDate;
 }

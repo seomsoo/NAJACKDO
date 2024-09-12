@@ -1,5 +1,6 @@
 package com.najackdo.server.domain.rental.entity;
 
+import com.najackdo.server.core.entity.TimeEntity;
 import com.najackdo.server.domain.book.entity.UserBook;
 
 import jakarta.persistence.Column;
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "rental_log")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RentalLog {
+public class RentalLog extends TimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

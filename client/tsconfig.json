@@ -19,8 +19,10 @@
     "paths": {
       "components/*": ["./components/*"],
       "icons/*": ["./icons/*"],
-      "lib/*": ["./lib/*"]
-    }
+      "lib/*": ["./lib/*"],
+      "page/*": ["./page/*"]
+    },
+    "types": ["node"]
   },
   "include": ["src"]
 }

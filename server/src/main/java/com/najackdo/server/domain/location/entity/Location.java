@@ -1,5 +1,8 @@
 package com.najackdo.server.domain.location.entity;
 
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Point;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -21,9 +24,9 @@ public class Location {
 	@Column(name = "location_name", nullable = false)
 	private String locationName;
 
-	@Column(name = "location_polygon", nullable = false)
-	private String locationPolygon;  // Multipolygon
+	@Column(columnDefinition = "geometry(Multipolygon, 4326)")
+	private MultiPolygon locationPolygon;  // Multipolygon
 
-	@Column(name = "location_point", nullable = false)
-	private String locationPoint;    // Point
+	@Column(columnDefinition = "geometry(Point, 4326)")
+	private Point locationPoint;    // Point
 }
