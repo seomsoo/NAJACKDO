@@ -9,30 +9,34 @@ declare global {
 const KakaoMap = () => {
   const [address, setAddress] = useState(""); // 행정동 정보를 저장할 상태
 
-  const pointArray = [
+  const polygonArray = [
     {
-      lat:35.2052044 + 0.01, 
-      lon: 126.8116763 - 0.01
+      locationName: "광주 광산구 하남동",
+      locationPolygon: [35.2211604737, 126.8103687071,
+        35.2025753369, 126.8186611635,
+        35.1802463214, 126.8087259725,
+        35.1635846867, 126.7920117674,
+        35.2153028754, 126.7786200907,
+        35.2211604737, 126.8103687071]
     },
     {
-      lat:35.2052044 + 0.01, 
-      lon: 126.8116763 + 0.01
+      locationName: "광주 광산구 수완동",
+      locationPolygon: [35.2025753369, 126.8186611635,
+        35.1977068327, 126.8343350472,
+        35.1860890847, 126.8306159230,
+        35.1802463214, 126.8087259725,
+        35.2025753369, 126.8186611635]
+       
     },
     {
-      lat:35.2052044 + 0.005, 
-      lon: 126.8116763 + 0.015
-    },
-    {
-      lat:35.2052044 - 0.01, 
-      lon: 126.8116763 + 0.01
-    },
-    {
-      lat:35.2052044 - 0.01, 
-      lon: 126.8116763 - 0.01
-    },
-    {
-      lat:35.2052044 + 0.01, 
-      lon: 126.8116763 - 0.01
+      locationName: "광주 광산구 비아동",
+      locationPolygon: [35.2211604737, 126.8103687071, 
+        35.2317120787, 126.8257548636,
+        35.2015392391, 126.8387450811, 
+        35.1977068327, 126.8343350472,
+        35.2025753369, 126.8186611635,
+        35.2211604737, 126.8103687071]
+       
     }
   ]
 
@@ -85,13 +89,15 @@ const KakaoMap = () => {
     }
 
     // polygon - 값 받아서 바꾸기
-    displayPolygon(pointArray);
+    displayPolygon(polygonArray);
     
-    function displayPolygon(pointArray: { lat: number; lon: number }[]) {
+    function displayPolygon(polygonArray: { locationName: string; locationPolygon: number[] }[]) {
       var polygonPath: any[] = [];
 
-      pointArray.forEach(point => {
-        polygonPath.push(new window.kakao.maps.LatLng(point.lat, point.lon));
+      polygonArray.forEach(polygon => {
+        for (let i = 0; i < polygon.locationPolygon.length; i += 2) {
+          polygonPath.push(new window.kakao.maps.LatLng(polygon.locationPolygon[i], polygon.locationPolygon[i+1]))
+        }
       });
 
       var polygon = new window.kakao.maps.Polygon({
