@@ -39,7 +39,7 @@ services:
       - backendnet
   
   server:
-    build: server
+    image: server
     container_name: server
     ports:
       - "8081:8080"
@@ -53,7 +53,7 @@ services:
       - backendnet
 
   client:
-    build: client
+    image: client
     container_name: client
     ports:
       - "3000:80"
