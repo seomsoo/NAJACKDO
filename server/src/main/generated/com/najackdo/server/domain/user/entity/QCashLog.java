@@ -31,7 +31,7 @@ public class QCashLog extends EntityPathBase<CashLog> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final StringPath logType = createString("logType");
+    public final EnumPath<CashLogType> logType = createEnum("logType", CashLogType.class);
 
     public final NumberPath<Integer> resultCash = createNumber("resultCash", Integer.class);
 
