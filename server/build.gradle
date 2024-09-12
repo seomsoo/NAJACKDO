@@ -77,7 +77,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-
+    // netty resolver dns native macos for websocket
+    implementation group: 'io.netty', name: 'netty-all', version: '4.1.112.Final'
 
 }
 
