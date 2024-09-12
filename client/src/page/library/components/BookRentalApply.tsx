@@ -11,7 +11,7 @@ import {
   DrawerTrigger,
 } from "components/ui/drawer";
 import { useEffect, useState } from "react";
-import { IoLeafSharp } from "react-icons/io5";
+import { IoIosLeaf } from "react-icons/io";
 
 interface BookRentalApplyProps {
   dayPrice: number;
@@ -81,8 +81,10 @@ const BookRentalApply = ({ dayPrice }: BookRentalApplyProps) => {
         </DrawerHeader>
         <DrawerFooter className="flex flex-row items-center justify-center space-x-11">
           <div className="flex flex-row items-center">
-            <IoLeafSharp color="#A6B37D" size={25} className="mr-2"/>
-            <span className="font-bold text-[#5F6F52] text-lg">{totalPrice}</span>
+            <IoIosLeaf color="#A6B37D" size={25} className="mr-2" />
+            <span className="font-bold text-[#5F6F52] text-lg">
+              {totalPrice}
+            </span>
           </div>
           <DrawerClose className="bg-[#776B5D] text-white font-bold px-8 py-2 rounded-lg mx-5">
             도서 대출 신청

@@ -9,7 +9,7 @@ import {
   DrawerTrigger,
 } from "components/ui/drawer";
 import { useEffect, useState } from "react";
-import { IoLeafSharp } from "react-icons/io5";
+import { IoIosLeaf } from "react-icons/io";
 
 interface UpdatePriceProps {
   price: number;
@@ -35,7 +35,7 @@ const UpdatePrice = ({ price }: UpdatePriceProps) => {
             대여 가격을 입력해주세요.
           </DrawerTitle>
           <DrawerDescription className="mt-5 flex flex-row justify-center items-center">
-            <IoLeafSharp color="#A6B37D" size={40} className="mr-2" />
+            <IoIosLeaf color="#A6B37D" size={40} className="mr-2" />
             <input
               type="text"
               placeholder={String(price)}
