@@ -44,6 +44,7 @@ public class SecurityConfig {
 				configuration.setAllowCredentials(true);
 				configuration.setAllowedHeaders(Collections.singletonList("*"));
 				configuration.setExposedHeaders(List.of("Set-Cookie", "Authorization"));
+
 				return configuration;
 			}))
 			.exceptionHandling(configurer -> configurer
@@ -61,7 +62,8 @@ public class SecurityConfig {
 						.authorizationRequestRepository(customAuthorizationRequestRepository)
 				)
 				.redirectionEndpoint(redirection -> redirection.baseUri("/*/oauth2/code/*"))
-				.userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig.userService(customOAuth2UserService))
+				.userInfoEndpoint(
+					(userInfoEndpointConfig) -> userInfoEndpointConfig.userService(customOAuth2UserService))
 				.successHandler(customSuccessHandler)
 			)
 			.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
