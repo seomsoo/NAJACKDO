@@ -11,4 +11,5 @@ public interface UserBooksRepository extends JpaRepository<UserBook,Long> {
 
     @Query("SELECT u FROM UserBook u WHERE u.user.providerId =: userId")
     List<UserBook> findByUserId(@Param("userId") String userId);
+
 }

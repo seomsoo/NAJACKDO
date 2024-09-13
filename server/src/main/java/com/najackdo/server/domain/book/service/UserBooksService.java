@@ -32,6 +32,11 @@ public class UserBooksService {
     }
 
     @Transactional
+    public void addBook(User user, UserBookData.CreateByISBN create) {
+            userBooksRepository.save(UserBook.UserBookCreate(user, bookRepository.findFirstByISBN(create.getISBN()),locationRepository.findById(create.getLocationId())));
+    }
+
+    @Transactional
     public List<UserBookData.Search> getBooksByUserId(String userId) {
         return userBooksRepository.findByUserId(userId).stream()
                 .map(UserBookData.Search::of)

@@ -1,8 +1,10 @@
 package com.najackdo.server.domain.book.controller;
 
+import com.najackdo.server.core.annotation.CurrentUser;
 import com.najackdo.server.core.response.SuccessResponse;
 import com.najackdo.server.domain.book.dto.UserBookData;
 import com.najackdo.server.domain.book.service.UserBooksService;
+import com.najackdo.server.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping(value = "/api/v1/book")
 public class BookController {
     private final UserBooksService userBooksService;
 
@@ -23,14 +26,14 @@ public class BookController {
 //    }
 
     @PostMapping("/registBooks")
-    public SuccessResponse<Void> registBooks(@RequestBody UserBookData.Create create) {
-        
+    public SuccessResponse<Void> registBooks(@CurrentUser User user, @RequestBody UserBookData.Create create) {
+        userBooksService.addBookList(user,create);
         return SuccessResponse.empty();
     }
 
-    @GetMapping("/registBook/{ISBN}")
-    public SuccessResponse<Void> registBooks(@PathVariable String ISBN) {
-
+    @PostMapping("/registBook")
+    public SuccessResponse<Void> registBooks(@CurrentUser User user, @RequestBody UserBookData.CreateByISBN create) {
+        userBooksService.addBook(user,create);
         return SuccessResponse.empty();
     }
 

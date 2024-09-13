@@ -37,4 +37,19 @@ public class UserBookData {
         }
     }
 
+    @Getter
+    @AllArgsConstructor
+    public static class CreateByISBN {
+
+        @NotNull
+        private String ISBN;
+
+        @NotNull
+        private int locationId;
+
+        public static CreateByISBN of(String ISBN, int locationId) {
+            return new CreateByISBN(ISBN, locationId);
+        }
+    }
+
 }
