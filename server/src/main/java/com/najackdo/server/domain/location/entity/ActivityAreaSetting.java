@@ -14,12 +14,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "activity_areas")
+@Table(name = "activity_areas", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id"}))
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ActivityAreaSetting extends TimeEntity {
@@ -38,5 +39,16 @@ public class ActivityAreaSetting extends TimeEntity {
 	private User user;
 
 	@Column(name = "distance_meters", nullable = false)
-	private Integer distanceMeters;
+	private Double distanceMeters;
+
+
+
+	public static ActivityAreaSetting create(User user, Location location, Double distanceMeters) {
+		ActivityAreaSetting activityAreaSetting = new ActivityAreaSetting();
+		activityAreaSetting.user = user;
+		activityAreaSetting.location = location;
+		activityAreaSetting.distanceMeters = distanceMeters;
+		return activityAreaSetting;
+	}
+
 }
