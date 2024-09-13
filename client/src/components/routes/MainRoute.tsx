@@ -2,6 +2,7 @@ import AlarmPage from "page/alarm/page/AlarmPage";
 import CartPage from "page/cart/page/CartPage";
 import ChattingPage from "page/chatting/page/ChattingPage";
 import ChattingRoomPage from "page/chatting/page/ChattingRoomPage";
+import ReviewPage from "page/chatting/page/ReviewPage";
 import KaPayApprovePage from "page/kapay/page/KaPayApprovePage";
 import KaPayCancelPage from "page/kapay/page/KaPayCancelPage";
 import KaPayPage from "page/kapay/page/KaPayPage";
@@ -11,6 +12,7 @@ import ApplyPage from "page/library/page/ApplyPage";
 import BookApplyPage from "page/library/page/BookApplyPage";
 import BookDetailPage from "page/library/page/BookDetailPage";
 import BookcaseApplyPage from "page/library/page/BookcaseApplyPage";
+import HistoryPage from "page/library/page/HistoryPage";
 import LibraryPage from "page/library/page/LibraryPage";
 import MyFavoritePage from "page/library/page/MyFavoritePage";
 import MyLibraryPage from "page/library/page/MyLibraryPage";
@@ -28,7 +30,6 @@ import LeafPage from "page/profile/page/LeafPage";
 import ProfilePage from "page/profile/page/ProfilePage";
 import SearchPage from "page/search/page/SearchPage";
 import SearchResultPage from "page/search/page/SearchResultPage";
-import HistoryPage from "page/library/page/HistoryPage";
 
 import { Route, Routes } from "react-router-dom";
 
@@ -73,4 +74,3 @@ const MainRoute = () => {
 };
 
 export default MainRoute;
-
