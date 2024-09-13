@@ -11,7 +11,6 @@ import ApplyPage from "page/library/page/ApplyPage";
 import BookApplyPage from "page/library/page/BookApplyPage";
 import BookDetailPage from "page/library/page/BookDetailPage";
 import BookcaseApplyPage from "page/library/page/BookcaseApplyPage";
-import HistoryPage from "page/library/page/HistoryPage";
 import LibraryPage from "page/library/page/LibraryPage";
 import MyFavoritePage from "page/library/page/MyFavoritePage";
 import MyLibraryPage from "page/library/page/MyLibraryPage";
@@ -29,6 +28,8 @@ import LeafPage from "page/profile/page/LeafPage";
 import ProfilePage from "page/profile/page/ProfilePage";
 import SearchPage from "page/search/page/SearchPage";
 import SearchResultPage from "page/search/page/SearchResultPage";
+import HistoryPage from "page/library/page/HistoryPage";
+
 import { Route, Routes } from "react-router-dom";
 
 const MainRoute = () => {
@@ -43,6 +44,7 @@ const MainRoute = () => {
       <Route path="/library/my-history" element={<HistoryPage />} />
       <Route path="/chat" element={<ChattingPage />} />
       <Route path="/chat/:room_id" element={<ChattingRoomPage />} />
+      <Route path="/chat/review" element={<ReviewPage />} />
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="/profile/my-grade" element={<GradePage />} />
       <Route path="/profile/my-leaf" element={<LeafPage />} />
@@ -71,3 +73,4 @@ const MainRoute = () => {
 };
 
 export default MainRoute;
+
