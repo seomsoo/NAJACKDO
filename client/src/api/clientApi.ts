@@ -8,6 +8,8 @@ export const host =
     ? "http://localhost:3000"
     : "https://j11c105.p.ssafy.io/";
 
+console.log("node_env", host);
+
 export const KAKAO_AUTH_URL = `${BASE_URL}/oauth2/authorization/kakao?redirect_uri=${host}`;
 const REFRESH_URI = `${BASE_URL}/api/v1/auth/refresh`;
 
