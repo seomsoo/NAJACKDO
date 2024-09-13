@@ -12,12 +12,12 @@ const ChattingPage = () => {
         </Link>
       </div>
       <div>
-        <ChatList />
-        <ChatList />
-        <ChatList />
-        <ChatList />
-        <ChatList />
-        <ChatList />
+        <ChatList roomId={1}/>
+        <ChatList roomId={2}/>
+        <ChatList roomId={3}/>
+        <ChatList roomId={4}/>
+        <ChatList roomId={5}/>
+        <ChatList roomId={6}/>
       </div>
     </div>
   );
