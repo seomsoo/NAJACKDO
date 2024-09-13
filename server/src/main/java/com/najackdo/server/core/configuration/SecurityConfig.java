@@ -44,7 +44,6 @@ public class SecurityConfig {
 				configuration.setAllowCredentials(true);
 				configuration.setAllowedHeaders(Collections.singletonList("*"));
 				configuration.setExposedHeaders(List.of("Set-Cookie", "Authorization"));
-
 				return configuration;
 			}))
 			.exceptionHandling(configurer -> configurer
