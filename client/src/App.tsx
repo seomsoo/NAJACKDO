@@ -18,7 +18,6 @@ function App() {
     <div className="pb-[86px] relative">
       {!shouldHideHeaderFooter && showHeaderPaths.includes(currentPath) && <Header />}
       <Routes>
-        .
         <Route path="/*" element={<MainRoute />} />
       </Routes>
       {!shouldHideHeaderFooter && !hideFooterPaths.includes(currentPath) && <Footer />}
