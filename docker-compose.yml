@@ -73,7 +73,6 @@ services:
 
 volumes:
   najackdo-db:
-   name: najackdo-db
 
 networks:
   backendnet:
