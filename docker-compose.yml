@@ -1,4 +1,4 @@
-version: '3.3'
+version: "3.3"
 
 services:
   database:
@@ -47,7 +47,7 @@ services:
     ports:
       - "15672:15672"
       - "5672:5672"
-      - "61613:61613"  # STOMP 기본 포트 추가
+      - "61613:61613" # STOMP 기본 포트 추가
     command: >
       sh -c "rabbitmq-plugins enable rabbitmq_stomp &&
                  rabbitmq-server"
