@@ -12,6 +12,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.najackdo.server.core.exception.BaseException;
+import com.najackdo.server.core.exception.ErrorCode;
 import com.najackdo.server.domain.location.dto.LocationData;
 import com.najackdo.server.domain.location.entity.ActivityAreaSetting;
 import com.najackdo.server.domain.location.entity.Location;
@@ -98,7 +100,7 @@ public class LocationService {
 
 	public void registActivityArea(User user, LocationData.Regist request) {
 		Location closestLocation = locationRepository.findById(request.getLocationCode())
-			.orElseThrow(() -> new IllegalArgumentException("해당 위치를 찾을 수 없습니다."));
+			.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_LOCATION));
 
 		log.info(closestLocation.getLocationName());
 		log.info("closestLocation: {}", closestLocation);
