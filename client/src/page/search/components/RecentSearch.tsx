@@ -13,8 +13,6 @@ const RecentSearch = () => {
         <RecentSearchText />
         <RecentSearchText />
         <RecentSearchText />
-        <RecentSearchText />
-        <RecentSearchText />
       </div>
     </div>
   );
