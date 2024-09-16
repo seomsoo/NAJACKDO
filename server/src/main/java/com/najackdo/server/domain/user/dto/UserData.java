@@ -7,10 +7,11 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+//
 public class UserData {
 
 	@Data
-	public static class Update{
+	public static class Update {
 
 		@NotBlank(message = "닉네임을 입력해 주세요")
 		private String nickname;
