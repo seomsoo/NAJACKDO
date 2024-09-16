@@ -13,8 +13,6 @@ services:
       - "5432:5432"
     volumes:
       - najackdo-db:/var/lib/postgresql/data
-    networks:
-      - backendnet
 
   database-admin:
     container_name: database-admin
@@ -25,8 +23,6 @@ services:
       PGADMIN_DEFAULT_EMAIL: "najackdo@gmail.com"
       PGADMIN_DEFAULT_PASSWORD: "najackdo"
     restart: always
-    networks:
-      - backendnet
 
   cache-database:
     image: redis:7.4-rc2-alpine
@@ -34,8 +30,6 @@ services:
     ports:
       - "6379:6379"
     entrypoint: redis-server --requirepass najackdo --maxmemory 128mb
-    networks:
-      - backendnet
 
   rabbitmq:
     image: rabbitmq:3.13.3-management
@@ -52,8 +46,6 @@ services:
     command: >
       sh -c "rabbitmq-plugins enable rabbitmq_stomp &&
                  rabbitmq-server"
-    networks:
-      - backendnet
 
   mongodb:
     image: mongo:latest
@@ -69,12 +61,6 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=najackdo
       - MONGO_INITDB_DATABASE=najackdo
       - TZ=Asia/Seoul
-    networks:
-      - backendnet
 
 volumes:
   najackdo-db:
-
-networks:
-  backendnet:
-    external: true
