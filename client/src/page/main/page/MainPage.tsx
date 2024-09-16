@@ -13,7 +13,7 @@ const MainPage = () => {
       <div>
         <div className="flex flex-row items-center">
           <FaRankingStar color="#5F6F52" size={25} className="my-1 mx-2" />
-          <span className="font-bold">오늘의 베스트 셀러 123</span>
+          <span className="font-bold">오늘의 베스트 셀러</span>
         </div>
         <MainCarousel />
       </div>
