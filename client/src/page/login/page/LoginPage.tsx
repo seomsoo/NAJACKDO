@@ -33,7 +33,7 @@ const LoginPage = () => {
     {
       title: "Read",
       content:
-        "당신의 주변에 있는 다양한 책을 발견해 보세요. <br/> 이웃과 함께 책을 나누고, <br/> 새로운 독서 경험을 시작하세요.",
+        "당신의 주변에 있는 다양한 책을 발견해 보세요. <br/> 이웃과 함께 책을 나누고, <br/> 새로운 독서 경험을 시작하세요.1",
       onboardingImage: "images/onBoarding/onboarding_first.png",
     },
     {
@@ -53,20 +53,9 @@ const LoginPage = () => {
   return (
     <div className="mx-16 h-[calc(screen-86px)] flex flex-col justify-between">
       <div className="flex flex-row justify-end mt-16 mb-2">
-        <FaCircle
-          size={10}
-          className="mr-2"
-          color={carouselIndex === 0 ? "#000000" : "#888888"}
-        />
-        <FaCircle
-          size={10}
-          className="mr-2"
-          color={carouselIndex === 1 ? "#000000" : "#888888"}
-        />
-        <FaCircle
-          size={10}
-          color={carouselIndex === 2 ? "#000000" : "#888888"}
-        />
+        <FaCircle size={10} className="mr-2" color={carouselIndex === 0 ? "#000000" : "#888888"} />
+        <FaCircle size={10} className="mr-2" color={carouselIndex === 1 ? "#000000" : "#888888"} />
+        <FaCircle size={10} color={carouselIndex === 2 ? "#000000" : "#888888"} />
       </div>
       <Carousel className="mb-16" setApi={setApi}>
         <CarouselContent>
