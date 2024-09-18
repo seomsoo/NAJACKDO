@@ -20,9 +20,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserBooksService {
 
-    private UserBooksRepository userBooksRepository;
-    private BookRepository bookRepository;
-    private LocationRepository locationRepository;
+    private final UserBooksRepository userBooksRepository;
+    private final BookRepository bookRepository;
+    private final LocationRepository locationRepository;
 
     @Transactional
     public void addBookList(User user, UserBookData.Create create) {
