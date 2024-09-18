@@ -15,6 +15,7 @@ import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.najackdo.server.domain.book.dto.BookData;
 import com.najackdo.server.domain.book.entity.Book;
 import com.najackdo.server.domain.book.repository.BookRepository;
 import com.najackdo.server.domain.searh.dto.AutocompleteResponse;
@@ -45,7 +46,7 @@ public class SearchService {
 	private static final String SCORE_KEY = "score";
 
 
-	public List<String> searchKeyword(Long userId, String keyword) {
+	public List<BookData.Search> searchKeyword(Long userId, String keyword) {
 
 		// 검색어 유효성 검사
 		if (isInvalidKeyword(keyword)) return null;
@@ -54,15 +55,18 @@ public class SearchService {
 
 		String key = SEARCH_KEY + userId;
 		// 검색어에 해당하는 책 제목 검색
-		List<String> books = bookRepository.findByTitleContains(keyword).stream().map(Book::getTitle).toList();
+		List<BookData.Search> searchBooks = bookRepository.findByTitleContains(keyword)
+			.stream()
+			.map(BookData.Search::new)
+			.toList();
 
 		// 검색 결과가 있으면 Redis에 검색어 저장 및 관련 통계 업데이트
-		if (!books.isEmpty()) {
+		if (!searchBooks.isEmpty()) {
 			addKeywordInRedis(keyword, key);
 			incrementSearchCount(keyword);
 			updatePopularKeywordsList(keyword);
 		}
-		return books;
+		return searchBooks;
 	}
 
 	@Transactional(readOnly = true)
