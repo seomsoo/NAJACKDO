@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.najackdo.server.core.annotation.CurrentUser;
 import com.najackdo.server.core.response.SuccessResponse;
+import com.najackdo.server.domain.searh.dto.AutocompleteResponse;
 import com.najackdo.server.domain.searh.service.SearchService;
 import com.najackdo.server.domain.user.entity.User;
 
@@ -41,5 +42,12 @@ public class SearchController {
 
 		// 인기 검색어 조회 서비스 호출
 		return SuccessResponse.of(searchService.getPopularKeywords());
+	}
+
+	@GetMapping("/auto-complete")
+	public AutocompleteResponse getAutoCompleteList(@RequestParam("keyword") String keyword) {
+		// 자동완성 검색어 조회 서비스 호출
+		log.info("keyword: {}", keyword);
+		return searchService.getAutocomplete(keyword);
 	}
 }

@@ -1,21 +1,23 @@
 package com.najackdo.server.domain.searh.service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.najackdo.server.domain.book.entity.Book;
 import com.najackdo.server.domain.book.repository.BookRepository;
+import com.najackdo.server.domain.searh.dto.AutocompleteResponse;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,21 +27,32 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Transactional
 public class SearchService {
+
+	private final RedisTemplate<String, String> redisTemplate;
+
+	private final BookRepository bookRepository;
+
 	private static final int MAXIMUM_SAVED_VALUE = 5;
 	private static final String SEARCH_KEY = "search:";
 	private static final String SEARCH_COUNT_KEY = "search_count:";
 	private static final String POPULAR_KEYWORDS_KEY = "popular_keywords";
 
-	private final RedisTemplate<String, String> redisTemplate;
-	private final BookRepository bookRepository;
+
+
+	private static final long AUTO_COMPLETE_LIMIT = 10L; // 예: 최대 10개의 자동완성 결과 반환
+	private static final String SUFFIX = "*"; // 예: 자동완성 접미사
+	private static final String AUTO_COMPLETE_KEY = "autocomplete"; // 예: Redis에서 사용할 키 값
+	private static final String SCORE_KEY = "score";
+
 
 	public List<String> searchKeyword(Long userId, String keyword) {
 
 		// 검색어 유효성 검사
 		if (isInvalidKeyword(keyword)) return null;
 
-		String key = SEARCH_KEY + userId;
+		addAutocomplete(keyword);
 
+		String key = SEARCH_KEY + userId;
 		// 검색어에 해당하는 책 제목 검색
 		List<String> books = bookRepository.findByTitleContains(keyword).stream().map(Book::getTitle).toList();
 
@@ -150,4 +163,62 @@ public class SearchService {
 		ListOperations<String, String> listOperations = redisTemplate.opsForList();
 		listOperations.rightPush(POPULAR_KEYWORDS_KEY, keyword);
 	}
+
+	public AutocompleteResponse getAutocomplete(String searchWord) {
+		List<String> autocompleteList = getAutoCompleteListFromRedis(searchWord);
+		log.info("autocompleteList {}", autocompleteList);
+
+		return sortAutocompleteListByScore(autocompleteList);
+	}
+
+	public void addAutocomplete(String searchWord) {
+		ZSetOperations<String, String> zSetOperations = redisTemplate.opsForZSet();
+		zSetOperations.incrementScore(SCORE_KEY, searchWord, 1.0);
+
+		if (zSetOperations.score(AUTO_COMPLETE_KEY, searchWord) == null) {
+			for (int i = 1; i <= searchWord.length(); i++) {
+				zSetOperations.add(AUTO_COMPLETE_KEY, searchWord.substring(0, i), 0.0);
+			}
+			zSetOperations.add(AUTO_COMPLETE_KEY, searchWord + SUFFIX, 0.0);
+		}
+	}
+
+
+	public List<String> getAutoCompleteListFromRedis(String searchWord) {
+		ZSetOperations<String, String> zSetOperations = redisTemplate.opsForZSet();
+		List<String> autocompleteList = List.of();
+
+		Long rank = zSetOperations.rank(AUTO_COMPLETE_KEY, searchWord);
+		if (rank != null) {
+			Set<String> rangeList = zSetOperations.range(AUTO_COMPLETE_KEY, rank, rank + 1000);
+			if (rangeList != null) {
+				autocompleteList = rangeList.stream()
+					.filter(value -> value.endsWith(SUFFIX) && value.startsWith(searchWord))
+					.map(value -> value.endsWith(SUFFIX) ? value.substring(0, value.length() - SUFFIX.length()) : value)
+					.limit(AUTO_COMPLETE_LIMIT)
+					.toList();
+			}
+		}
+		return autocompleteList;
+	}
+
+
+	public AutocompleteResponse sortAutocompleteListByScore(List<String> autocompleteList) {
+		ZSetOperations<String, String> zSetOperations = redisTemplate.opsForZSet();
+		List<AutocompleteResponse.Data> list = new ArrayList<>();
+
+		for (String word : autocompleteList) {
+			Double score = zSetOperations.score(SCORE_KEY, word);
+
+			if (score != null) {
+				list.add(new AutocompleteResponse.Data(word, score));
+			}
+		}
+		list.sort((a, b) -> Double.compare(b.getScore(), a.getScore()));
+
+		return new AutocompleteResponse(list);
+	}
+
+
+
 }

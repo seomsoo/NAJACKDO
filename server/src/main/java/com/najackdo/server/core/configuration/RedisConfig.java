@@ -3,6 +3,7 @@ package com.najackdo.server.core.configuration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
@@ -51,14 +52,4 @@ public class RedisConfig {
 
         return redisTemplate;
     }
-
-    // 검색 로그 템플릿
-    // @Bean
-    // public RedisTemplate<String, String> searchRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
-    //     RedisTemplate<String, String> searchRedisTemplate = new RedisTemplate<>();
-    //     searchRedisTemplate.setConnectionFactory(redisConnectionFactory);
-    //     searchRedisTemplate.setKeySerializer(new StringRedisSerializer());
-    //     searchRedisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(String.class));
-    //     return searchRedisTemplate;
-    // }
 }
