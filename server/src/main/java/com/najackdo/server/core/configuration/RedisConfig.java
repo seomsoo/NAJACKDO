@@ -8,8 +8,8 @@ import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -51,4 +51,14 @@ public class RedisConfig {
 
         return redisTemplate;
     }
+
+    // 검색 로그 템플릿
+    // @Bean
+    // public RedisTemplate<String, String> searchRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
+    //     RedisTemplate<String, String> searchRedisTemplate = new RedisTemplate<>();
+    //     searchRedisTemplate.setConnectionFactory(redisConnectionFactory);
+    //     searchRedisTemplate.setKeySerializer(new StringRedisSerializer());
+    //     searchRedisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(String.class));
+    //     return searchRedisTemplate;
+    // }
 }
