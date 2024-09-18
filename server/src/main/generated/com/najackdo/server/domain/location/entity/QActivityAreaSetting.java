@@ -27,7 +27,7 @@ public class QActivityAreaSetting extends EntityPathBase<ActivityAreaSetting> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
-    public final NumberPath<Integer> distanceMeters = createNumber("distanceMeters", Integer.class);
+    public final NumberPath<Double> distanceMeters = createNumber("distanceMeters", Double.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 

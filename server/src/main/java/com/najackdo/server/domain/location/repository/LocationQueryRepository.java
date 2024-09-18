@@ -11,4 +11,9 @@ import com.najackdo.server.domain.location.entity.Location;
 
 public interface LocationQueryRepository {
 	Page<Location> findLocationsByDistance(@Param("point") Point point, Pageable pageable);
+
+	Location findClosestLocation(@Param("point") Point point);
+
+	List<Location> findLocationsWithPoligonByDistance(@Param("point") Point point, Double distance);
 }
+
