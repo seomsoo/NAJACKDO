@@ -33,7 +33,7 @@ const LoginPage = () => {
     {
       title: "Read",
       content:
-        "당신의 주변에 있는 다양한 책을 발견해 보세요. <br/> 이웃과 함께 책을 나누고, <br/> 새로운 독서 경험을 시작하세요.1",
+        "당신의 주변에 있는 다양한 책을 발견해 보세요. <br/> 이웃과 함께 책을 나누고, <br/> 새로운 독서 경험을 시작하세요.",
       onboardingImage: "images/onBoarding/onboarding_first.png",
     },
     {
