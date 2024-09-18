@@ -1,9 +1,8 @@
-package com.najackdo.server.domain.searh.controller;
+package com.najackdo.server.domain.search.controller;
 
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.najackdo.server.core.annotation.CurrentUser;
 import com.najackdo.server.core.response.SuccessResponse;
 import com.najackdo.server.domain.book.dto.BookData;
-import com.najackdo.server.domain.searh.dto.AutocompleteResponse;
-import com.najackdo.server.domain.searh.service.SearchService;
+import com.najackdo.server.domain.search.dto.AutocompleteResponse;
+import com.najackdo.server.domain.search.service.SearchService;
 import com.najackdo.server.domain.user.entity.User;
 
 import lombok.RequiredArgsConstructor;
@@ -27,7 +26,8 @@ public class SearchController {
 	private final SearchService searchService;
 
 	@GetMapping
-	public SuccessResponse<List<BookData.Search>> search(@CurrentUser User user,  @RequestParam("keyword") String keyword) {
+	public SuccessResponse<List<BookData.Search>> search(@CurrentUser User user,
+		@RequestParam("keyword") String keyword) {
 		return SuccessResponse.of(searchService.searchKeyword(user.getId(), keyword));
 	}
 
@@ -36,7 +36,6 @@ public class SearchController {
 		// 최근 검색어 조회 서비스 호출
 		return SuccessResponse.of(searchService.getResentSearchList(user.getId()));
 	}
-
 
 	@GetMapping("/popularity")
 	public SuccessResponse<List<String>> getPopularSearchList() {

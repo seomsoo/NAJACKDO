@@ -1,4 +1,4 @@
-package com.najackdo.server.domain.searh.dto;
+package com.najackdo.server.domain.search.dto;
 
 import java.util.List;
 

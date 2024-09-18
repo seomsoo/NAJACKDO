@@ -1,4 +1,4 @@
-package com.najackdo.server.domain.searh.service;
+package com.najackdo.server.domain.search.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -16,9 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.najackdo.server.domain.book.dto.BookData;
-import com.najackdo.server.domain.book.entity.Book;
 import com.najackdo.server.domain.book.repository.BookRepository;
-import com.najackdo.server.domain.searh.dto.AutocompleteResponse;
+import com.najackdo.server.domain.search.dto.AutocompleteResponse;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,18 +36,16 @@ public class SearchService {
 	private static final String SEARCH_COUNT_KEY = "search_count:";
 	private static final String POPULAR_KEYWORDS_KEY = "popular_keywords";
 
-
-
 	private static final long AUTO_COMPLETE_LIMIT = 10L; // 예: 최대 10개의 자동완성 결과 반환
 	private static final String SUFFIX = "*"; // 예: 자동완성 접미사
 	private static final String AUTO_COMPLETE_KEY = "autocomplete"; // 예: Redis에서 사용할 키 값
 	private static final String SCORE_KEY = "score";
 
-
 	public List<BookData.Search> searchKeyword(Long userId, String keyword) {
 
 		// 검색어 유효성 검사
-		if (isInvalidKeyword(keyword)) return null;
+		if (isInvalidKeyword(keyword))
+			return null;
 
 		addAutocomplete(keyword);
 
@@ -187,7 +183,6 @@ public class SearchService {
 		}
 	}
 
-
 	public List<String> getAutoCompleteListFromRedis(String searchWord) {
 		ZSetOperations<String, String> zSetOperations = redisTemplate.opsForZSet();
 		List<String> autocompleteList = List.of();
@@ -206,7 +201,6 @@ public class SearchService {
 		return autocompleteList;
 	}
 
-
 	public AutocompleteResponse sortAutocompleteListByScore(List<String> autocompleteList) {
 		ZSetOperations<String, String> zSetOperations = redisTemplate.opsForZSet();
 		List<AutocompleteResponse.Data> list = new ArrayList<>();
@@ -222,7 +216,5 @@ public class SearchService {
 
 		return new AutocompleteResponse(list);
 	}
-
-
 
 }
