@@ -6,6 +6,7 @@ import com.najackdo.server.domain.book.dto.UserBookData;
 import com.najackdo.server.domain.book.service.UserBooksService;
 import com.najackdo.server.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/book")
+@Slf4j
 public class BookController {
     private final UserBooksService userBooksService;
 
@@ -37,5 +39,14 @@ public class BookController {
         return SuccessResponse.empty();
     }
 
+    @GetMapping("/bookcase/interest")
+    public SuccessResponse<List<UserBookData.BookCase>> getBookCase(@CurrentUser User user) {
+        return SuccessResponse.of(userBooksService.getBookCasesByUserId(user));
+    }
 
+    @GetMapping("/bookcase/{username}")
+    public SuccessResponse<List<UserBookData.BookCase>> getBookCase(@PathVariable String username) {
+        log.info(username);
+        return SuccessResponse.of(userBooksService.getBookCasesByUserName(username));
+    }
 }

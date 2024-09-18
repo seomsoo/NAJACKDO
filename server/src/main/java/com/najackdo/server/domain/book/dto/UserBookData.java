@@ -52,4 +52,13 @@ public class UserBookData {
         }
     }
 
+    @Getter
+    @AllArgsConstructor
+    public static class BookCase{
+        private long userBookId;
+        private String cover;
+        private String title;
+        private String author;
+        private String description;
+    }
 }
