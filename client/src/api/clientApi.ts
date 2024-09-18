@@ -4,9 +4,7 @@ import { useAuthStore } from "store/useAuthStore";
 const BASE_URL = process.env.REACT_APP_BACKEND_PROD_HOST;
 
 export const host =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:3000"
-    : "https://j11c105.p.ssafy.io/";
+  process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://najackdo.kro.kr";
 
 console.log("node_env", host);
 
