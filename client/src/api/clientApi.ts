@@ -11,6 +11,8 @@ console.log("node_env", host);
 export const KAKAO_AUTH_URL = `${BASE_URL}/oauth2/authorization/kakao?redirect_uri=${host}`;
 const REFRESH_URI = `${BASE_URL}/api/v1/auth/refresh`;
 
+console.log("KAKAO_AUTH_URL", KAKAO_AUTH_URL);
+
 const instance = axios.create({
   baseURL: BASE_URL + "/api/v1",
   headers: {
