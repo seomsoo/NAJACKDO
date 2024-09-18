@@ -67,4 +67,4 @@ services:
 
 volumes:
   najackdo-db:
-   name: najackdo-db
+    name: najackdo-db
