@@ -53,7 +53,7 @@ const MainRoute = () => {
       <Route path="/search" element={<SearchPage />} />
       <Route path="/search/result" element={<SearchResultPage />} />
       <Route path="/alarm" element={<AlarmPage />} />
-      <Route path="/login" element={<LoginPage />} />
+      <Route path="/signin" element={<LoginPage />} />
       <Route path="/auth/callback" element={<AuthCallBack />} />
       <Route path="/kapay" element={<KaPayPage />} />
       <Route path="/kapay/approve" element={<KaPayApprovePage />} />

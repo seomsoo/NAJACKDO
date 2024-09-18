@@ -4,9 +4,7 @@ import { useAuthStore } from "store/useAuthStore";
 const BASE_URL = process.env.REACT_APP_BACKEND_PROD_HOST;
 
 export const host =
-  process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://najackdo.kro.kr";
-
-console.log("node_env", host);
+  process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://www.najackdo.kro.kr";
 
 export const KAKAO_AUTH_URL = `${BASE_URL}/oauth2/authorization/kakao?redirect_uri=${host}`;
 const REFRESH_URI = `${BASE_URL}/api/v1/auth/refresh`;
@@ -14,7 +12,7 @@ const REFRESH_URI = `${BASE_URL}/api/v1/auth/refresh`;
 console.log("KAKAO_AUTH_URL", KAKAO_AUTH_URL);
 
 const instance = axios.create({
-  baseURL: BASE_URL + "/api/v1",
+  baseURL: `${BASE_URL}/api/v1`,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -72,7 +70,7 @@ instance.interceptors.response.use(
       } catch (refreshError) {
         // refreshToken도 만료된 경우 로그아웃 처리
         useAuthStore.getState().clearTokens();
-        window.location.href = "/login";
+        window.location.href = "/signin";
         alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
         return Promise.reject(refreshError);
       }
