@@ -75,7 +75,7 @@ instance.interceptors.response.use(
       } catch (refreshError) {
         // refreshToken도 만료된 경우 로그아웃 처리
         useAuthStore.getState().clearTokens();
-        window.location.href = "/signin";
+        window.location.href = "/sign-in";
         alert("로그인 세션이 만료되었습니다. 다시 로그인해주세요.");
         return Promise.reject(refreshError);
       }

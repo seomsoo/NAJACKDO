@@ -1,17 +1,69 @@
+import {
+  getAutoSearchText,
+  getPopularSearch,
+  getRecentSearch,
+} from "api/searchApi";
 import { Input } from "components/ui/input";
+import PopularSearch from "page/search/components/PopularSearch";
 import RecentSearch from "page/search/components/RecentSearch";
 import RecommendBook from "page/search/components/RecommendBook";
+import SearchResult from "page/search/components/SearchResult";
+import { useEffect, useState } from "react";
 import { IoIosArrowBack, IoIosSearch } from "react-icons/io";
+import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 
 const SearchPage = () => {
   const navigate = useNavigate();
-  const goSearchResult = () => {
-    navigate("/search/result");
+  const [searchText, setSearchText] = useState("");
+  const [autoSearchText, setAutoSearchText] = useState<string[]>([]);
+
+  const handlerSearchText = (e) => {
+    setSearchText(e.target.value);
   };
+
+  const goSearchResult = () => {
+    navigate(`/search?keyword=${searchText}`);
+  };
+
+  // 인기 검색어 조회
+  const {
+    data: popularSearchData,
+    isLoading: popularSearchLoading,
+    isError: popularSearchError,
+  } = useQuery<string[]>({
+    queryKey: ["search", "popular"],
+    queryFn: getPopularSearch,
+  });
+
+  // 최근 검색어 조회
+  const {
+    data: recentSearchData,
+    isLoading: recentSearchLoading,
+    isError: recentSearchError,
+  } = useQuery<string[]>({
+    queryKey: ["search", "recent"],
+    queryFn: getRecentSearch,
+  });
+
+  // 자동완성 검색어 조회
+  // 내일 해야지~!
+
+  if (popularSearchLoading || recentSearchLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (recentSearchData) {
+    console.log("최근 검색어", recentSearchData);
+  }
+
+  if (popularSearchData) {
+    console.log("인기 검색어", popularSearchData);
+  }
 
   return (
     <div className="mx-4 mt-8">
+      {/* 검색어 입력 창 */}
       <div className="flex flex-row items-center relative">
         <IoIosArrowBack
           size={25}
@@ -21,6 +73,7 @@ const SearchPage = () => {
         <Input
           className="bg-[#D9D9D9] border-none"
           placeholder="검색어를 입력해주세요."
+          onChange={handlerSearchText}
         />
         <div
           className="absolute right-2 cursor-pointer"
@@ -29,8 +82,16 @@ const SearchPage = () => {
           <IoIosSearch size={25} color="#545454" />
         </div>
       </div>
-      <RecentSearch />
-      <RecommendBook />
+      <PopularSearch />
+      {/* 검색어가 없을 때 */}
+      {searchText === "" ? (
+        <>
+          <RecentSearch />
+          <RecommendBook />
+        </>
+      ) : (
+        <SearchResult />
+      )}
     </div>
   );
 };
