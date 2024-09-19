@@ -1,28 +1,27 @@
-import { getUserInfo } from "api/profileApi";
-import { IProfile } from "atoms/Profile.type";
-import LogoutButton from "page/profile/components/LogoutButton";
+import BookcaseContainer from "page/library/components/BookcaseContainer";
 import MannerTree from "page/profile/components/MannerTree";
-import MyLeaf from "page/profile/components/MyLeaf";
-import { useQuery } from "react-query";
-import UserInfo from "../components/UserInfo";
+import UserInfo from "page/profile/components/UserInfo";
+import { useLocation } from "react-router-dom";
 
-const ProfilePage = () => {
-  const {
-    data: profileInfo,
-    isLoading,
-    isError,
-  } = useQuery<IProfile>({
-    queryKey: ["profile"],
-    queryFn: async () => await getUserInfo(),
-  });
+const OtherProfilePage = () => {
+  const nickname: string = useLocation().pathname.split("/")[1];
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  // const {
+  //   data: profileInfo,
+  //   isLoading,
+  //   isError,
+  // } = useQuery<IProfile>({
+  //   queryKey: ["profile", "other"],
+  //   queryFn: async () => await getOtherProfile(nickname),
+  // });
 
-  if (profileInfo) {
-    console.log("유저 정보", profileInfo);
-  }
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
+
+  // if (profileInfo) {
+  //   console.log("유저 정보", profileInfo);
+  // }
 
   const user = {
     username: "서민수",
@@ -42,22 +41,22 @@ const ProfilePage = () => {
 
   return (
     <div className="mx-[25px] mt-6">
-      {/* 유저 정보 */}
       <p className="text-[32px] font-extrabold tracking-wider mb-6">프로필</p>
+      {/* 유저 정보 */}
       <UserInfo
         userName={user.username}
         userLocation={user.userlocation}
         userImage={user.userImage}
         gradeImage="https://placehold.co/21x21"
       />
+
       {/* 신뢰 나무 */}
       <MannerTree />
 
-      {/* 나의 책잎 */}
-      <MyLeaf leaf={user.myLeaf} />
-      <LogoutButton />
+      {/* 책장 */}
+      <BookcaseContainer name={user.username} imageArray={user.bookCase} />
     </div>
   );
 };
 
-export default ProfilePage;
+export default OtherProfilePage;

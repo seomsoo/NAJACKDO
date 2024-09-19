@@ -4,7 +4,9 @@ import { useAuthStore } from "store/useAuthStore";
 const BASE_URL = process.env.REACT_APP_BACKEND_PROD_HOST;
 
 export const host =
-  process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://www.najackdo.kro.kr";
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : "https://www.najackdo.kro.kr";
 
 export const KAKAO_AUTH_URL = `${BASE_URL}/oauth2/authorization/kakao?redirect_uri=${host}`;
 const REFRESH_URI = `${BASE_URL}/api/v1/auth/refresh`;
@@ -23,7 +25,7 @@ const instance = axios.create({
 // 요청 전에 accessToken을 헤더에 포함시키는 인터셉터
 instance.interceptors.request.use(
   (config) => {
-    const accessToken = sessionStorage.getItem("accessToken");
+    const accessToken = useAuthStore.getState().accessToken;
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
@@ -34,7 +36,7 @@ instance.interceptors.request.use(
   }
 );
 
-// 응답에서 401 오류가 발생하면 refreshToken응 사용해 토큰 재발급
+// 응답에서 401 오류가 발생하면 refreshToken을 사용해 토큰 재발급
 instance.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -53,7 +55,7 @@ instance.interceptors.response.use(
         }
 
         // refreshToken으로 새로운 accessToken 요청
-        const refreshResponse = await axios.post(`${BASE_URL}/auth/refresh`, {
+        const refreshResponse = await axios.post(`${REFRESH_URI}`, {
           token: refreshToken,
         });
 
@@ -71,10 +73,12 @@ instance.interceptors.response.use(
         // refreshToken도 만료된 경우 로그아웃 처리
         useAuthStore.getState().clearTokens();
         window.location.href = "/signin";
-        alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
+        alert("로그인 세션이 만료되었습니다. 다시 로그인해주세요.");
         return Promise.reject(refreshError);
       }
     }
+
+    return Promise.reject(error);
   }
 );
 
