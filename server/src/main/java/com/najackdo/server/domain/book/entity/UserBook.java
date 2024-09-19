@@ -4,6 +4,8 @@ import static com.najackdo.server.domain.book.entity.BookStatus.*;
 
 import java.util.List;
 
+import com.najackdo.server.domain.book.dto.UserBookData;
+import lombok.AllArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import com.najackdo.server.domain.location.entity.Location;
@@ -63,4 +65,13 @@ public class UserBook {
 	@Column(name = "is_deleted", nullable = false)
 	@ColumnDefault("false")
 	private Boolean isDeleted = false;
+
+	public static UserBook UserBookCreate(User user, Book book, Location locationCode){
+		UserBook userBook = new UserBook();
+		userBook.user = user;
+		userBook.book = book;
+		userBook.locationCode = locationCode;
+		return userBook;
+	}
+
 }
