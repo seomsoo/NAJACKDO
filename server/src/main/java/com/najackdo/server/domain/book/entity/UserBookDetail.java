@@ -21,7 +21,7 @@ public class UserBookDetail {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "book_damage_id", nullable = false)
+	@Column(name = "book_detail_id", nullable = false)
 	private Long id;
 
 	@OneToOne(fetch = FetchType.LAZY)

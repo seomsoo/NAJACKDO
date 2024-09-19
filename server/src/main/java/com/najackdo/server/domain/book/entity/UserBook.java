@@ -23,6 +23,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -36,6 +37,10 @@ public class UserBook {
 
 	@OneToMany(mappedBy = "userBook", fetch = FetchType.LAZY)
 	private List<RentalLog> bookRentalHistories;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "book_detail_id", nullable = false)
+	private UserBookDetail userBookDetail;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

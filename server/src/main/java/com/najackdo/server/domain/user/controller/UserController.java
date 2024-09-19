@@ -1,5 +1,9 @@
 package com.najackdo.server.domain.user.controller;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +30,7 @@ public class UserController {
 	 * 첫 로그인 후 유저 정보 입력 API
 	 * @param user
 	 * @param update
-	 * @return
+	 * @return {@link Void}
 	 */
 	@PostMapping("/info")
 	public SuccessResponse<Void> updateUserInfo(
@@ -36,4 +40,33 @@ public class UserController {
 		return SuccessResponse.empty();
 	}
 
+	/**
+	 * 유저 정보 조회 API
+	 * @param user
+	 * @return {@link UserData.InfoResponse}
+	 */
+	@GetMapping("/info")
+	public SuccessResponse<UserData.InfoResponse> getUserInfo(@CurrentUser User user) {
+		return SuccessResponse.of(userService.getUserInfo(user));
+	}
+
+	/**
+	 * 유저 캐시 로그 조회 API
+	 * @param user
+	 * @return {@link List<UserData.CashLogResponse>}
+	 */
+	@GetMapping("/cashlog")
+	public SuccessResponse<List<UserData.CashLogResponse>> getUserCashLog(@CurrentUser User user) {
+		return SuccessResponse.of(userService.getUserCashLog(user));
+	}
+
+	/**
+	 * 유저 닉네임으로 유저 정보 조회 API
+	 * @param nickname
+	 * @return {@link UserData.InfoResponse}
+	 */
+	@GetMapping("/info/{nickname}")
+	public SuccessResponse<UserData.InfoResponse> getUserInfoByNickName(@PathVariable String nickname) {
+		return SuccessResponse.of(userService.getUserInfoByNickName(nickname));
+	}
 }

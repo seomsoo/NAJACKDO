@@ -1,6 +1,5 @@
 package com.najackdo.server.domain.auth.service;
 
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class AuthService {
+
 	private final JWTService jwtService;
 	private final AuthCacheRepository authCacheRepository;
 	private final UserRepository userRepository;
@@ -45,6 +45,7 @@ public class AuthService {
 			throw new BaseException(ErrorCode.EXPIRED_TOKEN, e);
 		}
 	}
+
 	@Transactional
 	public void deleteUser(User user) {
 		user.delete();

@@ -1,8 +1,8 @@
 package com.najackdo.server.domain.book.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.najackdo.server.domain.book.entity.Book;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
