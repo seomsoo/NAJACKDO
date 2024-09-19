@@ -22,7 +22,7 @@ const MainPage = () => {
       {/* C105 추천 */}
       <C105Recommend />
       {/* <div className="flex flex-col">
-        <button onClick={() => nav("/signin")}>signin</button>
+        <button onClick={() => nav("/sign-in")}>signin</button>
         <button onClick={() => nav("/bookdetail")}>bookdetail</button>
         <button onClick={() => nav("/bookdetail/rental")}>
           rentalbookdetail
