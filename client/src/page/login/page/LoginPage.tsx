@@ -20,6 +20,7 @@ const LoginPage = () => {
 
   const [api, setApi] = useState<CarouselApi>();
   const [carouselIndex, setCarouselIndex] = useState<number>(0);
+  const [active, setActive] = useState<boolean>(false);
 
   useEffect(() => {
     if (!api) return;
@@ -50,12 +51,31 @@ const LoginPage = () => {
     },
   ];
 
+  useEffect(() => {
+    if (carouselIndex === 2) {
+      setActive(true);
+    } else {
+      setActive(false);
+    }
+  }, [carouselIndex]);
+
   return (
     <div className="mx-16 h-[calc(screen-86px)] flex flex-col justify-between">
       <div className="flex flex-row justify-end mt-16 mb-2">
-        <FaCircle size={10} className="mr-2" color={carouselIndex === 0 ? "#000000" : "#888888"} />
-        <FaCircle size={10} className="mr-2" color={carouselIndex === 1 ? "#000000" : "#888888"} />
-        <FaCircle size={10} color={carouselIndex === 2 ? "#000000" : "#888888"} />
+        <FaCircle
+          size={10}
+          className="mr-2"
+          color={carouselIndex === 0 ? "#000000" : "#888888"}
+        />
+        <FaCircle
+          size={10}
+          className="mr-2"
+          color={carouselIndex === 1 ? "#000000" : "#888888"}
+        />
+        <FaCircle
+          size={10}
+          color={carouselIndex === 2 ? "#000000" : "#888888"}
+        />
       </div>
       <Carousel className="mb-16" setApi={setApi}>
         <CarouselContent>
@@ -74,7 +94,7 @@ const LoginPage = () => {
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
-      <KakaoLogin />
+      <KakaoLogin active={active} />
     </div>
   );
 };

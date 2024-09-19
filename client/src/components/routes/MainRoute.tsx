@@ -27,6 +27,7 @@ import MainPage from "page/main/page/MainPage";
 import GradePage from "page/profile/page/GradePage";
 import LeafChargePage from "page/profile/page/LeafChargePage";
 import LeafPage from "page/profile/page/LeafPage";
+import OtherProfilePage from "page/profile/page/OtherProfilePage";
 import ProfilePage from "page/profile/page/ProfilePage";
 import SearchPage from "page/search/page/SearchPage";
 import SearchResultPage from "page/search/page/SearchResultPage";
@@ -47,6 +48,7 @@ const MainRoute = () => {
       <Route path="/chat/:room_id" element={<ChattingRoomPage />} />
       <Route path="/chat/review" element={<ReviewPage />} />
       <Route path="/profile" element={<ProfilePage />} />
+      <Route path="/profile/:nickname" element={<OtherProfilePage />} />
       <Route path="/profile/my-grade" element={<GradePage />} />
       <Route path="/profile/my-leaf" element={<LeafPage />} />
       <Route path="/profile/my-leaf/charge" element={<LeafChargePage />} />

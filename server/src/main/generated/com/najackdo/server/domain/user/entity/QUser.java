@@ -61,6 +61,8 @@ public class QUser extends EntityPathBase<User> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 
+    public final ListPath<com.najackdo.server.domain.book.entity.UserBook, com.najackdo.server.domain.book.entity.QUserBook> userBooks = this.<com.najackdo.server.domain.book.entity.UserBook, com.najackdo.server.domain.book.entity.QUserBook>createList("userBooks", com.najackdo.server.domain.book.entity.UserBook.class, com.najackdo.server.domain.book.entity.QUserBook.class, PathInits.DIRECT2);
+
     public final StringPath username = createString("username");
 
     public QUser(String variable) {

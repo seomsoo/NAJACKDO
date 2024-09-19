@@ -53,7 +53,7 @@ public class SearchService {
 		// 검색어에 해당하는 책 제목 검색
 		List<BookData.Search> searchBooks = bookRepository.findByTitleContains(keyword)
 			.stream()
-			.map(BookData.Search::new)
+			.map(BookData.Search::of)
 			.toList();
 
 		// 검색 결과가 있으면 Redis에 검색어 저장 및 관련 통계 업데이트

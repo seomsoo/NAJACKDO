@@ -92,8 +92,8 @@ public class UserBooksService {
     }
 
 
-    public List<Book> getInterestBooks(User user) {
-        return bookRepository.findInterestingBooks(user.getId());
+    public List<BookData.Search> getInterestBooks(User user) {
+        return bookRepository.findInterestingBooks(user.getId()).stream().map(BookData.Search::of).toList();
     }
 
     @Transactional

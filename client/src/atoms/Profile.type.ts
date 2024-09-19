@@ -5,7 +5,14 @@ export interface IProfile {
   mannerScore: number;
   goodReviewCount: number;
   badReviewCount: number;
+  cash?: number;
+  saveCash?: number;
+  earnCash?: number;
+}
+
+export interface ILeafLog {
   cash: number;
-  saveCash: number;
-  earnCash: number;
+  resultCash: number;
+  type: string;
+  createdAt: string;
 }

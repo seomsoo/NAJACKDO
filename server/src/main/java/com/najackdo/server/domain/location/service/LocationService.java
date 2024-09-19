@@ -106,18 +106,24 @@ public class LocationService {
 		Location location = locationRepository.findById(request.getLocationCode())
 			.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_LOCATION));
 
+		log.info("location: {}", location.getLocationName());
+
 		ActivityAreaSetting existingSetting = activityAreaSettingRepository.findByUser(user)
 			.orElseGet(() -> {
 				ActivityAreaSetting newSetting = ActivityAreaSetting.create(user, location, request.getDistanceMeters());
 				user.setActivityAreaSetting(newSetting);
 				userRepository.save(user);
+				log.info("newSetting: {}", newSetting.getDistanceMeters());
 				return newSetting;
 			});
 
 		existingSetting.updateLocation(location);
 		existingSetting.setDistanceMeters(request.getDistanceMeters());
 
+		user.setActivityAreaSetting(existingSetting);
+
 		activityAreaSettingRepository.save(existingSetting);
+		userRepository.save(user);
 	}
 
 
