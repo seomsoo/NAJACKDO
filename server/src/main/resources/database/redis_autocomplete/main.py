@@ -1,7 +1,7 @@
 #-*- coding:utf-8 -*-
 import redis
 
-r = redis.StrictRedis(host='localhost', port=6379, db=0, password='najackdo')
+r = redis.StrictRedis(host='j11c105.p.ssafy.io', port=6379, db=0, password='najackdo')
 
 f = open("./autocomplete.txt","rt", encoding="utf-8")
 for line in f:

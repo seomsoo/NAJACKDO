@@ -123,7 +123,7 @@ class SearchControllerTest extends RestDocsSupport {
 	@WithMockUser(username = "test-user")
 	void getRecentSearchList() throws Exception {
 		// GIVEN
-		List<String> recentSearchList = List.of("test1", "test2");
+		List<String> recentSearchList = List.of("1분 전 검색어", "5분 전 검색어", "10분 전 검색어");
 		when(searchService.getResentSearchList(anyLong())).thenReturn(recentSearchList);
 
 		// WHEN
@@ -132,8 +132,9 @@ class SearchControllerTest extends RestDocsSupport {
 
 		// THEN
 		perform.andExpect(status().isOk())
-			.andExpect(jsonPath("$.data[0]").value("test1"))
-			.andExpect(jsonPath("$.data[1]").value("test2"))
+			.andExpect(jsonPath("$.data[0]").value("1분 전 검색어"))
+			.andExpect(jsonPath("$.data[1]").value("5분 전 검색어"))
+			.andExpect(jsonPath("$.data[2]").value("10분 전 검색어"))
 			.andDo(restDocs.document(
 				resource(
 					ResourceSnippetParameters.builder()
@@ -157,7 +158,7 @@ class SearchControllerTest extends RestDocsSupport {
 	@WithMockUser(username = "test-user")
 	void getPopularSearchList() throws Exception {
 		// GIVEN
-		List<String> popularKeywords = List.of("test1", "test2");
+		List<String> popularKeywords = List.of("1등 인기책", "2등 인기책", "3등 인기책");
 		when(searchService.getPopularKeywords()).thenReturn(popularKeywords);
 
 		// WHEN
@@ -166,8 +167,9 @@ class SearchControllerTest extends RestDocsSupport {
 
 		// THEN
 		perform.andExpect(status().isOk())
-			.andExpect(jsonPath("$.data[0]").value("test1"))
-			.andExpect(jsonPath("$.data[1]").value("test2"))
+			.andExpect(jsonPath("$.data[0]").value("1등 인기책"))
+			.andExpect(jsonPath("$.data[1]").value("2등 인기책"))
+			.andExpect(jsonPath("$.data[2]").value("3등 인기책"))
 			.andDo(restDocs.document(
 				resource(
 					ResourceSnippetParameters.builder()
@@ -191,17 +193,17 @@ class SearchControllerTest extends RestDocsSupport {
 	void getAutoCompleteList() throws Exception {
 		// GIVEN
 		AutocompleteResponse autocompleteResponse = new AutocompleteResponse(
-			List.of(new AutocompleteResponse.Data("test1", 1.0), new AutocompleteResponse.Data("test2", 2.0))
+			List.of(new AutocompleteResponse.Data("싸피 교과서1", 2.0), new AutocompleteResponse.Data("싸피 교과서2", 1.0))
 		);
 		when(searchService.getAutocomplete(anyString())).thenReturn(autocompleteResponse);
 
 		// WHEN
 		ResultActions perform = this.mockMvc.perform(get("/api/v1/search/auto-complete")
-			.param("keyword", "test"));
+			.param("keyword", "싸피"));
 
 		// THEN
 		perform.andExpect(status().isOk())
-			.andExpect(jsonPath("$.list[0].value").value("test1"))
+			.andExpect(jsonPath("$.list[0].value").value("싸피 교과서1"))
 			.andDo(restDocs.document(
 				resource(
 					ResourceSnippetParameters.builder()
