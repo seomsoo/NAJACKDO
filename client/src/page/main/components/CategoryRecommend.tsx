@@ -44,7 +44,7 @@ const CategoryRecommend = () => {
         오늘의
         <span className="bg-[#A6B37D] border-2 border-[#A6B37D] text-sm text-white px-4 py-0.5 rounded-full mx-1">
           {selectedCategory}
-        </span>{" "}
+        </span>
         추천도서는?
       </p>
       <div
@@ -58,7 +58,7 @@ const CategoryRecommend = () => {
           .fill(null)
           .map((index) => {
             return (
-              <img src="pubao.png" alt="" width={80} className="mx-1 my-3" />
+              <img src="pubao.png" alt="" width={80} className="mx-1 my-3" key={index}/>
             );
           })}
       </div>

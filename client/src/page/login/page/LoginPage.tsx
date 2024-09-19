@@ -20,6 +20,7 @@ const LoginPage = () => {
 
   const [api, setApi] = useState<CarouselApi>();
   const [carouselIndex, setCarouselIndex] = useState<number>(0);
+  const [active, setActive] = useState<boolean>(false);
 
   useEffect(() => {
     if (!api) return;
@@ -49,6 +50,14 @@ const LoginPage = () => {
       onboardingImage: "images/onBoarding/onboarding_third.png",
     },
   ];
+
+  useEffect(() => {
+    if (carouselIndex === 2) {
+      setActive(true);
+    } else {
+      setActive(false);
+    }
+  }, [carouselIndex]);
 
   return (
     <div className="mx-16 h-[calc(screen-86px)] flex flex-col justify-between">
@@ -85,7 +94,7 @@ const LoginPage = () => {
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
-      <KakaoLogin />
+      <KakaoLogin active={active} />
     </div>
   );
 };

@@ -35,7 +35,7 @@ const KapayPage = () => {
 
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/v1/kapay/ready/${deviceType}/${openType}`,
+        `https://www.najackdo.kro.kr/api/v1/kapay/ready/${deviceType}/${openType}`,
         {
           params: {
             itemName,

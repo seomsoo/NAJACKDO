@@ -39,7 +39,7 @@ public class SecurityConfig {
 		return httpSecurity
 			.cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
 				CorsConfiguration configuration = new CorsConfiguration();
-				configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://127.0.0.1:5500"));
+				configuration.setAllowedOrigins(List.of("http://localhost:3000", "https://www.najackdo.kro.kr"));
 				configuration.setAllowedMethods(Collections.singletonList("*"));
 				configuration.setAllowCredentials(true);
 				configuration.setAllowedHeaders(Collections.singletonList("*"));
@@ -61,7 +61,8 @@ public class SecurityConfig {
 						.authorizationRequestRepository(customAuthorizationRequestRepository)
 				)
 				.redirectionEndpoint(redirection -> redirection.baseUri("/*/oauth2/code/*"))
-				.userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig.userService(customOAuth2UserService))
+				.userInfoEndpoint(
+					(userInfoEndpointConfig) -> userInfoEndpointConfig.userService(customOAuth2UserService))
 				.successHandler(customSuccessHandler)
 			)
 			.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

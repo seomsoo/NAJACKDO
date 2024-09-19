@@ -1,7 +1,10 @@
 package com.najackdo.server.domain.location.entity;
 
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.MultiPolygon;
 import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.geom.PrecisionModel;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,4 +32,5 @@ public class Location {
 
 	@Column(columnDefinition = "geometry(Point, 4326)")
 	private Point locationPoint;    // Point
+
 }

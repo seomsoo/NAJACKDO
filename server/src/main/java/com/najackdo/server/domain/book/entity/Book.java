@@ -55,4 +55,22 @@ public class Book {
 
 	@Column(name = "publisher")
 	private String publisher;
+
+	public static Book createBook(Long isbn, String description, String genre, String title, String author,
+		String cover, Date pubDate, int priceStandard, int itemPage, int starPoint, String publisher) {
+		Book book = new Book();
+		book.isbn = isbn;
+		book.description = description;
+		book.genre = genre;
+		book.title = title;
+		book.author = author;
+		book.cover = cover;
+		book.pubDate = pubDate;
+		book.priceStandard = priceStandard;
+		book.itemPage = itemPage;
+		book.starPoint = starPoint;
+		book.publisher = publisher;
+		return book;
+	}
+
 }

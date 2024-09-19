@@ -1,7 +1,14 @@
+buildscript {
+    ext {
+        restdocsApiSpecVersion = '0.18.2'
+    }
+}
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.3'
     id 'io.spring.dependency-management' version '1.1.6'
+    id 'com.epages.restdocs-api-spec' version "${restdocsApiSpecVersion}"
 }
 
 group = 'com.najackdo'
@@ -76,10 +83,44 @@ dependencies {
     // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'com.google.code.gson:gson:2.11.0'
+    testImplementation 'org.projectlombok:lombok'
 
-    // netty resolver dns native macos for websocket
-    implementation group: 'io.netty', name: 'netty-all', version: '4.1.112.Final'
+    // Documentation
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testImplementation "com.epages:restdocs-api-spec-mockmvc:${restdocsApiSpecVersion}"
 
+
+}
+
+openapi3 {
+    servers = [
+            { url = "http://localhost:8080" },
+            { url = "https://www.najackdo.kro.kr" }
+    ]
+    title = 'NAJACKDO API Documentation'
+    description = '나작도 프로젝트 나작도의 API 문서입니다.'
+    version = '0.0.1'
+    outputFileNamePrefix = 'najackdo-api-docs'
+    format = 'yaml'
+    outputDirectory = 'build/resources/test/docs'
+}
+
+tasks.register('openapi3-security-schemes') {
+    dependsOn 'openapi3'
+    doFirst {
+        def swaggerUIFile = file("${openapi3.outputDirectory}/${openapi3.outputFileNamePrefix}.${openapi3.format}")
+
+        def securitySchemesContent = "  securitySchemes:\n" +                     \
+                                                         "    APIKey:\n" +                     \
+                                                         "      type: apiKey\n" +                     \
+                                                         "      name: Authorization\n" +                     \
+                                                         "      in: header\n" +                    \
+                                                         "security:\n" +
+                "  - APIKey: []  # Apply the security scheme here"
+
+        swaggerUIFile.append securitySchemesContent
+    }
 }
 
 tasks.named('test') {

@@ -1,6 +1,6 @@
-import Alarm from "../components/Alarm";
 import { useNavigate } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
+import Alarm from "page/alarm/components/Alarm";
 
 const AlarmPage = () => {
   const alarmHistoryArray = [

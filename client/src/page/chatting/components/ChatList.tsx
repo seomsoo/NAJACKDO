@@ -1,6 +1,22 @@
-const ChatList = () => {
+import { useNavigate } from "react-router-dom";
+
+interface ChatListProps {
+  roomId: number;
+}
+
+const ChatList = ({ roomId }: ChatListProps) => {
+  const navigate = useNavigate();
+
+  const goChattingRoom = () => {
+    console.log("채팅방으로 이동");
+    navigate(`/chat/${roomId}`);
+  };
+
   return (
-    <div className="border-b-2 flex flex-row justify-between items-center px-3 py-5">
+    <div
+      className="border-b-2 flex flex-row justify-between items-center px-3 py-5"
+      onClick={goChattingRoom}
+    >
       <div className="flex flex-row items-center">
         <img
           src="하니.png"

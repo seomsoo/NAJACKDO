@@ -10,25 +10,17 @@ function App() {
 
   const popupPaths = ["/kapay/approve", "/kapay/cancel", "/kapay/fail"];
   const showHeaderPaths = ["/"];
-  const hideFooterPaths = [
-    "/login",
-    "/bookdetail/rental",
-    "/bookdetail/mybook",
-  ];
+  const hideFooterPaths = ["/signin", "/bookdetail/rental", "/bookdetail/mybook"];
 
   const isPopup = window.opener !== null && !window.opener.closed;
   const shouldHideHeaderFooter = popupPaths.includes(currentPath) && isPopup;
   return (
     <div className="pb-[86px] relative">
-      {!shouldHideHeaderFooter && showHeaderPaths.includes(currentPath) && (
-        <Header />
-      )}
+      {!shouldHideHeaderFooter && showHeaderPaths.includes(currentPath) && <Header />}
       <Routes>
         <Route path="/*" element={<MainRoute />} />
       </Routes>
-      {!shouldHideHeaderFooter && !hideFooterPaths.includes(currentPath) && (
-        <Footer />
-      )}
+      {!shouldHideHeaderFooter && !hideFooterPaths.includes(currentPath) && <Footer />}
     </div>
   );
 }

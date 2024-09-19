@@ -1,5 +1,8 @@
+import { Popover, PopoverContent, PopoverTrigger } from "components/ui/popover";
 import ApplyGuide from "page/library/components/ApplyGuide";
+import TextApply from "page/library/components/TextApply";
 import { IoChevronBack } from "react-icons/io5";
+import { LuCamera } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 
 const ApplyPage = () => {
@@ -15,17 +18,31 @@ const ApplyPage = () => {
       </div>
       <ApplyGuide />
       <div className="flex flex-row justify-center mt-6">
-        <button
-          className="bg-[#B0A695] text-white font-bold w-[153px] h-[54px] rounded-xl mx-2"
-          onClick={() => navigate("/apply/book")}
-        >
-          도서 단일 촬영
-        </button>
+        <Popover>
+          <PopoverTrigger className="bg-[#B0A695] text-white font-bold w-[153px] h-[54px] rounded-xl mx-2">
+            도서 단일 등록
+          </PopoverTrigger>
+          <PopoverContent
+            align="start"
+            side="top"
+            className="font-bold border-2 border-[#B0A695]"
+          >
+            <div
+              className="flex flex-row items-center cursor-pointer"
+              onClick={() => navigate("/apply/book")}
+            >
+              <LuCamera size={20} className="mr-3" />
+              <span>단일 도서 촬영</span>
+            </div>
+            <div className="border-[0.5px] border-[#B0A695] my-1.5" />
+            <TextApply />
+          </PopoverContent>
+        </Popover>
         <button
           className="bg-[#B0A695] text-white font-bold w-[153px] h-[54px] rounded-xl mx-2"
           onClick={() => navigate("/apply/bookcase")}
         >
-          책장 촬영
+          책장 등록
         </button>
       </div>
     </div>
