@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.najackdo.server.core.exception.BaseException;
 import com.najackdo.server.core.exception.ErrorCode;
@@ -20,6 +21,7 @@ import com.najackdo.server.domain.location.entity.Location;
 import com.najackdo.server.domain.location.repository.ActivityAreaSettingRepository;
 import com.najackdo.server.domain.location.repository.LocationRepository;
 import com.najackdo.server.domain.user.entity.User;
+import com.najackdo.server.domain.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +33,7 @@ public class LocationService {
 
 	private final LocationRepository locationRepository;
 	private final ActivityAreaSettingRepository activityAreaSettingRepository;
+	private final UserRepository userRepository;
 
 	/**
 	 * 현재 위치를 기준으로 가까운 위치를 조회한다.
@@ -98,17 +101,23 @@ public class LocationService {
 	}
 
 
+	@Transactional
 	public void registActivityArea(User user, LocationData.Regist request) {
-		Location closestLocation = locationRepository.findById(request.getLocationCode())
+		Location location = locationRepository.findById(request.getLocationCode())
 			.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_LOCATION));
 
-		log.info(closestLocation.getLocationName());
-		log.info("closestLocation: {}", closestLocation);
+		ActivityAreaSetting existingSetting = activityAreaSettingRepository.findByUser(user)
+			.orElseGet(() -> {
+				ActivityAreaSetting newSetting = ActivityAreaSetting.create(user, location, request.getDistanceMeters());
+				user.setActivityAreaSetting(newSetting);
+				userRepository.save(user);
+				return newSetting;
+			});
 
-		activityAreaSettingRepository.findByUser(user).ifPresent(activityAreaSettingRepository::delete);
+		existingSetting.updateLocation(location);
+		existingSetting.setDistanceMeters(request.getDistanceMeters());
 
-		activityAreaSettingRepository.save(
-			ActivityAreaSetting.create(user, closestLocation, request.getDistanceMeters()));
+		activityAreaSettingRepository.save(existingSetting);
 	}
 
 

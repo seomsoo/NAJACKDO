@@ -35,5 +35,4 @@ public class UserController {
 		userService.updateUser(user, update);
 		return SuccessResponse.empty();
 	}
-
 }

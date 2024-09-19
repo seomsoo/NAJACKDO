@@ -22,35 +22,26 @@ public class UserBookData {
         }
     }
 
-    @Getter
-    @AllArgsConstructor
+    @Data
     public static class Create {
 
         @NotNull
         private List<String> titles;
 
-        @NotNull
-        private int locationId;
-
-        public static Create of(List<String> titles, int locationId) {
-            return new Create(titles, locationId);
+        public static Create of(List<String> titles) {
+            Create create = new Create();
+            create.titles = titles;
+            return create;
         }
+
     }
 
-    @Getter
-    @AllArgsConstructor
+    @Data
     public static class CreateByISBN {
-
         @NotNull
-        private String ISBN;
-
-        @NotNull
-        private int locationId;
-
-        public static CreateByISBN of(String ISBN, int locationId) {
-            return new CreateByISBN(ISBN, locationId);
-        }
+        private Long ISBN;
     }
+
 
     @Getter
     @AllArgsConstructor

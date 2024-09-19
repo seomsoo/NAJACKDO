@@ -40,6 +40,14 @@ public enum ErrorCode {
 
 	// Location
 	NOT_FOUND_LOCATION(6000, HttpStatus.NOT_FOUND, "위치를 찾을 수 없습니다."),
+	ACTIVITY_AREA_NOT_FOUND(6001, HttpStatus.NOT_FOUND, "활동지역을 찾을 수 없습니다."),
+
+	// BOOK
+	BOOK_NOT_FOUND(7000, HttpStatus.NOT_FOUND, "책을 찾을 수 없습니다."),
+	BOOK_ALREADY_EXIST(7001, HttpStatus.BAD_REQUEST, "이미 존재하는 책입니다."),
+
+	BOOKMARK_ALREADY_EXIST(7002, HttpStatus.BAD_REQUEST, "이미 존재하는 북마크입니다."),
+	BOOKMARK_NOT_FOUND(7003, HttpStatus.NOT_FOUND, "북마크를 찾을 수 없습니다."),
 
 	// S3
 	EMPTY_FILE(8000, HttpStatus.BAD_REQUEST, "파일이 비어있습니다."),

@@ -34,4 +34,9 @@ public class BookData {
 			this.isbn = book.getIsbn();
 		}
 	}
+
+	@Data
+	public static class Interest{
+		Long bookId;
+	}
 }

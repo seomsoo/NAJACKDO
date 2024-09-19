@@ -217,4 +217,9 @@ public class SearchService {
 		return new AutocompleteResponse(list);
 	}
 
+	public void deleteRecentKeyword(Long id, String keyword) {
+		String key = SEARCH_KEY + id;
+		ListOperations<String, String> listOperations = redisTemplate.opsForList();
+		listOperations.remove(key, 1, keyword);
+	}
 }

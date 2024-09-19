@@ -57,7 +57,7 @@ public class QActivityAreaSetting extends EntityPathBase<ActivityAreaSetting> {
     public QActivityAreaSetting(Class<? extends ActivityAreaSetting> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.location = inits.isInitialized("location") ? new QLocation(forProperty("location")) : null;
-        this.user = inits.isInitialized("user") ? new com.najackdo.server.domain.user.entity.QUser(forProperty("user")) : null;
+        this.user = inits.isInitialized("user") ? new com.najackdo.server.domain.user.entity.QUser(forProperty("user"), inits.get("user")) : null;
     }
 
 }

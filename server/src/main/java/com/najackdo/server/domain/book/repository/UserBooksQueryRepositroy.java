@@ -5,7 +5,6 @@ import com.najackdo.server.domain.user.entity.User;
 
 import java.util.List;
 
-public interface UserBooksCustomRepositroy {
+public interface UserBooksQueryRepositroy {
 
-    List<UserBookData.BookCase> getBookCasesByUser(User user);
 }

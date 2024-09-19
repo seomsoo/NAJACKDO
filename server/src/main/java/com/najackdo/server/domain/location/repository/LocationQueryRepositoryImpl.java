@@ -11,11 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.najackdo.server.domain.location.dto.LocationData;
 import com.najackdo.server.domain.location.entity.Location;
-import com.najackdo.server.domain.location.entity.QLocation;
 import com.querydsl.core.types.dsl.Expressions;
-import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import jakarta.persistence.EntityManager;
