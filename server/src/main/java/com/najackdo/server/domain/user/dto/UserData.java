@@ -40,16 +40,16 @@ public class UserData {
 		private Long goodReviewCount;
 		private Long badReviewCount;
 		private int cash;
-		private int saveCash;
-		private int earnCash;
+		private Integer saveCash;
+		private Integer earnCash;
 
 		public static InfoResponse of(
 			User user,
 			String locationName,
 			Long goodReviewCount,
 			Long badReviewCount,
-			int saveCash,
-			int earnCash
+			Integer saveCash,
+			Integer earnCash
 		) {
 			InfoResponse response = ofWithoutCash(user, locationName, goodReviewCount, badReviewCount);
 			response.cash = user.getCash();

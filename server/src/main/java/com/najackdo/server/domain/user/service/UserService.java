@@ -63,8 +63,8 @@ public class UserService {
 		String locationName = userQueryRepository.findUserLocationName(user.getId());
 		Long goodReviewCount = userQueryRepository.countUserReviewsByItem(user.getId(), GOOD);
 		Long badReviewCount = userQueryRepository.countUserReviewsByItem(user.getId(), BAD);
-		int saveCash = userQueryRepository.findUserSavingCash(user.getId());
-		int earnCash = userQueryRepository.findUserEarningCash(user.getId());
+		Integer saveCash = userQueryRepository.findUserSavingCash(user.getId());
+		Integer earnCash = userQueryRepository.findUserEarningCash(user.getId());
 		return UserData.InfoResponse.of(user, locationName, goodReviewCount, badReviewCount, saveCash, earnCash);
 	}
 
