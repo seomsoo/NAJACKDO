@@ -8,6 +8,7 @@ console.log("BASE_URL", BASE_URL);
 export const host =
   process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://www.najackdo.kro.kr";
 
+console.log("NODE_ENV", process.env.NODE_ENV);
 console.log("host", host);
 
 export const KAKAO_AUTH_URL = `${BASE_URL}/oauth2/authorization/kakao?redirect_uri=${host}`;
