@@ -1,129 +1,157 @@
 import { useEffect, useState } from "react";
+import { useQuery, useInfiniteQuery } from "react-query";
+import { INearLocation } from "atoms/Location.type";
+import { getNearLocation } from "api/locationApi";
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle } from "components/ui/dialog";
+import { IPaging } from "atoms/Base.type";
+
 
 declare global {
   interface Window {
     kakao: any;
   }
 }
+interface ILocation {
+  latitude: number;
+  longitude: number;
+}
+
+const fetchLocation = (): Promise<ILocation> => {
+  return new Promise((resolve, reject) => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          resolve({ latitude: lat, longitude: lon });
+        },
+        (error) => reject(error)
+      );
+    } else {
+      reject(new Error("Fail to load my location"));
+    }
+  });
+};
+
 
 const KakaoMap = () => {
   const [address, setAddress] = useState(""); // 행정동 정보를 저장할 상태
 
-  const polygonArray = [
-    {
-      locationName: "광주 광산구 하남동",
-      locationPolygon: [35.2211604737, 126.8103687071,
-        35.2025753369, 126.8186611635,
-        35.1802463214, 126.8087259725,
-        35.1635846867, 126.7920117674,
-        35.2153028754, 126.7786200907,
-        35.2211604737, 126.8103687071]
+  const {
+    data: location,
+    isLoading: isLocationLoading,
+    isError: isLocationError,
+  } = useQuery<ILocation>({
+    queryKey: ["location"],
+    queryFn: fetchLocation,
+  });
+
+  if (location) {
+    console.log("내위치", location);
+  }
+
+  
+  const {
+    data: nearLocationData,
+    isLoading: isNearLocationLoading,
+    isError: isNearLocationError,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage
+  } = useInfiniteQuery<IPaging<INearLocation[]>>({
+    queryKey: ["nearLocations"],
+    queryFn: ({ pageParam = 0 }) => getNearLocation(location.latitude, location.longitude, pageParam as number),
+    getNextPageParam: (lastPage, pages) => {
+      if (!lastPage.last) {
+        return pages.length;
+      }
+      return undefined;
     },
-    {
-      locationName: "광주 광산구 수완동",
-      locationPolygon: [35.2025753369, 126.8186611635,
-        35.1977068327, 126.8343350472,
-        35.1860890847, 126.8306159230,
-        35.1802463214, 126.8087259725,
-        35.2025753369, 126.8186611635]
-       
-    },
-    {
-      locationName: "광주 광산구 비아동",
-      locationPolygon: [35.2211604737, 126.8103687071, 
-        35.2317120787, 126.8257548636,
-        35.2015392391, 126.8387450811, 
-        35.1977068327, 126.8343350472,
-        35.2025753369, 126.8186611635,
-        35.2211604737, 126.8103687071]
-       
-    }
-  ]
+    enabled: !!location,
+  });
+
+  console.log("neaarLocationData",nearLocationData)  
+  
+  // const {
+  //   data: nearLocationData,
+  //   isLoading: isNearLocationLoading,
+  //   isError: isNearLocationError,
+  // } =useQuery<INearLocation[]>({
+  //   queryKey: ["nearLocations"],
+  //   queryFn: async () => location ? getNearLocation(location.latitude, location.longitude, 0) : [],
+  //   enabled: !!location,
+  // })
+  // if (nearLocationData) {
+  //   console.log("주변 동 정보", nearLocationData);
+  // }
+  
 
   useEffect(() => {
-    const mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-    mapOption = { 
-        center: new window.kakao.maps.LatLng(35.204095, 126.807187), // 지도의 중심좌표
-        level: 6
-    }; 
-
-    const map = new window.kakao.maps.Map(mapContainer, mapOption);
-    const geocoder = new window.kakao.maps.services.Geocoder(); // 주소 변환을 위한 geocoder
-
-    if (navigator.geolocation) {
-      // 현위치
-      navigator.geolocation.getCurrentPosition(function(position) {
-        
-        var lat = position.coords.latitude;
-        var lon = position.coords.longitude;
-        
-        var locPosition = new window.kakao.maps.LatLng(lat, lon);
-
-        searchAddrFromCoords(lon, lat, function(result: any, status: any) {
-          if (status === window.kakao.maps.services.Status.OK) {
-            for (let i = 0; i < result.length; i++) {
-              if (result[i].region_type === 'H') { 
-                setAddress(result[i].address_name); 
-                break;
-              }
-            }
-          }
-        });
-
-        displayMarker(locPosition);
-      });
-        
-    } else { 
-      var locPosition = new window.kakao.maps.LatLng(35.204095, 126.8071876)   
-      console.log('현재 위치 조회에 실패');
-      displayMarker(locPosition);
-    }
-
-    function displayMarker(locPosition: any) {
-      var marker = new window.kakao.maps.Marker({  
-        map: map, 
-        position: locPosition
-      }); 
-      marker.setMap(map);
-      map.setCenter(locPosition);
-    }
-
-    // polygon - 값 받아서 바꾸기
-    displayPolygon(polygonArray);
+    const mapContainer = document.getElementById('map');
     
-    function displayPolygon(polygonArray: { locationName: string; locationPolygon: number[] }[]) {
-      var polygonPath: any[] = [];
+    // const mapOption = {
+    //   center: new window.kakao.maps.LatLng(location ? location.latitude:35.204095, location? location.longitude:126.807187 ),
+    //   level: 6,
+    // };
 
-      polygonArray.forEach(polygon => {
-        for (let i = 0; i < polygon.locationPolygon.length; i += 2) {
-          polygonPath.push(new window.kakao.maps.LatLng(polygon.locationPolygon[i], polygon.locationPolygon[i+1]))
-        }
-      });
+    // const map = new window.kakao.maps.Map(mapContainer, mapOption);
+    // displayMarker(mapOption.center);
 
-      var polygon = new window.kakao.maps.Polygon({
-        path:polygonPath,
-        strokeWeight: 2,
-        strokeColor: '#B0A695',
-        strokeOpacity: 1,
-        strokeStyle: 'solid',
-        fillColor: '#B0A695',
-        fillOpacity: 0.2
-      });
-    
-      polygon.setMap(map);
-    }
+    // function displayMarker(center: any) {
+    //   const marker = new window.kakao.maps.Marker({
+    //     map: map,
+    //     position: center,
+    //   });
+    //   marker.setMap(map);
+    //   map.setCenter(center);
+    // }
+  
 
-    // 좌표 -> 주소
-    function searchAddrFromCoords(lng: number, lat: number, callback: Function) {
-      geocoder.coord2RegionCode(lng, lat, callback);
-    }
+  }, [location]);
 
-  }, []);
+  const handleLocationSelect = (locationName: string) => {
+    setAddress(locationName);
+  };
+
+  // 로딩 상태 처리
+  if (isLocationLoading || isNearLocationLoading) {
+    return <div>Loading...</div>;
+  }
+
+  // 에러 처리
+  if (isLocationError || isNearLocationError) {
+    return <div>Error loading location data.</div>;
+  }
 
   return (
     <>
       <div id="map" className="w-full h-[500px]"></div>
       <p className="text-center mt-2">{address}</p>
+      {/* <Dialog>
+        <DialogTrigger asChild>
+          <button className="mt-4 p-2 bg-blue-500 text-white rounded">
+            근처 동 선택
+          </button>
+        </DialogTrigger>
+
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>근처 동 선택</DialogTitle>
+          </DialogHeader>
+          <ul>
+            {nearLocationData.map((location, index) => (
+              <li key={index}>
+                <button
+                  onClick={() => handleLocationSelect(location.locationName)}
+                  className="w-full text-left p-2 border-b hover:bg-gray-100"
+                >
+                  {location.locationName}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </DialogContent>
+      </Dialog> */}
     </>
   );
 }
