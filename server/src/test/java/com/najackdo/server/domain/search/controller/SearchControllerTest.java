@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -53,20 +54,29 @@ class SearchControllerTest extends RestDocsSupport {
 	@WithMockUser(username = "test-user")
 	void search() throws Exception {
 		// GIVEN
+		Book book = Book.createBook(
+			1234567890L, // ID는 나중에 스파이를 통해 설정
+			"Book",
+			"genre",
+			"Test Book",
+			"Bum su",
+			"image.png",
+			Date.valueOf(LocalDate.now()),
+			15000,
+			320,
+			5,
+			"Publisher"
+		);
+
+		// Book 객체에 스파이를 사용
+		Book spyBook = Mockito.spy(book);
+
+		// bookId에 대해 가짜 ID 값 설정
+		doReturn(1L).when(spyBook).getId();
+
+		// 검색 결과로 스파이된 Book 사용
 		List<BookData.Search> searchResults = List.of(
-			BookData.Search.of (Book.createBook(
-				1234567890L,
-				"Book",
-				"genre",
-				"Test Book",
-				"Bum su",
-				"image.png",
-				Date.valueOf(LocalDate.now()),
-				15000,
-				320,
-				5,
-				"Publisher"
-			))
+			BookData.Search.of(spyBook)
 		);
 		when(searchService.searchKeyword(anyLong(), anyString())).thenReturn(searchResults);
 
@@ -77,6 +87,7 @@ class SearchControllerTest extends RestDocsSupport {
 
 		// THEN
 		perform.andExpect(status().isOk())
+			.andExpect(jsonPath("$.data[0].bookId").value(1L))  // 스파이를 통해 설정된 ID 값 검증
 			.andExpect(jsonPath("$.data[0].title").value("Test Book"))
 			.andExpect(jsonPath("$.data[0].author").value("Bum su"))
 			.andExpect(jsonPath("$.data[0].cover").value("image.png"))
@@ -101,6 +112,7 @@ class SearchControllerTest extends RestDocsSupport {
 							fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("요청 성공 여부"),
 							fieldWithPath("status").type(JsonFieldType.NUMBER).description("상태 코드"),
 							fieldWithPath("message").type(JsonFieldType.STRING).description("상태 메시지"),
+							fieldWithPath("data[].bookId").type(JsonFieldType.NUMBER).description("도서 ID"),
 							fieldWithPath("data[].title").type(JsonFieldType.STRING).description("도서 제목"),
 							fieldWithPath("data[].author").type(JsonFieldType.STRING).description("도서 저자"),
 							fieldWithPath("data[].cover").type(JsonFieldType.STRING).description("도서 커버 이미지"),
