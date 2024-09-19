@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.najackdo.server.domain.book.dto.BookData;
 import com.najackdo.server.domain.user.entity.User;
+import com.najackdo.server.domain.book.entity.Book;
 
 public interface BookQueryRepository {
 
@@ -14,6 +15,8 @@ public interface BookQueryRepository {
 	 * @return {@link List<BookData.BookCase>}
 	 */
 	List<BookData.BookCase> findBookCaseInterestByUser(User user);
+
+	List<Book> findInterestingBooks(Long userId);
 
 	/**
 	 * 사용자 닉네임으로 사용자의 책 목록을 조회한다.

@@ -4,8 +4,6 @@ import static com.najackdo.server.domain.book.entity.BookStatus.*;
 
 import java.util.List;
 
-import com.najackdo.server.domain.book.dto.UserBookData;
-import lombok.AllArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import com.najackdo.server.domain.location.entity.Location;
@@ -39,7 +37,7 @@ public class UserBook {
 	private List<RentalLog> bookRentalHistories;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "book_detail_id", nullable = false)
+	@JoinColumn(name = "book_detail_id")
 	private UserBookDetail userBookDetail;
 
 	@Id
@@ -71,11 +69,11 @@ public class UserBook {
 	@ColumnDefault("false")
 	private Boolean isDeleted = false;
 
-	public static UserBook UserBookCreate(User user, Book book, Location locationCode){
+	public static UserBook createUserBook(User user, Book book, Location location){
 		UserBook userBook = new UserBook();
 		userBook.user = user;
 		userBook.book = book;
-		userBook.locationCode = locationCode;
+		userBook.locationCode = location;
 		return userBook;
 	}
 

@@ -33,4 +33,12 @@ public class BookMark {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "book_id", nullable = false)
 	private Book book;
+
+	public static BookMark createBookMark(User user, Book book) {
+		BookMark bookMark = new BookMark();
+		bookMark.user = user;
+		bookMark.book = book;
+		return bookMark;
+	}
+
 }

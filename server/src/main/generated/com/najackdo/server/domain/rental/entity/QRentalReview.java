@@ -57,7 +57,7 @@ public class QRentalReview extends EntityPathBase<RentalReview> {
     public QRentalReview(Class<? extends RentalReview> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.rental = inits.isInitialized("rental") ? new QRental(forProperty("rental"), inits.get("rental")) : null;
-        this.user = inits.isInitialized("user") ? new com.najackdo.server.domain.user.entity.QUser(forProperty("user")) : null;
+        this.user = inits.isInitialized("user") ? new com.najackdo.server.domain.user.entity.QUser(forProperty("user"), inits.get("user")) : null;
     }
 
 }

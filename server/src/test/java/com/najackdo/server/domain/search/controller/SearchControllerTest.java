@@ -54,7 +54,7 @@ class SearchControllerTest extends RestDocsSupport {
 	void search() throws Exception {
 		// GIVEN
 		List<BookData.Search> searchResults = List.of(
-			new BookData.Search(Book.createBook(
+			BookData.Search.of (Book.createBook(
 				1234567890L,
 				"Book",
 				"genre",

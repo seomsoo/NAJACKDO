@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -17,9 +18,13 @@ public class QUser extends EntityPathBase<User> {
 
     private static final long serialVersionUID = 1940316214L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QUser user = new QUser("user");
 
     public final com.najackdo.server.core.entity.QBaseEntity _super = new com.najackdo.server.core.entity.QBaseEntity(this);
+
+    public final com.najackdo.server.domain.location.entity.QActivityAreaSetting activityAreaSetting;
 
     public final NumberPath<Short> age = createNumber("age", Short.class);
 
@@ -56,18 +61,29 @@ public class QUser extends EntityPathBase<User> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 
+    public final ListPath<com.najackdo.server.domain.book.entity.UserBook, com.najackdo.server.domain.book.entity.QUserBook> userBooks = this.<com.najackdo.server.domain.book.entity.UserBook, com.najackdo.server.domain.book.entity.QUserBook>createList("userBooks", com.najackdo.server.domain.book.entity.UserBook.class, com.najackdo.server.domain.book.entity.QUserBook.class, PathInits.DIRECT2);
+
     public final StringPath username = createString("username");
 
     public QUser(String variable) {
-        super(User.class, forVariable(variable));
+        this(User.class, forVariable(variable), INITS);
     }
 
     public QUser(Path<? extends User> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QUser(PathMetadata metadata) {
-        super(User.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QUser(PathMetadata metadata, PathInits inits) {
+        this(User.class, metadata, inits);
+    }
+
+    public QUser(Class<? extends User> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.activityAreaSetting = inits.isInitialized("activityAreaSetting") ? new com.najackdo.server.domain.location.entity.QActivityAreaSetting(forProperty("activityAreaSetting"), inits.get("activityAreaSetting")) : null;
     }
 
 }

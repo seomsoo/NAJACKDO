@@ -7,11 +7,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface UserBooksRepository extends JpaRepository<UserBook,Long>{
+public interface UserBooksRepository extends JpaRepository<UserBook,Long>, UserBooksQueryRepositroy{
+    @Query("SELECT ub FROM UserBook ub JOIN FETCH ub.book JOIN FETCH ub.user WHERE ub.user.id = :userId AND ub.book.isbn = :isbn")
+    Optional<UserBook> findByUserAndIsbn(@Param("userId") Long userId, @Param("isbn") Long isbn);
 
-    @Query("SELECT u FROM UserBook u WHERE u.user.providerId =: userId")
-    List<UserBook> findByUserId(@Param("userId") String userId);
+
 
 }
+

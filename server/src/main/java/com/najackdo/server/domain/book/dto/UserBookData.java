@@ -2,44 +2,43 @@ package com.najackdo.server.domain.book.dto;
 
 import java.util.List;
 
+import com.najackdo.server.domain.book.entity.UserBook;
+
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 public class UserBookData {
 
-	@Data
-	public static class Create {
+    @Data
+    public static class Search {
+        private String title;
+
+        public static Search of(UserBook book) {
+            Search search = new Search();
+            search.setTitle(book.getBook().getTitle());
+            return search;
+        }
+    }
+
+    @Data
+    public static class Create {
 
 		@NotNull
 		private List<String> titles;
 
-		@NotNull
-		private int locationId;
+        public static Create of(List<String> titles) {
+            Create create = new Create();
+            create.titles = titles;
+            return create;
+        }
 
-		public static Create of(List<String> titles, int locationId) {
-			Create create = new Create();
-			create.titles = titles;
-			create.locationId = locationId;
-			return create;
-		}
-	}
+    }
 
-	@Data
-	public static class CreateByISBN {
-
-		@NotNull
-		private String ISBN;
-
-		@NotNull
-		private int locationId;
-
-		public static CreateByISBN of(String ISBN, int locationId) {
-			CreateByISBN create = new CreateByISBN();
-			create.ISBN = ISBN;
-			create.locationId = locationId;
-			return create;
-		}
-	}
+    @Data
+    public static class CreateByISBN {
+        @NotNull
+        private Long ISBN;
+    }
 
 	@Data
 	public static class BookCase {

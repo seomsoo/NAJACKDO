@@ -6,8 +6,10 @@ import org.hibernate.annotations.ColumnDefault;
 
 import com.najackdo.server.core.entity.BaseEntity;
 import com.najackdo.server.domain.book.entity.UserBook;
+import com.najackdo.server.domain.location.entity.ActivityAreaSetting;
 import com.najackdo.server.domain.user.dto.UserData;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -17,7 +19,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AccessLevel;
@@ -85,6 +89,10 @@ public class User extends BaseEntity {
 	@ColumnDefault("50")
 	private int mannerScore = 50;
 
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "activity_areas_id")
+	private ActivityAreaSetting activityAreaSetting;
+
 	// @OneToMany(mappedBy = "following", fetch = FetchType.LAZY)
 	// private Set<InterestUser> followingUsers;
 	//
@@ -129,6 +137,10 @@ public class User extends BaseEntity {
 		return user;
 	}
 
+
+	public void setActivityAreaSetting(ActivityAreaSetting activityAreaSetting) {
+		this.activityAreaSetting = activityAreaSetting;
+	}
 	public void delete() {
 		this.isDeleted = true;
 	}
@@ -142,7 +154,6 @@ public class User extends BaseEntity {
 		this.age = update.getAge();
 		this.gender = update.getGender();
 	}
-
 	public void addCash(Integer cash) {
 		this.cash += cash;
 	}

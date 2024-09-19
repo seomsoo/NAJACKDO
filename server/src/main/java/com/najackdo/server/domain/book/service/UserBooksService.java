@@ -1,22 +1,30 @@
 package com.najackdo.server.domain.book.service;
 
-import com.najackdo.server.domain.book.dto.UserBookData;
-import com.najackdo.server.domain.book.entity.Book;
-import com.najackdo.server.domain.book.entity.UserBook;
-import com.najackdo.server.domain.book.repository.BookRepository;
-import com.najackdo.server.domain.book.repository.UserBooksCustomRepositroy;
-import com.najackdo.server.domain.book.repository.UserBooksRepository;
-import com.najackdo.server.domain.location.repository.LocationRepository;
-import com.najackdo.server.domain.user.entity.User;
-import com.najackdo.server.domain.user.repository.UserRepository;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.najackdo.server.core.exception.BaseException;
+import com.najackdo.server.core.exception.ErrorCode;
+import com.najackdo.server.domain.book.dto.BookData;
+import com.najackdo.server.domain.book.dto.UserBookData;
+import com.najackdo.server.domain.book.entity.Book;
+import com.najackdo.server.domain.book.entity.BookMark;
+import com.najackdo.server.domain.book.entity.UserBook;
+import com.najackdo.server.domain.book.repository.BookMarkRepository;
+import com.najackdo.server.domain.book.repository.BookRepository;
+import com.najackdo.server.domain.book.repository.UserBooksRepository;
+import com.najackdo.server.domain.location.entity.ActivityAreaSetting;
+import com.najackdo.server.domain.location.repository.ActivityAreaSettingRepository;
+import com.najackdo.server.domain.user.entity.User;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Transactional(readOnly = true)
@@ -25,35 +33,96 @@ import java.util.List;
 public class UserBooksService {
 
     private final UserBooksRepository userBooksRepository;
-    private final UserBooksCustomRepositroy userBooksCustomRepositroy;
     private final BookRepository bookRepository;
-    private final LocationRepository locationRepository;
-    private final UserRepository userRepository;
-
+    private final ActivityAreaSettingRepository activityAreaSettingRepository;
+    private final BookMarkRepository bookMarkRepository;
 
     @Transactional
-    public void addBookList(User user, UserBookData.Create create) {
+    public Map<String, List<String>> addBookList(User user, UserBookData.Create create) {
+
+        ActivityAreaSetting activityAreaSetting = activityAreaSettingRepository.findUserActivityArea(user.getId()).orElseThrow(
+            () -> new BaseException(ErrorCode.ACTIVITY_AREA_NOT_FOUND)
+        );
+
+        List<String> notFoundBooks = new ArrayList<>();
+        List<String> alreadyExistBooks = new ArrayList<>();
+
+
         for(String title : create.getTitles()) {
-            userBooksRepository.save(UserBook.UserBookCreate(user, bookRepository.findFirstByTitle(title),locationRepository.findById(create.getLocationId())));
+
+            Book book = bookRepository.findFirstByTitle(title).orElseGet(() -> {
+                notFoundBooks.add(title);
+                return null;
+            });
+
+            if (book == null) {
+                continue;
+            }
+
+            if (userBooksRepository.findByUserAndIsbn(user.getId(), book.getIsbn()).isPresent()) {
+                alreadyExistBooks.add(book.getTitle());
+                continue;
+            }
+
+            userBooksRepository.save(UserBook.createUserBook(user, book, activityAreaSetting.getLocation()));
         }
+
+        Map<String, List<String>> result = new HashMap<>();
+        result.put("notFoundBooks", notFoundBooks);
+        result.put("alreadyExistBooks", alreadyExistBooks);
+
+        return result;
     }
 
     @Transactional
     public void addBook(User user, UserBookData.CreateByISBN create) {
-            userBooksRepository.save(UserBook.UserBookCreate(user, bookRepository.findFirstByISBN(create.getISBN()),locationRepository.findById(create.getLocationId())));
+        userBooksRepository.findByUserAndIsbn(user.getId(), create.getISBN()).ifPresent(
+            userBook -> {
+                throw new BaseException(ErrorCode.BOOK_ALREADY_EXIST);
+            }
+        );
+        ActivityAreaSetting activityAreaSetting = activityAreaSettingRepository.findUserActivityArea(user.getId()).orElseThrow(
+            () -> new BaseException(ErrorCode.ACTIVITY_AREA_NOT_FOUND)
+        );
+
+        Book book = bookRepository.findFirstByISBN(create.getISBN()).orElseThrow(
+            () -> new BaseException(ErrorCode.BOOK_NOT_FOUND)
+        );
+        userBooksRepository.save(UserBook.createUserBook(user, book, activityAreaSetting.getLocation()));
     }
 
 
-    public List<UserBookData.BookCase> getBookCasesByUserName(String userName) {
-        User user = userRepository.findByUsername(userName).orElseThrow();
-        log.info("유저탐색 완료");
-        log.info(String.valueOf(user));
-        return userBooksCustomRepositroy.getBookCasesByUser(user);
+    public List<BookData.Search> getInterestBooks(User user) {
+        return bookRepository.findInterestingBooks(user.getId()).stream().map(BookData.Search::of).toList();
     }
 
-    public List<UserBookData.BookCase> getBookCasesByUserId(User user) {
-        return userBooksCustomRepositroy.getBookCasesByUser(user);
+    @Transactional
+    public void addInterestBook(User user,  Long interest) {
+        Book book = bookRepository.findById(interest).orElseThrow(
+            () -> new BaseException(ErrorCode.BOOK_NOT_FOUND)
+        );
+        bookMarkRepository.findByUserIdAndBookId(user.getId(), book.getId()).ifPresent(
+            bookMark -> {
+                throw new BaseException(ErrorCode.BOOKMARK_ALREADY_EXIST);
+            }
+        );
+        bookMarkRepository.save(BookMark.createBookMark(user, book));
     }
 
+    @Transactional
+    public void deleteInterestBook(User user, Long interest) {
 
+        Book book = bookRepository.findById(interest).orElseThrow(
+            () -> new BaseException(ErrorCode.BOOK_NOT_FOUND)
+        );
+
+
+        BookMark byUserIdAndBookId = bookMarkRepository.findByUserIdAndBookId(user.getId(), book.getId()).orElseThrow(
+            () -> new BaseException(ErrorCode.BOOKMARK_NOT_FOUND)
+        );
+
+        bookMarkRepository.delete(byUserIdAndBookId);
+
+
+    }
 }

@@ -62,6 +62,8 @@ public class LocationController {
 		@CurrentUser User user,
 		@RequestBody LocationData.Regist request) {
 
+		log.info("user: {}, request: {}", user, request);
+
 		locationService.registActivityArea(user, request);
 
 		return SuccessResponse.empty();

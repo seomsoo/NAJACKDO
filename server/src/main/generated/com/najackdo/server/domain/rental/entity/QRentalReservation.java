@@ -48,7 +48,7 @@ public class QRentalReservation extends EntityPathBase<RentalReservation> {
 
     public QRentalReservation(Class<? extends RentalReservation> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.user = inits.isInitialized("user") ? new com.najackdo.server.domain.user.entity.QUser(forProperty("user")) : null;
+        this.user = inits.isInitialized("user") ? new com.najackdo.server.domain.user.entity.QUser(forProperty("user"), inits.get("user")) : null;
         this.userBook = inits.isInitialized("userBook") ? new com.najackdo.server.domain.book.entity.QUserBook(forProperty("userBook"), inits.get("userBook")) : null;
     }
 

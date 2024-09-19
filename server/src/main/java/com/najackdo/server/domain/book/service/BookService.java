@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.najackdo.server.domain.book.dto.BookData;
 import com.najackdo.server.domain.book.repository.BookQueryRepository;
+import com.najackdo.server.domain.book.repository.BookRepository;
 import com.najackdo.server.domain.user.entity.User;
 
 import lombok.RequiredArgsConstructor;
@@ -16,13 +17,13 @@ import lombok.RequiredArgsConstructor;
 @Transactional(readOnly = true)
 public class BookService {
 
-	private final BookQueryRepository bookQueryRepository;
+	private final BookRepository bookRepository;
 
 	public List<BookData.BookCase> getBookCaseInterest(User user) {
-		return bookQueryRepository.findBookCaseInterestByUser(user);
+		return bookRepository.findBookCaseInterestByUser(user);
 	}
 
 	public BookData.BookCase getBookCaseByNickName(String nickname) {
-		return bookQueryRepository.findBookCaseByNickName(nickname);
+		return bookRepository.findBookCaseByNickName(nickname);
 	}
 }

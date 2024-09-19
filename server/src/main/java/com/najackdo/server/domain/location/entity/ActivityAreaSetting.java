@@ -2,6 +2,8 @@ package com.najackdo.server.domain.location.entity;
 
 import java.sql.Date;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import com.najackdo.server.core.entity.TimeEntity;
 import com.najackdo.server.domain.user.entity.User;
 
@@ -13,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AccessLevel;
@@ -34,13 +37,13 @@ public class ActivityAreaSetting extends TimeEntity {
 	@JoinColumn(name = "location_code", nullable = false)
 	private Location location;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 
 	@Column(name = "distance_meters", nullable = false)
+	@ColumnDefault("0.15")
 	private Double distanceMeters;
-
 
 
 	public static ActivityAreaSetting create(User user, Location location, Double distanceMeters) {
@@ -50,5 +53,14 @@ public class ActivityAreaSetting extends TimeEntity {
 		activityAreaSetting.distanceMeters = distanceMeters;
 		return activityAreaSetting;
 	}
+
+	public void updateLocation(Location location) {
+		this.location = location;
+	}
+
+	public void setDistanceMeters(Double distanceMeters) {
+		this.distanceMeters = distanceMeters;
+	}
+
 
 }
