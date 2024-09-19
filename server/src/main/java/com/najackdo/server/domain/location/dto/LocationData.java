@@ -34,15 +34,15 @@ public class LocationData {
 	public static class SearchWithGeom{
 		private int locationCode;
 		private String locationName;
-		// private String locationPoint;
-		// private String polygon;
+		private String locationPoint;
+		private String polygon;
 
 		public static SearchWithGeom fromEntity(Location location) {
 			SearchWithGeom search = new SearchWithGeom();
 			search.setLocationCode(location.getId());
 			search.setLocationName(location.getLocationName());
-			// search.setLocationPoint(location.getLocationPoint().toString());
-			// search.setPolygon(location.getLocationPolygon().toString());
+			search.setLocationPoint(location.getLocationPoint().toString());
+			search.setPolygon(location.getLocationPolygon().toString());
 			return search;
 		}
 	}
