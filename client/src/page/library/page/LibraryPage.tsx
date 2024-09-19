@@ -18,12 +18,12 @@ const LibraryPage = () => {
 
   return (
     <div>
-      <header className='flex items-center justify-between p-6 mb-3 '>
+      <header className='flex items-center justify-between p-4 px-6 mb-3 '>
         <span className='font-extrabold text-2xl'>
           <span className='hakgyo text-3xl text-[#5F6F52]'>민수</span>
           님의 서재
         </span>
-        <div className='flex justify-between text-2xl gap-3 text-[#545454]'>
+        <div className='flex justify-between text-3xl gap-3 text-[#545454]'>
           <Link to='/search'>
             <IoIosSearch />
           </Link>
@@ -36,7 +36,7 @@ const LibraryPage = () => {
         </div>
       </header>
       <main className=' px-6'>
-        <section className='flex flex-col gap-4'>
+        <section className='flex flex-col gap-10'>
           <nav>
             <button onClick={goToMyLibrary}>
               <article className='flex items-center mb-7'>

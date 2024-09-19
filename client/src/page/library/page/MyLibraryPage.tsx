@@ -142,13 +142,13 @@ const MyLibraryPage = () => {
 
   return (
     <div>
-      <header className='sticky top-0 z-10 bg-[#F8F6F3] flex items-center justify-between p-6 '>
+      <header className='sticky top-0 z-10 bg-[#F8F6F3] flex items-center justify-between p-6 py-4 '>
         <div className='items-center flex gap-2'>
           <button onClick={goBack} className='text-2xl'>
             <IoIosArrowBack />
           </button>
         </div>
-        <div className='flex justify-between text-2xl gap-5 text-[#545454]'>
+        <div className='flex justify-between text-3xl gap-5 text-[#545454]'>
           {isMyLibrary ? (
             <Link to='/apply/book'>
               <BiBookAdd />

@@ -12,14 +12,14 @@ const HistoryPage = () => {
 
   return (
     <div>
-      <header className='sticky top-0 z-10 bg-[#F8F6F3] flex items-center justify-between p-6 mb-4'>
+      <header className='sticky top-0 z-10 bg-[#F8F6F3] flex items-center justify-between p-6 py-4 mb-4'>
         <div className='items-center flex gap-2'>
           <button onClick={goBack} className='text-2xl '>
             <IoIosArrowBack />
           </button>
           <span className='font-extrabold text-2xl'>책 히스토리</span>
         </div>
-        <div className='flex justify-between text-2xl gap-5 text-[#545454]'>
+        <div className='text-3xl text-[#545454]'>
           <Link to='/alarm'>
             <IoNotificationsOutline />
           </Link>
@@ -46,8 +46,9 @@ const HistoryPage = () => {
                   <span className='text-sm ml-3'>
                     스토리 조영선, 작화 이영호
                   </span>
-                  <span className='text-sm self-end mr-1 mt-2'>
-                    <span className='text-[#ff0000]'>3</span>일 남음
+                  <span className='text-sm self-end mr-1 mt-2 opacity-70'>
+                    <span className='text-[#ff0000] font-semibold'>3</span>일
+                    남음
                   </span>
                 </article>
               </div>
