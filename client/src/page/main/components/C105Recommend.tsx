@@ -17,7 +17,7 @@ const C105Recommend = () => {
           .fill(null)
           .map((index) => {
             return (
-              <img src="harrypotter.png" alt="" width={80} className="mx-1 my-3" />
+              <img src="harrypotter.png" alt="" width={80} className="mx-1 my-3" key={index} />
             );
           })}
       </div>
