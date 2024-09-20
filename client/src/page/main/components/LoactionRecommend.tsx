@@ -22,7 +22,7 @@ const LocationRecommend = () => {
   };
 
   return (
-    <div className='py-4'>
+    <div>
       <div className='flex items-center justify-between mb-4'>
         <span className='text-xl font-bold'>
           지금 <span className='text-[#79AC78]'>수완동</span> 인기 있는 도서 Top

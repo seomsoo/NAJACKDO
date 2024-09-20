@@ -40,7 +40,7 @@ const CategoryRecommend = () => {
           );
         })}
       </div>
-      <p className='font-bold text-xl'>
+      <p className='font-bold text-xl mt-2'>
         오늘의
         <span className='bg-[#A6B37D] border-2  border-[#A6B37D] font-medium text-white px-3 py-0.5 rounded-full mx-1'>
           {selectedCategory}
@@ -59,10 +59,10 @@ const CategoryRecommend = () => {
           .map((index) => {
             return (
               <img
-                src='pubao.png'
+                src='ssafy.png'
                 alt=''
                 width={150}
-                className='mx-1 my-3'
+                className='mx-1 mt-5'
                 key={index}
               />
             );
