@@ -12,8 +12,6 @@ export const getUserInfo = async (): Promise<IProfile> => {
     throw new Error("유저 정보 조회 실패");
   }
 
-  console.log("getuserInfo");
-
   return data;
 };
 
