@@ -3,18 +3,13 @@ import { useAuthStore } from "store/useAuthStore";
 
 const BASE_URL = process.env.REACT_APP_BACKEND_PROD_HOST;
 
-console.log("BASE_URL", BASE_URL);
-
 export const host =
-  process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://www.najackdo.kro.kr";
-
-console.log("NODE_ENV", process.env.NODE_ENV);
-console.log("host", host);
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : "https://www.najackdo.kro.kr";
 
 export const KAKAO_AUTH_URL = `${BASE_URL}/oauth2/authorization/kakao?redirect_uri=${host}`;
 const REFRESH_URI = `${BASE_URL}/api/v1/auth/refresh`;
-
-console.log("KAKAO_AUTH_URL", KAKAO_AUTH_URL);
 
 const instance = axios.create({
   baseURL: `${BASE_URL}/api/v1`,
@@ -46,27 +41,23 @@ instance.interceptors.response.use(
     const originalRequest = error.config;
 
     // 401 에러가 발생하면 토큰 갱신 시도
-    if (error.response.statue === 401 && !originalRequest._retry) {
+    if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {
-        const { refreshToken } = useAuthStore.getState();
-
-        // refreshToken이 null인 경우 새로운 에러 반환
-        if (!refreshToken) {
-          throw new Error("Refresh token is null");
-        }
-
-        // refreshToken으로 새로운 accessToken 요청
-        const refreshResponse = await axios.post(`${REFRESH_URI}`, {
-          token: refreshToken,
-        });
+        // refreshToken이 쿠키에 저장되어 있으므로 쿠키를 통해 서버로 전송
+        const refreshResponse = await axios.post(
+          `${REFRESH_URI}`,
+          {},
+          {
+            withCredentials: true, // 쿠키를 함께 전송
+          }
+        );
 
         const { accessToken: newAccessToken } = refreshResponse.data;
 
         // 새로운 accessToken 저장
         useAuthStore.getState().setAccessToken(newAccessToken);
-        useAuthStore.getState().setRefreshToken(refreshToken);
 
         // 실패했던 요청을 다시 보내기
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;

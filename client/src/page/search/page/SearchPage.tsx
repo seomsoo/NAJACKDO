@@ -18,10 +18,6 @@ const SearchPage = () => {
   const [searchText, setSearchText] = useState("");
   const [autoSearchText, setAutoSearchText] = useState<string[]>([]);
 
-  const handlerSearchText = (e) => {
-    setSearchText(e.target.value);
-  };
-
   const goSearchResult = () => {
     navigate(`/search?keyword=${searchText}`);
   };
@@ -47,7 +43,32 @@ const SearchPage = () => {
   });
 
   // 자동완성 검색어 조회
-  // 내일 해야지~!
+  // const fetchData = useCallback(
+  //   debounce(async (keyword: string) => {
+  //     try {
+  //       const data = await getAutoSearchText(keyword);
+  //       setAutoSearchText(data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }, 500),
+  //   []
+  // );
+
+  const handlerSearchText = async (e) => {
+    setSearchText(e.target.value);
+
+    // try {
+    //   const data = await getAutoSearchText(e.target.value);
+    //   setAutoSearchText(data);
+    // } catch (error) {
+    //   console.log("자동완성 검색어 조회에 실패했습니다.");
+    // }
+  };
+
+  // useEffect(() => {
+  //   console.log("자동완성 검색어", autoSearchText);
+  // }, [autoSearchText]);
 
   if (popularSearchLoading || recentSearchLoading) {
     return <div>Loading...</div>;
