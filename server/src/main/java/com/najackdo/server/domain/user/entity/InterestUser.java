@@ -26,9 +26,9 @@ public class InterestUser {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "following_id", nullable = false)
-	private User followUser;
+	private User following;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "follower_id", nullable = false)
-	private User user;
+	private User follower;
 }

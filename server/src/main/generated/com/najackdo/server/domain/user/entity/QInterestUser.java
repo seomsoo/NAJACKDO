@@ -22,11 +22,11 @@ public class QInterestUser extends EntityPathBase<InterestUser> {
 
     public static final QInterestUser interestUser = new QInterestUser("interestUser");
 
-    public final QUser followUser;
+    public final QUser follower;
+
+    public final QUser following;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
-
-    public final QUser user;
 
     public QInterestUser(String variable) {
         this(InterestUser.class, forVariable(variable), INITS);
@@ -46,8 +46,8 @@ public class QInterestUser extends EntityPathBase<InterestUser> {
 
     public QInterestUser(Class<? extends InterestUser> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.followUser = inits.isInitialized("followUser") ? new QUser(forProperty("followUser"), inits.get("followUser")) : null;
-        this.user = inits.isInitialized("user") ? new QUser(forProperty("user"), inits.get("user")) : null;
+        this.follower = inits.isInitialized("follower") ? new QUser(forProperty("follower"), inits.get("follower")) : null;
+        this.following = inits.isInitialized("following") ? new QUser(forProperty("following"), inits.get("following")) : null;
     }
 
 }
