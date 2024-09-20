@@ -36,6 +36,7 @@ public class BookQueryRepositoryImpl implements BookQueryRepository {
 			.from(bookMark)
 			.leftJoin(bookMark.book).fetchJoin()
 			.where(bookMark.user.id.eq(userId))
+			.orderBy(bookMark.id.desc())
 			.fetch();
 
 		return fetch.stream().map(BookMark::getBook).toList();

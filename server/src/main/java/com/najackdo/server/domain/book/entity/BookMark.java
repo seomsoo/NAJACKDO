@@ -1,5 +1,6 @@
 package com.najackdo.server.domain.book.entity;
 
+import com.najackdo.server.core.entity.TimeEntity;
 import com.najackdo.server.domain.user.entity.User;
 
 import jakarta.persistence.Column;
