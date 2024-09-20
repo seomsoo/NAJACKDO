@@ -16,7 +16,7 @@ public class LocationData {
 	public static class Search {
 		private int locationCode;
 		private String locationName;
-		private Double letitude;
+		private Double latitude;
 		private Double longitude;
 
 
@@ -24,7 +24,7 @@ public class LocationData {
 			Search search = new Search();
 			search.setLocationCode(location.getId());
 			search.setLocationName(location.getLocationName());
-			search.setLetitude(location.getLocationPoint().getY());
+			search.setLatitude(location.getLocationPoint().getY());
 			search.setLongitude(location.getLocationPoint().getX());
 			return search;
 		}

@@ -53,7 +53,12 @@ public enum ErrorCode {
 	EMPTY_FILE(8000, HttpStatus.BAD_REQUEST, "파일이 비어있습니다."),
 	FAIL_TO_DELETE_FILE(8001, HttpStatus.INTERNAL_SERVER_ERROR, "파일 삭제에 실패하였습니다."),
 	NOT_SUPPORTED_EXTENTION(8002, HttpStatus.BAD_REQUEST, "지원하지 않는 확장자입니다."),
-	FAIL_TO_CREATE_FILE(8003, HttpStatus.INTERNAL_SERVER_ERROR, "파일 생성에 실패하였습니다.");
+	FAIL_TO_CREATE_FILE(8003, HttpStatus.INTERNAL_SERVER_ERROR, "파일 생성에 실패하였습니다."),
+
+	//USER
+	INTERESTUSER_ALREADY_EXIST(9000, HttpStatus.BAD_REQUEST, "이미 존재하는 관심 유저입니다."),
+	INVALID_FOLLOW_BY_MYSELF(9001, HttpStatus.BAD_REQUEST, "자신을 팔로우할 수 없습니다.");
+
 
 	private final int code;
 	private final HttpStatus status;

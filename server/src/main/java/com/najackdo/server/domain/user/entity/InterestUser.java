@@ -25,10 +25,18 @@ public class InterestUser {
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "follower_id", nullable = false)
+	private User follower;
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "following_id", nullable = false)
 	private User following;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "follower_id", nullable = false)
-	private User follower;
+
+	public static InterestUser of(User follower, User following) {
+		InterestUser interestUser = new InterestUser();
+		interestUser.follower = follower;
+		interestUser.following = following;
+		return interestUser;
+	}
 }
