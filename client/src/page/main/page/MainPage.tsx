@@ -18,12 +18,14 @@ const MainPage = () => {
         </div>
         <MainCarousel />
       </div>
-      {/* 카테고리 별 추천 */}
-      <CategoryRecommend />
-      {/* 지역에서 인기있는 도서 추천 */}
-      <LoactionRecommend />
-      {/* C105 추천 */}
-      <C105Recommend />
+      <main className='flex flex-col gap-8'>
+        {/* 카테고리 별 추천 */}
+        <CategoryRecommend />
+        {/* 지역에서 인기있는 도서 추천 */}
+        <LoactionRecommend />
+        {/* C105 추천 */}
+        <C105Recommend />
+      </main>
       {/* <div className="flex flex-col">
         <button onClick={() => nav("/sign-in")}>signin</button>
         <button onClick={() => nav("/bookdetail")}>bookdetail</button>
