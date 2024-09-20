@@ -81,9 +81,10 @@ public class SearchController {
 	 * @return
 	 */
 	@GetMapping("/auto-complete")
-	public AutocompleteResponse getAutoCompleteList(@RequestParam("keyword") String keyword) {
+	public SuccessResponse<AutocompleteResponse> getAutoCompleteList(@RequestParam("keyword") String keyword) {
 		// 자동완성 검색어 조회 서비스 호출
 		log.info("keyword: {}", keyword);
-		return searchService.getAutocomplete(keyword);
+		return SuccessResponse.of(searchService.getAutocomplete(keyword));
 	}
+
 }
