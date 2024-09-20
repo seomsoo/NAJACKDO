@@ -1,42 +1,59 @@
-import { Carousel, CarouselContent, CarouselItem } from "components/ui/carousel"
-import { IoHeart } from "react-icons/io5";
-import { IoHeartOutline } from "react-icons/io5";
-import { useState } from "react";
-
-
+import { IoHeart, IoHeartOutline } from 'react-icons/io5';
+import { useState } from 'react';
+import { postInterestbook, deleteInterestbook } from 'api/interstbookApi'; // API 호출 함수
 
 interface BookContainerProps {
-  title: string,
-  author: string,
-  rating: number,
-  detail: string,
-  image: string
+  bookId: number;
+  title: string;
+  author: string;
+  description: string;
+  cover: string;
+  isInterested: boolean;
 }
-const BookContainer = ({ title, author, rating, detail, image }: BookContainerProps) => {
-  const [heart, setHeart] = useState(false);
 
-  const handleHeart = () => {
-    setHeart(!heart);
-  }
+const BookContainer = ({
+  bookId,
+  title,
+  author,
+  description,
+  cover,
+  isInterested,
+}: BookContainerProps) => {
+  const [heart, setHeart] = useState(isInterested);
+
+  const handleHeart = async () => {
+    try {
+      if (heart) {
+        await deleteInterestbook(bookId);
+      } else {
+        await postInterestbook(bookId);
+      }
+      setHeart(!heart);
+    } catch (error) {
+      // console.error('관심 도서 등록/해제 중 오류 발생:', error);
+    }
+  };
 
   return (
-    <div className="my-5 grid grid-rows-3 grid-flow-col gap-3">
-      <img className="row-span-3 w-[100px]" src={image} alt="BookContainer" />
-      <div className="col-span-2 mt-1">
-        <div className="flex flex-row justify-between">
-          <p className="text-[15px] font-semibold">{title}</p>
-          <div onClick={handleHeart}>
+    <div className='flex py-3 '>
+      <img className='row-span-2 w-24' src={cover} alt='BookContainer' />
+      <div className='overflow-hidden ml-2 flex flex-col gap-1'>
+        <div className='flex justify-between items-center'>
+          <p className='font-semibold'>{title}</p>
+          {/* 하트 버튼 */}
+          <div className='ml-2' onClick={handleHeart}>
             {heart ? (
-              <IoHeartOutline size={15} color="#D96363" />
+              <IoHeart size={15} color='#D96363' />
             ) : (
-              <IoHeart size={15} color="#D96363" />
+              <IoHeartOutline size={15} color='#D96363' />
             )}
           </div>
         </div>
-        <p className="text-[13px] font-medium">{author}</p>
-
+        <p className='text-sm font-medium'>{author}</p>
+        <p className='text-xs leading-normal mt-2 pr-4 line-clamp-3'>
+          {description}
+        </p>
       </div>
-      <p className="row-span-2 col-span-2 text-[12px] line-clamp-3 h-[3.6rem]">{detail}</p>
     </div>
   );
 };
