@@ -3,11 +3,12 @@ package com.najackdo.server.domain.user.repository;
 import static com.najackdo.server.domain.book.entity.QBook.*;
 import static com.najackdo.server.domain.book.entity.QUserBook.*;
 import static com.najackdo.server.domain.book.entity.QUserBookDetail.*;
+import static com.najackdo.server.domain.cart.entity.QCart.*;
+import static com.najackdo.server.domain.cart.entity.QCartItem.*;
 import static com.najackdo.server.domain.location.entity.QActivityAreaSetting.*;
 import static com.najackdo.server.domain.location.entity.QLocation.*;
-import static com.najackdo.server.domain.rental.entity.QRental.*;
-import static com.najackdo.server.domain.rental.entity.QRentalLog.*;
 import static com.najackdo.server.domain.rental.entity.QRentalReview.*;
+import static com.najackdo.server.domain.rental.entity.QReviewItems.*;
 import static com.najackdo.server.domain.user.entity.QCashLog.*;
 import static com.najackdo.server.domain.user.entity.QUser.*;
 
@@ -16,7 +17,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
 
-import com.najackdo.server.domain.rental.entity.ReviewItems;
 import com.najackdo.server.domain.user.dto.UserData;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
@@ -39,41 +39,37 @@ public class UserQueryRepositoryImpl implements UserQueryRepository {
 					"when {0} >= 45 then 0.15 " +
 					"when {0} = 60 then 0.2 " +
 					"else 0.0 end",
-				rental.rentalPeriod);
+				cart.rentalPeriod);
 
 		return queryFactory
 			.select(
 				book.priceStandard.subtract(
 					userBookDetail.onedayPrice
-						.multiply(rental.rentalPeriod)
+						.multiply(cart.rentalPeriod)
 						.multiply(rentalPeriodDiscountRate)
 				).sum().intValue()
 			)
-			.from(user)
-			.join(user.userBooks, userBook)
+			.from(cartItem)
+			.join(cartItem.cart, cart)
+			.join(cartItem.userBookDetail, userBookDetail)
+			.join(userBookDetail.userBook, userBook)
 			.join(userBook.book, book)
-			.join(userBook.userBookDetail, userBookDetail)
-			.join(userBook.bookRentalHistories, rentalLog)
-			.join(rentalLog.bookRental, rental)
-			.where(user.id.eq(userId))
+			.where(cart.customer.id.eq(userId)
+				.and(cart.isDelete.isTrue())
+			)
 			.fetchOne();
 	}
 
 	@Override
 	public Integer findUserEarningCash(Long userId) {
-		return queryFactory
-			.select(
-				userBookDetail.onedayPrice
-					.multiply(rental.rentalPeriod)
-					.sum().intValue()
-			)
-			.from(user)
-			.join(user.userBooks, userBook)
-			.join(userBook.bookRentalHistories, rentalLog)
-			.join(rentalLog.bookRental, rental)
-			.join(userBook.userBookDetail, userBookDetail)
-			.where(user.id.eq(userId))
+		Integer totalEarning = queryFactory
+			.select(cartItem.userBookDetail.onedayPrice.multiply(cart.rentalPeriod).sum())
+			.from(cartItem)
+			.join(cartItem.cart, cart)
+			.where(cart.owner.id.eq(userId))
 			.fetchOne();
+
+		return totalEarning != null ? totalEarning : 0;
 	}
 
 	@Override
@@ -88,16 +84,6 @@ public class UserQueryRepositoryImpl implements UserQueryRepository {
 	}
 
 	@Override
-	public Long countUserReviewsByItem(Long userId, ReviewItems reviewItem) {
-		return queryFactory
-			.select(rentalReview.count())
-			.from(rentalReview)
-			.where(rentalReview.user.id.eq(userId)
-				.and(rentalReview.reviewItems.eq(reviewItem)))
-			.fetchOne();
-	}
-
-	@Override
 	public List<UserData.CashLogResponse> findUserCashLog(Long userId) {
 
 		return queryFactory
@@ -108,6 +94,20 @@ public class UserQueryRepositoryImpl implements UserQueryRepository {
 			.stream()
 			.map(UserData.CashLogResponse::of)
 			.collect(Collectors.toList());
+	}
+
+	@Override
+	public Long countUserReviewsByPositive(Long id, boolean positive) {
+
+		return queryFactory
+			.select(
+				rentalReview.count()
+			)
+			.from(rentalReview)
+			.join(rentalReview.reviewItems, reviewItems)
+			.where(rentalReview.user.id.eq(id)
+				.and(reviewItems.positive.eq(positive)))
+			.fetchOne();
 	}
 
 }

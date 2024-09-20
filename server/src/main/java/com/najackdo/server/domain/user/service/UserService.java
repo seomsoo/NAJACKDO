@@ -1,6 +1,5 @@
 package com.najackdo.server.domain.user.service;
 
-import static com.najackdo.server.domain.rental.entity.ReviewItems.*;
 import static com.najackdo.server.domain.user.entity.CashLogType.*;
 
 import java.util.List;
@@ -61,8 +60,8 @@ public class UserService {
 
 	public UserData.InfoResponse getUserInfo(User user) {
 		String locationName = userQueryRepository.findUserLocationName(user.getId());
-		Long goodReviewCount = userQueryRepository.countUserReviewsByItem(user.getId(), GOOD);
-		Long badReviewCount = userQueryRepository.countUserReviewsByItem(user.getId(), BAD);
+		Long goodReviewCount = userQueryRepository.countUserReviewsByPositive(user.getId(), true);
+		Long badReviewCount = userQueryRepository.countUserReviewsByPositive(user.getId(), false);
 		Integer saveCash = userQueryRepository.findUserSavingCash(user.getId());
 		Integer earnCash = userQueryRepository.findUserEarningCash(user.getId());
 		return UserData.InfoResponse.of(user, locationName, goodReviewCount, badReviewCount, saveCash, earnCash);
@@ -76,14 +75,13 @@ public class UserService {
 		User user = userRepository.findByNickname(nickname)
 			.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_USER));
 		String locationName = userQueryRepository.findUserLocationName(user.getId());
-		Long goodReviewCount = userQueryRepository.countUserReviewsByItem(user.getId(), GOOD);
-		Long badReviewCount = userQueryRepository.countUserReviewsByItem(user.getId(), BAD);
+		Long goodReviewCount = userQueryRepository.countUserReviewsByPositive(user.getId(), true);
+		Long badReviewCount = userQueryRepository.countUserReviewsByPositive(user.getId(), false);
 		return UserData.InfoResponse.ofWithoutCash(user, locationName, goodReviewCount,
 			badReviewCount);
 	}
 
 	public void addInterestUser(User user, UserData.InterestUserRequest request) {
-		
 
 	}
 }
