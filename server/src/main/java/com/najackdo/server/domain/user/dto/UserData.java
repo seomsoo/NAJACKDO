@@ -93,4 +93,11 @@ public class UserData {
 		}
 	}
 
+
+	@Data
+	public static class InterestUserRequest {
+
+		@NotNull(message = "관심 사용자 아이디를 입력해 주세요.")
+		private Long interestUserId;
+	}
 }

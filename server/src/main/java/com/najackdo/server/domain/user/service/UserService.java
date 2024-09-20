@@ -81,4 +81,9 @@ public class UserService {
 		return UserData.InfoResponse.ofWithoutCash(user, locationName, goodReviewCount,
 			badReviewCount);
 	}
+
+	public void addInterestUser(User user, UserData.InterestUserRequest request) {
+		
+
+	}
 }

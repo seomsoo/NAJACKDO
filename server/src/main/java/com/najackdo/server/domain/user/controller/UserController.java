@@ -28,6 +28,7 @@ public class UserController {
 
 	/**
 	 * 첫 로그인 후 유저 정보 입력 API
+	 *
 	 * @param user
 	 * @param update
 	 * @return {@link Void}
@@ -42,6 +43,7 @@ public class UserController {
 
 	/**
 	 * 유저 정보 조회 API
+	 *
 	 * @param user
 	 * @return {@link UserData.InfoResponse}
 	 */
@@ -52,6 +54,7 @@ public class UserController {
 
 	/**
 	 * 유저 캐시 로그 조회 API
+	 *
 	 * @param user
 	 * @return {@link List<UserData.CashLogResponse>}
 	 */
@@ -62,11 +65,20 @@ public class UserController {
 
 	/**
 	 * 유저 닉네임으로 유저 정보 조회 API
+	 *
 	 * @param nickname
 	 * @return {@link UserData.InfoResponse}
 	 */
 	@GetMapping("/info/{nickname}")
 	public SuccessResponse<UserData.InfoResponse> getUserInfoByNickName(@PathVariable String nickname) {
 		return SuccessResponse.of(userService.getUserInfoByNickName(nickname));
+	}
+
+	@PostMapping("/interest-user")
+	public SuccessResponse<Void> interestUser(@CurrentUser User user, @RequestBody UserData.InterestUserRequest request) {
+
+		userService.addInterestUser(user, request);
+
+		return SuccessResponse.empty();
 	}
 }
