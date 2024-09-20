@@ -7,21 +7,24 @@ export const getNearLocation = async (
   latitude: number,
   longitude: number,
   page: number
-// ): Promise<IPaging<INearLocation[]>> => {
 ): Promise<IPaging<INearLocation[]>> => {
-
   
   const {
-    data: { success, data },
+    data: { success, data, status },
   } = await instance.get<BaseResponse<IPaging<INearLocation[]>>>(
-    `/location/near-location?latitude=${latitude}&longitude=${longitude}&page=${page}`
+    `/location/near-location?latitude=${longitude}&longitude=${latitude}&page=${page}`
   );
+
+  console.log('lat', latitude)
+  console.log('lon', longitude)
+  console.log('page', page)
+  console.log('data', data)
 
   if (!success) {
     throw new Error("주변 동 조회 실패");
   }
 
-  console.log("getNearLocation",data);
+  // console.log("getNearLocation", data);
 
   return data;
 };

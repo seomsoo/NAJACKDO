@@ -1,7 +1,7 @@
 export interface INearLocation {
   locationCode: number;
   locationName: string;
-  letitude: number;
+  latitude: number;
   longitude: number;
 }
 
