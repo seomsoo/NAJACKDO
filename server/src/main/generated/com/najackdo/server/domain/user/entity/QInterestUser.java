@@ -46,8 +46,8 @@ public class QInterestUser extends EntityPathBase<InterestUser> {
 
     public QInterestUser(Class<? extends InterestUser> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.follower = inits.isInitialized("follower") ? new QUser(forProperty("follower")) : null;
-        this.following = inits.isInitialized("following") ? new QUser(forProperty("following")) : null;
+        this.follower = inits.isInitialized("follower") ? new QUser(forProperty("follower"), inits.get("follower")) : null;
+        this.following = inits.isInitialized("following") ? new QUser(forProperty("following"), inits.get("following")) : null;
     }
 
 }
