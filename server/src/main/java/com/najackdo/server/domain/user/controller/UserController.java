@@ -27,7 +27,6 @@ import lombok.extern.slf4j.Slf4j;
 public class UserController {
 
 	private final UserService userService;
-	private final BookService bookService;
 
 	/**
 	 * 첫 로그인 후 유저 정보 입력 API
@@ -100,12 +99,6 @@ public class UserController {
 	@DeleteMapping("/interest-user/{userId}")
 	public SuccessResponse<Void> unInterestUser(@CurrentUser User user, @PathVariable Long userId) {
 		userService.removeInterestUser(user, userId);
-		return SuccessResponse.empty();
-	}
-
-	@GetMapping("/interest-users")
-	public SuccessResponse<Void> getInterestUsers(@CurrentUser User user) {
-		// bookService.getInte
 		return SuccessResponse.empty();
 	}
 }
