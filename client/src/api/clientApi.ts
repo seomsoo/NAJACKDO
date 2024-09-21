@@ -12,7 +12,7 @@ export const KAKAO_AUTH_URL = `${BASE_URL}/oauth2/authorization/kakao?redirect_u
 const REFRESH_URI = `${BASE_URL}/api/v1/auth/refresh`;
 
 const instance = axios.create({
-  baseURL: `${BASE_URL}/api/v1`,
+  baseURL: BASE_URL + '/api/v1',  
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",

@@ -36,6 +36,7 @@ public class BookQueryRepositoryImpl implements BookQueryRepository {
 			.from(bookMark)
 			.leftJoin(bookMark.book).fetchJoin()
 			.where(bookMark.user.id.eq(userId))
+			.orderBy(bookMark.id.desc())
 			.fetch();
 
 		return fetch.stream().map(BookMark::getBook).toList();
@@ -44,7 +45,7 @@ public class BookQueryRepositoryImpl implements BookQueryRepository {
 
 	@Override
 	public List<BookData.BookCase> findBookCaseInterestByUser(User user) {
-		List<User> followerUsers = getFollowerUsers(user);
+		List<User> followerUsers = getFollowingUsers(user);
 		List<Tuple> userBooksData = getUserBooksData(followerUsers);
 		Map<String, List<BookData.DisplayBook>> userBooksMap = groupBooksByUser(userBooksData);
 
@@ -61,11 +62,11 @@ public class BookQueryRepositoryImpl implements BookQueryRepository {
 		return BookData.BookCase.of(nickname, displayBooks);
 	}
 
-	private List<User> getFollowerUsers(User user) {
+	private List<User> getFollowingUsers(User user) {
 		return queryFactory
-			.select(interestUser.follower)
+			.select(interestUser.following)
 			.from(interestUser)
-			.where(interestUser.following.eq(user))
+			.where(interestUser.follower.eq(user))
 			.fetch();
 	}
 

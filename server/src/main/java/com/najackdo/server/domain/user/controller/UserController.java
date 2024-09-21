@@ -2,6 +2,7 @@ package com.najackdo.server.domain.user.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.najackdo.server.core.annotation.CurrentUser;
 import com.najackdo.server.core.response.SuccessResponse;
+import com.najackdo.server.domain.book.service.BookService;
 import com.najackdo.server.domain.user.dto.UserData;
 import com.najackdo.server.domain.user.entity.User;
 import com.najackdo.server.domain.user.service.UserService;
@@ -74,11 +76,29 @@ public class UserController {
 		return SuccessResponse.of(userService.getUserInfoByNickName(nickname));
 	}
 
-	@PostMapping("/interest-user")
-	public SuccessResponse<Void> interestUser(@CurrentUser User user, @RequestBody UserData.InterestUserRequest request) {
+	/**
+	 * 유저 팔로우 관심 책장 추가 API
+	 *
+	 * @param user
+	 * @param userId
+	 * @return
+	 */
+	@PostMapping("/interest-user/{userId}")
+	public SuccessResponse<Void> interestUser(@CurrentUser User user, @PathVariable Long userId) {
+		userService.addInterestUser(user, userId);
+		return SuccessResponse.empty();
+	}
 
-		userService.addInterestUser(user, request);
-
+	/**
+	 * 유저 팔로우 관심 책장 삭제 API
+	 *
+	 * @param user
+	 * @param userId
+	 * @return
+	 */
+	@DeleteMapping("/interest-user/{userId}")
+	public SuccessResponse<Void> unInterestUser(@CurrentUser User user, @PathVariable Long userId) {
+		userService.removeInterestUser(user, userId);
 		return SuccessResponse.empty();
 	}
 }

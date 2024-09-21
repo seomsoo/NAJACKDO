@@ -1,7 +1,8 @@
 import { IoIosArrowBack } from 'react-icons/io';
 import { IoNotificationsOutline } from 'react-icons/io5';
 import { Link, useNavigate } from 'react-router-dom';
-
+import { useQuery } from 'react-query';
+import { getInterestbook } from 'api/interstbookApi'; // 관심 도서 조회 API
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
 import BookcaseContainer from '../components/BookcaseContainer';
 import BookContainer from '../components/BookContainer';
@@ -12,6 +13,14 @@ const MyFavoritePage = () => {
     navigate(-1);
   };
 
+  // 관심 도서 목록 조회
+  const {
+    data: interestBooks,
+    isLoading,
+    isError,
+  } = useQuery('interestBooks', getInterestbook);
+
+  // 책장 관련 배열은 그대로 유지
   const bookcaseArray = [
     {
       name: '정하림',
@@ -42,41 +51,14 @@ const MyFavoritePage = () => {
     },
   ];
 
-  const bookArray = [
-    {
-      title: '이기적 유전자',
-      author: '리처드 도킨스',
-      rating: 4.5,
-      detail:
-        '세계적 베스트셀러, 과학을 넘어선 우리 시대의 고전, 『이기적 유전자』의 40주년 기념판. 진화론의 새로운 패러다임을 제시한 이 책은 다윈의 ‘적자생존과 자연선택’이라는 개념을 유전자 단위로 끌어내려 진화를 설명한다. 2013년 영국의 정치평론지 『프로스펙트』지가 독자...',
-      image:
-        'https://image.aladin.co.kr/product/18190/96/cover500/e893247390_1.jpg',
-    },
-    {
-      title: '이기적 유전자',
-      author: '리처드 도킨스',
-      rating: 4.5,
-      detail:
-        '세계적 베스트셀러, 과학을 넘어선 우리 시대의 고전, 『이기적 유전자』의 40주년 기념판. 진화론의 새로운 패러다임을 제시한 이 책은 다윈의 ‘적자생존과 자연선택’이라는 개념을 유전자 단위로 끌어내려 진화를 설명한다. 2013년 영국의 정치평론지 『프로스펙트』지가 독자...',
-      image:
-        'https://image.aladin.co.kr/product/18190/96/cover500/e893247390_1.jpg',
-    },
-    {
-      title: '해리포터와 마법사의 돌 1(해리포터 20주년 개정판)',
-      author: 'J. K. 롤링',
-      rating: 4.5,
-      detail:
-        '세계적 베스트셀러, 과학을 넘어선 우리 시대의 고전, 『이기적 유전자』의 40주년 기념판. 진화론의 새로운 패러다임을 제시한 이 책은 다윈의 ‘적자생존과 자연선택’이라는 개념을 유전자 단위로 끌어내려 진화를 설명한다. 2013년 영국의 정치평론지 『프로스펙트』지가 독자 세계적 베스트셀러, 과학을 넘어선 우리 시대의 고전, 『이기적 유전자』의 40주년 기념판. 진화론의 새로운 패러다임을 제시한 이 책은 다윈의 ‘적자생존과 자연선택’이라는 개념을 유전자 단위로 끌어내려 진화를 설명한다. 2013년 영국의 정치평론지 『프로스펙트』지가 독자',
-      image:
-        'https://image.aladin.co.kr/product/18190/96/cover500/e893247390_1.jpg',
-    },
-  ];
+  if (isLoading) return <div>로딩 중...</div>;
+  if (isError) return <div>오류가 발생했습니다.</div>;
 
   return (
     <div>
-      <header className='sticky top-0 z-10 bg-[#F8F6F3] flex items-center  justify-between p-6 py-4 mb-4'>
+      <header className='sticky top-0 z-10 bg-[#F8F6F3] flex items-center justify-between p-6 py-4 mb-4'>
         <div className='items-center flex gap-2'>
-          <button onClick={goBack} className='text-2xl '>
+          <button onClick={goBack} className='text-2xl'>
             <IoIosArrowBack />
           </button>
           <span className='font-extrabold text-2xl'>My Favorite</span>
@@ -87,38 +69,42 @@ const MyFavoritePage = () => {
           </Link>
         </div>
       </header>
+
       <main className='px-6'>
         <Tabs defaultValue='bookcase' className='w-full'>
-          <TabsList className='grid w-full grid-cols-2 '>
+          <TabsList className='grid w-full grid-cols-2'>
             <TabsTrigger value='bookcase'>책장</TabsTrigger>
             <TabsTrigger value='book'>책</TabsTrigger>
           </TabsList>
+
+          {/* 책장(Tab 1) */}
           <TabsContent value='bookcase'>
-            {bookcaseArray.map((item, index) => {
-              return (
-                <div className='mx-3 my-5 bg-white/30 shadow rounded-lg p-4'>
-                  <BookcaseContainer
-                    key={index}
-                    name={item.name}
-                    imageArray={item.imageArray}
-                  />
-                </div>
-              );
-            })}
-          </TabsContent>
-          <TabsContent value='book'>
-            {bookArray.map((item, index) => {
-              return (
-                <BookContainer
-                  key={index}
-                  title={item.title}
-                  author={item.author}
-                  rating={item.rating}
-                  detail={item.detail}
-                  image={item.image}
+            {bookcaseArray.map((item, index) => (
+              <div
+                key={index}
+                className='mx-3 my-5 bg-white/30 shadow rounded-lg p-4'
+              >
+                <BookcaseContainer
+                  name={item.name}
+                  imageArray={item.imageArray}
                 />
-              );
-            })}
+              </div>
+            ))}
+          </TabsContent>
+
+          {/* 관심 도서 리스트(Tab 2) */}
+          <TabsContent value='book'>
+            {interestBooks?.map((book) => (
+              <BookContainer
+                key={book.bookId}
+                bookId={book.bookId} // 도서 ID
+                title={book.title} // 도서 제목
+                author={book.author} // 도서 저자
+                description={book.description} // 도서 설명
+                cover={book.cover} // 도서 커버 이미지
+                isInterested={true} // 조회된 책은 이미 관심 도서
+              />
+            ))}
           </TabsContent>
         </Tabs>
       </main>

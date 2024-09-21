@@ -32,7 +32,7 @@ const BookcaseContainer = ({ name, imageArray }: BookcaseContainerProps) => {
         }}
       >
         {imageArray.map((item, index) => {
-          return <img key={index} src={item} alt='book' />;
+          return <img key={index} src={item} className='w-20' alt='book' />;
         })}
       </div>
     </div>
