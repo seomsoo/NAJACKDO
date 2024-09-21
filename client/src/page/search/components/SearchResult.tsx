@@ -1,6 +1,22 @@
+import { getSearch } from "api/searchApi";
+import { ISearch } from "atoms/Search.type";
 import SearchResultBook from "page/search/components/SearchResultBook";
+import { useQuery } from "react-query";
 
-const SearchResult = () => {
+interface SearchResultProps {
+  keyword: string;
+}
+
+const SearchResult = ({ keyword }: SearchResultProps) => {
+  // const {
+  //   data: searchData,
+  //   isLoading,
+  //   isError,
+  // } = useQuery<ISearch[]>({
+  //   queryKey: ["search", "result"],
+  //   queryFn: getSearch(keyword),
+  // });
+
   return (
     <div>
       <div className="ml-1 mt-4">

@@ -9,7 +9,11 @@ export interface ISearch {
   itemPage: number;
   starPoint: number;
   pubDate: string;
-  isbn: string;
+  isbn: number;
+}
+
+export interface IAutoArray {
+  list: IAutoSearch[];
 }
 
 export interface IAutoSearch {
