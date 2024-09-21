@@ -3,6 +3,7 @@ package com.najackdo.server.domain.user.service;
 import static com.najackdo.server.domain.user.entity.CashLogType.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -102,10 +103,19 @@ public class UserService {
 		interestUserRepository.save(InterestUser.of(user, followingUser));
 	}
 
+	@Transactional
 	public void removeInterestUser(User user, Long userId) {
 		User followingUser = userRepository.findById(userId)
 			.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_USER));
 
 		interestUserRepository.deleteByFollowerAndFollowing(user, followingUser);
+	}
+
+	public Boolean availableNickname(String userNickname, String nickname) {
+		Optional<User> byNickname = userRepository.findByNickname(nickname);
+		if (byNickname.isEmpty() || byNickname.get().getNickName().equals(userNickname)) {
+			return true;
+		}
+		return false;
 	}
 }
