@@ -1,17 +1,31 @@
 package com.najackdo.server.domain.rental.entity;
 
-public enum ReviewItems {
+import com.najackdo.server.core.entity.TimeEntity;
 
-	GOOD,
-	BAD,
-	// 시간
-	TIME_GOOD,
-	TIME_BAD,
-	// 책
-	BOOK_GOOD,
-	BOOK_BAD,
-	// 사진과 같다 or 다르다
-	PHOTO_SAME,
-	PHOTO_DIFFERENT,
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Getter
+@Table(name = "review_items")
+@NoArgsConstructor
+public class ReviewItems extends TimeEntity {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "review_item_id")
+	private Long Id;
+
+	@Column(name = "content")
+	private String content;
+
+	@Column(name = "positive")
+	private boolean positive;
 
 }

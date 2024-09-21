@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.repository.query.Param;
 
-import com.najackdo.server.domain.rental.entity.ReviewItems;
 import com.najackdo.server.domain.user.dto.UserData.CashLogResponse;
 
 public interface UserQueryRepository {
@@ -34,14 +33,6 @@ public interface UserQueryRepository {
 	String findUserLocationName(@Param("userId") Long userId);
 
 	/**
-	 * 사용자 ID로 사용자 특정 리뷰 개수 조회
-	 *
-	 * @param userId 사용자 ID
-	 * @return {@link Long} 사용자 리뷰 개수
-	 */
-	Long countUserReviewsByItem(Long userId, ReviewItems reviewItem);
-
-	/**
 	 * 사용자 ID로 사용자 캐시 로그 조회
 	 *
 	 * @param userId 사용자 ID
@@ -49,4 +40,12 @@ public interface UserQueryRepository {
 	 */
 	List<CashLogResponse> findUserCashLog(Long userId);
 
+	/**
+	 * 사용자 ID로 사용자 리뷰 긍정/부정 개수 조회
+	 *
+	 * @param id 사용자 ID
+	 * @param positive  리뷰 긍정 여부
+	 * @return {@link Long} 리뷰 개수
+	 */
+	Long countUserReviewsByPositive(Long id, boolean positive);
 }

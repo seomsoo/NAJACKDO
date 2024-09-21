@@ -15,7 +15,6 @@ import com.najackdo.server.core.annotation.CurrentUser;
 import com.najackdo.server.core.response.SuccessResponse;
 import com.najackdo.server.domain.book.dto.BookData;
 import com.najackdo.server.domain.book.dto.UserBookData;
-import com.najackdo.server.domain.book.entity.Book;
 import com.najackdo.server.domain.book.service.BookService;
 import com.najackdo.server.domain.book.service.UserBooksService;
 import com.najackdo.server.domain.user.entity.User;
@@ -94,7 +93,7 @@ public class BookController {
 	 * 관심 책장 목록 조회 API
 	 *
 	 * @param user
-	 * @return {@link  List<  BookData.BookCase>}
+	 * @return {@link  List<BookData.BookCase>}
 	 */
 	@GetMapping("/bookcase/interest")
 	public SuccessResponse<List<BookData.BookCase>> getUserInterest(@CurrentUser User user) {
