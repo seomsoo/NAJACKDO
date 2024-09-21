@@ -52,7 +52,7 @@ class UserControllerTest extends RestDocsSupport {
 		UserData.Update update = new UserData.Update();
 		update.setNickname("JohnDoe");
 		update.setGender('M');
-		update.setAge((short)25);
+		update.setAge("20대");
 		update.setInterest(List.of(1L, 2L, 3L));
 
 		// WHEN
