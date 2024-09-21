@@ -41,7 +41,7 @@ public class UserQueryRepositoryImpl implements UserQueryRepository {
 					"else 0.0 end",
 				cart.rentalPeriod);
 
-		return queryFactory
+		Integer totalSaving = queryFactory
 			.select(
 				book.priceStandard.subtract(
 					userBookDetail.onedayPrice
@@ -58,6 +58,8 @@ public class UserQueryRepositoryImpl implements UserQueryRepository {
 				.and(cart.isDelete.isTrue())
 			)
 			.fetchOne();
+
+		return totalSaving != null ? totalSaving : 0;
 	}
 
 	@Override

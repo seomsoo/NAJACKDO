@@ -15,9 +15,11 @@ import com.najackdo.server.core.exception.BaseException;
 import com.najackdo.server.core.exception.ErrorCode;
 import com.najackdo.server.domain.survey.event.SurveySaveEvent;
 import com.najackdo.server.domain.user.dto.UserData;
+import com.najackdo.server.domain.user.entity.InterestUser;
 import com.najackdo.server.domain.user.entity.User;
 import com.najackdo.server.domain.user.event.CashLogPaymentEvent;
 import com.najackdo.server.domain.user.event.UserPaymentEvent;
+import com.najackdo.server.domain.user.repository.InterestUserRepository;
 import com.najackdo.server.domain.user.repository.UserQueryRepository;
 import com.najackdo.server.domain.user.repository.UserRepository;
 
@@ -30,6 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional(readOnly = true)
 public class UserService {
 
+	private final InterestUserRepository interestUserRepository;
 	private final ApplicationEventPublisher eventPublisher;
 	private final UserRepository userRepository;
 	private final UserQueryRepository userQueryRepository;
@@ -81,7 +84,28 @@ public class UserService {
 			badReviewCount);
 	}
 
-	public void addInterestUser(User user, UserData.InterestUserRequest request) {
+	@Transactional
+	public void addInterestUser(User user, Long userId) {
+		User followingUser = userRepository.findById(userId)
+			.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_USER));
 
+		if (followingUser.getId() == user.getId()) {
+			throw new BaseException(ErrorCode.INVALID_FOLLOW_BY_MYSELF);
+		}
+
+		InterestUser.of(user, followingUser);
+
+		if (interestUserRepository.existsByFollowerAndAndFollowing(user, followingUser)) {
+
+			throw new BaseException(ErrorCode.INTERESTUSER_ALREADY_EXIST);
+		}
+		interestUserRepository.save(InterestUser.of(user, followingUser));
+	}
+
+	public void removeInterestUser(User user, Long userId) {
+		User followingUser = userRepository.findById(userId)
+			.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_USER));
+
+		interestUserRepository.deleteByFollowerAndFollowing(user, followingUser);
 	}
 }
