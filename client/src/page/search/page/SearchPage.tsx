@@ -3,20 +3,28 @@ import {
   getPopularSearch,
   getRecentSearch,
 } from "api/searchApi";
+import { IAutoArray } from "atoms/Search.type";
 import { Input } from "components/ui/input";
+import { debounce } from "lodash";
+import AutoSearch from "page/search/components/AutoSearch";
 import PopularSearch from "page/search/components/PopularSearch";
 import RecentSearch from "page/search/components/RecentSearch";
 import RecommendBook from "page/search/components/RecommendBook";
 import SearchResult from "page/search/components/SearchResult";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { IoIosArrowBack, IoIosSearch } from "react-icons/io";
 import { useQuery } from "react-query";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const SearchPage = () => {
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState("");
-  const [autoSearchText, setAutoSearchText] = useState<string[]>([]);
+  const [autoSearchText, setAutoSearchText] = useState<IAutoArray>({
+    list: [],
+  });
+
+  const [searchParam] = useSearchParams();
+  const keywordText = searchParam.get("keyword");
 
   const goSearchResult = () => {
     navigate(`/search?keyword=${searchText}`);
@@ -43,32 +51,30 @@ const SearchPage = () => {
   });
 
   // 자동완성 검색어 조회
-  // const fetchData = useCallback(
-  //   debounce(async (keyword: string) => {
-  //     try {
-  //       const data = await getAutoSearchText(keyword);
-  //       setAutoSearchText(data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }, 500),
-  //   []
-  // );
+  const fetchAutoSearchText = useCallback(
+    debounce(async (keyword: string) => {
+      try {
+        const data = await getAutoSearchText(keyword);
+        setAutoSearchText(data);
+      } catch (error) {
+        console.log("자동완성 검색어 조회에 실패했습니다.");
+      }
+    }, 500),
+    []
+  );
 
-  const handlerSearchText = async (e) => {
-    setSearchText(e.target.value);
-
-    // try {
-    //   const data = await getAutoSearchText(e.target.value);
-    //   setAutoSearchText(data);
-    // } catch (error) {
-    //   console.log("자동완성 검색어 조회에 실패했습니다.");
-    // }
+  const handlerSearchText = (e) => {
+    setAutoSearchText({ list: [] });
+    const value = e.target.value;
+    setSearchText(value);
+    fetchAutoSearchText(value);
   };
 
-  // useEffect(() => {
-  //   console.log("자동완성 검색어", autoSearchText);
-  // }, [autoSearchText]);
+  useEffect(() => {
+    return () => {
+      fetchAutoSearchText.cancel(); // 컴포넌트 언마운트 시 debounce 취소
+    };
+  }, [fetchAutoSearchText]);
 
   if (popularSearchLoading || recentSearchLoading) {
     return <div>Loading...</div>;
@@ -103,15 +109,26 @@ const SearchPage = () => {
           <IoIosSearch size={25} color="#545454" />
         </div>
       </div>
-      <PopularSearch />
-      {/* 검색어가 없을 때 */}
-      {searchText === "" ? (
-        <>
-          <RecentSearch />
-          <RecommendBook />
-        </>
+      {keywordText ? (
+        <SearchResult keyword={keywordText} />
       ) : (
-        <SearchResult />
+        <div
+          className="flex-grow overflow-y-auto flex flex-col justify-between"
+          style={{ height: "calc(100vh - 150px)" }}
+        >
+          {/* 검색어가 없을 때 */}
+          {searchText === "" ? (
+            <div>
+              <PopularSearch popularData={popularSearchData} />
+              <RecentSearch recentData={recentSearchData} />
+            </div>
+          ) : (
+            autoSearchText?.list && (
+              <AutoSearch autoSearch={autoSearchText.list} />
+            )
+          )}
+          <RecommendBook />
+        </div>
       )}
     </div>
   );
