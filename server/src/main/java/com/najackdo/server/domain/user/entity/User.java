@@ -9,7 +9,6 @@ import com.najackdo.server.domain.book.entity.UserBook;
 import com.najackdo.server.domain.location.entity.ActivityAreaSetting;
 import com.najackdo.server.domain.user.dto.UserData;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -53,7 +52,7 @@ public class User extends BaseEntity {
 	private char gender;
 
 	@Column(name = "age", nullable = false)
-	private short age;
+	private String age = "선택안됨";
 
 	@Column(nullable = false)
 	private String name;
@@ -137,10 +136,10 @@ public class User extends BaseEntity {
 		return user;
 	}
 
-
 	public void setActivityAreaSetting(ActivityAreaSetting activityAreaSetting) {
 		this.activityAreaSetting = activityAreaSetting;
 	}
+
 	public void delete() {
 		this.isDeleted = true;
 	}
@@ -154,6 +153,7 @@ public class User extends BaseEntity {
 		this.age = update.getAge();
 		this.gender = update.getGender();
 	}
+
 	public void addCash(Integer cash) {
 		this.cash += cash;
 	}

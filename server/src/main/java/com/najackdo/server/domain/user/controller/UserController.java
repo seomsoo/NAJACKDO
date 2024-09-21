@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.najackdo.server.core.annotation.CurrentUser;
 import com.najackdo.server.core.response.SuccessResponse;
-import com.najackdo.server.domain.book.service.BookService;
 import com.najackdo.server.domain.user.dto.UserData;
 import com.najackdo.server.domain.user.entity.User;
 import com.najackdo.server.domain.user.service.UserService;
@@ -100,5 +99,27 @@ public class UserController {
 	public SuccessResponse<Void> unInterestUser(@CurrentUser User user, @PathVariable Long userId) {
 		userService.removeInterestUser(user, userId);
 		return SuccessResponse.empty();
+	}
+
+	/**
+	 * 유저 닉네임 조회 API
+	 *
+	 * @param user
+	 * @return {@link UserData.NicknameResponse}
+	 */
+	@GetMapping("/nickname")
+	public SuccessResponse<UserData.NicknameResponse> getNickname(@CurrentUser User user) {
+		return SuccessResponse.of(UserData.NicknameResponse.of(user.getNickName()));
+	}
+
+	/**
+	 * 닉네임 중복 조회
+	 *
+	 * @param nickname
+	 * @return {@link Boolean}
+	 */
+	@GetMapping("/available-nickname/{nickname}")
+	public SuccessResponse<Boolean> availableNickname(@CurrentUser User user, @PathVariable String nickname) {
+		return SuccessResponse.of(userService.availableNickname(user.getNickName(), nickname));
 	}
 }
