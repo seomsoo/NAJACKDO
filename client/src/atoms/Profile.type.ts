@@ -16,3 +16,14 @@ export interface ILeafLog {
   type: string;
   createdAt: string;
 }
+
+export interface INickname {
+  nickname: string;
+}
+
+export interface IUserInfo {
+  nickname: string;
+  gender: string;
+  age: string;
+  interest: number[];
+}
