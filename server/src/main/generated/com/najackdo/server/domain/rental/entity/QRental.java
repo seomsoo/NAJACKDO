@@ -22,9 +22,9 @@ public class QRental extends EntityPathBase<Rental> {
 
     public static final QRental rental = new QRental("rental");
 
-    public final NumberPath<Long> id = createNumber("id", Long.class);
+    public final com.najackdo.server.domain.cart.entity.QCart cartId;
 
-    public final com.najackdo.server.domain.user.entity.QUser loner;
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final NumberPath<Integer> rentalCost = createNumber("rentalCost", Integer.class);
 
@@ -33,8 +33,6 @@ public class QRental extends EntityPathBase<Rental> {
     public final NumberPath<Integer> rentalPeriod = createNumber("rentalPeriod", Integer.class);
 
     public final DateTimePath<java.time.LocalDateTime> rentalStartDate = createDateTime("rentalStartDate", java.time.LocalDateTime.class);
-
-    public final QRentalSchedule schedule;
 
     public final EnumPath<RentalStatus> status = createEnum("status", RentalStatus.class);
 
@@ -56,8 +54,7 @@ public class QRental extends EntityPathBase<Rental> {
 
     public QRental(Class<? extends Rental> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.loner = inits.isInitialized("loner") ? new com.najackdo.server.domain.user.entity.QUser(forProperty("loner")) : null;
-        this.schedule = inits.isInitialized("schedule") ? new QRentalSchedule(forProperty("schedule")) : null;
+        this.cartId = inits.isInitialized("cartId") ? new com.najackdo.server.domain.cart.entity.QCart(forProperty("cartId"), inits.get("cartId")) : null;
     }
 
 }

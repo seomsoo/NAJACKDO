@@ -19,6 +19,7 @@ import com.najackdo.server.domain.auth.entity.JwtToken;
 import com.najackdo.server.domain.auth.service.AuthService;
 import com.najackdo.server.domain.user.entity.User;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -29,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/auth")
+@Tag(name = "인증 인가 관련 API")
 public class AuthController {
 	private final JwtProperties properties;
 	private final AuthService authService;

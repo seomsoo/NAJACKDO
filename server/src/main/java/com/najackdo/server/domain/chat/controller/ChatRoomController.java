@@ -18,16 +18,20 @@ import com.najackdo.server.domain.chat.entity.Chat;
 import com.najackdo.server.domain.chat.service.ChatServiceImpl;
 import com.najackdo.server.domain.user.entity.User;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/chatroom")
+@Tag(name = "채팅 관련 API ")
 public class ChatRoomController {
 	private final ChatServiceImpl chatService;
 
 	// 채팅방 목록 조회
 	@GetMapping("")
+	@Operation(summary = "채팅방 목록 조회", description = "채팅방 목록 조회")
 	public SuccessResponse<List<ChatRoomDTO>> chatRoomList(){
 		List<ChatRoomDTO> chatRoomDTOS = chatService.chatRoomList();
 		return SuccessResponse.of(chatRoomDTOS);
@@ -35,6 +39,7 @@ public class ChatRoomController {
 
 	// 채팅방 생성
 	@PostMapping("")
+	@Operation(summary = "채팅방 생성", description = "채팅방 생성")
 	public SuccessResponse<String> createRoom(@RequestParam("name") String name) {
 		ChatRoomDTO room = chatService.createRoom(name);
 		return SuccessResponse.of(room.getRoomId());
@@ -43,6 +48,7 @@ public class ChatRoomController {
 
 	// 채팅방 채팅내용 불러오기 (방 열기)
 	@GetMapping("/chat")
+	@Operation(summary = "채팅방 채팅내용 불러오기", description = "채팅방 채팅내용 불러오기")
 	public SuccessResponse<List<Chat.Message>> getChatList(
 		@CurrentUser User user,
 		@RequestParam("roomId") String roomId){
