@@ -39,5 +39,4 @@ public class Cart {
 	
 	@Column(name = "is_delete", nullable = false)
 	private boolean isDelete = false;
-
 }

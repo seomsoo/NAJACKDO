@@ -22,11 +22,15 @@ public class QCart extends EntityPathBase<Cart> {
 
     public static final QCart cart = new QCart("cart");
 
-    public final ListPath<CartItem, QCartItem> bookCartItems = this.<CartItem, QCartItem>createList("bookCartItems", CartItem.class, QCartItem.class, PathInits.DIRECT2);
+    public final com.najackdo.server.domain.user.entity.QUser customer;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final com.najackdo.server.domain.user.entity.QUser user;
+    public final BooleanPath isDelete = createBoolean("isDelete");
+
+    public final com.najackdo.server.domain.user.entity.QUser owner;
+
+    public final NumberPath<Integer> rentalPeriod = createNumber("rentalPeriod", Integer.class);
 
     public QCart(String variable) {
         this(Cart.class, forVariable(variable), INITS);
@@ -46,7 +50,8 @@ public class QCart extends EntityPathBase<Cart> {
 
     public QCart(Class<? extends Cart> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.user = inits.isInitialized("user") ? new com.najackdo.server.domain.user.entity.QUser(forProperty("user"), inits.get("user")) : null;
+        this.customer = inits.isInitialized("customer") ? new com.najackdo.server.domain.user.entity.QUser(forProperty("customer"), inits.get("customer")) : null;
+        this.owner = inits.isInitialized("owner") ? new com.najackdo.server.domain.user.entity.QUser(forProperty("owner"), inits.get("owner")) : null;
     }
 
 }

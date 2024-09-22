@@ -26,7 +26,7 @@ public class QUser extends EntityPathBase<User> {
 
     public final com.najackdo.server.domain.location.entity.QActivityAreaSetting activityAreaSetting;
 
-    public final NumberPath<Short> age = createNumber("age", Short.class);
+    public final StringPath age = createString("age");
 
     public final NumberPath<Integer> cash = createNumber("cash", Integer.class);
 

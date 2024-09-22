@@ -24,7 +24,7 @@ public class UserData {
 		private char gender;
 
 		@NotNull(message = "나이를 입력해 주세요.")
-		private short age;
+		private String age;
 
 		@Size(min = 3, message = "관심 분야를 3개 이상 선택해 주세요.")
 		private List<Long> interest;
@@ -93,11 +93,22 @@ public class UserData {
 		}
 	}
 
-
 	@Data
 	public static class InterestUserRequest {
 
 		@NotNull(message = "관심 사용자 아이디를 입력해 주세요.")
 		private Long interestUserId;
+	}
+
+	@Data
+	public static class NicknameResponse {
+
+		private String nickname;
+
+		public static NicknameResponse of(String nickname) {
+			NicknameResponse response = new NicknameResponse();
+			response.nickname = nickname;
+			return response;
+		}
 	}
 }

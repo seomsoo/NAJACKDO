@@ -37,7 +37,7 @@ public abstract class AuthenticatedSupport {
 		lenient().when(user.getNickName()).thenReturn(username);
 		lenient().when(user.getEmail()).thenReturn(username + "@example.com");
 		lenient().when(user.getGender()).thenReturn('M');
-		lenient().when(user.getAge()).thenReturn((short)30);
+		lenient().when(user.getAge()).thenReturn("20대");
 		lenient().when(user.getRoleType()).thenReturn(RoleType.USER);
 		lenient().when(user.getCash()).thenReturn(1000);
 		lenient().when(user.getProfileImage()).thenReturn("default.png");

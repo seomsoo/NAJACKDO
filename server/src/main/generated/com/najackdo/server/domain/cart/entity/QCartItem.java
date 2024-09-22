@@ -22,11 +22,11 @@ public class QCartItem extends EntityPathBase<CartItem> {
 
     public static final QCartItem cartItem = new QCartItem("cartItem");
 
-    public final QCart bookCart;
+    public final QCart cart;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final com.najackdo.server.domain.book.entity.QUserBook userBook;
+    public final com.najackdo.server.domain.book.entity.QUserBookDetail userBookDetail;
 
     public QCartItem(String variable) {
         this(CartItem.class, forVariable(variable), INITS);
@@ -46,8 +46,8 @@ public class QCartItem extends EntityPathBase<CartItem> {
 
     public QCartItem(Class<? extends CartItem> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.bookCart = inits.isInitialized("bookCart") ? new QCart(forProperty("bookCart"), inits.get("bookCart")) : null;
-        this.userBook = inits.isInitialized("userBook") ? new com.najackdo.server.domain.book.entity.QUserBook(forProperty("userBook"), inits.get("userBook")) : null;
+        this.cart = inits.isInitialized("cart") ? new QCart(forProperty("cart"), inits.get("cart")) : null;
+        this.userBookDetail = inits.isInitialized("userBookDetail") ? new com.najackdo.server.domain.book.entity.QUserBookDetail(forProperty("userBookDetail"), inits.get("userBookDetail")) : null;
     }
 
 }
