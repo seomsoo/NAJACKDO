@@ -34,6 +34,7 @@ export const getRecentSearch = async (): Promise<string[]> => {
 
 // 검색
 export const getSearch = async (keyword: string): Promise<ISearch[]> => {
+  console.log("keyword", keyword);
   const {
     data: { success, data },
   } = await instance.get<BaseResponse<ISearch[]>>(`/search?keyword=${keyword}`);
@@ -64,4 +65,17 @@ export const getAutoSearchText = async (
   console.log("getAutoSearchText");
 
   return data;
+};
+
+// 최근 검색어 삭제
+export const deleteRecentSearch = async (keyword: string): Promise<void> => {
+  const {
+    data: { success },
+  } = await instance.delete<BaseResponse<void>>(`search/recent/${keyword}`);
+
+  if (!success) {
+    throw new Error("최근 검색어 삭제에 실패했습니다.");
+  }
+
+  console.log("deleteRecentSearch");
 };

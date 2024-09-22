@@ -1,4 +1,5 @@
 export interface ISearch {
+  bookId: number;
   title: string;
   author: string;
   cover: string;

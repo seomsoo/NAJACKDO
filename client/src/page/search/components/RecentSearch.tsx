@@ -5,6 +5,7 @@ interface IRecentSearchTextProps {
 }
 
 const RecentSearch = ({ recentData }: IRecentSearchTextProps) => {
+  console.log("recentData", recentData);
   return (
     <div className="my-6 flex flex-col">
       <span className="font-bold">최근 검색</span>
