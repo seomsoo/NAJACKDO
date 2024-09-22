@@ -30,6 +30,7 @@ import LeafPage from "page/profile/page/LeafPage";
 import OtherProfilePage from "page/profile/page/OtherProfilePage";
 import ProfilePage from "page/profile/page/ProfilePage";
 import SearchPage from "page/search/page/SearchPage";
+import SearchResultPage from "page/search/page/SearchResultPage";
 
 import { Route, Routes } from "react-router-dom";
 
@@ -52,6 +53,7 @@ const MainRoute = () => {
       <Route path="/profile/my-leaf" element={<LeafPage />} />
       <Route path="/profile/my-leaf/charge" element={<LeafChargePage />} />
       <Route path="/search" element={<SearchPage />} />
+      <Route path="/search/result" element={<SearchResultPage />} />
       <Route path="/alarm" element={<AlarmPage />} />
       <Route path="/sign-in" element={<LoginPage />} />
       <Route path="/auth/callback" element={<AuthCallBack />} />

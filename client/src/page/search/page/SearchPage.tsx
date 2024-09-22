@@ -5,16 +5,14 @@ import {
 } from "api/searchApi";
 import { IAutoArray } from "atoms/Search.type";
 import { Input } from "components/ui/input";
-import { debounce } from "lodash";
 import AutoSearch from "page/search/components/AutoSearch";
 import PopularSearch from "page/search/components/PopularSearch";
 import RecentSearch from "page/search/components/RecentSearch";
 import RecommendBook from "page/search/components/RecommendBook";
-import SearchResult from "page/search/components/SearchResult";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { IoIosArrowBack, IoIosSearch } from "react-icons/io";
 import { useQuery } from "react-query";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SearchPage = () => {
   const navigate = useNavigate();
@@ -22,12 +20,14 @@ const SearchPage = () => {
   const [autoSearchText, setAutoSearchText] = useState<IAutoArray>({
     list: [],
   });
-
-  const [searchParam] = useSearchParams();
-  const keywordText = searchParam.get("keyword");
+  const [isComposing, setIsComposing] = useState(false);
 
   const goSearchResult = () => {
-    navigate(`/search?keyword=${searchText}`);
+    if (searchText === "") {
+      return alert("검색어를 입력해주세요.");
+    }
+
+    navigate(`/search/result?keyword=${searchText}`);
   };
 
   // 인기 검색어 조회
@@ -51,30 +51,55 @@ const SearchPage = () => {
   });
 
   // 자동완성 검색어 조회
-  const fetchAutoSearchText = useCallback(
-    debounce(async (keyword: string) => {
-      try {
-        const data = await getAutoSearchText(keyword);
-        setAutoSearchText(data);
-      } catch (error) {
-        console.log("자동완성 검색어 조회에 실패했습니다.");
-      }
-    }, 500),
-    []
-  );
-
-  const handlerSearchText = (e) => {
-    setAutoSearchText({ list: [] });
-    const value = e.target.value;
-    setSearchText(value);
-    fetchAutoSearchText(value);
+  const fetchAutoSearchText = async (keyword: string) => {
+    try {
+      const data = await getAutoSearchText(keyword);
+      setAutoSearchText(data);
+    } catch (error) {
+      console.log("자동완성 검색어 조회에 실패했습니다.");
+    }
   };
 
-  useEffect(() => {
-    return () => {
-      fetchAutoSearchText.cancel(); // 컴포넌트 언마운트 시 debounce 취소
-    };
-  }, [fetchAutoSearchText]);
+  // const handlerSearchText = (e) => {
+  //   setAutoSearchText({ list: [] });
+  //   const value = e.target.value;
+  //   setSearchText(value);
+  //   fetchAutoSearchText(value);
+  // };
+
+  // useEffect(() => {
+  //   return () => {
+  //     fetchAutoSearchText.cancel(); // 컴포넌트 언마운트 시 debounce 취소
+  //   };
+  // }, [fetchAutoSearchText]);
+
+  const handleSearchText = (e) => {
+    const value = e.target.value;
+    setSearchText(value);
+    setAutoSearchText({ list: [] });
+
+    // 완성된 한글인지 확인
+    const isCompletedText = /^[가-힣]+$/.test(value);
+
+    // 조합 중이 아니고 한글이 완성된 상태일 때만 검색 쿼리 전송
+    if (!isComposing && isCompletedText) {
+      fetchAutoSearchText(value);
+    }
+  };
+
+  const handleCompositionStart = () => {
+    setIsComposing(true);
+  };
+
+  const handleCompositionEnd = (e) => {
+    setIsComposing(false);
+    const value = e.target.value;
+
+    // 조합이 끝나면 한글이 완성된 상태일 때 쿼리 전송
+    if (/^[가-힣]+$/.test(value)) {
+      fetchAutoSearchText(value);
+    }
+  };
 
   if (popularSearchLoading || recentSearchLoading) {
     return <div>Loading...</div>;
@@ -92,15 +117,19 @@ const SearchPage = () => {
     <div className="mx-4 mt-8">
       {/* 검색어 입력 창 */}
       <div className="flex flex-row items-center relative">
-        <IoIosArrowBack
-          size={25}
-          color="#545454"
-          className="mr-2 cursor-pointer"
-        />
+        <div onClick={() => navigate(-1)}>
+          <IoIosArrowBack
+            size={25}
+            color="#545454"
+            className="mr-2 cursor-pointer"
+          />
+        </div>
         <Input
           className="bg-[#D9D9D9] border-none"
           placeholder="검색어를 입력해주세요."
-          onChange={handlerSearchText}
+          onChange={handleSearchText}
+          onCompositionStart={handleCompositionStart}
+          onCompositionEnd={handleCompositionEnd}
         />
         <div
           className="absolute right-2 cursor-pointer"
@@ -109,27 +138,23 @@ const SearchPage = () => {
           <IoIosSearch size={25} color="#545454" />
         </div>
       </div>
-      {keywordText ? (
-        <SearchResult keyword={keywordText} />
-      ) : (
-        <div
-          className="flex-grow overflow-y-auto flex flex-col justify-between"
-          style={{ height: "calc(100vh - 150px)" }}
-        >
-          {/* 검색어가 없을 때 */}
-          {searchText === "" ? (
-            <div>
-              <PopularSearch popularData={popularSearchData} />
-              <RecentSearch recentData={recentSearchData} />
-            </div>
-          ) : (
-            autoSearchText?.list && (
-              <AutoSearch autoSearch={autoSearchText.list} />
-            )
-          )}
-          <RecommendBook />
-        </div>
-      )}
+      <div
+        className="flex-grow overflow-y-auto flex flex-col justify-between"
+        style={{ height: "calc(100vh - 150px)" }}
+      >
+        {/* 검색어가 없을 때 */}
+        {searchText === "" ? (
+          <div>
+            <PopularSearch popularData={popularSearchData} />
+            <RecentSearch recentData={recentSearchData} />
+          </div>
+        ) : (
+          autoSearchText?.list && (
+            <AutoSearch autoSearch={autoSearchText.list} />
+          )
+        )}
+        <RecommendBook />
+      </div>
     </div>
   );
 };
