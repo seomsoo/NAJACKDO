@@ -16,6 +16,8 @@ import com.najackdo.server.domain.user.dto.UserData;
 import com.najackdo.server.domain.user.entity.User;
 import com.najackdo.server.domain.user.service.UserService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping(value = "/api/v1/user")
 @RequiredArgsConstructor
+@Tag(name = "사용자 관련 API ")
 public class UserController {
 
 	private final UserService userService;
@@ -35,6 +38,7 @@ public class UserController {
 	 * @return {@link Void}
 	 */
 	@PostMapping("/info")
+	@Operation(summary = "유저 정보 입력", description = "유저 정보 입력")
 	public SuccessResponse<Void> updateUserInfo(
 		@CurrentUser User user,
 		@RequestBody UserData.Update update) {
@@ -49,6 +53,7 @@ public class UserController {
 	 * @return {@link UserData.InfoResponse}
 	 */
 	@GetMapping("/info")
+	@Operation(summary = "유저 정보 조회", description = "유저 정보 조회")
 	public SuccessResponse<UserData.InfoResponse> getUserInfo(@CurrentUser User user) {
 		return SuccessResponse.of(userService.getUserInfo(user));
 	}
@@ -60,6 +65,7 @@ public class UserController {
 	 * @return {@link List<UserData.CashLogResponse>}
 	 */
 	@GetMapping("/cashlog")
+	@Operation(summary = "유저 캐시 로그 조회", description = "유저 캐시 로그 조회")
 	public SuccessResponse<List<UserData.CashLogResponse>> getUserCashLog(@CurrentUser User user) {
 		return SuccessResponse.of(userService.getUserCashLog(user));
 	}
@@ -71,6 +77,7 @@ public class UserController {
 	 * @return {@link UserData.InfoResponse}
 	 */
 	@GetMapping("/info/{nickname}")
+	@Operation(summary = "유저 닉네임으로 유저 정보 조회", description = "유저 닉네임으로 유저 정보 조회")
 	public SuccessResponse<UserData.InfoResponse> getUserInfoByNickName(@PathVariable String nickname) {
 		return SuccessResponse.of(userService.getUserInfoByNickName(nickname));
 	}
@@ -83,6 +90,7 @@ public class UserController {
 	 * @return
 	 */
 	@PostMapping("/interest-user/{userId}")
+	@Operation(summary = "유저 팔로우( 관심 책장)  추가", description = "유저 팔로우 (관심 책장) 추가")
 	public SuccessResponse<Void> interestUser(@CurrentUser User user, @PathVariable Long userId) {
 		userService.addInterestUser(user, userId);
 		return SuccessResponse.empty();
@@ -96,6 +104,7 @@ public class UserController {
 	 * @return
 	 */
 	@DeleteMapping("/interest-user/{userId}")
+	@Operation(summary = "유저 팔로우( 관심 책장)  삭제", description = "유저 팔로우 (관심 책장) 삭제")
 	public SuccessResponse<Void> unInterestUser(@CurrentUser User user, @PathVariable Long userId) {
 		userService.removeInterestUser(user, userId);
 		return SuccessResponse.empty();
@@ -108,6 +117,7 @@ public class UserController {
 	 * @return {@link UserData.NicknameResponse}
 	 */
 	@GetMapping("/nickname")
+	@Operation(summary = "유저 닉네임 조회", description = "유저 닉네임 조회")
 	public SuccessResponse<UserData.NicknameResponse> getNickname(@CurrentUser User user) {
 		return SuccessResponse.of(UserData.NicknameResponse.of(user.getNickName()));
 	}
@@ -119,6 +129,7 @@ public class UserController {
 	 * @return {@link Boolean}
 	 */
 	@GetMapping("/available-nickname/{nickname}")
+	@Operation(summary = "닉네임 중복 조회", description = "닉네임 중복 조회")
 	public SuccessResponse<Boolean> availableNickname(@CurrentUser User user, @PathVariable String nickname) {
 		return SuccessResponse.of(userService.availableNickname(user.getNickName(), nickname));
 	}

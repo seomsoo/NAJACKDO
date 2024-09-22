@@ -16,6 +16,8 @@ import com.najackdo.server.domain.search.dto.AutocompleteResponse;
 import com.najackdo.server.domain.search.service.SearchService;
 import com.najackdo.server.domain.user.entity.User;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/api/v1/search")
 @RequiredArgsConstructor
+@Tag(name = "도서 검색 API ")
 public class SearchController {
 
 	private final SearchService searchService;
@@ -34,6 +37,7 @@ public class SearchController {
 	 * @return
 	 */
 	@GetMapping
+	@Operation(summary = "도서 검색", description = "도서 검색")
 	public SuccessResponse<List<BookData.Search>> search(@CurrentUser User user,
 		@RequestParam("keyword") String keyword) {
 		return SuccessResponse.of(searchService.searchKeyword(user.getId(), keyword));
@@ -45,6 +49,7 @@ public class SearchController {
 	 * @return
 	 */
 	@GetMapping("/recent")
+	@Operation(summary = "최근 검색어 조회", description = "최근 검색어 조회")
 	public SuccessResponse<List<String>> getRecentSearchList(@CurrentUser User user) {
 		// 최근 검색어 조회 서비스 호출
 		return SuccessResponse.of(searchService.getResentSearchList(user.getId()));
@@ -55,6 +60,7 @@ public class SearchController {
 	 */
 
 	@DeleteMapping("/recent/{keyword}")
+	@Operation(summary = "최근 검색어 삭제", description = "최근 검색어 삭제")
 	public SuccessResponse<Void> deleteRecentSearchList(@CurrentUser User user,
 		@PathVariable("keyword") String keyword) {
 		// 최근 검색어 삭제 서비스 호출
@@ -69,6 +75,7 @@ public class SearchController {
 	 * @return
 	 */
 	@GetMapping("/popularity")
+	@Operation(summary = "인기 검색어 조회", description = "인기 검색어 조회")
 	public SuccessResponse<List<String>> getPopularSearchList() {
 
 		// 인기 검색어 조회 서비스 호출
@@ -81,6 +88,7 @@ public class SearchController {
 	 * @return
 	 */
 	@GetMapping("/auto-complete")
+	@Operation(summary = "자동완성 검색어 조회", description = "자동완성 검색어 조회")
 	public SuccessResponse<AutocompleteResponse> getAutoCompleteList(@RequestParam("keyword") String keyword) {
 		// 자동완성 검색어 조회 서비스 호출
 		log.info("keyword: {}", keyword);

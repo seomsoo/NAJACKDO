@@ -19,13 +19,16 @@ import com.najackdo.server.domain.book.service.BookService;
 import com.najackdo.server.domain.book.service.UserBooksService;
 import com.najackdo.server.domain.user.entity.User;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/book")
-@Slf4j
+@Tag(name = "도서 관련 API ")
 public class BookController {
 	private final UserBooksService userBooksService;
 	private final BookService bookService;
@@ -38,6 +41,7 @@ public class BookController {
 	 * @return
 	 */
 	@PostMapping("/regist-books")
+	@Operation(summary = "도서 등록", description = "책 제목 리스트로 여러권 등록")
 	public SuccessResponse<Map<String, List<String>>> registBooks(@CurrentUser User user,
 		@RequestBody UserBookData.Create create) {
 		Map<String, List<String>> result = userBooksService.addBookList(user, create);
@@ -52,6 +56,7 @@ public class BookController {
 	 * @return
 	 */
 	@PostMapping("/regist-book")
+	@Operation(summary = "도서 등록", description = "책 ISBN으로 단일 등록")
 	public SuccessResponse<Void> registBooks(@CurrentUser User user, @RequestBody UserBookData.CreateByISBN create) {
 		userBooksService.addBook(user, create);
 		return SuccessResponse.empty();
@@ -64,6 +69,7 @@ public class BookController {
 	 * @return
 	 */
 	@GetMapping("/interest")
+	@Operation(summary = "관심 도서 목록 조회", description = "유저의 관심 도서 목록 조회")
 	public SuccessResponse<List<BookData.Search>> getBookCase(@CurrentUser User user) {
 		return SuccessResponse.of(userBooksService.getInterestBooks(user));
 	}
@@ -76,6 +82,7 @@ public class BookController {
 	 * @return
 	 */
 	@PostMapping("/interest/{bookId}")
+	@Operation(summary = "관심 도서 추가", description = "유저의 관심 도서 추가")
 	public SuccessResponse<Void> addInterestBook(@CurrentUser User user,
 		@PathVariable("bookId") Long interest) {
 		userBooksService.addInterestBook(user, interest);
@@ -83,6 +90,7 @@ public class BookController {
 	}
 
 	@DeleteMapping("/interest/{bookId}")
+	@Operation(summary = "관심 도서 삭제", description = "유저의 관심 도서 삭제")
 	public SuccessResponse<Void> deleteInterestBook(@CurrentUser User user,
 		@PathVariable("bookId") Long interest) {
 		userBooksService.deleteInterestBook(user, interest);
@@ -96,6 +104,7 @@ public class BookController {
 	 * @return {@link  List<BookData.BookCase>}
 	 */
 	@GetMapping("/bookcase/interest")
+	@Operation(summary = "관심 책장 목록 조회", description = "유저의 관심 책장 목록 조회")
 	public SuccessResponse<List<BookData.BookCase>> getUserInterest(@CurrentUser User user) {
 		return SuccessResponse.of(bookService.getBookCaseInterest(user));
 	}
@@ -108,6 +117,7 @@ public class BookController {
 	 * @return {@link BookData.BookCase}
 	 */
 	@GetMapping("/bookcase/{nickname}")
+	@Operation(summary = "책장 목록 조회", description = "유저 닉네임으로 책장 목록 조회")
 	public SuccessResponse<BookData.BookCase> getUserBookCaseByNickName(
 		@CurrentUser User user,
 		@PathVariable String nickname) {
