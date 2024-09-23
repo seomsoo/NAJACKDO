@@ -69,5 +69,4 @@ public class UserBook {
 		userBook.locationCode = location;
 		return userBook;
 	}
-
 }

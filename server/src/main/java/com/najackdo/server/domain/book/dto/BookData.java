@@ -49,22 +49,32 @@ public class BookData {
 
 	@Data
 	public static class DisplayBook {
-
 		private Long bookId;
+		private Long userBookId;
 		private String cover;
 		private BookStatus bookStatus;
 
+		public static DisplayBook of(Long bookId, Long userBookId, String cover, BookStatus bookStatus) {
+			DisplayBook displayBook = new DisplayBook();
+			displayBook.bookId = bookId;
+			displayBook.userBookId = userBookId;
+			displayBook.cover = cover;
+			displayBook.bookStatus = bookStatus;
+			return displayBook;
+		}
 	}
 
 	@Data
 	public static class BookCase {
 
-		private String userName;
+		private Long userId;
+		private String nickname;;
 		private List<DisplayBook> displayBooks;
 
-		public static BookCase of(String userName, List<DisplayBook> displayBooks) {
+		public static BookCase of(Long userId, String nickname, List<DisplayBook> displayBooks) {
 			BookCase response = new BookCase();
-			response.userName = userName;
+			response.userId = userId;
+			response.nickname = nickname;
 			response.displayBooks = displayBooks;
 			return response;
 		}

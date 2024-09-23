@@ -1,11 +1,17 @@
 // src/App.tsx
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { getValid } from "api/validApi";
+// import { getValid } from "api/validApi";
 import Footer from "components/common/Footer";
 import Header from "components/common/Header";
 import MainRoute from "components/routes/MainRoute";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { useAuthStore } from "store/useAuthStore";
+import { useIsValidStore, useValidStore } from "store/useValidStore";
 
 function App() {
+  const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
   const queryClient = new QueryClient();
@@ -17,6 +23,52 @@ function App() {
     "/bookdetail/rental",
     "/bookdetail/mybook",
   ];
+
+  useEffect(() => {
+    const checkValidation = async () => {
+      try {
+        const { accessToken } = useAuthStore.getState();
+        const { isValid } = useIsValidStore.getState();
+        const { setIsSurvey, setIsLocation } = useValidStore.getState();
+
+        if (isValid) {
+          return;
+        }
+
+        if (!accessToken) {
+          navigate("/sign-in");
+          return;
+        }
+
+        const data = await getValid();
+        setIsSurvey(data.survey);
+        setIsLocation(data.location);
+
+        console.log("app data :", data);
+
+        if (!data.survey) {
+          navigate("/survey");
+          return;
+        }
+
+        // if (!data.location) {
+        //   // 위치 설정 페이지로 이동
+        //   return;
+        // }
+
+        if (accessToken && data.survey) {
+          if (currentPath === "/sign-in" || currentPath === "/survey") {
+            navigate("/");
+            return;
+          }
+        }
+      } catch (error) {
+        console.error("유효성 검사 실패", error);
+        navigate("/sign-in");
+      }
+    };
+    checkValidation();
+  }, [currentPath, navigate]);
 
   const isPopup = window.opener !== null && !window.opener.closed;
   const shouldHideHeaderFooter = popupPaths.includes(currentPath) && isPopup;

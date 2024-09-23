@@ -11,7 +11,7 @@ const useAuthCallback = () => {
     const accessToken = searchParam.get("accessToken");
     if (accessToken) {
       setAccessToken(accessToken);
-      navigate("/");
+      navigate("/survey");
     }
   };
 

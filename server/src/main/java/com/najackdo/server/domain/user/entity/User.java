@@ -1,6 +1,7 @@
 package com.najackdo.server.domain.user.entity;
 
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.annotations.ColumnDefault;
 
@@ -92,8 +93,8 @@ public class User extends BaseEntity {
 	@JoinColumn(name = "activity_areas_id")
 	private ActivityAreaSetting activityAreaSetting;
 
-	// @OneToMany(mappedBy = "following", fetch = FetchType.LAZY)
-	// private Set<InterestUser> followingUsers;
+	@OneToMany(mappedBy = "following", fetch = FetchType.LAZY)
+	private List<InterestUser> followingUsers;
 	//
 	// @OneToMany(mappedBy = "follower", fetch = FetchType.LAZY)
 	// private Set<InterestUser> followerUsers;
