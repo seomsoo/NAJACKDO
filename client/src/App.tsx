@@ -1,14 +1,14 @@
 // src/App.tsx
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { getValid } from "api/validApi";
-// import { getValid } from "api/validApi";
+import { IValid } from "atoms/Valid.type";
 import Footer from "components/common/Footer";
 import Header from "components/common/Header";
 import MainRoute from "components/routes/MainRoute";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore } from "store/useAuthStore";
-import { useIsValidStore, useValidStore } from "store/useValidStore";
+import { useValidStore } from "store/useValidStore";
 
 function App() {
   const navigate = useNavigate();
@@ -24,51 +24,67 @@ function App() {
     "/bookdetail/mybook",
   ];
 
+  const { accessToken } = useAuthStore.getState();
+  const { isSurvey, isLocation, setIsSurvey, setIsLocation } =
+    useValidStore.getState();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [validData, setValidData] = useState<IValid | null>(null);
+
   useEffect(() => {
     const checkValidation = async () => {
       try {
-        const { accessToken } = useAuthStore.getState();
-        const { isValid } = useIsValidStore.getState();
-        const { setIsSurvey, setIsLocation } = useValidStore.getState();
-
-        if (isValid) {
-          return;
-        }
-
+        console.log("accessToken", accessToken);
+        console.log("isSurvey", isSurvey);
+        console.log(accessToken && isSurvey);
+        // 로그인 안되어있을 때
         if (!accessToken) {
           navigate("/sign-in");
           return;
         }
 
-        const data = await getValid();
-        setIsSurvey(data.survey);
-        setIsLocation(data.location);
+        if (accessToken && isSurvey) {
+          navigate("/");
+          return;
+        }
 
-        console.log("app data :", data);
+        setLoading(true);
 
-        if (!data.survey) {
+        const response = await getValid();
+        setValidData(response);
+
+        if (!response.survey) {
+          setLoading(false);
           navigate("/survey");
           return;
         }
 
-        // if (!data.location) {
+        // if (!response.isLocation) {
         //   // 위치 설정 페이지로 이동
         //   return;
         // }
 
-        if (accessToken && data.survey) {
+        if (accessToken && response.survey) {
+          setIsSurvey(true);
+          // setIsLocation(true);
           if (currentPath === "/sign-in" || currentPath === "/survey") {
+            setLoading(false);
             navigate("/");
             return;
           }
         }
+        setLoading(false);
       } catch (error) {
         console.error("유효성 검사 실패", error);
+        setLoading(false);
         navigate("/sign-in");
       }
     };
     checkValidation();
-  }, [currentPath, navigate]);
+  }, [currentPath, navigate, accessToken, isSurvey, setIsSurvey]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   const isPopup = window.opener !== null && !window.opener.closed;
   const shouldHideHeaderFooter = popupPaths.includes(currentPath) && isPopup;

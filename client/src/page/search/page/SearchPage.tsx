@@ -113,7 +113,7 @@ const SearchPage = () => {
         style={{ height: "calc(100vh - 150px)" }}
       >
         {/* 검색어가 없을 때 */}
-        {searchText === "" ? (
+        {!searchText ? (
           <div>
             <PopularSearch popularData={popularSearchData} />
             <RecentSearch recentData={recentSearchData} />

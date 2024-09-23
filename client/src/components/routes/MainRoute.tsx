@@ -43,7 +43,7 @@ const MainRoute = () => {
       <Route path="/library" element={<LibraryPage />} />
       <Route path="/library/my-favorite" element={<MyFavoritePage />} />
       <Route path="/library/my-library" element={<MyLibraryPage />} />
-      <Route path="/library/my-history" element={<HistoryPage />} />
+      <Route path="/library/my-history"  element={<HistoryPage />} />
       <Route path="/chat" element={<ChattingPage />} />
       <Route path="/chat/:room_id" element={<ChattingRoomPage />} />
       <Route path="/chat/review" element={<ReviewPage />} />
