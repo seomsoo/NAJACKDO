@@ -1,8 +1,8 @@
 import instance from "api/clientApi";
 import { BaseResponse, IPaging } from "atoms/Base.type";
-import { INearLocation } from "atoms/Location.type";
+import { INearLocation, ILocationRange } from "atoms/Location.type";
 
-
+// 유저의 위치 기반으로 가까운 순으로 동네 정보 반환
 export const getNearLocation = async (
   latitude: number,
   longitude: number,
@@ -10,7 +10,7 @@ export const getNearLocation = async (
 ): Promise<IPaging<INearLocation[]>> => {
   
   const {
-    data: { success, data, status },
+    data: { success, data },
   } = await instance.get<BaseResponse<IPaging<INearLocation[]>>>(
     `/location/near-location?latitude=${longitude}&longitude=${latitude}&page=${page}`
   );
@@ -25,6 +25,31 @@ export const getNearLocation = async (
   }
 
   // console.log("getNearLocation", data);
+
+  return data;
+};
+
+// 사용자의 주변 활동 범위
+export const getLocationRange = async (
+  latitude: number,
+  longitude: number,
+): Promise<ILocationRange[]> => {
+  
+  const {
+    data: { success, data },
+  } = await instance.get<BaseResponse<ILocationRange[]>>(
+    `/location/near-neighborhood?latitude=${latitude}&longitude=${longitude}`
+  );
+
+  console.log('getLocationRange')
+  console.log('lat', latitude)
+  console.log('lon', longitude)
+  console.log('data', data)
+  console.log( `/location/near-neighborhood?latitude=${latitude}&longitude=${longitude}`)
+
+  if (!success) {
+    throw new Error("범위 설정 실패");
+  }
 
   return data;
 };
