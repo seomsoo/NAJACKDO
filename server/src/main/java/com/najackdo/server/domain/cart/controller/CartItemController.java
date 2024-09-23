@@ -1,0 +1,42 @@
+package com.najackdo.server.domain.cart.controller;
+
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.najackdo.server.core.annotation.CurrentUser;
+import com.najackdo.server.core.response.SuccessResponse;
+import com.najackdo.server.domain.cart.service.CartItemService;
+import com.najackdo.server.domain.user.entity.User;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@RestController
+@RequestMapping("/api/v1/cart")
+@RequiredArgsConstructor
+@Tag(name = "도서 검색 API ")
+public class CartItemController {
+
+	private final CartItemService cartItemService;
+
+	/**
+	 * 장바구니 담기
+	 *
+	 * @param customer
+	 * @param ownerbookId
+	 * @return {@link SuccessResponse<Void>}
+	 */
+	@PostMapping("add/{ownerbookId}")
+	@Operation(summary = "장바구니 담기", description = "장바구니 담기")
+	public SuccessResponse<Void> addCartItem(@CurrentUser User customer, @PathVariable Long ownerbookId) {
+		log.info("장바구니 담기 요청 : {}", ownerbookId);
+		cartItemService.addCartItem(customer, ownerbookId);
+		log.info("장바구니 담기 완료 : {}", ownerbookId);
+		return SuccessResponse.empty();
+	}
+}

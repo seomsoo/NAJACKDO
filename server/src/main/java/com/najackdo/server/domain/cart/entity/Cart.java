@@ -35,8 +35,15 @@ public class Cart {
 	private User owner;
 
 	@Column(name = "rental_period", nullable = false)
-	private int rentalPeriod;
-	
+	private int rentalPeriod = 14;
+
 	@Column(name = "is_delete", nullable = false)
 	private boolean isDelete = false;
+
+	public static Cart createCart(User customer, User owner) {
+		Cart cart = new Cart();
+		cart.customer = customer;
+		cart.owner = owner;
+		return cart;
+	}
 }

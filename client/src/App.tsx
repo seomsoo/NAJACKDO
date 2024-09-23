@@ -18,11 +18,7 @@ function App() {
 
   const popupPaths = ["/kapay/approve", "/kapay/cancel", "/kapay/fail"];
   const showHeaderPaths = ["/"];
-  const hideFooterPaths = [
-    "/sign-in",
-    "/bookdetail/rental",
-    "/bookdetail/mybook",
-  ];
+  const hideFooterPaths = ["/sign-in", "/bookdetail/rental", "/bookdetail/mybook"];
 
   useEffect(() => {
     const checkValidation = async () => {
@@ -43,8 +39,6 @@ function App() {
         const data = await getValid();
         setIsSurvey(data.survey);
         setIsLocation(data.location);
-
-        console.log("app data :", data);
 
         if (!data.survey) {
           navigate("/survey");
@@ -75,15 +69,11 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="pb-[86px] relative">
-        {!shouldHideHeaderFooter && showHeaderPaths.includes(currentPath) && (
-          <Header />
-        )}
+        {!shouldHideHeaderFooter && showHeaderPaths.includes(currentPath) && <Header />}
         <Routes>
           <Route path="/*" element={<MainRoute />} />
         </Routes>
-        {!shouldHideHeaderFooter && !hideFooterPaths.includes(currentPath) && (
-          <Footer />
-        )}
+        {!shouldHideHeaderFooter && !hideFooterPaths.includes(currentPath) && <Footer />}
       </div>
     </QueryClientProvider>
   );
