@@ -25,14 +25,21 @@ const BookcaseContainer = ({ name, imageArray }: BookcaseContainerProps) => {
         </div>
       </div>
       <div
-        className='flex overflow-x-auto whitespace-nowrap space-x-3'
+        className='flex overflow-x-auto whitespace-nowrap space-x-5'
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
         }}
       >
         {imageArray.map((item, index) => {
-          return <img key={index} src={item} className='w-20' alt='book' />;
+          return (
+            <img
+              key={index}
+              src={item}
+              className='w-20  object-cover rounded-sm shadow-xl '
+              alt='book'
+            />
+          );
         })}
       </div>
     </div>
