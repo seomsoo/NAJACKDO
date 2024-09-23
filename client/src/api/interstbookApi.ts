@@ -1,10 +1,11 @@
-import { BaseResponse } from 'atoms/Base.type';
-import instance from './clientApi';
-import { Iinterest } from 'atoms/Interest.type';
+import { BaseResponse } from "atoms/Base.type";
+import { Iinterest } from "atoms/Interest.type";
+import instance from "./clientApi";
 
+// 관심 도서 조회
 export const getInterestbook = async (): Promise<Iinterest[]> => {
   const {
-    data : { success, data },
+    data: { success, data },
   } = await instance.get<BaseResponse<Iinterest[]>>("/book/interest");
 
   if (!success) {
@@ -15,26 +16,28 @@ export const getInterestbook = async (): Promise<Iinterest[]> => {
   return data;
 };
 
-export const postInterestbook = async (bookId:number): Promise<void> => {
+// 관심 도서 등록
+export const postInterestbook = async (bookId: number): Promise<void> => {
   const {
-    data : { success },
+    data: { success },
   } = await instance.post<BaseResponse<null>>(`/book/interest/${bookId}`);
-  
+
   if (!success) {
-    throw new Error("관심 있는 책 등록 실패")
+    throw new Error("관심 있는 책 등록 실패");
   }
 
   // console.log("관심도서 등록 성공")
 };
 
-  export const deleteInterestbook = async (bookId:number) : Promise<void> => {
-    const {
-      data : { success },
-    } = await instance.delete<BaseResponse<null>>(`/book/interest/${bookId}`);
+// 관심 도서 해제
+export const deleteInterestbook = async (bookId: number): Promise<void> => {
+  const {
+    data: { success },
+  } = await instance.delete<BaseResponse<null>>(`/book/interest/${bookId}`);
 
-    if (!success) {
-      throw new Error("관심 있는 책 해제 실패")
-    }
+  if (!success) {
+    throw new Error("관심 있는 책 해제 실패");
+  }
 
-    // console.log("관심 도서 해제 성공")
-  };
+  // console.log("관심 도서 해제 성공")
+};

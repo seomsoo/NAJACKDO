@@ -53,7 +53,7 @@ const CartContainer = ({ name, period, books }: CartContainerProps) => {
           님의 책장
         </span>
 
-        <Dialog>
+        {/* <Dialog>
           <DialogTrigger asChild>
             <div className='flex flex-row items-center justify-end gap-1'>
               <p className='text-[12px]'>대출 기간: {date}일</p>
@@ -107,7 +107,7 @@ const CartContainer = ({ name, period, books }: CartContainerProps) => {
               </button>
             </DialogTrigger>
           </DialogContent>
-        </Dialog>
+        </Dialog> */}
       </div>
       <div className='border-y-[1px] border-[#776B5D]/50'>
         {books.map((item, index) => {
@@ -130,10 +130,10 @@ const CartContainer = ({ name, period, books }: CartContainerProps) => {
         })}
       </div>
       <div className='flex flex-row justify-between mt-3 px-3'>
-        <p>총 금액</p>
+        <p>금액</p>
         <div className='flex flex-row justify-end items-center mt-auto '>
           <IoIosLeaf size={16} color='#79AC78' />
-          <p>{totalPrice.toLocaleString()}</p>
+          <p>{sumPrice.toLocaleString()} <span className='text-[12px]'>/ 일</span></p>
         </div>
       </div>
       <div className='flex justify-center mt-4'>
