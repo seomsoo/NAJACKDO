@@ -15,6 +15,8 @@ export interface IInterestBook {
 
 export interface IInterestBookCase {
   userName: string;
+  userId: number;
+  nickname: string; 
   displayBooks: {
     bookId: number; 
     cover: string; 
