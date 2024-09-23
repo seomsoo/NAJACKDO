@@ -27,7 +27,7 @@ function App() {
   const { accessToken } = useAuthStore.getState();
   const { isSurvey, isLocation, setIsSurvey, setIsLocation } =
     useValidStore.getState();
-  const [loading, setLoading] = useState<boolean>(false);
+  // const [loading, setLoading] = useState<boolean>(false);
   const [validData, setValidData] = useState<IValid | null>(null);
 
   useEffect(() => {
@@ -43,17 +43,19 @@ function App() {
         }
 
         if (accessToken && isSurvey) {
-          navigate("/");
-          return;
+          if (currentPath === "/sign-in" || currentPath === "/survey") {
+            navigate("/");
+            return;
+          }
         }
 
-        setLoading(true);
+        // setLoading(true);
 
         const response = await getValid();
         setValidData(response);
 
         if (!response.survey) {
-          setLoading(false);
+          // setLoading(false);
           navigate("/survey");
           return;
         }
@@ -67,24 +69,24 @@ function App() {
           setIsSurvey(true);
           // setIsLocation(true);
           if (currentPath === "/sign-in" || currentPath === "/survey") {
-            setLoading(false);
+            // setLoading(false);
             navigate("/");
             return;
           }
         }
-        setLoading(false);
+        // setLoading(false);
       } catch (error) {
         console.error("유효성 검사 실패", error);
-        setLoading(false);
+        // setLoading(false);
         navigate("/sign-in");
       }
     };
     checkValidation();
   }, [currentPath, navigate, accessToken, isSurvey, setIsSurvey]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
   const isPopup = window.opener !== null && !window.opener.closed;
   const shouldHideHeaderFooter = popupPaths.includes(currentPath) && isPopup;
