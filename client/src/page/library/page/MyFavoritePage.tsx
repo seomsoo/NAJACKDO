@@ -6,6 +6,7 @@ import { getInterestbook } from 'api/interstbookApi'; // 관심 도서 조회 AP
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
 import BookcaseContainer from '../components/BookcaseContainer';
 import BookContainer from '../components/BookContainer';
+import { getInterestBookCase } from 'api/interestbookcaseApi';
 
 const MyFavoritePage = () => {
   const navigate = useNavigate();
@@ -13,12 +14,24 @@ const MyFavoritePage = () => {
     navigate(-1);
   };
 
+  // 관심 책장 목록 조회
+  const {
+    data: bookcases,
+    isLoading: isBookcasesLoading,
+    isError: isBookcasesError,
+  } = useQuery('interestBookcase', getInterestBookCase);
+
   // 관심 도서 목록 조회
   const {
     data: interestBooks,
-    isLoading,
-    isError,
+    isLoading: isInterestBooksLoading,
+    isError: isInterestBooksError,
   } = useQuery('interestBooks', getInterestbook);
+
+  if (isInterestBooksLoading || isBookcasesLoading)
+    return <div>로딩 중...</div>;
+  if (isInterestBooksError || isBookcasesError)
+    return <div>오류가 발생했습니다.</div>;
 
   // 책장 관련 배열은 그대로 유지
   const bookcaseArray = [
@@ -51,9 +64,6 @@ const MyFavoritePage = () => {
     },
   ];
 
-  if (isLoading) return <div>로딩 중...</div>;
-  if (isError) return <div>오류가 발생했습니다.</div>;
-
   return (
     <div>
       <header className='sticky top-0 z-10 bg-[#F8F6F3] flex items-center justify-between p-6 py-4 mb-4'>
@@ -79,16 +89,12 @@ const MyFavoritePage = () => {
 
           {/* 책장(Tab 1) */}
           <TabsContent value='bookcase'>
-            {bookcaseArray.map((item, index) => (
-              <div
+            {bookcases?.map((bookcase, index) => (
+              <BookcaseContainer
                 key={index}
-                className='mx-3 my-5 bg-white/30 shadow rounded-lg p-4'
-              >
-                <BookcaseContainer
-                  name={item.name}
-                  imageArray={item.imageArray}
-                />
-              </div>
+                name={bookcase.userName}
+                imageArray={bookcase.displayBooks.map((book) => book.cover)}
+              />
             ))}
           </TabsContent>
 
