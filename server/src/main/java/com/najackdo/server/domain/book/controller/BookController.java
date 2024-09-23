@@ -110,7 +110,7 @@ public class BookController {
 	}
 
 	/**
-	 * 이름으로 책장 목록 조회 API
+	 * 유저 아이디로 책장 목록 조회 API
 	 *
 	 * @param user
 	 * @param findUserId
