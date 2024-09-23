@@ -16,6 +16,7 @@ interface ILocation {
   longitude: number;
 }
 
+
 const fetchLocation = (): Promise<ILocation> => {
   return new Promise((resolve, reject) => {
     if (navigator.geolocation) {
@@ -33,13 +34,13 @@ const fetchLocation = (): Promise<ILocation> => {
   });
 };
 
-const KakaoMap = () => {
-  const [address, setAddress] = useState(""); // 행정동 정보
-  const [isOpen, setIsOpen] = useState(true);
-  const [map, setMap] = useState<any>(null); // 지도 상태 추가
-  const [isMapLoaded, setIsMapLoaded] = useState(false); // 지도 로드 상태 확인
-  const [latlng, setLatlng] = useState("");
 
+const KakaoMap = () => {
+  const [address, setAddress] = useState("");
+  const [isOpen, setIsOpen] = useState(true);
+  const [map, setMap] = useState<any>(null);
+
+  
   const {
     data: location,
     isLoading: isLocationLoading,
@@ -48,6 +49,8 @@ const KakaoMap = () => {
     queryKey: ["location"],
     queryFn: fetchLocation,
   });
+
+
 
   const {
     data: nearLocationData,
@@ -79,6 +82,7 @@ const KakaoMap = () => {
       console.log('현재 위치 조회에 실패');
       return;
     }
+    console.log('현위치 조회 성공');
 
     const mapContainer = document.getElementById('map');
     
@@ -93,31 +97,36 @@ const KakaoMap = () => {
       level: 6,
     };
 
-    const mapInstance = new window.kakao.maps.Map(mapContainer, mapOption);
-    setMap(mapInstance); // 생성된 지도를 상태에 저장
-    setIsMapLoaded(true); // 지도가 로드되었음을 표시
+    const map = new window.kakao.maps.Map(mapContainer, mapOption);
+    setMap(map); 
 
     // 초기 위치에 마커 표시
-    displayMarker(mapInstance, mapOption.center);
-  }, [location, address]);
+    displayMarker(map, mapOption.center);
+  }, [address, location]);
 
   // 특정 위치에 마커 표시 함수
   const displayMarker = (map: any, position: any) => {
+    if (!map) {
+      console.error("Map 로딩 중입니다.");
+      return false;
+    }
     const marker = new window.kakao.maps.Marker({
       map: map,
       position: position,
     });
     marker.setMap(map); // 지도에 마커 표시
     map.setCenter(position); // 지도 중심을 마커 위치로 설정
+
+    return true;
   };
 
-  const handleLocationSelect = (locationName: string, latitude: number, longitude: number) => {
+  const handleLocationSelect = (locationName: string, map: any, position: any, latitude: number, longitude:number) => {
     setAddress(locationName);
-    const mapCenter = new window.kakao.maps.LatLng(latitude, longitude);
-    
-    
-    
-    setIsOpen(false);
+    console.log(`선택한 위치: ${locationName} (${latitude}, ${longitude})`);
+    if (displayMarker(map, position)) {
+      console.log("지도 이동 성공");
+      setIsOpen(false);
+    }
   };
 
   if (isLocationLoading || isNearLocationLoading) {
@@ -147,7 +156,7 @@ const KakaoMap = () => {
             {nearLocationArray.map((location, index) => (
               <li key={index}>
                 <button
-                  onClick={() => handleLocationSelect(location.locationName, location.latitude, location.longitude)}
+                  onClick={() => handleLocationSelect(location.locationName, map, new window.kakao.maps.LatLng(location.longitude, location.latitude), location.latitude, location.longitude)}
                   className="w-full text-left p-2 border-b hover:bg-gray-100"
                 >
                   {location.locationName}
@@ -162,65 +171,3 @@ const KakaoMap = () => {
 };
 
 export default KakaoMap;
-
-// import { useEffect, useState } from "react";
-
-// declare global {
-//   interface Window {
-//     kakao: any;
-//   }
-// }
-
-// const KakaoMap = () => {
-//   const [address, setAddress] = useState(""); // 행정동 정보를 저장할 상태
-
-  
-
-//   useEffect(() => {
-//     const mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-//     mapOption = { 
-//         center: new window.kakao.maps.LatLng(35.204095, 126.807187), // 지도의 중심좌표
-//         level: 6
-//     }; 
-
-//     const map = new window.kakao.maps.Map(mapContainer, mapOption);
-
-//     if (navigator.geolocation) {
-//       // 현위치
-//       navigator.geolocation.getCurrentPosition(function(position) {
-        
-//         var lat = position.coords.latitude;
-//         var lon = position.coords.longitude;
-        
-//         var locPosition = new window.kakao.maps.LatLng(lat, lon);
-
-//         displayMarker(locPosition);
-//       });
-        
-//     } else { 
-//       var locPosition = new window.kakao.maps.LatLng(35.204095, 126.8071876)   
-//       console.log('현재 위치 조회에 실패');
-//       displayMarker(locPosition);
-//     }
-
-//     function displayMarker(locPosition: any) {
-//       var marker = new window.kakao.maps.Marker({  
-//         map: map, 
-//         position: locPosition
-//       }); 
-//       marker.setMap(map);
-//       map.setCenter(locPosition);
-//     }
-    
-    
-//   }, []);
-
-//   return (
-//     <>
-//       <div id="map" className="w-full h-[500px]"></div>
-//       <p className="text-center mt-2">{address}</p>
-//     </>
-//   );
-// }
-
-// export default KakaoMap;
