@@ -17,11 +17,13 @@ const Nickname = () => {
     data: userNicknameData,
     error: userNicknameError,
     isLoading: userNicknameLoading,
-  } = useQuery("userNickname", getUserNickname, {
-    onSuccess: (data) => {
-      setNickname(data.nickname);
-      setValue("nickname", data.nickname);
-    },
+  } = useQuery({
+    queryKey: ["userNickname"],
+    queryFn: getUserNickname,
+    // onSuccess: (data) => {
+    //   setNickname(data.nickname);
+    //   setValue("nickname", data.nickname);
+    // },
   });
 
   const {
@@ -29,7 +31,9 @@ const Nickname = () => {
     error: availableNicknameError,
     isLoading: availableNicknameLoading,
     refetch: checkNickname,
-  } = useQuery("availableNickname", () => availableNickname(nicknameToCheck), {
+  } = useQuery({
+    queryKey: ["availableNickname"],
+    queryFn: () => availableNickname(nicknameToCheck),
     enabled: false,
   });
 
