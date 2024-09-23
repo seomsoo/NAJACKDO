@@ -20,7 +20,6 @@ const SearchPage = () => {
   const [autoSearchText, setAutoSearchText] = useState<IAutoArray>({
     list: [],
   });
-  const [isComposing, setIsComposing] = useState(false);
 
   const goSearchResult = () => {
     if (searchText === "") {
@@ -60,19 +59,6 @@ const SearchPage = () => {
     }
   };
 
-  // const handlerSearchText = (e) => {
-  //   setAutoSearchText({ list: [] });
-  //   const value = e.target.value;
-  //   setSearchText(value);
-  //   fetchAutoSearchText(value);
-  // };
-
-  // useEffect(() => {
-  //   return () => {
-  //     fetchAutoSearchText.cancel(); // 컴포넌트 언마운트 시 debounce 취소
-  //   };
-  // }, [fetchAutoSearchText]);
-
   const handleSearchText = (e) => {
     const value = e.target.value;
     setSearchText(value);
@@ -82,21 +68,7 @@ const SearchPage = () => {
     const isCompletedText = /^[가-힣]+$/.test(value);
 
     // 조합 중이 아니고 한글이 완성된 상태일 때만 검색 쿼리 전송
-    if (!isComposing && isCompletedText) {
-      fetchAutoSearchText(value);
-    }
-  };
-
-  const handleCompositionStart = () => {
-    setIsComposing(true);
-  };
-
-  const handleCompositionEnd = (e) => {
-    setIsComposing(false);
-    const value = e.target.value;
-
-    // 조합이 끝나면 한글이 완성된 상태일 때 쿼리 전송
-    if (/^[가-힣]+$/.test(value)) {
+    if (isCompletedText) {
       fetchAutoSearchText(value);
     }
   };
@@ -128,8 +100,6 @@ const SearchPage = () => {
           className="bg-[#D9D9D9] border-none"
           placeholder="검색어를 입력해주세요."
           onChange={handleSearchText}
-          onCompositionStart={handleCompositionStart}
-          onCompositionEnd={handleCompositionEnd}
         />
         <div
           className="absolute right-2 cursor-pointer"
