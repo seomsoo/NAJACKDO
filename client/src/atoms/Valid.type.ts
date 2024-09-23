@@ -1,5 +1,4 @@
 export interface IValid {
-  isLogin: boolean;
-  isLocation: boolean;
-  isSurvey: boolean;
+  location: boolean;
+  survey: boolean;
 }
