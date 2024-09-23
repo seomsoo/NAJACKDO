@@ -1,12 +1,12 @@
 import { BaseResponse } from "atoms/Base.type";
-import { Iinterest } from "atoms/Interest.type";
+import { IInterestBook } from "atoms/Interest.type";
 import instance from "./clientApi";
 
 // 관심 도서 조회
-export const getInterestbook = async (): Promise<Iinterest[]> => {
+export const getInterestbook = async (): Promise<IInterestBook[]> => {
   const {
     data: { success, data },
-  } = await instance.get<BaseResponse<Iinterest[]>>("/book/interest");
+  } = await instance.get<BaseResponse<IInterestBook[]>>("/book/interest");
 
   if (!success) {
     throw new Error("관심 있는 책 조회 실패");
