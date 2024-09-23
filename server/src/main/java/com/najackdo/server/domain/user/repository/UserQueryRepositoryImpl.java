@@ -13,11 +13,13 @@ import static com.najackdo.server.domain.user.entity.QCashLog.*;
 import static com.najackdo.server.domain.user.entity.QUser.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
 
 import com.najackdo.server.domain.user.dto.UserData;
+import com.najackdo.server.domain.user.entity.User;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -110,6 +112,19 @@ public class UserQueryRepositoryImpl implements UserQueryRepository {
 			.where(rentalReview.user.id.eq(id)
 				.and(reviewItems.positive.eq(positive)))
 			.fetchOne();
+	}
+
+	@Override
+	public Optional<User> findUserWithCartsById(Long userId) {
+
+		User fetchedUser = queryFactory
+			.selectFrom(user)
+			.leftJoin(user.bookCarts, cart).fetchJoin()
+			.leftJoin(cart.owner, user).fetchJoin()
+			.where(user.id.eq(userId))
+			.fetchOne();
+
+		return Optional.ofNullable(fetchedUser);
 	}
 
 }

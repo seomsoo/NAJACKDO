@@ -1,10 +1,12 @@
 package com.najackdo.server.domain.user.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.repository.query.Param;
 
 import com.najackdo.server.domain.user.dto.UserData.CashLogResponse;
+import com.najackdo.server.domain.user.entity.User;
 
 public interface UserQueryRepository {
 
@@ -48,4 +50,12 @@ public interface UserQueryRepository {
 	 * @return {@link Long} 리뷰 개수
 	 */
 	Long countUserReviewsByPositive(Long id, boolean positive);
+
+	/**
+	 * 사용자 ID로 사용자의 카트 조회
+	 *
+	 * @param userId 사용자 ID
+	 * @return {@link User} 사용자 엔티티
+	 */
+	Optional<User> findUserWithCartsById(@Param("userId") Long userId);
 }

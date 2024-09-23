@@ -12,8 +12,8 @@ public class CartData {
 	@Data
 	public static class CartInfo {
 
-		User onwer;
-		List<CartItem> cartItems;
+		private User onwer;
+		private List<CartItem> cartItems;
 
 		public static CartInfo of(User owner, List<CartItem> cartItems) {
 			CartInfo cartList = new CartInfo();

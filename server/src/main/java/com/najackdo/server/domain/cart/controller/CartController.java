@@ -29,7 +29,7 @@ public class CartController {
 	/**
 	 * 유저의 모든 장바구니 조회
 	 *
-	 * @param customer
+	 * @param user
 	 * @return {@link SuccessResponse<List<CartData.CartInfo>>}
 	 */
 	@GetMapping("list")
