@@ -1,6 +1,8 @@
 import BookRentalInfo from './BookRentalInfo';
 import { LuPencilLine } from 'react-icons/lu';
 import { IoIosLeaf } from 'react-icons/io';
+import BookRentalApply from "page/library/components/BookRentalApply";
+
 
 import {
   Dialog,
@@ -52,6 +54,7 @@ const CartContainer = ({ name, period, books }: CartContainerProps) => {
           <p className='text-[#79AC78]'>{name}</p>
           님의 책장
         </span>
+
 
         {/* <Dialog>
           <DialogTrigger asChild>
@@ -137,9 +140,7 @@ const CartContainer = ({ name, period, books }: CartContainerProps) => {
         </div>
       </div>
       <div className='flex justify-center mt-4'>
-        <button className='w-[265px] bg-[#776B5D] text-[12px] text-white rounded-[12px] p-2'>
-          도서 대출 신청
-        </button>
+        <BookRentalApply dayPrice={sumPrice} triggerClassName="w-[265px] bg-[#776B5D] text-[12px] text-white rounded-[12px] p-2" />
       </div>
     </div>
   );
