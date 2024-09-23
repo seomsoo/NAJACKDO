@@ -34,7 +34,11 @@ const RecentSearchText = ({ text }: IRecentSearchTextProps) => {
         <IoMdTime size={25} color="#545454" />
         <span
           className="ml-3"
-          onClick={() => navigate(`/search/result?keyword=${text}`)}
+          onClick={() =>
+            navigate('/search/result', {
+              state: { keyword: text },
+            })
+          }
         >
           {text}
         </span>

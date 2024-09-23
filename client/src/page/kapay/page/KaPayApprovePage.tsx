@@ -1,5 +1,4 @@
 import { Button } from "components/ui/button";
-import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const KaPayApprovePage = () => {
@@ -11,9 +10,12 @@ const KaPayApprovePage = () => {
   };
 
   return (
-    <div>
-      <h1>결제 완료</h1>
-      <p>결제가 성공적으로 완료되었습니다.</p>
+    <div
+      className="flex flex-col items-center justify-center"
+      style={{ height: "calc(100vh - 86px)" }}
+    >
+      <span className="maplestory text-3xl text-[#A6B37D]">결제 완료</span>
+      <p className="my-10">결제가 성공적으로 완료되었습니다.</p>
       {canCloseWindow ? (
         <Button onClick={() => window.close()}>닫기</Button>
       ) : (

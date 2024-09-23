@@ -10,7 +10,7 @@ const KaPayCancelPage = () => {
   };
 
   return (
-    <div>
+    <div className="bg-white" style={{ height: "calc(100vh - 86px)" }}>
       <h1>카페이 결제 취소 페이지</h1>
       <p>결제 취소가 완료되었습니다.</p>
       {canCloseWindow ? (
