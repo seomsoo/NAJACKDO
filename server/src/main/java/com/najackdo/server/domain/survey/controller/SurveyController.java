@@ -14,10 +14,4 @@ import lombok.extern.slf4j.Slf4j;
 @Tag(name = "설문 관련 API ")
 public class SurveyController {
 
-	/**
-	 * 설문 정보 API
-	 *
-	 * @param surveyId
-	 *
-	 */
 }

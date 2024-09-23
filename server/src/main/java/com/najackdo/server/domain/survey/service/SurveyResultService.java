@@ -39,4 +39,11 @@ public class SurveyResultService {
 		serveyResultRepository.saveAll(surveyResults);
 
 	}
+
+	public boolean isVaildSurvey(Long userId) {
+		List<SurveyResult> byUserId = serveyResultRepository.findByUserId(userId);
+
+		return !byUserId.isEmpty();
+	}
+
 }

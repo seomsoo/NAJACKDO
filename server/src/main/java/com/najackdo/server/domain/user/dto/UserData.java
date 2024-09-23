@@ -111,4 +111,17 @@ public class UserData {
 			return response;
 		}
 	}
+
+	@Data
+	public static class ValidResponse {
+		private boolean isSurvey;
+		private boolean isLocation;
+
+		public static ValidResponse of(boolean isSurvey, boolean isLocation) {
+			ValidResponse response = new ValidResponse();
+			response.isSurvey = isSurvey;
+			response.isLocation = isLocation;
+			return response;
+		}
+	}
 }

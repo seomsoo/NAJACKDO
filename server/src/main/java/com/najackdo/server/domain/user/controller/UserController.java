@@ -133,4 +133,16 @@ public class UserController {
 	public SuccessResponse<Boolean> availableNickname(@CurrentUser User user, @PathVariable String nickname) {
 		return SuccessResponse.of(userService.availableNickname(user.getNickName(), nickname));
 	}
+
+	/**
+	 * 유저 정보 유효성 조회 (로그인, 설문 여부, 위치 정보)
+	 *
+	 * @param user
+	 * @return {@link UserData.ValidResponse}
+	 */
+	@GetMapping("/valid")
+	@Operation(summary = "유저 정보 유효성 조회", description = "유저 정보 유효성 조회")
+	public SuccessResponse<UserData.ValidResponse> valid(@CurrentUser User user) {
+		return SuccessResponse.of(userService.valid(user));
+	}
 }

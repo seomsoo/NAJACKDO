@@ -15,6 +15,7 @@ import org.springframework.transaction.event.TransactionalEventListener;
 import com.najackdo.server.core.exception.BaseException;
 import com.najackdo.server.core.exception.ErrorCode;
 import com.najackdo.server.domain.survey.event.SurveySaveEvent;
+import com.najackdo.server.domain.survey.service.SurveyResultService;
 import com.najackdo.server.domain.user.dto.UserData;
 import com.najackdo.server.domain.user.entity.InterestUser;
 import com.najackdo.server.domain.user.entity.User;
@@ -37,6 +38,7 @@ public class UserService {
 	private final ApplicationEventPublisher eventPublisher;
 	private final UserRepository userRepository;
 	private final UserQueryRepository userQueryRepository;
+	private final SurveyResultService surveyResultService;
 
 	@Transactional
 	public void updateUser(User user, UserData.Update update) {
@@ -117,5 +119,12 @@ public class UserService {
 			return true;
 		}
 		return false;
+	}
+
+	public UserData.ValidResponse valid(User user) {
+		boolean isSurvey = surveyResultService.isVaildSurvey(user.getId());
+		boolean isLocation = user.getActivityAreaSetting() != null;
+
+		return UserData.ValidResponse.of(isSurvey, isLocation);
 	}
 }
