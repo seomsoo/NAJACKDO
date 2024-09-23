@@ -24,17 +24,12 @@ function App() {
     "/bookdetail/mybook",
   ];
 
-  const { isValid } = useIsValidStore.getState();
-  const { setIsSurvey, setIsLocation } = useValidStore.getState();
-
   useEffect(() => {
     const checkValidation = async () => {
       try {
         const { accessToken } = useAuthStore.getState();
-
-        if (currentPath === "/survey" || currentPath === "/sign-in") {
-          return;
-        }
+        const { isValid } = useIsValidStore.getState();
+        const { setIsSurvey, setIsLocation } = useValidStore.getState();
 
         if (isValid) {
           return;
@@ -49,17 +44,19 @@ function App() {
         setIsSurvey(data.survey);
         setIsLocation(data.location);
 
+        console.log("app data :", data);
+
         if (!data.survey) {
           navigate("/survey");
           return;
         }
 
-        if (!data.location) {
-          // 위치 설정 페이지로 이동
-          return;
-        }
+        // if (!data.location) {
+        //   // 위치 설정 페이지로 이동
+        //   return;
+        // }
 
-        if (accessToken && data.survey && data.location) {
+        if (accessToken && data.survey) {
           if (currentPath === "/sign-in" || currentPath === "/survey") {
             navigate("/");
             return;
@@ -71,7 +68,7 @@ function App() {
       }
     };
     checkValidation();
-  }, [currentPath, isValid, navigate, setIsSurvey, setIsLocation]);
+  }, [currentPath, navigate]);
 
   const isPopup = window.opener !== null && !window.opener.closed;
   const shouldHideHeaderFooter = popupPaths.includes(currentPath) && isPopup;
