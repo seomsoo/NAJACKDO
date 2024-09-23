@@ -1,8 +1,4 @@
-import {
-  getAutoSearchText,
-  getPopularSearch,
-  getRecentSearch,
-} from "api/searchApi";
+import { getAutoSearchText, getPopularSearch, getRecentSearch } from "api/searchApi";
 import { IAutoArray } from "atoms/Search.type";
 import { Input } from "components/ui/input";
 import AutoSearch from "page/search/components/AutoSearch";
@@ -11,7 +7,7 @@ import RecentSearch from "page/search/components/RecentSearch";
 import RecommendBook from "page/search/components/RecommendBook";
 import { useState } from "react";
 import { IoIosArrowBack, IoIosSearch } from "react-icons/io";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 const SearchPage = () => {
@@ -90,21 +86,14 @@ const SearchPage = () => {
       {/* 검색어 입력 창 */}
       <div className="flex flex-row items-center relative">
         <div onClick={() => navigate(-1)}>
-          <IoIosArrowBack
-            size={25}
-            color="#545454"
-            className="mr-2 cursor-pointer"
-          />
+          <IoIosArrowBack size={25} color="#545454" className="mr-2 cursor-pointer" />
         </div>
         <Input
           className="bg-[#D9D9D9] border-none"
           placeholder="검색어를 입력해주세요."
           onChange={handleSearchText}
         />
-        <div
-          className="absolute right-2 cursor-pointer"
-          onClick={goSearchResult}
-        >
+        <div className="absolute right-2 cursor-pointer" onClick={goSearchResult}>
           <IoIosSearch size={25} color="#545454" />
         </div>
       </div>
@@ -119,9 +108,7 @@ const SearchPage = () => {
             <RecentSearch recentData={recentSearchData} />
           </div>
         ) : (
-          autoSearchText?.list && (
-            <AutoSearch autoSearch={autoSearchText.list} />
-          )
+          autoSearchText?.list && <AutoSearch autoSearch={autoSearchText.list} />
         )}
         <RecommendBook />
       </div>

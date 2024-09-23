@@ -3,7 +3,7 @@ import { IProfile } from "atoms/Profile.type";
 import LogoutButton from "page/profile/components/LogoutButton";
 import MannerTree from "page/profile/components/MannerTree";
 import MyLeaf from "page/profile/components/MyLeaf";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import UserInfo from "../components/UserInfo";
 
 const ProfilePage = () => {
