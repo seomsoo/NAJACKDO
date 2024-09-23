@@ -113,14 +113,14 @@ public class BookController {
 	 * 이름으로 책장 목록 조회 API
 	 *
 	 * @param user
-	 * @param nickname
+	 * @param findUserId
 	 * @return {@link BookData.BookCase}
 	 */
-	@GetMapping("/bookcase/{nickname}")
+	@GetMapping("/bookcase/{findUserId}")
 	@Operation(summary = "책장 목록 조회", description = "유저 닉네임으로 책장 목록 조회")
 	public SuccessResponse<BookData.BookCase> getUserBookCaseByNickName(
 		@CurrentUser User user,
-		@PathVariable String nickname) {
-		return SuccessResponse.of(bookService.getBookCaseByNickName(nickname));
+		@PathVariable Long findUserId) {
+		return SuccessResponse.of(bookService.getBookCaseByuserId(findUserId));
 	}
 }

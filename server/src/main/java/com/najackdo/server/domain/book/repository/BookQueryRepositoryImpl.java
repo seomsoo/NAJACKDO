@@ -50,16 +50,16 @@ public class BookQueryRepositoryImpl implements BookQueryRepository {
 		Map<String, List<BookData.DisplayBook>> userBooksMap = groupBooksByUser(userBooksData);
 
 		return userBooksMap.entrySet().stream()
-			.map(entry -> BookData.BookCase.of(entry.getKey(), entry.getValue()))
+			.map(entry -> BookData.BookCase.of(user.getId(), user.getNickName(), user.getUsername(), entry.getValue()))
 			.collect(Collectors.toList());
 	}
 
 	@Override
-	public BookData.BookCase findBookCaseByNickName(String nickname) {
-		List<Tuple> userBooksData = getUserBooksDataByNickname(nickname);
+	public BookData.BookCase findBookCaseByUserId(User findUser) {
+		List<Tuple> userBooksData = getUserBooksDataByUserId(findUser.getId());
 		List<BookData.DisplayBook> displayBooks = convertToDisplayBooks(userBooksData);
 
-		return BookData.BookCase.of(nickname, displayBooks);
+		return BookData.BookCase.of(findUser.getId(), findUser.getNickName(), findUser.getUsername(), displayBooks);
 	}
 
 	private List<User> getFollowingUsers(User user) {
@@ -79,12 +79,12 @@ public class BookQueryRepositoryImpl implements BookQueryRepository {
 			.fetch();
 	}
 
-	private List<Tuple> getUserBooksDataByNickname(String nickname) {
+	private List<Tuple> getUserBooksDataByUserId(Long userId) {
 		return queryFactory
 			.select(userBook.user.username, userBook.id, book.cover, userBook.bookStatus)
 			.from(userBook)
 			.join(userBook.book, book)
-			.where(userBook.user.username.eq(nickname))
+			.where(userBook.user.id.eq(userId))
 			.fetch();
 	}
 

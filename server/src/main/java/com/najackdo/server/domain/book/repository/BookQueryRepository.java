@@ -21,8 +21,8 @@ public interface BookQueryRepository {
 	/**
 	 * 사용자 닉네임으로 사용자의 책 목록을 조회한다.
 	 *
-	 * @param nickname
+	 * @param findUser
 	 * @return {@link BookData.BookCase}
 	 */
-	BookData.BookCase findBookCaseByNickName(String nickname);
+	BookData.BookCase findBookCaseByUserId(User findUser);
 }
