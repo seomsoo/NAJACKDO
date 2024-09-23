@@ -20,6 +20,7 @@ import MyRentalBookDetailPage from "page/library/page/MyRentalBookDetailPage";
 import RentalBookDetailPage from "page/library/page/RentalBookDetailPage";
 import LocationPage from "page/location/page/LocationPage";
 import LocationSettingPage from "page/location/page/LocationSettingPage";
+import RangeSettingPage from "page/location/page/RangeSettingPage";
 import AuthCallBack from "page/login/page/AuthCallbackPage";
 import LoginPage from "page/login/page/LoginPage";
 import SurveyPage from "page/login/page/SurveyPage";
@@ -40,6 +41,7 @@ const MainRoute = () => {
       <Route path="/" element={<MainPage />} />
       <Route path="/location" element={<LocationPage />} />
       <Route path="/location/setting" element={<LocationSettingPage />} />
+      <Route path="/location/range" element={<RangeSettingPage />} />
       <Route path="/library" element={<LibraryPage />} />
       <Route path="/library/my-favorite" element={<MyFavoritePage />} />
       <Route path="/library/my-library" element={<MyLibraryPage />} />
