@@ -36,4 +36,13 @@ public class UserController {
 		return SuccessResponse.empty();
 	}
 
+	@PostMapping("/pushToken")
+	public SuccessResponse<Void> pushToken(
+			@CurrentUser User user,
+			@RequestBody UserData.PushToken pushToken
+	){
+		log.info("들어옴");
+		userService.pushToken(user, pushToken);
+		return SuccessResponse.empty();
+	}
 }

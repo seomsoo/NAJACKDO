@@ -141,6 +141,9 @@ public class User  extends BaseEntity {
 		this.cash += cash;
 	}
 
+	public void pushToken(String Token){
+		this.fcmToken = Token;
+	}
 	@Override
 	public String toString() {
 		return "User{" +

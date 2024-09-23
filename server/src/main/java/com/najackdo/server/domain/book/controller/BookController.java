@@ -7,10 +7,12 @@ import com.najackdo.server.domain.book.service.UserBooksService;
 import com.najackdo.server.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -20,6 +22,9 @@ import java.util.List;
 @Slf4j
 public class BookController {
     private final UserBooksService userBooksService;
+
+    private final RestTemplate restTemplate;
+
 
 //    @GetMapping("")
 //    @ResponseStatus(HttpStatus.CREATED)
@@ -48,5 +53,12 @@ public class BookController {
     public SuccessResponse<List<UserBookData.BookCase>> getBookCase(@PathVariable String username) {
         log.info(username);
         return SuccessResponse.of(userBooksService.getBookCasesByUserName(username));
+    }
+
+    @GetMapping("/go")
+    public SuccessResponse<Void> borrowBooks() {
+        String url = "http://localhost:3000/api/v1/notification/alarm";
+        restTemplate.getForObject(url, String.class);
+        return SuccessResponse.empty();
     }
 }

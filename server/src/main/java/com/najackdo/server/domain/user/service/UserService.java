@@ -70,5 +70,9 @@ public class UserService {
 		userRepository.save(findUser);
 	}
 
-
+	@Transactional
+	public void pushToken(User user,UserData.PushToken pushToken) {
+		user.pushToken(pushToken.getToken());
+		userRepository.save(user);
+	}
 }

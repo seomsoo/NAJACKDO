@@ -25,4 +25,10 @@ public class UserData {
 		@Size(min = 3, message = "관심 분야를 3개 이상 선택해 주세요.")
 		private List<Long> interest;
 	}
+
+	@Data
+	public static class PushToken{
+		@NotBlank(message = "토큰이 비어있습니다.")
+		private String token;
+	}
 }
