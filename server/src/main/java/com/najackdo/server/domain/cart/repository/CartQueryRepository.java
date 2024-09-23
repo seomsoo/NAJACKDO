@@ -14,5 +14,5 @@ public interface CartQueryRepository {
 	 * @return {@link Optional<Cart>} 장바구니
 	 */
 	Optional<Cart> findCartByUserIdAndBookId(Long userId, Long bookId);
-
+	
 }

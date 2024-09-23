@@ -37,6 +37,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath fcmToken = createString("fcmToken");
 
+    public final ListPath<InterestUser, QInterestUser> followingUsers = this.<InterestUser, QInterestUser>createList("followingUsers", InterestUser.class, QInterestUser.class, PathInits.DIRECT2);
+
     public final ComparablePath<Character> gender = createComparable("gender", Character.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);

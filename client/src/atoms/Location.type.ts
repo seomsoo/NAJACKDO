@@ -5,3 +5,9 @@ export interface INearLocation {
   longitude: number;
 }
 
+export interface ILocationRange {
+  locationCode: number;
+  locationName: string;
+  locationPoint: any;
+  polygon: any;
+}

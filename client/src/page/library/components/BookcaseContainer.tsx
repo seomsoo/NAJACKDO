@@ -1,15 +1,40 @@
+import {
+  deleteInterestBookCase,
+  postInterestBookCase,
+} from 'api/interestbookcaseApi';
 import { useState } from 'react';
 import { IoHeart, IoHeartOutline } from 'react-icons/io5';
 
 interface BookcaseContainerProps {
+  userId?: number;
   name: string;
   imageArray: string[];
+  isFollowed?: boolean;
 }
-const BookcaseContainer = ({ name, imageArray }: BookcaseContainerProps) => {
-  const [heart, setHeart] = useState(false);
+const BookcaseContainer = ({
+  userId,
+  name,
+  imageArray,
+  isFollowed,
+}: BookcaseContainerProps) => {
+  // console.log('userId:', userId);
+  const [heart, setHeart] = useState(isFollowed);
 
-  const handleHeart = () => {
-    setHeart(!heart);
+  const handleHeart = async () => {
+    try {
+      console.log('userId:', userId);
+
+      if (heart) {
+        await deleteInterestBookCase(userId);
+        // console.log(`${name}님의 책장을 관심 목록에서 해제했습니다.`);
+      } else {
+        await postInterestBookCase(userId);
+        // console.log(`${name}님의 책장을 관심 목록에 등록했습니다.`);
+      }
+      setHeart(!heart);
+    } catch (error) {
+      // console.error('관심 도서 등록/해제 중 오류 발생:', error);
+    }
   };
 
   return (
@@ -18,9 +43,9 @@ const BookcaseContainer = ({ name, imageArray }: BookcaseContainerProps) => {
         <p className='font-medium mb-2'>{name}님의 책장</p>
         <div onClick={handleHeart}>
           {heart ? (
-            <IoHeartOutline size={15} color='#D96363' />
-          ) : (
             <IoHeart size={15} color='#D96363' />
+          ) : (
+            <IoHeartOutline size={15} color='#D96363' />
           )}
         </div>
       </div>

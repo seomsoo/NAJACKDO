@@ -50,4 +50,17 @@ public class CartItemService {
 		cartItemRepository.save(cartItem);
 	}
 
+	@Transactional
+	public void deleteCartItem(User customer, Long ownerbookId) {
+
+		UserBook userBook = userBooksRepository.findById(ownerbookId)
+			.orElseThrow(() -> new IllegalArgumentException("해당 책을 찾을 수 없습니다."));
+
+		UserBookDetail userBookDetail = userBookDetailRepository.findUserBookDetailByUserBookId(ownerbookId)
+			.orElseThrow(() -> new IllegalArgumentException("해당 책의 상세 정보를 찾을 수 없습니다."));
+
+		Cart cart = cartRepository.findCartByUserIdAndBookId(customer.getId(), ownerbookId)
+			.orElseThrow(() -> new IllegalArgumentException("해당 책을 찾을 수 없습니다."));
+
+	}
 }

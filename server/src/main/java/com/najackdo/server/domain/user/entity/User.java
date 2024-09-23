@@ -1,11 +1,13 @@
 package com.najackdo.server.domain.user.entity;
 
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.annotations.ColumnDefault;
 
 import com.najackdo.server.core.entity.BaseEntity;
 import com.najackdo.server.domain.book.entity.UserBook;
+import com.najackdo.server.domain.cart.entity.Cart;
 import com.najackdo.server.domain.location.entity.ActivityAreaSetting;
 import com.najackdo.server.domain.user.dto.UserData;
 
@@ -92,8 +94,8 @@ public class User extends BaseEntity {
 	@JoinColumn(name = "activity_areas_id")
 	private ActivityAreaSetting activityAreaSetting;
 
-	// @OneToMany(mappedBy = "following", fetch = FetchType.LAZY)
-	// private Set<InterestUser> followingUsers;
+	@OneToMany(mappedBy = "following", fetch = FetchType.LAZY)
+	private List<InterestUser> followingUsers;
 	//
 	// @OneToMany(mappedBy = "follower", fetch = FetchType.LAZY)
 	// private Set<InterestUser> followerUsers;
@@ -113,8 +115,8 @@ public class User extends BaseEntity {
 	// @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
 	// private List<CashLog> cashLogs;
 	//
-	// @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	// private List<Cart> bookCarts;
+	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+	private List<Cart> bookCarts;
 	//
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	private List<UserBook> userBooks;

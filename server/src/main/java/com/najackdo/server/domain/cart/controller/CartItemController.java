@@ -17,9 +17,9 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/cart")
+@RequestMapping("/api/v1/cart-item")
 @RequiredArgsConstructor
-@Tag(name = "도서 검색 API ")
+@Tag(name = "장바구니 아이템 API ")
 public class CartItemController {
 
 	private final CartItemService cartItemService;
@@ -37,6 +37,22 @@ public class CartItemController {
 		log.info("장바구니 담기 요청 : {}", ownerbookId);
 		cartItemService.addCartItem(customer, ownerbookId);
 		log.info("장바구니 담기 완료 : {}", ownerbookId);
+		return SuccessResponse.empty();
+	}
+
+	/**
+	 * 장바구니 삭제
+	 *
+	 * @param customer
+	 * @param ownerbookId
+	 * @return {@link SuccessResponse<Void>}
+	 */
+	@PostMapping("delete/{ownerbookId}")
+	@Operation(summary = "장바구니 삭제", description = "장바구니 삭제")
+	public SuccessResponse<Void> deleteCartItem(@CurrentUser User customer, @PathVariable Long ownerbookId) {
+		log.info("장바구니 삭제 요청 : {}", ownerbookId);
+		cartItemService.deleteCartItem(customer, ownerbookId);
+		log.info("장바구니 삭제 완료 : {}", ownerbookId);
 		return SuccessResponse.empty();
 	}
 }

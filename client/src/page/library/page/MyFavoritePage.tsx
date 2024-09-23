@@ -1,12 +1,12 @@
-import { IoIosArrowBack } from 'react-icons/io';
-import { IoNotificationsOutline } from 'react-icons/io5';
-import { Link, useNavigate } from 'react-router-dom';
-import { useQuery } from 'react-query';
-import { getInterestbook } from 'api/interstbookApi'; // 관심 도서 조회 API
-import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
-import BookcaseContainer from '../components/BookcaseContainer';
-import BookContainer from '../components/BookContainer';
-import { getInterestBookCase } from 'api/interestbookcaseApi';
+import { IoIosArrowBack } from "react-icons/io";
+import { IoNotificationsOutline } from "react-icons/io5";
+import { Link, useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { getInterestbook } from "api/interstbookApi"; // 관심 도서 조회 API
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "components/ui/tabs";
+import BookcaseContainer from "../components/BookcaseContainer";
+import BookContainer from "../components/BookContainer";
+import { getInterestBookCase } from "api/interestbookcaseApi";
 
 const MyFavoritePage = () => {
   const navigate = useNavigate();
@@ -19,87 +19,48 @@ const MyFavoritePage = () => {
     data: bookcases,
     isLoading: isBookcasesLoading,
     isError: isBookcasesError,
-  } = useQuery('interestBookcase', getInterestBookCase);
+  } = useQuery({
+    queryKey: ["interestBookCase"],
+    queryFn: getInterestBookCase,
+  });
 
   // 관심 도서 목록 조회
   const {
     data: interestBooks,
     isLoading: isInterestBooksLoading,
     isError: isInterestBooksError,
-  } = useQuery('interestBooks', getInterestbook);
+  } = useQuery({
+    queryKey: ["interestBooks"],
+    queryFn: getInterestbook,
+  });
 
-  if (isInterestBooksLoading || isBookcasesLoading)
-    return <div>로딩 중...</div>;
-  if (isInterestBooksError || isBookcasesError)
-    return <div>오류가 발생했습니다.</div>;
-
-  // 책장 관련 배열은 그대로 유지
-  const bookcaseArray = [
-    {
-      name: '정하림',
-      imageArray: [
-        'https://image.aladin.co.kr/product/18190/96/cover500/e893247390_1.jpg',
-        'https://image.aladin.co.kr/product/18190/96/cover500/e893247390_1.jpg',
-        'https://image.aladin.co.kr/product/18190/96/cover500/e893247390_1.jpg',
-        'https://image.aladin.co.kr/product/18190/96/cover500/e893247390_1.jpg',
-        'https://image.aladin.co.kr/product/18190/96/cover500/e893247390_1.jpg',
-        'https://image.aladin.co.kr/product/18190/96/cover500/e893247390_1.jpg',
-      ],
-    },
-    {
-      name: '김도영',
-      imageArray: [
-        'https://image.aladin.co.kr/product/18190/96/cover500/e893247390_1.jpg',
-        'https://image.aladin.co.kr/product/18190/96/cover500/e893247390_1.jpg',
-        'https://image.aladin.co.kr/product/18190/96/cover500/e893247390_1.jpg',
-      ],
-    },
-    {
-      name: '서민수',
-      imageArray: [
-        'https://image.aladin.co.kr/product/18190/96/cover500/e893247390_1.jpg',
-        'https://image.aladin.co.kr/product/18190/96/cover500/e893247390_1.jpg',
-        'https://image.aladin.co.kr/product/18190/96/cover500/e893247390_1.jpg',
-      ],
-    },
-  ];
+  if (isInterestBooksLoading || isBookcasesLoading) return <div>로딩 중...</div>;
+  if (isInterestBooksError || isBookcasesError) return <div>오류가 발생했습니다.</div>;
 
   return (
     <div>
-      <header className='sticky top-0 z-10 bg-[#F8F6F3] flex items-center justify-between p-6 py-4 mb-4'>
-        <div className='items-center flex gap-2'>
-          <button onClick={goBack} className='text-2xl'>
+      <header className="sticky top-0 z-10 bg-[#F8F6F3] flex items-center justify-between p-6 py-4 mb-4">
+        <div className="items-center flex gap-2">
+          <button onClick={goBack} className="text-2xl">
             <IoIosArrowBack />
           </button>
-          <span className='font-extrabold text-2xl'>My Favorite</span>
+          <span className="font-extrabold text-2xl">My Favorite</span>
         </div>
-        <div className=' text-3xl text-[#545454]'>
-          <Link to='/alarm'>
+        <div className=" text-3xl text-[#545454]">
+          <Link to="/alarm">
             <IoNotificationsOutline />
           </Link>
         </div>
       </header>
 
-      <main className='px-6'>
-        <Tabs defaultValue='bookcase' className='w-full'>
-          <TabsList className='grid w-full grid-cols-2'>
-            <TabsTrigger value='bookcase'>책장</TabsTrigger>
-            <TabsTrigger value='book'>책</TabsTrigger>
+      <main className="px-6">
+        <Tabs defaultValue="bookcase" className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="book">책</TabsTrigger>
+            <TabsTrigger value="bookcase">책장</TabsTrigger>
           </TabsList>
 
-          {/* 책장(Tab 1) */}
-          <TabsContent value='bookcase'>
-            {bookcases?.map((bookcase, index) => (
-              <BookcaseContainer
-                key={index}
-                name={bookcase.userName}
-                imageArray={bookcase.displayBooks.map((book) => book.cover)}
-              />
-            ))}
-          </TabsContent>
-
-          {/* 관심 도서 리스트(Tab 2) */}
-          <TabsContent value='book'>
+          <TabsContent value="book">
             {interestBooks?.map((book) => (
               <BookContainer
                 key={book.bookId}
@@ -109,6 +70,18 @@ const MyFavoritePage = () => {
                 description={book.description} // 도서 설명
                 cover={book.cover} // 도서 커버 이미지
                 isInterested={true} // 조회된 책은 이미 관심 도서
+              />
+            ))}
+          </TabsContent>
+
+          <TabsContent value="bookcase">
+            {bookcases?.map((bookcase) => (
+              <BookcaseContainer
+                key={bookcase.userId}
+                userId={bookcase.userId}
+                name={bookcase.nickname}
+                imageArray={bookcase.displayBooks.map((book) => book.cover)}
+                isFollowed={true}
               />
             ))}
           </TabsContent>

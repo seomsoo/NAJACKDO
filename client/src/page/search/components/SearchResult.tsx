@@ -1,7 +1,7 @@
 import { getSearch } from "api/searchApi";
 import { ISearch } from "atoms/Search.type";
 import SearchResultBook from "page/search/components/SearchResultBook";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 
 interface SearchResultProps {
   keyword: string;

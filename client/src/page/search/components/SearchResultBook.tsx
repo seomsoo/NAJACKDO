@@ -29,6 +29,7 @@ const SearchResultBook = ({ search }: SearchResultBookProps) => {
 
     onSuccess: () => {
       setInterestBook(false);
+      // TODO: 알람창 바꾸기
       alert("관심 도서에서 삭제되었습니다.");
     },
   });

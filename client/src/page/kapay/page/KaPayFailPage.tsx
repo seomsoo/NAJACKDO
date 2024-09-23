@@ -11,7 +11,7 @@ const KaPayFailPage = () => {
   };
 
   return (
-    <div>
+    <div className="bg-white" style={{ height: "calc(100vh - 86px)" }}>
       <h1>결제 실패</h1>
       <p>결제 처리 중 오류가 발생했습니다.</p>
       {canCloseWindow ? (
