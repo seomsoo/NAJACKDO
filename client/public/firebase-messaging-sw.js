@@ -30,11 +30,14 @@ self.addEventListener("push", function (e) {
   const notificationTitle = resultData.title;
   const notificationOptions = {
     body: resultData.body,
-    icon: '/images/icons/favicon-128x128.png',
+    icon: 'http://localhost:3000/images/icons/favicon-128.png',
     tag: resultData.tag,
     ...resultData,
   };
-  self.registration.showNotification(notificationTitle, notificationOptions);
+  event.waitUntil(
+    self.registration.showNotification(notificationTitle, notificationOptions)
+  );
+  
 });
 
 self.addEventListener("notificationclick", function (event) {

@@ -1,15 +1,19 @@
 package com.najackdo.server.domain.book.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.firebase.messaging.Notification;
 import com.najackdo.server.core.annotation.CurrentUser;
 import com.najackdo.server.core.response.SuccessResponse;
 import com.najackdo.server.domain.book.dto.UserBookData;
 import com.najackdo.server.domain.book.service.UserBooksService;
+import com.najackdo.server.domain.notification.dto.NotificationDto;
+import com.najackdo.server.domain.notification.service.NotificationService;
 import com.najackdo.server.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -25,7 +29,9 @@ public class BookController {
 
     private final RestTemplate restTemplate;
 
+    private final ObjectMapper objectMapper;
 
+    private final NotificationService notificationService;
 //    @GetMapping("")
 //    @ResponseStatus(HttpStatus.CREATED)
 //    public SuccessResponse<List<UserBookData.Search>> index() {
@@ -56,9 +62,9 @@ public class BookController {
     }
 
     @GetMapping("/go")
-    public SuccessResponse<Void> borrowBooks() {
-        String url = "http://localhost:3000/api/v1/notification/alarm";
-        restTemplate.getForObject(url, String.class);
-        return SuccessResponse.empty();
+    public SuccessResponse<String> borrowBooks(@CurrentUser User user) {
+
+        return SuccessResponse.of(notificationService.sendNotificationByToken(
+                NotificationDto.NotificationRequest.createNotificationRequest(user.getId(),"najackdo","test문구입니당.")));
     }
 }

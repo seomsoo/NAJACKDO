@@ -43,11 +43,12 @@ function App() {
         console.log('Foreground Message:', payload);
         // Handle the notification or update your UI
       });
+      
     } catch (error) {
       console.error('Error setting up notifications:', error);
     }
   };
-//////
+////
   const location = useLocation();
   const currentPath = location.pathname;
 

@@ -11,11 +11,13 @@ public class NotificationDto {
         private String title;
         private String body;
 
-        @Builder
-        public NotificationRequest(Long targetUserId, String title, String body) {
-            this.targetUserId = targetUserId;
-            this.title = title;
-            this.body = body;
+        public static NotificationRequest createNotificationRequest(Long targetUserId, String title, String body){
+            NotificationRequest request = new NotificationRequest();
+            request.setTargetUserId(targetUserId);
+            request.setTitle(title);
+            request.setBody(body);
+            return request;
         }
+
     }
 }

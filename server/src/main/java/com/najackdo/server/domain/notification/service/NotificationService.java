@@ -9,12 +9,14 @@ import com.najackdo.server.domain.notification.dto.NotificationDto;
 import com.najackdo.server.domain.user.entity.User;
 import com.najackdo.server.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class NotificationService {
 
     private final FirebaseMessaging firebaseMessaging;
@@ -28,7 +30,7 @@ public class NotificationService {
                         .setTitle(requestDto.getTitle())
                         .setBody(requestDto.getBody())
                         .build();
-
+                log.info("토큰 : "+ user.get().getFcmToken());
                 Message message = Message.builder()
                         .setToken(user.get().getFcmToken())
                         .setNotification(notification)
