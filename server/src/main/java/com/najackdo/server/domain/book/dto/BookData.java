@@ -69,14 +69,12 @@ public class BookData {
 
 		private Long userId;
 		private String nickname;;
-		private String userName;
 		private List<DisplayBook> displayBooks;
 
-		public static BookCase of(Long userId, String nickname, String userName, List<DisplayBook> displayBooks) {
+		public static BookCase of(Long userId, String nickname, List<DisplayBook> displayBooks) {
 			BookCase response = new BookCase();
 			response.userId = userId;
 			response.nickname = nickname;
-			response.userName = userName;
 			response.displayBooks = displayBooks;
 			return response;
 		}

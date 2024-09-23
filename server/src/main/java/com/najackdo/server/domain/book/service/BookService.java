@@ -34,7 +34,6 @@ public class BookService {
 				Long userId = entry.getKey();
 				User userFromBooks = entry.getValue().get(0).getUser(); // 첫 번째 UserBook에서 사용자 정보 가져오기
 				String nickname = userFromBooks.getNickName();
-				String userName = userFromBooks.getName();
 				List<BookData.DisplayBook> displayBooks = entry.getValue().stream()
 					.map(userBook -> BookData.DisplayBook.of(
 						userBook.getBook().getId(),
@@ -44,7 +43,7 @@ public class BookService {
 					))
 					.collect(Collectors.toList());
 
-				return BookData.BookCase.of(userId, nickname, userName, displayBooks);
+				return BookData.BookCase.of(userId, nickname, displayBooks);
 			})
 			.collect(Collectors.toList());
 	}
@@ -66,7 +65,6 @@ public class BookService {
 		return BookData.BookCase.of(
 			findUser.getId(),
 			findUser.getNickName(),
-			findUser.getName(),
 			displayBooks
 		);
 	}
