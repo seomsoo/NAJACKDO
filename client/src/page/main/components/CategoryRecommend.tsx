@@ -56,7 +56,7 @@ const CategoryRecommend = () => {
       >
         {Array(10)
           .fill(null)
-          .map((index) => {
+          .map((_, index) => {
             return (
               <img
                 src='ssafy.png'
