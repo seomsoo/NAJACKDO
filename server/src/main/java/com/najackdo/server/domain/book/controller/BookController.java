@@ -123,4 +123,12 @@ public class BookController {
 		@PathVariable Long findUserId) {
 		return SuccessResponse.of(bookService.getBookCaseByuserId(findUserId));
 	}
+
+
+	@GetMapping("/bookcase/me")
+	@Operation(summary = "나의 책장 목록 조회", description = "나의 책장 목록 조회")
+	public SuccessResponse<BookData.BookCase> getMyBookCaseByNickName(
+		@CurrentUser User user) {
+		return SuccessResponse.of(bookService.getBookCaseByuserId(user.getId()));
+	}
 }
