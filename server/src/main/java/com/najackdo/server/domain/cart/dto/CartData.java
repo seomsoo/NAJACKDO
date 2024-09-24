@@ -10,12 +10,14 @@ public class CartData {
 	public static class CartInfo {
 
 		private Long cartId;
+		private Long ownerId;
 		private String ownerUsername;
 		private List<CartItemInfo> cartItems;
 
-		public static CartInfo of(Long cartId, String ownerUsername, List<CartItemInfo> cartItems) {
+		public static CartInfo of(Long cartId, Long ownerId, String ownerUsername, List<CartItemInfo> cartItems) {
 			CartInfo cartInfo = new CartInfo();
 			cartInfo.cartId = cartId;
+			cartInfo.ownerId = ownerId;
 			cartInfo.ownerUsername = ownerUsername;
 			cartInfo.cartItems = cartItems;
 			return cartInfo;
