@@ -11,7 +11,7 @@ const LibraryPage = () => {
   const goToMyFavorite = () => {
     navigate('/library/my-favorite');
   };
-  const goToMyLibrary = () => {
+  const goToMyBookCase = () => {
     navigate('/library/my-library');
   };
   const goToMyHistory = () => {
@@ -73,7 +73,7 @@ const LibraryPage = () => {
       <main className=' px-6'>
         <section className='flex flex-col gap-10'>
           <nav>
-            <button onClick={goToMyLibrary}>
+            <button onClick={goToMyBookCase}>
               <article className='flex items-center mb-7'>
                 <span className='font-bold text-2xl'>나의 책장</span>
                 <SlArrowRight className='ml-2 text-[#807B7B] text-xl' />

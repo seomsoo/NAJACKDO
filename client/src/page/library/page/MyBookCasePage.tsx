@@ -12,7 +12,7 @@ type Book = {
   src: string;
   status: string;
 };
-const MyLibraryPage = () => {
+const MyBookCasePage = () => {
   const [heart, setHeart] = useState(false);
   const [checked, setChecked] = useState<boolean[]>(new Array(13).fill(false));
   const navigate = useNavigate();
@@ -21,59 +21,59 @@ const MyLibraryPage = () => {
     navigate(-1);
   };
 
-  const [isMyLibrary, setIsMyLibrary] = useState(true);
+  const [isMyBookCase, setIsMyBookCase] = useState(true);
 
   const books: Book[] = [
     {
-      src: isMyLibrary ? '/ssafy.png' : '/harrypotter.png',
+      src: isMyBookCase ? '/ssafy.png' : '/harrypotter.png',
       status: '대여 중',
     },
     {
-      src: isMyLibrary ? '/ssafy.png' : '/harrypotter.png',
+      src: isMyBookCase ? '/ssafy.png' : '/harrypotter.png',
       status: '연체 중',
     },
     {
-      src: isMyLibrary ? '/ssafy.png' : '/harrypotter.png',
+      src: isMyBookCase ? '/ssafy.png' : '/harrypotter.png',
       status: '인증 필요',
     },
     {
-      src: isMyLibrary ? '/ssafy.png' : '/harrypotter.png',
+      src: isMyBookCase ? '/ssafy.png' : '/harrypotter.png',
       status: '대여 가능',
     },
     {
-      src: isMyLibrary ? '/ssafy.png' : '/harrypotter.png',
+      src: isMyBookCase ? '/ssafy.png' : '/harrypotter.png',
       status: '대여 불가',
     },
     {
-      src: isMyLibrary ? '/ssafy.png' : '/harrypotter.png',
+      src: isMyBookCase ? '/ssafy.png' : '/harrypotter.png',
       status: '대여 가능',
     },
     {
-      src: isMyLibrary ? '/ssafy.png' : '/harrypotter.png',
+      src: isMyBookCase ? '/ssafy.png' : '/harrypotter.png',
       status: '대여 중',
     },
     {
-      src: isMyLibrary ? '/ssafy.png' : '/harrypotter.png',
+      src: isMyBookCase ? '/ssafy.png' : '/harrypotter.png',
       status: '연체 중',
     },
     {
-      src: isMyLibrary ? '/ssafy.png' : '/harrypotter.png',
+      src: isMyBookCase ? '/ssafy.png' : '/harrypotter.png',
       status: '인증 필요',
     },
     {
-      src: isMyLibrary ? '/ssafy.png' : '/harrypotter.png',
+      src: isMyBookCase ? '/ssafy.png' : '/harrypotter.png',
       status: '대여 가능',
     },
     {
-      src: isMyLibrary ? '/ssafy.png' : '/harrypotter.png',
+      src: isMyBookCase ? '/ssafy.png' : '/harrypotter.png',
       status: '대여 불가',
     },
     {
-      src: isMyLibrary ? '/ssafy.png' : '/harrypotter.png',
+      src: isMyBookCase ? '/ssafy.png' : '/harrypotter.png',
       status: '대여 중',
     },
     {
-      src: isMyLibrary ? '/ssafy.png' : '/harrypotter.png',
+      src: isMyBookCase ? '/ssafy.png' : '/harrypotter.png',
       status: '대여 중',
     },
   ];
@@ -102,7 +102,7 @@ const MyLibraryPage = () => {
   const isAnyChecked = checked.some((item) => item);
 
   const renderBadge = (status: string) => {
-    if (isMyLibrary) {
+    if (isMyBookCase) {
       if (status === '대여 중') {
         return (
           <span className='absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-[#5f6f52] p-2 px-3 rounded-2xl text-white font-light text-xs text-nowrap mb-1'>
@@ -149,7 +149,7 @@ const MyLibraryPage = () => {
           </button>
         </div>
         <div className='flex justify-between text-3xl gap-5 text-[#545454]'>
-          {isMyLibrary ? (
+          {isMyBookCase ? (
             <Link to='/apply/book'>
               <BiBookAdd />
             </Link>
@@ -167,7 +167,7 @@ const MyLibraryPage = () => {
       <main className='px-6'>
         <article className='flex items-center w-full justify-between font-extrabold text-2xl mb-5'>
           <div className='flex items-center'>
-            {isMyLibrary ? (
+            {isMyBookCase ? (
               <span>나의 책장</span>
             ) : (
               <span>
@@ -178,15 +178,15 @@ const MyLibraryPage = () => {
           </div>
           <div className='flex justify-center'>
             <button
-              onClick={() => setIsMyLibrary(!isMyLibrary)}
+              onClick={() => setIsMyBookCase(!isMyBookCase)}
               className='bg-[#5f6f52] font-light p-2 text-white text-xs rounded-lg'
             >
-              {isMyLibrary ? '다른 사용자 보기' : '나의 책장 보기'}
+              {isMyBookCase ? '다른 사용자 보기' : '나의 책장 보기'}
             </button>
           </div>
           <button>
             <img
-              src={isMyLibrary ? '/pubao.png' : '/하니.png'}
+              src={isMyBookCase ? '/pubao.png' : '/하니.png'}
               alt='profile'
               className='rounded-full w-16 h-16'
             />
@@ -201,7 +201,7 @@ const MyLibraryPage = () => {
                   <div className='grid grid-cols-3 gap-4'>
                     {chunk.map((book, index) => (
                       <div key={index}>
-                        {!isMyLibrary && (
+                        {!isMyBookCase && (
                           <div className='mb-1 ml-2'>
                             <input
                               type='checkbox'
@@ -250,7 +250,7 @@ const MyLibraryPage = () => {
           </nav>
         </section>
       </main>
-      {isAnyChecked && !isMyLibrary && (
+      {isAnyChecked && !isMyBookCase && (
         <aside className='fixed bottom-20 w-full text-white flex text-lg justify-around rounded-t-xl items-center bg-[#776B5D]'>
           <button className='px-12 p-8'>담기</button>
           <span className='ml-1'>|</span>
@@ -261,4 +261,4 @@ const MyLibraryPage = () => {
   );
 };
 
-export default MyLibraryPage;
+export default MyBookCasePage;
