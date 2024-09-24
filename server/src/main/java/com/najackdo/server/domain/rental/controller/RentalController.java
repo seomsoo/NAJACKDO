@@ -5,10 +5,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.najackdo.server.core.annotation.CurrentUser;
 import com.najackdo.server.domain.rental.dto.RentalData;
 import com.najackdo.server.domain.rental.service.RentalService;
-import com.najackdo.server.domain.user.entity.User;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,12 +25,11 @@ public class RentalController {
 	/**
 	 * 렌탈 신청 api
 	 *
-	 * @param customer
 	 * @param rentalRequest
 	 */
 	@PostMapping("")
 	@Operation(summary = "렌탈 신청", description = "렌탈 신청")
-	public void rental(@CurrentUser User customer, @RequestBody RentalData.RentalRequest rentalRequest) {
-		rentalService.rental(customer, rentalRequest);
+	public void rental(@RequestBody RentalData.RentalRequest rentalRequest) {
+		rentalService.rentalCart(rentalRequest);
 	}
 }

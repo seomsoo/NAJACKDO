@@ -32,6 +32,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final NumberPath<Integer> cash = createNumber("cash", Integer.class);
 
+    public final ListPath<CashLog, QCashLog> cashLogs = this.<CashLog, QCashLog>createList("cashLogs", CashLog.class, QCashLog.class, PathInits.DIRECT2);
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 

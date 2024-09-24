@@ -39,6 +39,7 @@ public class Cart {
 	@JoinColumn(name = "owner_id", nullable = false)
 	private User owner;
 
+	// FIXME : 삭제 예정
 	@Column(name = "rental_period", nullable = false)
 	private int rentalPeriod = 14;
 
@@ -54,7 +55,7 @@ public class Cart {
 		cart.owner = owner;
 		return cart;
 	}
-	
+
 	public void deleteCart() {
 		this.isDelete = true;
 	}

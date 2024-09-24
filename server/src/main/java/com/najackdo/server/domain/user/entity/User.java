@@ -112,8 +112,8 @@ public class User extends BaseEntity {
 	// @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
 	// private List<Notification> notifications;
 	//
-	// @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
-	// private List<CashLog> cashLogs;
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+	private List<CashLog> cashLogs;
 	//
 	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private List<Cart> bookCarts;
@@ -156,14 +156,15 @@ public class User extends BaseEntity {
 		this.gender = update.getGender();
 	}
 
-	public void addCash(Integer cash) {
+	public void plusCash(Integer cash) {
 		this.cash += cash;
 	}
 
-	@Override
-	public String toString() {
-		return "User{" +
-			"id=" + id +
-			", username='" + username + '}';
+	public void minusCash(Integer cash) {
+		this.cash -= cash;
+	}
+
+	public void updateCashLog(List<CashLog> cashLog) {
+		this.cashLogs = cashLog;
 	}
 }

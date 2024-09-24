@@ -34,6 +34,10 @@ public class CartItemService {
 		UserBook userBook = userBooksRepository.findById(ownerbookId)
 			.orElseThrow(() -> new IllegalArgumentException("해당 책을 찾을 수 없습니다."));
 
+		if (customer.getId().equals(userBook.getUser().getId())) {
+			throw new IllegalArgumentException("자신의 책을 장바구니에 담을 수 없습니다.");
+		}
+
 		UserBookDetail userBookDetail = userBookDetailRepository.findUserBookDetailByUserBookId(ownerbookId)
 			.orElseThrow(() -> new IllegalArgumentException("해당 책의 상세 정보를 찾을 수 없습니다."));
 

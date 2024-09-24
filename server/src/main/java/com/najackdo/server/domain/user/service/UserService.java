@@ -57,7 +57,7 @@ public class UserService {
 		User findUser = userRepository.findById(user.getId())
 			.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_USER));
 
-		findUser.addCash(cash);
+		findUser.plusCash(cash);
 		eventPublisher.publishEvent(new CashLogPaymentEvent(user, cash, findUser.getCash(), PAYMENT));
 		userRepository.save(findUser);
 	}
