@@ -28,6 +28,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath age = createString("age");
 
+    public final ListPath<com.najackdo.server.domain.cart.entity.Cart, com.najackdo.server.domain.cart.entity.QCart> bookCarts = this.<com.najackdo.server.domain.cart.entity.Cart, com.najackdo.server.domain.cart.entity.QCart>createList("bookCarts", com.najackdo.server.domain.cart.entity.Cart.class, com.najackdo.server.domain.cart.entity.QCart.class, PathInits.DIRECT2);
+
     public final NumberPath<Integer> cash = createNumber("cash", Integer.class);
 
     //inherited

@@ -34,4 +34,10 @@ public class CartItem {
 	@JoinColumn(name = "user_book_details_id")
 	private UserBookDetail userBookDetail;
 
+	public static CartItem createCartItem(Cart cart, UserBookDetail userBookDetail) {
+		CartItem cartItem = new CartItem();
+		cartItem.cart = cart;
+		cartItem.userBookDetail = userBookDetail;
+		return cartItem;
+	}
 }
