@@ -12,10 +12,12 @@ import lombok.Setter;
 public class ChatRoomDTO {
 
 	private String roomId; // 채팅방 아이디
-	private String roomName; // 채팅방 이름
+	private Long customerId;
+	private Long ownerId;
 
 	public ChatRoomDTO(ChatRoom chatRoom) {
 		this.roomId = chatRoom.getRoomId();
-		this.roomName = chatRoom.getRoomName();
+		this.customerId = chatRoom.getCustomer().getId();
+		this.ownerId = chatRoom.getOwner().getId();
 	}
 }
