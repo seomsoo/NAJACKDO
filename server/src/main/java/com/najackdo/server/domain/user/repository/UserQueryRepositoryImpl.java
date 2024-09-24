@@ -13,13 +13,14 @@ import static com.najackdo.server.domain.user.entity.QCashLog.*;
 import static com.najackdo.server.domain.user.entity.QUser.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
 
+import com.najackdo.server.domain.book.entity.UserBook;
+import com.najackdo.server.domain.book.entity.UserBookDetail;
+import com.najackdo.server.domain.cart.dto.CartData;
 import com.najackdo.server.domain.user.dto.UserData;
-import com.najackdo.server.domain.user.entity.User;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -115,16 +116,36 @@ public class UserQueryRepositoryImpl implements UserQueryRepository {
 	}
 
 	@Override
-	public Optional<User> findUserWithCartsById(Long userId) {
+	public List<CartData.CartInfo> findUserCartsById(Long userId) {
 
-		User fetchedUser = queryFactory
-			.selectFrom(user)
-			.leftJoin(user.bookCarts, cart).fetchJoin()
-			.leftJoin(cart.owner, user).fetchJoin()
-			.where(user.id.eq(userId))
-			.fetchOne();
-
-		return Optional.ofNullable(fetchedUser);
+		return queryFactory
+			.select(cart)
+			.from(cart)
+			.leftJoin(cart.customer, user).fetchJoin()
+			.leftJoin(cart.cartItems, cartItem).fetchJoin()
+			.leftJoin(cartItem.userBookDetail, userBookDetail).fetchJoin()
+			.leftJoin(userBookDetail.userBook, userBook).fetchJoin()
+			.where(cart.customer.id.eq(userId))
+			.fetch()
+			.stream()
+			.map(c -> CartData.CartInfo.of(
+				c.getId(),
+				c.getOwner().getNickName(),
+				c.getCartItems().stream()
+					.map(ci -> {
+						UserBookDetail detail = ci.getUserBookDetail();
+						UserBook book = detail.getUserBook();
+						return CartData.CartItemInfo.of(
+							ci.getId(),
+							detail.getFrontImagePath(),
+							book.getBook().getTitle(),
+							book.getBook().getAuthor(),
+							detail.getOnedayPrice()
+						);
+					})
+					.collect(Collectors.toList())
+			))
+			.collect(Collectors.toList());
 	}
 
 }
