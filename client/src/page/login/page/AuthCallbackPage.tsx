@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuthStore } from "store/useAuthStore";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
-import axios from "axios";
 import instance from "api/clientApi";
 
 const setupNotifications = async () => {

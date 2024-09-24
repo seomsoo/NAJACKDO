@@ -27,10 +27,6 @@ import java.util.List;
 public class BookController {
     private final UserBooksService userBooksService;
 
-    private final RestTemplate restTemplate;
-
-    private final ObjectMapper objectMapper;
-
     private final NotificationService notificationService;
 //    @GetMapping("")
 //    @ResponseStatus(HttpStatus.CREATED)
@@ -62,9 +58,8 @@ public class BookController {
     }
 
     @GetMapping("/go")
-    public SuccessResponse<String> borrowBooks(@CurrentUser User user) {
+    public SuccessResponse<Void> borrowBooks(@CurrentUser User user) {
 
-        return SuccessResponse.of(notificationService.sendNotificationByToken(
-                NotificationDto.NotificationRequest.createNotificationRequest(user.getId(),"najackdo","test문구입니당.")));
+        return SuccessResponse.empty();
     }
 }

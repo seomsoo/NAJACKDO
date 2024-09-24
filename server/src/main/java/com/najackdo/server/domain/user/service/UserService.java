@@ -50,6 +50,7 @@ public class UserService {
 
 		serveyResultRepository.saveAll(surveyResults);
 	}
+
 	@TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void userPaymentEvent(UserPaymentEvent event) {

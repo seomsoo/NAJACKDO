@@ -41,6 +41,7 @@ function App() {
       // Handle foreground notifications
       onMessage(messaging, (payload) => {
         console.log('Foreground Message:', payload);
+        console.log('app.tsx');
         // Handle the notification or update your UI
       });
       

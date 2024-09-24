@@ -6,29 +6,54 @@ import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
 import com.najackdo.server.domain.notification.dto.NotificationDto;
 
+import com.najackdo.server.domain.notification.event.NotificationEvent;
 import com.najackdo.server.domain.user.entity.User;
 import com.najackdo.server.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.event.TransactionPhase;
+import org.springframework.transaction.event.TransactionalEventListener;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 @Slf4j
+@Transactional(readOnly = true)
 public class NotificationService {
 
+    private final ApplicationEventPublisher publisher;
+
     private final FirebaseMessaging firebaseMessaging;
+
     private final UserRepository usersRepository;
 
-    public String sendNotificationByToken(NotificationDto.NotificationRequest requestDto) {
-        Optional<User> user = usersRepository.findById(requestDto.getTargetUserId());
+    // 안 본 알람 조회
+    public List<NotificationDto.Notification> searchByUserId(long userId){
+        return null;
+    }
+
+    // 반납 알림
+
+    // 만남 알림
+
+    // 빌림 신청
+
+
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public String sendNotificationEvent(NotificationEvent notificationEvent) {
+        Optional<User> user = usersRepository.findById(notificationEvent.getTargetUserId());
         if (user.isPresent()) {
             if (user.get().getFcmToken() != null) {
                 Notification notification = Notification.builder()
-                        .setTitle(requestDto.getTitle())
-                        .setBody(requestDto.getBody())
+                        .setTitle(notificationEvent.getTitle())
+                        .setBody(notificationEvent.getBody())
                         .build();
                 log.info("토큰 : "+ user.get().getFcmToken());
                 Message message = Message.builder()
@@ -38,16 +63,16 @@ public class NotificationService {
 
                 try {
                     firebaseMessaging.send(message);
-                    return "알림을 성공적으로 전송했습니다. targetUserId=" + requestDto.getTargetUserId();
+                    return "알림을 성공적으로 전송했습니다. targetUserId=" + notificationEvent.getTargetUserId();
                 } catch (FirebaseMessagingException e) {
                     e.printStackTrace();
-                    return "알림 보내기를 실패하였습니다. targetUserId=" + requestDto.getTargetUserId();
+                    return "알림 보내기를 실패하였습니다. targetUserId=" + notificationEvent.getTargetUserId();
                 }
             } else {
-                return "서버에 저장된 해당 유저의 FirebaseToken이 존재하지 않습니다. targetUserId=" + requestDto.getTargetUserId();
+                return "서버에 저장된 해당 유저의 FirebaseToken이 존재하지 않습니다. targetUserId=" + notificationEvent.getTargetUserId();
             }
         } else {
-            return "해당 유저가 존재하지 않습니다. targetUserId=" + requestDto.getTargetUserId();
+            return "해당 유저가 존재하지 않습니다. targetUserId=" + notificationEvent.getTargetUserId();
         }
     }
 }
