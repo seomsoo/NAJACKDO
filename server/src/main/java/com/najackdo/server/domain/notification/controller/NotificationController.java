@@ -19,13 +19,14 @@ public class NotificationController {
     private final NotificationService notificationService;
 
     // 1. 송신됬지만 확인되지 않은 알람 조회
-    @GetMapping("searchById")
-    public SuccessResponse<List<NotificationDto.Notification>> searchById(@CurrentUser User user){
+    @PostMapping("searchById")
+    public SuccessResponse<List<NotificationDto.Notification>> searchById(@CurrentUser User user,@RequestBody NotificationDto.NotificationPaging paging ){
         List<NotificationDto.Notification> list=null;
 
         return SuccessResponse.of(list);
     }
-    // 2. 알람 클릭시 읽음 처리
+    //2. 알람 클릭시 읽음 처리 - 보류
 
+    
 
 }

@@ -40,8 +40,8 @@ public class Notification extends TimeEntity {
 	@Column(name = "is_read")
 	private Boolean isRead;
 
-	@Column(name = "fcm_id")
-	private String fcmId;
+	@Column(name = "is_send")
+	private Boolean isSend;
 
 	@Column(name = "title")
 	private String title;

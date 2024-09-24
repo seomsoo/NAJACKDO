@@ -9,8 +9,54 @@ import { useEffect, useState } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore } from "store/useAuthStore";
 import { useValidStore } from "store/useValidStore";
+import { initializeApp } from "firebase/app";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
+
 
 function App() {
+
+  const firebaseConfig = {
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID,
+    measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
+  };
+  
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  // Initialize Firebase Cloud Messaging and get a reference to the service
+  const messaging = getMessaging(app);
+
+  console.log(messaging);
+
+  const setupNotifications = async () => {
+    try {
+      // Request permission for notifications
+      const permission = await Notification.requestPermission();
+      
+      if (permission === 'granted') {
+        console.log('Notification permission granted.');
+        // Get the FCM token
+        const token = await getToken(messaging, {vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY})
+        console.log('FCM Token:', token);
+      } else {
+        console.log('Notification permission denied.');
+      }
+      // Handle foreground notifications
+      onMessage(messaging, (payload) => {
+        console.log('Foreground Message:', payload);
+        console.log('app.tsx');
+        // Handle the notification or update your UI
+      });
+      
+    } catch (error) {
+      console.error('Error setting up notifications:', error);
+    }
+  };                
+
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;

@@ -35,9 +35,9 @@ public class NotificationService {
 
     // 안 본 알람 조회
     public List<NotificationDto.Notification> searchByUserId(long userId){
+
         return null;
     }
-
     // 반납 알림
 
     // 만남 알림
