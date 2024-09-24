@@ -26,8 +26,6 @@ public class QUserBook extends EntityPathBase<UserBook> {
 
     public final BooleanPath bookDamageChecked = createBoolean("bookDamageChecked");
 
-    public final ListPath<com.najackdo.server.domain.rental.entity.RentalLog, com.najackdo.server.domain.rental.entity.QRentalLog> bookRentalHistories = this.<com.najackdo.server.domain.rental.entity.RentalLog, com.najackdo.server.domain.rental.entity.QRentalLog>createList("bookRentalHistories", com.najackdo.server.domain.rental.entity.RentalLog.class, com.najackdo.server.domain.rental.entity.QRentalLog.class, PathInits.DIRECT2);
-
     public final EnumPath<BookStatus> bookStatus = createEnum("bookStatus", BookStatus.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
@@ -58,7 +56,7 @@ public class QUserBook extends EntityPathBase<UserBook> {
         super(type, metadata, inits);
         this.book = inits.isInitialized("book") ? new QBook(forProperty("book")) : null;
         this.locationCode = inits.isInitialized("locationCode") ? new com.najackdo.server.domain.location.entity.QLocation(forProperty("locationCode")) : null;
-        this.user = inits.isInitialized("user") ? new com.najackdo.server.domain.user.entity.QUser(forProperty("user")) : null;
+        this.user = inits.isInitialized("user") ? new com.najackdo.server.domain.user.entity.QUser(forProperty("user"), inits.get("user")) : null;
     }
 
 }

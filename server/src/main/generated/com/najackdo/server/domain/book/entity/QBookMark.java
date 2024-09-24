@@ -47,7 +47,7 @@ public class QBookMark extends EntityPathBase<BookMark> {
     public QBookMark(Class<? extends BookMark> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.book = inits.isInitialized("book") ? new QBook(forProperty("book")) : null;
-        this.user = inits.isInitialized("user") ? new com.najackdo.server.domain.user.entity.QUser(forProperty("user")) : null;
+        this.user = inits.isInitialized("user") ? new com.najackdo.server.domain.user.entity.QUser(forProperty("user"), inits.get("user")) : null;
     }
 
 }

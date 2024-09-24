@@ -61,6 +61,12 @@ module.exports = {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		keyframes: {
+				bounceTwice: {
+					'0%, 100%': { transform: 'translateY(0)' },
+          '25%': { transform: 'translateY(-15px)' },  
+          '50%': { transform: 'translateY(0)' },     
+          '75%': { transform: 'translateY(-8px)' },  
+        },
 				fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
@@ -103,6 +109,7 @@ module.exports = {
   			}
   		},
   		animation: {
+				bounceTwice: 'bounceTwice 1.2s ease-in-out',
 				fadeIn: 'fadeIn 1.5s ease-in-out',
         slideUp: 'slideUp 1.5s ease-in-out',
   			'accordion-down': 'accordion-down 0.2s ease-out',
@@ -112,5 +119,7 @@ module.exports = {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"),
+		require('@tailwindcss/line-clamp'),
+	],
 }

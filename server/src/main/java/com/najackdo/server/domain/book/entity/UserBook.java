@@ -2,14 +2,9 @@ package com.najackdo.server.domain.book.entity;
 
 import static com.najackdo.server.domain.book.entity.BookStatus.*;
 
-import java.util.List;
-
-import com.najackdo.server.domain.book.dto.UserBookData;
-import lombok.AllArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import com.najackdo.server.domain.location.entity.Location;
-import com.najackdo.server.domain.rental.entity.RentalLog;
 import com.najackdo.server.domain.user.entity.User;
 
 import jakarta.persistence.Column;
@@ -22,7 +17,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -33,9 +27,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserBook {
-
-	@OneToMany(mappedBy = "userBook", fetch = FetchType.LAZY)
-	private List<RentalLog> bookRentalHistories;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,12 +57,11 @@ public class UserBook {
 	@ColumnDefault("false")
 	private Boolean isDeleted = false;
 
-	public static UserBook UserBookCreate(User user, Book book, Location locationCode){
+	public static UserBook createUserBook(User user, Book book, Location location) {
 		UserBook userBook = new UserBook();
 		userBook.user = user;
 		userBook.book = book;
-		userBook.locationCode = locationCode;
+		userBook.locationCode = location;
 		return userBook;
 	}
-
 }

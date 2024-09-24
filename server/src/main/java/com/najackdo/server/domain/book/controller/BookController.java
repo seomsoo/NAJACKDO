@@ -1,24 +1,28 @@
 package com.najackdo.server.domain.book.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.firebase.messaging.Notification;
+import java.util.List;
+import java.util.Map;
+
+import com.najackdo.server.domain.book.dto.BookData;
+import com.najackdo.server.domain.book.service.BookService;
+import com.najackdo.server.domain.notification.service.NotificationService;
+import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import com.najackdo.server.core.annotation.CurrentUser;
 import com.najackdo.server.core.response.SuccessResponse;
 import com.najackdo.server.domain.book.dto.UserBookData;
 import com.najackdo.server.domain.book.service.UserBooksService;
-import com.najackdo.server.domain.notification.dto.NotificationDto;
-import com.najackdo.server.domain.notification.service.NotificationService;
 import com.najackdo.server.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.minidev.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,17 +32,22 @@ public class BookController {
     private final UserBooksService userBooksService;
 
     private final NotificationService notificationService;
-//    @GetMapping("")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public SuccessResponse<List<UserBookData.Search>> index() {
-//        return SuccessResponse.of(userBooksService.getBooksByUserId("123"));
-//    }
 
-    @PostMapping("/registBooks")
-    public SuccessResponse<Void> registBooks(@CurrentUser User user, @RequestBody UserBookData.Create create) {
-        userBooksService.addBookList(user,create);
-        return SuccessResponse.empty();
-    }
+    private final BookService bookService;
+	/**
+	 * 책 제목으로 다중 등록
+	 *
+	 * @param user
+	 * @param create
+	 * @return
+	 */
+	@PostMapping("/regist-books")
+	@Operation(summary = "도서 등록", description = "책 제목 리스트로 여러권 등록")
+	public SuccessResponse<Map<String, List<String>>> registBooks(@CurrentUser User user,
+		@RequestBody UserBookData.Create create) {
+		Map<String, List<String>> result = userBooksService.addBookList(user, create);
+		return SuccessResponse.of(result);
+	}
 
     @PostMapping("/registBook")
     public SuccessResponse<Void> registBooks(@CurrentUser User user, @RequestBody UserBookData.CreateByISBN create) {
@@ -46,20 +55,17 @@ public class BookController {
         return SuccessResponse.empty();
     }
 
-    @GetMapping("/bookcase/interest")
-    public SuccessResponse<List<UserBookData.BookCase>> getBookCase(@CurrentUser User user) {
-        return SuccessResponse.of(userBooksService.getBookCasesByUserId(user));
-    }
-
-    @GetMapping("/bookcase/{username}")
-    public SuccessResponse<List<UserBookData.BookCase>> getBookCase(@PathVariable String username) {
-        log.info(username);
-        return SuccessResponse.of(userBooksService.getBookCasesByUserName(username));
-    }
 
     @GetMapping("/go")
     public SuccessResponse<Void> borrowBooks(@CurrentUser User user) {
 
         return SuccessResponse.empty();
     }
+
+	@GetMapping("/bookcase/me")
+	@Operation(summary = "나의 책장 목록 조회", description = "나의 책장 목록 조회")
+	public SuccessResponse<BookData.BookCase> getMyBookCaseByNickName(
+		@CurrentUser User user) {
+		return SuccessResponse.of(bookService.getBookCaseByuserId(user.getId()));
+	}
 }

@@ -1,7 +1,5 @@
 package com.najackdo.server.domain.rental.entity;
 
-import java.time.LocalDateTime;
-
 import com.najackdo.server.core.entity.TimeEntity;
 import com.najackdo.server.domain.user.entity.User;
 
@@ -34,11 +32,11 @@ public class RentalReview extends TimeEntity {
 	private Rental rental;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id", nullable = false)
+	@JoinColumn(name = "reviewee_id", nullable = false)
 	private User user;
 
-	@Column(name = "review_items", nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "review_item_id", nullable = false)
 	private ReviewItems reviewItems;
-
-
+	
 }

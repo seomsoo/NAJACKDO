@@ -49,7 +49,7 @@ public class QSearchRecord extends EntityPathBase<SearchRecord> {
     public QSearchRecord(Class<? extends SearchRecord> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.book = inits.isInitialized("book") ? new com.najackdo.server.domain.book.entity.QBook(forProperty("book")) : null;
-        this.user = inits.isInitialized("user") ? new QUser(forProperty("user")) : null;
+        this.user = inits.isInitialized("user") ? new QUser(forProperty("user"), inits.get("user")) : null;
     }
 
 }

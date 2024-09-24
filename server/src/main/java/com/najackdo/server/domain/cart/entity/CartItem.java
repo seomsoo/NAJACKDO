@@ -1,6 +1,6 @@
 package com.najackdo.server.domain.cart.entity;
 
-import com.najackdo.server.domain.book.entity.UserBook;
+import com.najackdo.server.domain.book.entity.UserBookDetail;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,10 +28,16 @@ public class CartItem {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cart_id", nullable = false)
-	private Cart bookCart;
+	private Cart cart;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_books_id")
-	private UserBook userBook;
+	@JoinColumn(name = "user_book_details_id")
+	private UserBookDetail userBookDetail;
 
+	public static CartItem createCartItem(Cart cart, UserBookDetail userBookDetail) {
+		CartItem cartItem = new CartItem();
+		cartItem.cart = cart;
+		cartItem.userBookDetail = userBookDetail;
+		return cartItem;
+	}
 }

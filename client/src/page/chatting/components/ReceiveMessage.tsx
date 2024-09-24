@@ -4,7 +4,7 @@ interface ReceiveMessageProps {
 
 const ReceiveMessage = ({ message }: ReceiveMessageProps) => {
   return (
-    <div className="flex ">
+    <div className="flex">
       <span className="p-3 bg-white rounded-xl rounded-tl-none text-left">
         {message}
       </span>

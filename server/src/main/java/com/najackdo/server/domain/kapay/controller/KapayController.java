@@ -16,6 +16,7 @@ import com.najackdo.server.domain.kapay.service.KapayService;
 import com.najackdo.server.domain.user.entity.User;
 import com.najackdo.server.domain.user.repository.UserRepository;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/kapay")
+@Tag(name = "카카오 페이 관련 API ")
 public class KapayController {
 
 	private final KapayService kapayService;

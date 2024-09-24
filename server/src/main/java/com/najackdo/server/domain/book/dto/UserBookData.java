@@ -1,13 +1,11 @@
 package com.najackdo.server.domain.book.dto;
 
-import com.najackdo.server.domain.book.entity.UserBook;
-import com.najackdo.server.domain.user.entity.User;
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-
 import java.util.List;
+
+import com.najackdo.server.domain.book.entity.UserBook;
+
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
 public class UserBookData {
 
@@ -22,43 +20,32 @@ public class UserBookData {
         }
     }
 
-    @Getter
-    @AllArgsConstructor
+    @Data
     public static class Create {
 
-        @NotNull
-        private List<String> titles;
+		@NotNull
+		private List<String> titles;
 
-        @NotNull
-        private int locationId;
-
-        public static Create of(List<String> titles, int locationId) {
-            return new Create(titles, locationId);
+        public static Create of(List<String> titles) {
+            Create create = new Create();
+            create.titles = titles;
+            return create;
         }
+
     }
 
-    @Getter
-    @AllArgsConstructor
+    @Data
     public static class CreateByISBN {
-
         @NotNull
-        private String ISBN;
-
-        @NotNull
-        private int locationId;
-
-        public static CreateByISBN of(String ISBN, int locationId) {
-            return new CreateByISBN(ISBN, locationId);
-        }
+        private Long ISBN;
     }
 
-    @Getter
-    @AllArgsConstructor
-    public static class BookCase{
-        private long userBookId;
-        private String cover;
-        private String title;
-        private String author;
-        private String description;
-    }
+	@Data
+	public static class BookCase {
+		private long userBookId;
+		private String cover;
+		private String title;
+		private String author;
+		private String description;
+	}
 }

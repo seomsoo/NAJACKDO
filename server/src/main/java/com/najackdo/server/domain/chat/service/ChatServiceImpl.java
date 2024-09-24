@@ -8,12 +8,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.najackdo.server.core.configuration.RootConfig;
+import com.najackdo.server.domain.cart.repository.CartRepository;
 import com.najackdo.server.domain.chat.dto.ChatRoomDTO;
 import com.najackdo.server.domain.chat.entity.Chat;
 import com.najackdo.server.domain.chat.entity.ChatRoom;
 import com.najackdo.server.domain.chat.repository.ChatRepository;
 import com.najackdo.server.domain.chat.repository.ChatRoomRepository;
 import com.najackdo.server.domain.user.entity.User;
+import com.najackdo.server.domain.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +27,8 @@ public class ChatServiceImpl implements ChatService {
 	private final ChatRoomRepository chatRoomRepository;
 	private final RootConfig rootConfig;
 	private final ChatRepository chatRepository;
+	private final UserRepository userRepository;
+	private final CartRepository cartRepository;
 
 	@Override
 	public List<ChatRoomDTO> chatRoomList() {
@@ -36,10 +40,12 @@ public class ChatServiceImpl implements ChatService {
 
 	@Override
 	@Transactional
-	public ChatRoomDTO createRoom(String roomName) {
+	public ChatRoomDTO createRoom(User customer, Long ownerId, Long cartId) {
 		ChatRoom chatRoom = ChatRoom.builder()
 			.roomId(UUID.randomUUID().toString())
-			.roomName(roomName)
+			.customer(customer)
+			.owner(userRepository.findById(ownerId).orElseThrow(() -> new IllegalArgumentException("사용자가 존재하지 않습니다.")))
+			.cart(cartRepository.findById(cartId).orElseThrow(() -> new IllegalArgumentException("카트가 존재하지 않습니다.")))
 			.build();
 		chatRoomRepository.save(chatRoom);
 		return rootConfig.getMapper().map(chatRoom, ChatRoomDTO.class);

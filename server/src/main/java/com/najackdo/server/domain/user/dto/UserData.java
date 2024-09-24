@@ -31,4 +31,99 @@ public class UserData {
 		@NotBlank(message = "토큰이 비어있습니다.")
 		private String token;
 	}
+
+	@Data
+	public static class InfoResponse {
+
+		private String nickname;
+		private String profileImage;
+		private String locationName;
+		private int mannerScore;
+		private Long goodReviewCount;
+		private Long badReviewCount;
+		private int cash;
+		private Integer saveCash;
+		private Integer earnCash;
+
+		public static InfoResponse of(
+			User user,
+			String locationName,
+			Long goodReviewCount,
+			Long badReviewCount,
+			Integer saveCash,
+			Integer earnCash
+		) {
+			InfoResponse response = ofWithoutCash(user, locationName, goodReviewCount, badReviewCount);
+			response.cash = user.getCash();
+			response.saveCash = saveCash;
+			response.earnCash = earnCash;
+			return response;
+		}
+
+		public static InfoResponse ofWithoutCash(
+			User user,
+			String locationName,
+			Long goodReviewCount,
+			Long badReviewCount
+		) {
+			InfoResponse response = new InfoResponse();
+			response.nickname = user.getNickName();
+			response.profileImage = user.getProfileImage();
+			response.locationName = locationName;
+			response.mannerScore = user.getMannerScore();
+			response.goodReviewCount = goodReviewCount;
+			response.badReviewCount = badReviewCount;
+			return response;
+		}
+	}
+
+	@Data
+	public static class CashLogResponse {
+
+		private int cash;
+		private int resultCash;
+		private String type;
+		private LocalDateTime createdAt;
+
+		public static CashLogResponse of(CashLog cashLog) {
+			CashLogResponse response = new CashLogResponse();
+			response.cash = cashLog.getChange();
+			response.resultCash = cashLog.getResultCash();
+			response.type = cashLog.getLogType().toString();
+			response.createdAt = cashLog.getCreatedAt();
+			return response;
+		}
+	}
+
+	@Data
+	public static class InterestUserRequest {
+
+		@NotNull(message = "관심 사용자 아이디를 입력해 주세요.")
+		private Long interestUserId;
+	}
+
+	@Data
+	public static class NicknameResponse {
+
+		private String nickname;
+
+		public static NicknameResponse of(String nickname) {
+			NicknameResponse response = new NicknameResponse();
+			response.nickname = nickname;
+			return response;
+		}
+	}
+
+	@Data
+	public static class ValidResponse {
+		private boolean isSurvey;
+		private boolean isLocation;
+
+		public static ValidResponse of(boolean isSurvey, boolean isLocation) {
+			ValidResponse response = new ValidResponse();
+			response.isSurvey = isSurvey;
+			response.isLocation = isLocation;
+			return response;
+		}
+	}
 }

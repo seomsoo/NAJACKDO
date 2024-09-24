@@ -47,7 +47,7 @@ public class QSurveyResult extends EntityPathBase<SurveyResult> {
     public QSurveyResult(Class<? extends SurveyResult> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.surveyQuestion = inits.isInitialized("surveyQuestion") ? new QSurveyQuestion(forProperty("surveyQuestion")) : null;
-        this.user = inits.isInitialized("user") ? new com.najackdo.server.domain.user.entity.QUser(forProperty("user")) : null;
+        this.user = inits.isInitialized("user") ? new com.najackdo.server.domain.user.entity.QUser(forProperty("user"), inits.get("user")) : null;
     }
 
 }

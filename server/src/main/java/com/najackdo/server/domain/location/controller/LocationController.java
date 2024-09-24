@@ -18,6 +18,8 @@ import com.najackdo.server.domain.location.dto.LocationData;
 import com.najackdo.server.domain.location.service.LocationService;
 import com.najackdo.server.domain.user.entity.User;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,11 +27,13 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping(value = "/api/v1/location")
 @RequiredArgsConstructor
+@Tag(name = "위치 관련 API ")
 public class LocationController {
 
 	private final LocationService locationService;
 
 	@GetMapping("/near-location")
+	@Operation(summary = "주변 위치 조회", description = "주변 위치 조회")
 	public SuccessResponse<Page<LocationData.Search>> getNearLocation(
 		@RequestParam double longitude,
 		@RequestParam double latitude,
@@ -44,6 +48,7 @@ public class LocationController {
 	}
 
 	@GetMapping("/near-neighborhood")
+	@Operation(summary = "주변 동 조회", description = "주변 동 조회")
 	public SuccessResponse<List<List<LocationData.SearchWithGeom>>> getNearLocation(
 		@RequestParam double longitude,
 		@RequestParam double latitude
@@ -58,9 +63,12 @@ public class LocationController {
 	}
 
 	@PostMapping("")
+	@Operation(summary = "위치 등록", description = "위치 등록")
 	public SuccessResponse<Void> registActivityArea(
 		@CurrentUser User user,
 		@RequestBody LocationData.Regist request) {
+
+		log.info("user: {}, request: {}", user, request);
 
 		locationService.registActivityArea(user, request);
 

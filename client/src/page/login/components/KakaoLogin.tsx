@@ -1,13 +1,21 @@
 import { KAKAO_AUTH_URL } from "api/clientApi";
-
 import { RiKakaoTalkFill } from "react-icons/ri";
-const KakaoLogin = () => {
+
+interface KakaoLoginProps {
+  active: boolean;
+}
+
+const KakaoLogin = ({ active }: KakaoLoginProps) => {
+  const handleClick = () => {
+    if (active) {
+      window.location.href = KAKAO_AUTH_URL;
+    }
+  };
+
   return (
     <button
-      className="flex flex-row items-center bg-[#FEE500] px-4 py-2 rounded-xl"
-      onClick={() => {
-        window.location.href = KAKAO_AUTH_URL;
-      }}
+      className={`flex flex-row items-center px-4 py-2 rounded-xl ${active ? "bg-[#FEE500]" : "bg-[#C5C5C5]"}`}
+      onClick={handleClick}
       type="button"
     >
       <RiKakaoTalkFill size={32} className="mr-2" color="#3B1E1E" />

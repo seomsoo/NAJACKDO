@@ -1,18 +1,22 @@
 import RecentSearchText from "page/search/components/RecentSearchText";
 
-const RecentSearch = () => {
+interface IRecentSearchTextProps {
+  recentData: string[];
+}
+
+const RecentSearch = ({ recentData }: IRecentSearchTextProps) => {
+  console.log("recentData", recentData);
   return (
-    <div className="my-6">
+    <div className="my-6 flex flex-col">
       <span className="font-bold">최근 검색</span>
       <div>
-        <RecentSearchText />
-        <RecentSearchText />
-        <RecentSearchText />
-        <RecentSearchText />
-        <RecentSearchText />
-        <RecentSearchText />
-        <RecentSearchText />
-        <RecentSearchText />
+        {recentData.length === 0 ? (
+          <p className="my-[100px] text-center">최근 검색어가 없습니다.</p>
+        ) : (
+          recentData.map((text, index) => (
+            <RecentSearchText key={index} text={text} />
+          ))
+        )}
       </div>
     </div>
   );

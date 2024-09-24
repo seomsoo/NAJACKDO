@@ -1,5 +1,6 @@
 package com.najackdo.server.domain.book.entity;
 
+import com.najackdo.server.core.entity.TimeEntity;
 import com.najackdo.server.domain.user.entity.User;
 
 import jakarta.persistence.Column;
@@ -33,4 +34,12 @@ public class BookMark {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "book_id", nullable = false)
 	private Book book;
+
+	public static BookMark createBookMark(User user, Book book) {
+		BookMark bookMark = new BookMark();
+		bookMark.user = user;
+		bookMark.book = book;
+		return bookMark;
+	}
+
 }

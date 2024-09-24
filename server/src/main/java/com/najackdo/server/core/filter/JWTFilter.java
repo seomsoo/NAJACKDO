@@ -30,19 +30,28 @@ public class JWTFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 		throws ServletException, IOException {
+
+		log.info("request: {}", request);
+		log.info("response: {}", response);
+		log.info("filterChain: {}", filterChain);
+
 		String requestURI = request.getRequestURI();
 		if (!requestURI.startsWith("/api/v1")) {
 			filterChain.doFilter(request, response);
 			return;
 		}
 
+		log.info("requestURI: {}", requestURI);
+
 		String accessToken = resolveToken(request);
+
 		try {
 			if (accessToken != null) {
 				Authentication authentication = jwtService.parseAuthentication(accessToken);
 				validateToken(request, authentication.getName());
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 			} else {
+				log.info("accessToken is null - JWTFilter");
 				throw new BaseException(ErrorCode.INVALID_ACCESS_TOKEN);
 			}
 		} catch (Exception e) {
@@ -52,7 +61,6 @@ public class JWTFilter extends OncePerRequestFilter {
 		}
 		doFilter(request, response, filterChain);
 	}
-
 
 	private void validateToken(HttpServletRequest request, String username) {
 		//        Cookie cookie = CookieUtils.getCookie(request, AuthConst.REFRESH_TOKEN).orElseThrow(
@@ -68,6 +76,7 @@ public class JWTFilter extends OncePerRequestFilter {
 
 	private String resolveToken(HttpServletRequest request) {
 		String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
+		log.info("bearerToken: {}", bearerToken);
 		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
 			return bearerToken.substring(7);
 		}
