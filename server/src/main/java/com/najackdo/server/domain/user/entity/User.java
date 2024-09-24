@@ -1,15 +1,16 @@
 package com.najackdo.server.domain.user.entity;
 
 import java.util.List;
-import java.util.Set;
 
 import org.hibernate.annotations.ColumnDefault;
 
 import com.najackdo.server.core.entity.BaseEntity;
 import com.najackdo.server.domain.book.entity.UserBook;
+import com.najackdo.server.domain.cart.entity.Cart;
 import com.najackdo.server.domain.location.entity.ActivityAreaSetting;
 import com.najackdo.server.domain.user.dto.UserData;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -114,10 +115,10 @@ public class User extends BaseEntity {
 	// @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
 	// private List<CashLog> cashLogs;
 	//
-	// @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	// private List<Cart> bookCarts;
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	private List<Cart> bookCarts;
 	//
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private List<UserBook> userBooks;
 	//
 	// @OneToMany(mappedBy = "loner", fetch = FetchType.LAZY)
