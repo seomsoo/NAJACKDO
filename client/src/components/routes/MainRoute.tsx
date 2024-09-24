@@ -5,6 +5,7 @@ import ChattingRoomPage from "page/chatting/page/ChattingRoomPage";
 import ReviewPage from "page/chatting/page/ReviewPage";
 import KaPayApprovePage from "page/kapay/page/KaPayApprovePage";
 import KaPayCancelPage from "page/kapay/page/KaPayCancelPage";
+import KaPayFailPage from "page/kapay/page/KaPayFailPage";
 import KaPayPage from "page/kapay/page/KaPayPage";
 import AICheckPage from "page/library/page/AICheckPage";
 import AICheckResultPage from "page/library/page/AICheckResultPage";
@@ -45,7 +46,7 @@ const MainRoute = () => {
       <Route path="/library" element={<LibraryPage />} />
       <Route path="/library/my-favorite" element={<MyFavoritePage />} />
       <Route path="/library/my-library" element={<MyLibraryPage />} />
-      <Route path="/library/my-history"  element={<HistoryPage />} />
+      <Route path="/library/my-history" element={<HistoryPage />} />
       <Route path="/chat" element={<ChattingPage />} />
       <Route path="/chat/:room_id" element={<ChattingRoomPage />} />
       <Route path="/chat/review" element={<ReviewPage />} />
@@ -62,7 +63,7 @@ const MainRoute = () => {
       <Route path="/kapay" element={<KaPayPage />} />
       <Route path="/kapay/approve" element={<KaPayApprovePage />} />
       <Route path="/kapay/cancel" element={<KaPayCancelPage />} />
-      <Route path="/kapay/fail" element={<KaPayCancelPage />} />
+      <Route path="/kapay/fail" element={<KaPayFailPage />} />
       <Route path="/bookdetail" element={<BookDetailPage />} />
       <Route path="/bookdetail/rental" element={<RentalBookDetailPage />} />
       <Route path="/bookdetail/mybook" element={<MyRentalBookDetailPage />} />
