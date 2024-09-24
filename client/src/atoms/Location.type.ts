@@ -11,3 +11,8 @@ export interface ILocationRange {
   locationPoint: any;
   polygon: any;
 }
+
+export interface IMyLocation {
+  locationCode: number;
+  distanceMeters: number
+}

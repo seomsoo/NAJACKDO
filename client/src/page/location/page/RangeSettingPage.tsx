@@ -1,9 +1,11 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { ILocationRange } from "atoms/Location.type";
-import { getLocationRange } from "api/locationApi";
+import { getLocationRange, postMyLocation } from "api/locationApi";
 import { IoIosArrowBack } from "react-icons/io";
+import { RangeSlider } from "components/ui/rangeslider";
+
 
 declare global {
   interface Window {
@@ -14,8 +16,10 @@ declare global {
 const RangeSettingPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { latitude, longitude, locationName } = location.state || {};
+  const { latitude, longitude, locationName, locationCode } = location.state || {};
   const [map, setMap] = useState<any>(null);
+  const [mapLoaded, setMapLoaded] = useState(false);
+  const [ range, setRange ] = useState(0);
 
   const {
     data: locationRange,
@@ -25,6 +29,8 @@ const RangeSettingPage = () => {
     queryKey: ["locationRange"],
     queryFn: () => getLocationRange(latitude, longitude),
   });
+  console.log("locationRange", locationRange);
+  console.log("제발", locationRange?.[range]);
 
   useEffect(() => {
     if (!locationRange || !map) {
@@ -34,11 +40,12 @@ const RangeSettingPage = () => {
     console.log("불러옴");
 
     // 폴리곤을 그리기 위한 함수 호출
-    displayPolygons(locationRange);
+    displayPolygons(locationRange?.[range]);
 
-    function displayPolygons(locationRanges: ILocationRange[]) {
+    function displayPolygons(locationRanges:any) {
       locationRanges.forEach((location) => {
-        const polygonCoordinates = parseMultipolygon(location.polygon);
+        console.log("으아악 포이치", location);
+        const polygonCoordinates = parsePolygon(location.polygon);
         if (polygonCoordinates.length > 0) {
           const polygonPath = polygonCoordinates.map(
             (coord) => new window.kakao.maps.LatLng(coord[0], coord[1])
@@ -46,12 +53,12 @@ const RangeSettingPage = () => {
 
           const polygon = new window.kakao.maps.Polygon({
             path: polygonPath,
-            strokeWeight: 2,
-            strokeColor: "#B0A695",
+            strokeWeight: 2.5,
+            strokeColor: "#E8B900",
             strokeOpacity: 1,
             strokeStyle: "solid",
-            fillColor: "#B0A695",
-            fillOpacity: 0.2,
+            fillColor: "#E8B900",
+            fillOpacity: 0.4,
           });
 
           polygon.setMap(map);
@@ -59,28 +66,50 @@ const RangeSettingPage = () => {
       });
     }
 
-    function parseMultipolygon(multipolygon: string) {
-      if (!multipolygon) return [];
-      const polygonArray = multipolygon
-        .replace("MULTIPOLYGON(((", "")
+    function parsePolygon(polygon: string) {
+      if (!polygon) return [];
+      const polygonArray = polygon
+        .replace("MULTIPOLYGON (((", "")
         .replace(")))", "")
         .split(", ")
         .map((latlng) => latlng.split(" ").map(Number));
+
+      console.log("polygonArray", polygonArray);
       return polygonArray;
     }
   }, [locationRange, map]);
 
   useEffect(() => {
     const mapContainer = document.getElementById("kakaomap");
-    if (!mapContainer) return;
-
+    if (!mapContainer) {
+      setTimeout(() => setMapLoaded(mapLoaded => !mapLoaded), 1000);
+      return;
+    }
     const mapOption = {
-      center: new window.kakao.maps.LatLng(latitude, longitude),
-      level: 6,
+      center: new window.kakao.maps.LatLng(longitude, latitude),
+      level: 7,
     };
     const mapInstance = new window.kakao.maps.Map(mapContainer, mapOption);
     setMap(mapInstance);
-  }, [latitude, longitude]);
+  }, [latitude, longitude, mapLoaded, range]);
+
+  const mutation = useMutation({
+    mutationKey: ["location"],
+    mutationFn: postMyLocation,
+    
+    onSuccess: () => {
+      alert("오예 성공")
+      navigate('/')
+    }
+  })
+
+  const handleLocationClick = () => {
+    mutation.mutate({
+      locationCode: locationCode,
+      distanceMeters: (range * 0.005 + 0.02)
+    })
+    console.log("locationCode", locationCode,"distanceMeters", range * 0.005 + 0.02)
+  }
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -97,9 +126,28 @@ const RangeSettingPage = () => {
           <IoIosArrowBack />
         </button>
         <p className="text-2xl font-bold ml-2">범위 설정</p>
-        <p className="ml-2">{locationName}</p>
       </div>
-      <div id="kakaomap" className="w-full h-[500px]"></div>
+      <div id="kakaomap" className="w-full h-[400px]"></div>
+      <div className="mx-6 my-10 flex flex-row justify-center items-center">
+        <p>가까운</p>
+          <RangeSlider
+          min={0}
+          max={locationRange?.length - 1 || 0} //3
+          step={1}
+          value={[range]}  
+          onValueChange={(value) => setRange(value[0])}
+          className="w-[240px]"
+          />
+        <p>먼</p>
+      </div>
+      <div className="flex justify-center mt-3">
+        <button 
+          className="w-[265px] bg-[#776B5D] text-white rounded-[12px] p-2"
+          onClick={handleLocationClick}
+        >
+          <span className="font-bold">{locationName.split(' ').slice(-1)[0]}</span>으로 지역 설정
+        </button>
+      </div>
     </div>
   );
 };
