@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
 import { IPaging } from "atoms/Base.type";
 import { INearLocation } from "atoms/Location.type";
@@ -38,6 +38,8 @@ const LocationSettingPage = () => {
   const navigate = useNavigate();
   const [address, setAddress] = useState("");
   const [map, setMap] = useState<any>(null);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+
 
   const {
     data: location,
@@ -76,6 +78,29 @@ const LocationSettingPage = () => {
     navigate(`/location/range`, { state: { latitude, longitude, locationName, locationCode } });
   };
 
+
+  const handleObserver = useCallback((entries: IntersectionObserverEntry[]) => {
+    const target = entries[0];
+    if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+
+  useEffect(() => {
+    const option = {
+      root: null, // viewport as root
+      rootMargin: "20px",
+      threshold: 1.0,
+    };
+    const observer = new IntersectionObserver(handleObserver, option);
+    if (loadMoreRef.current) observer.observe(loadMoreRef.current);
+
+    return () => {
+      if (loadMoreRef.current) observer.unobserve(loadMoreRef.current);
+    };
+  }, [handleObserver]);
+
+
   if (isLocationLoading || isNearLocationLoading) {
     return <div>Loading...</div>;
   }
@@ -104,6 +129,9 @@ const LocationSettingPage = () => {
           </li>
         ))}
       </ul>
+      <div ref={loadMoreRef} className="loading">
+        {isFetchingNextPage ? "Loading more..." : ""}
+      </div>
     </div>
   );
 };
