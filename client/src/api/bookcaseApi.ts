@@ -1,6 +1,6 @@
 import { BaseResponse } from "atoms/Base.type";
-import { IInterestBookCase } from "atoms/Interest.type";
 import instance from "./clientApi";
+import { IInterestBookCase } from 'atoms/BookCase.type';
 
 // 관심 책장 목록 조회
 export const getInterestBookCase = async (): Promise<IInterestBookCase[]> => {

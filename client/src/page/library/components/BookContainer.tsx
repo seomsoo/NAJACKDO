@@ -1,6 +1,6 @@
 import { IoHeart, IoHeartOutline } from 'react-icons/io5';
 import { useState } from 'react';
-import { postInterestbook, deleteInterestbook } from 'api/interstbookApi'; // API 호출 함수
+import { postInterestbook, deleteInterestbook } from 'api/bookApi'; // API 호출 함수
 
 interface BookContainerProps {
   bookId: number;
