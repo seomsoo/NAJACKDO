@@ -1,7 +1,10 @@
 package com.najackdo.server.domain.user.dto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import com.najackdo.server.domain.user.entity.CashLog;
+import com.najackdo.server.domain.user.entity.User;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -20,7 +23,7 @@ public class UserData {
 		private char gender;
 
 		@NotNull(message = "나이를 입력해 주세요.")
-		private short age;
+		private String age;
 
 		@Size(min = 3, message = "관심 분야를 3개 이상 선택해 주세요.")
 		private List<Long> interest;

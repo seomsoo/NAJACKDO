@@ -34,6 +34,7 @@ self.addEventListener("push", function (e) {
     tag: resultData.tag,
     ...resultData,
   };
+  console.log(resultData);
   self.registration.showNotification(notificationTitle, notificationOptions);
   
 });

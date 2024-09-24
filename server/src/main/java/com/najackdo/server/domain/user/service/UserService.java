@@ -3,8 +3,12 @@ package com.najackdo.server.domain.user.service;
 import static com.najackdo.server.domain.user.entity.CashLogType.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.najackdo.server.domain.survey.service.SurveyResultService;
+import com.najackdo.server.domain.user.entity.InterestUser;
+import com.najackdo.server.domain.user.repository.InterestUserRepository;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -36,6 +40,9 @@ public class UserService {
 	private final UserRepository userRepository;
 	private final SurveyResultRepository serveyResultRepository;
 	private final SurveyQuestionRepository surveyQuestionRepository;
+	private final InterestUserRepository interestUserRepository;
+	private final SurveyResultService surveyResultService;
+
 
 	@Transactional
 	public void updateUser(User user, UserData.Update update) {

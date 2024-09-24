@@ -55,7 +55,7 @@ public class NotificationService {
                         .setTitle(notificationEvent.getTitle())
                         .setBody(notificationEvent.getBody())
                         .build();
-                log.info("토큰 : "+ user.get().getFcmToken());
+//                log.info("토큰 : "+ user.get().getFcmToken());
                 Message message = Message.builder()
                         .setToken(user.get().getFcmToken())
                         .setNotification(notification)
