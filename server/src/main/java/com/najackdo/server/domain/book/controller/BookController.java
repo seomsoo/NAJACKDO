@@ -17,6 +17,7 @@ import com.najackdo.server.domain.book.dto.BookData;
 import com.najackdo.server.domain.book.dto.UserBookData;
 import com.najackdo.server.domain.book.service.BookService;
 import com.najackdo.server.domain.book.service.UserBooksService;
+import com.najackdo.server.domain.recommendation.entity.Rental;
 import com.najackdo.server.domain.user.entity.User;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -86,6 +87,7 @@ public class BookController {
 	public SuccessResponse<Void> addInterestBook(@CurrentUser User user,
 		@PathVariable("bookId") Long interest) {
 		userBooksService.addInterestBook(user, interest);
+
 		return SuccessResponse.empty();
 	}
 
