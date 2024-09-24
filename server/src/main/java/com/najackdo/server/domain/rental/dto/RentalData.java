@@ -6,8 +6,11 @@ public class RentalData {
 
 	@Data
 	public static class RentalRequest {
-		// 카트 아이디
-		// 렌탈 기간
+		private Long cartId;
+		private int rentalCost;
+		private int rentalPeriod;
+		private int totalPrice;
+
 	}
 
 }
