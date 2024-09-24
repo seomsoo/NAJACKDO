@@ -70,10 +70,10 @@ const LocationSettingPage = () => {
 
   const nearLocationArray = nearLocationData?.pages?.flatMap((page) => page.content) || [];
 
-  const handleLocationSelect = (locationName: string, latitude: number, longitude: number) => {
+  const handleLocationSelect = (locationName: string, latitude: number, longitude: number, locationCode:number) => {
     setAddress(locationName);
     console.log(`선택한 위치: ${locationName} (${latitude}, ${longitude})`);
-    navigate(`/location/range`, { state: { latitude, longitude, locationName } });
+    navigate(`/location/range`, { state: { latitude, longitude, locationName, locationCode } });
   };
 
   if (isLocationLoading || isNearLocationLoading) {
@@ -96,7 +96,7 @@ const LocationSettingPage = () => {
         {nearLocationArray.map((location, index) => (
           <li key={index}>
             <button
-              onClick={() => handleLocationSelect(location.locationName, location.latitude, location.longitude)}
+              onClick={() => handleLocationSelect(location.locationName, location.latitude, location.longitude, location.locationCode)}
               className="w-full text-left p-2 border-b hover:bg-gray-100"
             >
               {location.locationName}

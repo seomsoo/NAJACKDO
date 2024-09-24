@@ -1,10 +1,11 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { ILocationRange } from "atoms/Location.type";
-import { getLocationRange } from "api/locationApi";
+import { getLocationRange, postMyLocation } from "api/locationApi";
 import { IoIosArrowBack } from "react-icons/io";
-import { Slider } from "components/ui/slider";
+import { RangeSlider } from "components/ui/rangeslider";
+
 
 declare global {
   interface Window {
@@ -15,7 +16,7 @@ declare global {
 const RangeSettingPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { latitude, longitude, locationName } = location.state || {};
+  const { latitude, longitude, locationName, locationCode } = location.state || {};
   const [map, setMap] = useState<any>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [ range, setRange ] = useState(0);
@@ -92,6 +93,24 @@ const RangeSettingPage = () => {
     setMap(mapInstance);
   }, [latitude, longitude, mapLoaded, range]);
 
+  const mutation = useMutation({
+    mutationKey: ["location"],
+    mutationFn: postMyLocation,
+    
+    onSuccess: () => {
+      alert("오예 성공")
+      navigate('/')
+    }
+  })
+
+  const handleLocationClick = () => {
+    mutation.mutate({
+      locationCode: locationCode,
+      distanceMeters: (range * 0.005 + 0.02)
+    })
+    console.log("locationCode", locationCode,"distanceMeters", range * 0.005 + 0.02)
+  }
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -107,31 +126,27 @@ const RangeSettingPage = () => {
           <IoIosArrowBack />
         </button>
         <p className="text-2xl font-bold ml-2">범위 설정</p>
-        <p className="ml-2">{locationName}</p>
       </div>
-      <div id="kakaomap" className="w-full h-[500px]"></div>
-      {/* <div className="flex flex-row mx-6 my-4 items-center justify-center">
-        <p className="mr-2">가까운 책장</p>
-        <input
-          type="range"
-          min="0"
-          max={locationRange?.length - 1} //3
-          value={range}
-          onChange={(e) => setRange(Number(e.target.value))}
-          className="w-[230px] bg-[#E8B900]"
-        />
-        <span className="ml-2">먼 책장</span>
-      </div> */}
-        <div className="mx-6 my-4">
-        <Slider
+      <div id="kakaomap" className="w-full h-[400px]"></div>
+      <div className="mx-6 my-10 flex flex-row justify-center items-center">
+        <p>가까운</p>
+          <RangeSlider
           min={0}
-          max={locationRange?.length - 1 || 0}
+          max={locationRange?.length - 1 || 0} //3
           step={1}
-          value={[range]}
-          onValueChange={(value) => setRange(value?.[0])}
-          className="w-full"
-        />
-        <p>현재 범위: {range}</p>
+          value={[range]}  
+          onValueChange={(value) => setRange(value[0])}
+          className="w-[240px]"
+          />
+        <p>먼</p>
+      </div>
+      <div className="flex justify-center mt-3">
+        <button 
+          className="w-[265px] bg-[#776B5D] text-white rounded-[12px] p-2"
+          onClick={handleLocationClick}
+        >
+          <span className="font-bold">{locationName.split(' ').slice(-1)[0]}</span>으로 지역 설정
+        </button>
       </div>
     </div>
   );
