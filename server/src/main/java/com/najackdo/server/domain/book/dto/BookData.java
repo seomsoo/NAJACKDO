@@ -10,7 +10,7 @@ import lombok.Data;
 public class BookData {
 
 	@Data
-	public static class Search{
+	public static class Search {
 		private Long bookId;
 		private String title;
 		private String author;
@@ -43,7 +43,7 @@ public class BookData {
 	}
 
 	@Data
-	public static class Interest{
+	public static class Interest {
 		Long bookId;
 	}
 
@@ -68,13 +68,15 @@ public class BookData {
 	public static class BookCase {
 
 		private Long userId;
-		private String nickname;;
+		private String nickname;
+		private String profileImage;
 		private List<DisplayBook> displayBooks;
 
-		public static BookCase of(Long userId, String nickname, List<DisplayBook> displayBooks) {
+		public static BookCase of(Long userId, String nickname, String profileImage, List<DisplayBook> displayBooks) {
 			BookCase response = new BookCase();
 			response.userId = userId;
 			response.nickname = nickname;
+			response.profileImage = profileImage;
 			response.displayBooks = displayBooks;
 			return response;
 		}
