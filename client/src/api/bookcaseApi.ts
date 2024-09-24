@@ -3,25 +3,25 @@ import instance from "./clientApi";
 import { IBookCase } from 'atoms/BookCase.type';
 
 
-// 나의 책장 목록 조회
-export const getMyBookCase = async (): Promise<IBookCase[]> => {
+// 나의 책장 조회 API 호출 (단일 객체 반환)
+export const getMyBookCase = async (): Promise<IBookCase> => {
   const {
-    data: { success, data }, 
-  } = await instance.get<BaseResponse<IBookCase[]>>("/book/bookcase/me");
+    data: { success, data },
+  } = await instance.get<BaseResponse<IBookCase>>('/book/bookcase/me');
 
   if (!success) {
-    throw new Error("나의 책장 조회 실패");
+    throw new Error('나의 책장 조회 실패');
   }
 
-  console.log("나의 책장 조회", data)
-  return data;
-}
+  return data; // 단일 객체 반환
+};
+
 
 // 타인 책장 목록 조회
-export const getOtherBookCase = async (findUserId: number): Promise<IBookCase[]> => {
+export const getOtherBookCase = async (findUserId: number): Promise<IBookCase> => {
   const {
     data: { success, data }, 
-  } = await instance.get<BaseResponse<IBookCase[]>>(`/book/bookcase/${findUserId}`);
+  } = await instance.get<BaseResponse<IBookCase>>(`/book/bookcase/${findUserId}`);
 
   if (!success) {
     throw new Error("타인 책장 조회 실패");

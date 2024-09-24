@@ -12,7 +12,7 @@ const LibraryPage = () => {
     navigate('/library/my-favorite');
   };
   const goToMyBookCase = () => {
-    navigate('/library/my-library');
+    navigate('/library/my-bookcase');
   };
   const goToMyHistory = () => {
     navigate('/library/my-history');

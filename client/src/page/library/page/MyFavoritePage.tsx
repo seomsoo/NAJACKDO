@@ -23,7 +23,7 @@ const MyFavoritePage = () => {
     queryKey: ['interestBookCase'],
     queryFn: getInterestBookCase,
   });
-
+  console.log(bookcases);
   // 관심 도서 목록 조회
   const {
     data: interestBooks,
