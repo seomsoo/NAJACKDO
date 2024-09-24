@@ -54,4 +54,8 @@ public class Cart {
 		cart.owner = owner;
 		return cart;
 	}
+	
+	public void deleteCart() {
+		this.isDelete = true;
+	}
 }

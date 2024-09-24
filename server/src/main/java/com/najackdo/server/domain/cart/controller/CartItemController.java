@@ -34,9 +34,9 @@ public class CartItemController {
 	@PostMapping("add/{ownerbookId}")
 	@Operation(summary = "장바구니 담기", description = "장바구니 담기")
 	public SuccessResponse<Void> addCartItem(@CurrentUser User customer, @PathVariable Long ownerbookId) {
-		log.info("장바구니 담기 요청 : {}", ownerbookId);
+
 		cartItemService.addCartItem(customer, ownerbookId);
-		log.info("장바구니 담기 완료 : {}", ownerbookId);
+
 		return SuccessResponse.empty();
 	}
 
@@ -44,15 +44,15 @@ public class CartItemController {
 	 * 장바구니 삭제
 	 *
 	 * @param customer
-	 * @param ownerbookId
+	 * @param cartItemId
 	 * @return {@link SuccessResponse<Void>}
 	 */
-	@PostMapping("delete/{ownerbookId}")
+	@PostMapping("delete/{cartItemId}")
 	@Operation(summary = "장바구니 삭제", description = "장바구니 삭제")
-	public SuccessResponse<Void> deleteCartItem(@CurrentUser User customer, @PathVariable Long ownerbookId) {
-		log.info("장바구니 삭제 요청 : {}", ownerbookId);
-		cartItemService.deleteCartItem(customer, ownerbookId);
-		log.info("장바구니 삭제 완료 : {}", ownerbookId);
+	public SuccessResponse<Void> deleteCartItem(@CurrentUser User customer, @PathVariable Long cartItemId) {
+
+		cartItemService.deleteCartItem(customer, cartItemId);
+
 		return SuccessResponse.empty();
 	}
 }

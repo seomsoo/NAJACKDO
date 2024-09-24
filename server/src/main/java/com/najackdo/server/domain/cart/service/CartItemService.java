@@ -1,5 +1,6 @@
 package com.najackdo.server.domain.cart.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -51,16 +52,22 @@ public class CartItemService {
 	}
 
 	@Transactional
-	public void deleteCartItem(User customer, Long ownerbookId) {
+	public void deleteCartItem(User customer, Long cartItemId) {
+		CartItem cartItem = cartItemRepository.findById(cartItemId)
+			.orElseThrow(() -> new IllegalArgumentException("해당 장바구니 아이템을 찾을 수 없습니다."));
 
-		UserBook userBook = userBooksRepository.findById(ownerbookId)
-			.orElseThrow(() -> new IllegalArgumentException("해당 책을 찾을 수 없습니다."));
+		if (!cartItem.getCart().getCustomer().getId().equals(customer.getId())) {
+			throw new IllegalArgumentException("해당 장바구니 아이템을 삭제할 수 없습니다.");
+		}
 
-		UserBookDetail userBookDetail = userBookDetailRepository.findUserBookDetailByUserBookId(ownerbookId)
-			.orElseThrow(() -> new IllegalArgumentException("해당 책의 상세 정보를 찾을 수 없습니다."));
+		List<CartItem> cartItems = cartItemRepository.findCartItemsByCartId(cartItem.getCart().getId());
 
-		Cart cart = cartRepository.findCartByUserIdAndBookId(customer.getId(), ownerbookId)
-			.orElseThrow(() -> new IllegalArgumentException("해당 책을 찾을 수 없습니다."));
+		cartItemRepository.delete(cartItem);
+
+		if (cartItems.size() <= 1) {
+			Cart cart = cartItem.getCart();
+			cart.deleteCart();
+		}
 
 	}
 }

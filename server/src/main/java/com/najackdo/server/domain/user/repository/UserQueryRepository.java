@@ -4,9 +4,7 @@ import java.util.List;
 
 import org.springframework.data.repository.query.Param;
 
-import com.najackdo.server.domain.cart.dto.CartData;
 import com.najackdo.server.domain.user.dto.UserData.CashLogResponse;
-import com.najackdo.server.domain.user.entity.User;
 
 public interface UserQueryRepository {
 
@@ -51,11 +49,4 @@ public interface UserQueryRepository {
 	 */
 	Long countUserReviewsByPositive(@Param("id") Long id, @Param("positive") boolean positive);
 
-	/**
-	 * 사용자 ID로 사용자의 카트 조회
-	 *
-	 * @param id 사용자 ID
-	 * @return {@link User} 사용자 엔티티
-	 */
-	List<CartData.CartInfo> findUserCartsById(Long id);
 }

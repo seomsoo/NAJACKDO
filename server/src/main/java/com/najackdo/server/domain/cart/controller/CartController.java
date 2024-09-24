@@ -35,10 +35,7 @@ public class CartController {
 	@GetMapping("list")
 	@Operation(summary = "장바구니 조회", description = "장바구니 조회")
 	public SuccessResponse<List<CartData.CartInfo>> getCartList(@CurrentUser User user) {
-		log.info("장바구니 조회 요청 : {}", user.getId());
 		List<CartData.CartInfo> cartList = cartService.getCartList(user);
-		log.info("장바구니 리스트 : {}", cartList);
-		log.info("장바구니 조회 완료 : {}", user.getId());
 		return SuccessResponse.of(cartList);
 	}
 
