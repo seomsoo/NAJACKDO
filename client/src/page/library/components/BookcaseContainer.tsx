@@ -1,7 +1,4 @@
-import {
-  deleteInterestBookCase,
-  postInterestBookCase,
-} from 'api/interestbookcaseApi';
+import { deleteInterestBookCase, postInterestBookCase } from 'api/bookcaseApi';
 import { useState } from 'react';
 import { IoHeart, IoHeartOutline } from 'react-icons/io5';
 

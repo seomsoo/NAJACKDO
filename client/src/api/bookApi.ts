@@ -1,5 +1,5 @@
 import { BaseResponse } from "atoms/Base.type";
-import { IInterestBook } from "atoms/Interest.type";
+import { IInterestBook } from "atoms/Book.type";
 import instance from "./clientApi";
 
 // 관심 도서 조회

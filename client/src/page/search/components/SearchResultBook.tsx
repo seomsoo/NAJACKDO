@@ -1,9 +1,9 @@
-import { useMutation } from "@tanstack/react-query";
-import { deleteInterestbook, postInterestbook } from "api/interstbookApi";
-import { ISearch } from "atoms/Search.type";
-import CategoryTag from "components/common/CategoryTag";
-import { useState } from "react";
-import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
+import { useMutation } from '@tanstack/react-query';
+import { deleteInterestbook, postInterestbook } from 'api/bookApi';
+import { ISearch } from 'atoms/Search.type';
+import CategoryTag from 'components/common/CategoryTag';
+import { useState } from 'react';
+import { IoHeartOutline, IoHeartSharp } from 'react-icons/io5';
 
 interface SearchResultBookProps {
   search: ISearch;
@@ -11,26 +11,26 @@ interface SearchResultBookProps {
 
 const SearchResultBook = ({ search }: SearchResultBookProps) => {
   const [interestBook, setInterestBook] = useState(false);
-  const categoryList = search.genre.split(">");
+  const categoryList = search.genre.split('>');
 
   const applyInterest = useMutation({
-    mutationKey: ["book", "interest", "apply"],
+    mutationKey: ['book', 'interest', 'apply'],
     mutationFn: () => postInterestbook(search.bookId),
 
     onSuccess: () => {
       setInterestBook(true);
-      alert("관심 도서로 등록되었습니다.");
+      alert('관심 도서로 등록되었습니다.');
     },
   });
 
   const cancelInterest = useMutation({
-    mutationKey: ["book", "interest", "cancel"],
+    mutationKey: ['book', 'interest', 'cancel'],
     mutationFn: () => deleteInterestbook(search.bookId),
 
     onSuccess: () => {
       setInterestBook(false);
       // TODO: 알람창 바꾸기
-      alert("관심 도서에서 삭제되었습니다.");
+      alert('관심 도서에서 삭제되었습니다.');
     },
   });
 
@@ -43,13 +43,13 @@ const SearchResultBook = ({ search }: SearchResultBookProps) => {
   };
 
   return (
-    <div className="flex flex-row relative py-4 border-b-[1px]">
+    <div className='flex flex-row relative py-4 border-b-[1px]'>
       <img src={search.cover} alt={search.title} width={108} height={168} />
-      <div className="px-3 py-1">
-        <p className="font-bold">{search.title}</p>
-        <p className="my-2 text-sm">{search.author}</p>
+      <div className='px-3 py-1'>
+        <p className='font-bold'>{search.title}</p>
+        <p className='my-2 text-sm'>{search.author}</p>
         <p>중고가 : {search.priceStandard}원</p>
-        <div className="flex flex-row mt-1">
+        <div className='flex flex-row mt-1'>
           <CategoryTag category={categoryList[1]} />
           <CategoryTag category={categoryList[2]} />
         </div>
@@ -58,13 +58,13 @@ const SearchResultBook = ({ search }: SearchResultBookProps) => {
         {interestBook ? (
           <IoHeartSharp
             size={25}
-            color="#D96363"
-            className="absolute right-0 bottom-4 cursor-pointer"
+            color='#D96363'
+            className='absolute right-0 bottom-4 cursor-pointer'
           />
         ) : (
           <IoHeartOutline
             size={25}
-            className="absolute right-0 bottom-4 cursor-pointer"
+            className='absolute right-0 bottom-4 cursor-pointer'
           />
         )}
       </div>
