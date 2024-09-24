@@ -59,6 +59,7 @@ public class CartQueryRepositoryImpl implements CartQueryRepository {
 			.stream()
 			.map(c -> CartData.CartInfo.of(
 				c.getId(),
+				c.getOwner().getId(),
 				c.getOwner().getNickName(),
 				c.getCartItems().stream()
 					.map(ci -> {
