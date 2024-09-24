@@ -1,23 +1,37 @@
 import { Button } from "components/ui/button";
-import React from "react";
+import { IoIosLeaf } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
 const KaPayFailPage = () => {
   const navigate = useNavigate();
   const canCloseWindow = window.opener !== null && !window.opener.closed;
+  const bottonStyle = "bg-[#B0A695] hover:bg-[#776B5D]";
 
   const handleRedirect = () => {
-    navigate("/");
+    navigate("/profile");
   };
 
   return (
-    <div className="bg-white" style={{ height: "calc(100vh - 86px)" }}>
-      <h1>결제 실패</h1>
-      <p>결제 처리 중 오류가 발생했습니다.</p>
+    <div
+      className="flex flex-col items-center justify-center"
+      style={{ height: "calc(100vh - 86px)" }}
+    >
+      <span className="maplestory text-4xl text-[#D96363]">책잎 결제 실패</span>
+      <div className="flex flex-row items-center my-10">
+        <IoIosLeaf color="#79AC78" size={29} className="mx-1" />
+        <p className="font-bold">
+          <span className="text-[#A6B37D] text-xl maplestory mr-1">책잎</span>
+          결제 처리 중 오류가 발생하였습니다.
+        </p>
+      </div>
       {canCloseWindow ? (
-        <Button onClick={() => window.close()}>닫기</Button>
+        <Button className={bottonStyle} onClick={() => window.close()}>
+          닫기
+        </Button>
       ) : (
-        <Button onClick={handleRedirect}>메인 페이지로</Button>
+        <Button className={bottonStyle} onClick={handleRedirect}>
+          마이 페이지로!
+        </Button>
       )}
     </div>
   );
