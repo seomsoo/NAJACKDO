@@ -23,7 +23,6 @@ public class ChatRoom {
 
 	@Id
 	private String roomId; // 채팅방 아이디
-	private String roomName; // 채팅방 이름
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "customer_id")
