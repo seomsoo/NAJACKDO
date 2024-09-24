@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.najackdo.server.domain.book.dto.BookData;
 import com.najackdo.server.domain.book.service.BookService;
+import com.najackdo.server.domain.notification.entity.NotificationType;
+import com.najackdo.server.domain.notification.event.NotificationEvent;
 import com.najackdo.server.domain.notification.service.NotificationService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,7 +60,7 @@ public class BookController {
 
     @GetMapping("/go")
     public SuccessResponse<Void> borrowBooks(@CurrentUser User user) {
-
+		notificationService.sendNotificationEvent(new NotificationEvent(user.getId(),"hello","test", NotificationType.BOOK_RENTAL_REQUEST));
         return SuccessResponse.empty();
     }
 

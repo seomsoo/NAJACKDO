@@ -7,11 +7,15 @@ import com.google.firebase.messaging.Notification;
 import com.najackdo.server.domain.notification.dto.NotificationDto;
 
 import com.najackdo.server.domain.notification.event.NotificationEvent;
+import com.najackdo.server.domain.notification.event.NotificationRegistEvent;
+import com.najackdo.server.domain.notification.repository.NotificationRepository;
 import com.najackdo.server.domain.user.entity.User;
+import com.najackdo.server.domain.user.event.CashLogPaymentEvent;
 import com.najackdo.server.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +24,8 @@ import org.springframework.transaction.event.TransactionalEventListener;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.najackdo.server.domain.user.entity.CashLogType.PAYMENT;
 
 @RequiredArgsConstructor
 @Service
@@ -33,21 +39,26 @@ public class NotificationService {
 
     private final UserRepository usersRepository;
 
+    private final NotificationRepository notificationRepository;
     // 안 본 알람 조회
-    public List<NotificationDto.Notification> searchByUserId(long userId){
+    public List<NotificationDto.Notification> searchByUserId(long userId, NotificationDto.NotificationPaging paging){
 
-        return null;
+        return notificationRepository.searchById(userId,paging);
     }
     // 반납 알림
-
-    // 만남 알림
-
-    // 빌림 신청
+    @EventListener
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void registNotification(NotificationRegistEvent regist) {
+        log.info("알람 등록");
+        com.najackdo.server.domain.notification.entity.Notification notification = com.najackdo.server.domain.notification.entity.Notification.createNotification(regist);
+        notificationRepository.save(notification);
+    }
 
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public String sendNotificationEvent(NotificationEvent notificationEvent) {
+        log.info("알람 송신");
         Optional<User> user = usersRepository.findById(notificationEvent.getTargetUserId());
         if (user.isPresent()) {
             if (user.get().getFcmToken() != null) {
@@ -62,7 +73,10 @@ public class NotificationService {
                         .build();
 
                 try {
+                    log.info("알람 송신 성공");
                     firebaseMessaging.send(message);
+                    publisher.publishEvent(new NotificationRegistEvent(user.get(),notificationEvent.getType(),true,notificationEvent.getTitle(),notificationEvent.getBody()));
+                    log.info("끝");
                     return "알림을 성공적으로 전송했습니다. targetUserId=" + notificationEvent.getTargetUserId();
                 } catch (FirebaseMessagingException e) {
                     e.printStackTrace();

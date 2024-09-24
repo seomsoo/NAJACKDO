@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface NotificationQueryRepository {
 
-    List<NotificationDto.Notification> searchById(NotificationDto.NotificationPaging paging);
+    List<NotificationDto.Notification> searchById(long userId,NotificationDto.NotificationPaging paging);
 }

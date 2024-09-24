@@ -1,6 +1,8 @@
 package com.najackdo.server.domain.notification.entity;
 
 import com.najackdo.server.core.entity.TimeEntity;
+import com.najackdo.server.domain.notification.dto.NotificationDto;
+import com.najackdo.server.domain.notification.event.NotificationRegistEvent;
 import com.najackdo.server.domain.user.entity.User;
 
 import jakarta.persistence.Column;
@@ -48,4 +50,15 @@ public class Notification extends TimeEntity {
 
 	@Column(name = "content")
 	private String content;
+
+	public static Notification createNotification(NotificationRegistEvent regist) {
+		Notification notification = new Notification();
+		notification.user = regist.getUser();
+		notification.type = regist.getType();
+		notification.isRead = false;
+		notification.isSend = regist.getIsSend();
+		notification.title = regist.getTitle();
+		notification.content = regist.getContent();
+		return notification;
+	}
 }
