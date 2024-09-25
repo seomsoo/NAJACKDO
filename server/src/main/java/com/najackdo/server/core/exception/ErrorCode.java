@@ -57,8 +57,13 @@ public enum ErrorCode {
 
 	//USER
 	INTERESTUSER_ALREADY_EXIST(9000, HttpStatus.BAD_REQUEST, "이미 존재하는 관심 유저입니다."),
-	INVALID_FOLLOW_BY_MYSELF(9001, HttpStatus.BAD_REQUEST, "자신을 팔로우할 수 없습니다.");
+	INVALID_FOLLOW_BY_MYSELF(9001, HttpStatus.BAD_REQUEST, "자신을 팔로우할 수 없습니다."),
 
+	//ALARM
+	NOT_SENDED_ALARM(9100,HttpStatus.INTERNAL_SERVER_ERROR,"알람 송신에 실패하였습니다"),
+	NO_HAD_FCMTOKEN(9101,HttpStatus.BAD_REQUEST,"해당 유저의 FCM 토큰 값이 존재하지 않습니다."),
+
+	;
 
 	private final int code;
 	private final HttpStatus status;

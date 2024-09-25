@@ -1,6 +1,7 @@
 package com.najackdo.server.domain.notification.event;
 
 import com.najackdo.server.domain.notification.entity.NotificationType;
+import com.najackdo.server.domain.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

@@ -4,6 +4,8 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
+import com.najackdo.server.core.exception.BaseException;
+import com.najackdo.server.core.exception.ErrorCode;
 import com.najackdo.server.domain.notification.dto.NotificationDto;
 
 import com.najackdo.server.domain.notification.event.NotificationEvent;
@@ -56,8 +58,7 @@ public class NotificationService {
 
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public String sendNotificationEvent(NotificationEvent notificationEvent) {
+    public void sendNotificationEvent(NotificationEvent notificationEvent) {
         log.info("알람 송신");
         Optional<User> user = usersRepository.findById(notificationEvent.getTargetUserId());
         if (user.isPresent()) {
@@ -73,20 +74,21 @@ public class NotificationService {
                         .build();
 
                 try {
-                    log.info("알람 송신 성공");
+//                    log.info("알람 송신 성공");
                     firebaseMessaging.send(message);
                     publisher.publishEvent(new NotificationRegistEvent(user.get(),notificationEvent.getType(),true,notificationEvent.getTitle(),notificationEvent.getBody()));
-                    log.info("끝");
-                    return "알림을 성공적으로 전송했습니다. targetUserId=" + notificationEvent.getTargetUserId();
+//                    log.info("끝");
                 } catch (FirebaseMessagingException e) {
                     e.printStackTrace();
-                    return "알림 보내기를 실패하였습니다. targetUserId=" + notificationEvent.getTargetUserId();
+                    publisher.publishEvent(new NotificationRegistEvent(user.get(),notificationEvent.getType(),false,notificationEvent.getTitle(),notificationEvent.getBody()));
+                    new BaseException(ErrorCode.NOT_SENDED_ALARM);
                 }
             } else {
-                return "서버에 저장된 해당 유저의 FirebaseToken이 존재하지 않습니다. targetUserId=" + notificationEvent.getTargetUserId();
+                publisher.publishEvent(new NotificationRegistEvent(user.get(),notificationEvent.getType(),false,notificationEvent.getTitle(),notificationEvent.getBody()));
+                new BaseException(ErrorCode.NO_HAD_FCMTOKEN);
             }
         } else {
-            return "해당 유저가 존재하지 않습니다. targetUserId=" + notificationEvent.getTargetUserId();
+            new BaseException(ErrorCode.NOT_FOUND_USER);
         }
     }
 }

@@ -6,3 +6,5 @@
 /mongodb
 
 /docker-compose-prod.yml
+
+/node_modules
