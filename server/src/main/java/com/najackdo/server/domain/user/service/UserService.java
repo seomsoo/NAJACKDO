@@ -62,6 +62,12 @@ public class UserService {
 		userRepository.save(findUser);
 	}
 
+	@Transactional
+	public void pushToken(User user,UserData.PushToken pushToken) {
+		user.pushToken(pushToken.getToken());
+		userRepository.save(user);
+	}
+
 	public UserData.InfoResponse getUserInfo(User user) {
 		String locationName = userRepository.findUserLocationName(user.getId());
 		Long goodReviewCount = userRepository.countUserReviewsByPositive(user.getId(), true);

@@ -167,4 +167,9 @@ public class User extends BaseEntity {
 	public void updateCashLog(List<CashLog> cashLog) {
 		this.cashLogs = cashLog;
 	}
+
+	public void pushToken(String Token){
+		this.fcmToken = Token;
+	}
+
 }
