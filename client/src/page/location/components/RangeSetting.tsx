@@ -12,11 +12,10 @@ declare global {
     kakao: any;
   }
 }
-
-const RangeSetting = () => {
+const RangeSetting = ({ selectedLocation }) => {
+  const { latitude, longitude, locationName, locationCode } = selectedLocation || {};
   const location = useLocation();
   const navigate = useNavigate();
-  const { latitude, longitude, locationName, locationCode } = location.state || {};
   const [map, setMap] = useState<any>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [ range, setRange ] = useState(0);

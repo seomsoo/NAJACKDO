@@ -21,8 +21,7 @@ import OtherBookCasePage from 'page/library/page/OtherBookCasePage';
 import MyRentalBookDetailPage from 'page/library/page/MyRentalBookDetailPage';
 import RentalBookDetailPage from 'page/library/page/RentalBookDetailPage';
 import LocationPage from 'page/location/page/LocationPage';
-import LocationSettingPage from 'page/location/page/LocationSettingPage';
-import RangeSettingPage from 'page/location/page/RangeSettingPage';
+import LocationSettingPage from 'page/login/page/LocationSettingPage';
 import AuthCallBack from 'page/login/page/AuthCallbackPage';
 import LoginPage from 'page/login/page/LoginPage';
 import SurveyPage from 'page/login/page/SurveyPage';
@@ -37,13 +36,14 @@ import SearchResultPage from 'page/search/page/SearchResultPage';
 import NotFoundPage from 'components/common/NotFoundPage';
 
 import { Route, Routes } from 'react-router-dom';
+import LocationEditPage from 'page/location/page/LocationEditPage';
 const MainRoute = () => {
   return (
     <Routes>
       <Route path='/' element={<MainPage />} />
       <Route path='/location' element={<LocationPage />} />
-      <Route path='/location/setting' element={<LocationSettingPage />} />
-      <Route path='/location/range' element={<RangeSettingPage />} />
+      <Route path='/setting/location' element={<LocationSettingPage />} />
+      <Route path='/edit/location' element={<LocationEditPage />} />
       <Route path='/library' element={<LibraryPage />} />
       <Route path='/library/my-favorite' element={<MyFavoritePage />} />
       <Route path='/library/my-bookcase' element={<MyBookCasePage />} />
