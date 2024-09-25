@@ -19,19 +19,11 @@ public class QReviewItems extends EntityPathBase<ReviewItems> {
 
     public static final QReviewItems reviewItems = new QReviewItems("reviewItems");
 
-    public final com.najackdo.server.core.entity.QTimeEntity _super = new com.najackdo.server.core.entity.QTimeEntity(this);
-
     public final StringPath content = createString("content");
-
-    //inherited
-    public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
     public final NumberPath<Long> Id = createNumber("Id", Long.class);
 
     public final BooleanPath positive = createBoolean("positive");
-
-    //inherited
-    public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 
     public QReviewItems(String variable) {
         super(ReviewItems.class, forVariable(variable));
