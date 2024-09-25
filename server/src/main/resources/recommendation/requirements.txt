@@ -3,3 +3,6 @@ uvicorn
 pymongo
 pandas
 scikit-learn
+ultralytics
+boto3
+psycopg2
