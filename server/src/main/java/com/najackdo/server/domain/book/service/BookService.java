@@ -16,7 +16,9 @@ import com.najackdo.server.domain.user.repository.InterestUserRepository;
 import com.najackdo.server.domain.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -104,5 +106,15 @@ public class BookService {
 			user.getProfileImage(),
 			displayBooks
 		);
+	}
+
+	public List<BookData.BookCase> getNearBookCase(User user) {
+
+		log.info("user : {}", user);
+
+		BookData.BookCase bookCase = BookData.BookCase.of(user.getId(), true, user.getNickName(),
+			user.getProfileImage(), null);
+
+		return List.of(bookCase);
 	}
 }

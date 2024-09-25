@@ -135,6 +135,18 @@ public class BookController {
 	}
 
 	/**
+	 * 유저의 위치 기반으로 주변 책장 목록 조회
+	 *
+	 * @param user
+	 * @return {@link List<BookData.BookCase>}
+	 */
+	@GetMapping("/bookcase/near")
+	@Operation(summary = "주변 책장 목록 조회", description = "유저의 위치 기반으로 주변 책장 목록 조회")
+	public SuccessResponse<List<BookData.BookCase>> getNearBookCase(@CurrentUser User user) {
+		return SuccessResponse.of(bookService.getNearBookCase(user));
+	}
+
+	/**
 	 * 도서 상세 조회 API
 	 *
 	 * @param bookId
