@@ -28,23 +28,11 @@ public class UserBookDetail {
 	@JoinColumn(name = "user_books_id", nullable = false)
 	private UserBook userBook;
 
-	@Column(name = "barcode", nullable = false)
-	private Integer barcode;
-
-	@Column(name = "notch", nullable = false)
-	private Integer notch;
-
 	@Column(name = "ripped", nullable = false)
-	private Integer ripped;
-
-	@Column(name = "spot", nullable = false)
-	private Integer spot;
-
-	@Column(name = "tag", nullable = false)
-	private Integer tag;
+	private Integer ripped = 0;
 
 	@Column(name = "wornout", nullable = false)
-	private Integer wornout;
+	private Integer wornout = 0;
 
 	@Column(name = "front_image_path", nullable = false)
 	private String frontImagePath;
