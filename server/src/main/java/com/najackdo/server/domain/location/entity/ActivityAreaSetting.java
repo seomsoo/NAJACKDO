@@ -1,7 +1,5 @@
 package com.najackdo.server.domain.location.entity;
 
-import java.sql.Date;
-
 import org.hibernate.annotations.ColumnDefault;
 
 import com.najackdo.server.core.entity.TimeEntity;
@@ -45,7 +43,6 @@ public class ActivityAreaSetting extends TimeEntity {
 	@ColumnDefault("0.15")
 	private Double distanceMeters;
 
-
 	public static ActivityAreaSetting create(User user, Location location, Double distanceMeters) {
 		ActivityAreaSetting activityAreaSetting = new ActivityAreaSetting();
 		activityAreaSetting.user = user;
@@ -61,6 +58,5 @@ public class ActivityAreaSetting extends TimeEntity {
 	public void setDistanceMeters(Double distanceMeters) {
 		this.distanceMeters = distanceMeters;
 	}
-
 
 }
