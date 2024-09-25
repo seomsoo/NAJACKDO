@@ -59,8 +59,8 @@ public enum ErrorCode {
 	INVALID_FOLLOW_BY_MYSELF(9001, HttpStatus.BAD_REQUEST, "자신을 팔로우할 수 없습니다."),
 
 	//ALARM
-	NOT_SENDED_ALARM(9100,HttpStatus.INTERNAL_SERVER_ERROR,"알람 송신에 실패하였습니다"),
-	NO_HAD_FCMTOKEN(9101,HttpStatus.BAD_REQUEST,"해당 유저의 FCM 토큰 값이 존재하지 않습니다."),
+	NOT_SENDED_ALARM(9100, HttpStatus.INTERNAL_SERVER_ERROR, "알람 송신에 실패하였습니다"),
+	NO_HAD_FCMTOKEN(9101, HttpStatus.BAD_REQUEST, "해당 유저의 FCM 토큰 값이 존재하지 않습니다."),
 
 	// RENTAL
 	NOT_FOUND_CART(10000, HttpStatus.NOT_FOUND, "해당 장바구니가 존재하지 않습니다."),
@@ -77,6 +77,7 @@ public enum ErrorCode {
 	NOT_FOUND_USER_BOOK(12000, HttpStatus.NOT_FOUND, "해당 유저 책이 존재하지 않습니다."),
 	NOT_FOUND_USER_BOOK_DETAIL(12001, HttpStatus.NOT_FOUND, "해당 유저 책 상세 정보가 존재하지 않습니다."),
 	NOT_ADD_MY_BOOK_TO_CART(12002, HttpStatus.BAD_REQUEST, "자신의 책을 장바구니에 담을 수 없습니다."),
+	NOT_FOUND_BOOK(12003, HttpStatus.NOT_FOUND, "책을 찾을 수 없습니다."),
 
 	//REVIEW
 	NOT_FOUND_RENTAL_REVIEW(13000, HttpStatus.NOT_FOUND, "대여 리뷰를 찾을 수 없습니다."),

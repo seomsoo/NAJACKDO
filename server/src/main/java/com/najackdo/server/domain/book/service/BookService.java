@@ -70,4 +70,10 @@ public class BookService {
 			displayBooks
 		);
 	}
+	
+	public BookData.Search getBook(Long bookId) {
+		return bookRepository.findById(bookId)
+			.map(BookData.Search::of)
+			.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_BOOK));
+	}
 }

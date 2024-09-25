@@ -24,21 +24,17 @@ public class QUserBookDetail extends EntityPathBase<UserBookDetail> {
 
     public final StringPath backImagePath = createString("backImagePath");
 
-    public final NumberPath<Integer> barcode = createNumber("barcode", Integer.class);
-
     public final StringPath frontImagePath = createString("frontImagePath");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final NumberPath<Integer> notch = createNumber("notch", Integer.class);
+    public final StringPath inspectBackImagePath = createString("inspectBackImagePath");
+
+    public final StringPath inspectFrontImagePath = createString("inspectFrontImagePath");
 
     public final NumberPath<Integer> onedayPrice = createNumber("onedayPrice", Integer.class);
 
     public final NumberPath<Integer> ripped = createNumber("ripped", Integer.class);
-
-    public final NumberPath<Integer> spot = createNumber("spot", Integer.class);
-
-    public final NumberPath<Integer> tag = createNumber("tag", Integer.class);
 
     public final NumberPath<Integer> usedPrice = createNumber("usedPrice", Integer.class);
 
