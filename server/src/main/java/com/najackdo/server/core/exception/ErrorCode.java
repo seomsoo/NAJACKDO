@@ -63,6 +63,7 @@ public enum ErrorCode {
 	RENTAL_CART_ALREADY_RENTED(10000, HttpStatus.BAD_REQUEST, "이미 대여된 장바구니입니다."),
 	NOT_ENOUGH_CASH(10001, HttpStatus.BAD_REQUEST, "잔액이 부족합니다."),
 	NOT_FOUND_RENTAL(10002, HttpStatus.NOT_FOUND, "대여 정보를 찾을 수 없습니다."),
+	// 잘못된 반납 요청
 
 	// CART_ITEM
 	NOT_FOUND_CART_ITEM(11000, HttpStatus.NOT_FOUND, "해당 장바구니 아이템이 존재하지 않습니다."),

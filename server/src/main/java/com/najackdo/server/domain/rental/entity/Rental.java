@@ -61,4 +61,12 @@ public class Rental {
 		return rental;
 	}
 
+	public void updateRentalEndDate(LocalDateTime rentalEndDate) {
+		this.rentalEndDate = rentalEndDate;
+	}
+
+	public void updateStatus(RentalStatus status) {
+		this.status = status;
+	}
+
 }

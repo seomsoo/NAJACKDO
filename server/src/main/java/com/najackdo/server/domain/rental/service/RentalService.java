@@ -77,4 +77,29 @@ public class RentalService {
 
 		return SuccessResponse.empty();
 	}
+
+	@Transactional
+	public SuccessResponse<Void> returnRental(User user, RentalData.ReturnRequest returnRequest) {
+
+		Long ownerId = user.getId();
+		Long customerId = returnRequest.getCustomerId();
+		Long rentalId = returnRequest.getRentalId();
+
+		Rental rental = rentalRepository.findById(rentalId).orElseThrow(
+			() -> new BaseException(ErrorCode.NOT_FOUND_RENTAL)
+		);
+
+		if (!rental.getCart().getCustomer().getId().equals(customerId)
+			|| !rental.getCart().getOwner().getId().equals(ownerId)) {
+			throw new BaseException(ErrorCode.ACCESS_DENIED);
+		}
+
+		rental.updateRentalEndDate(LocalDateTime.now()); // 반납일 업데이트
+		rental.updateStatus(RentalStatus.RETURNED); // 상태 업데이트
+
+		// ! 채팅 전송 로직 추가
+
+		return SuccessResponse.empty();
+
+	}
 }
