@@ -28,10 +28,10 @@ public class Rental {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "book_rental_id", nullable = false)
 	private Long id;
-	
+
 	@OneToOne
-	@JoinColumn(name = "cart_id")
-	private Cart cartId;
+	@JoinColumn(name = "cart")
+	private Cart cart;
 
 	@Column(name = "rental_start_date")
 	private LocalDateTime rentalStartDate;
@@ -48,5 +48,25 @@ public class Rental {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status")
 	private RentalStatus status;
+
+	public static Rental create(Cart cartId, LocalDateTime rentalStartDate, LocalDateTime rentalEndDate,
+		Integer rentalPeriod, Integer rentalCost, RentalStatus status) {
+		Rental rental = new Rental();
+		rental.cart = cartId;
+		rental.rentalStartDate = rentalStartDate;
+		rental.rentalEndDate = rentalEndDate;
+		rental.rentalPeriod = rentalPeriod;
+		rental.rentalCost = rentalCost;
+		rental.status = status;
+		return rental;
+	}
+
+	public void updateRentalEndDate(LocalDateTime rentalEndDate) {
+		this.rentalEndDate = rentalEndDate;
+	}
+
+	public void updateStatus(RentalStatus status) {
+		this.status = status;
+	}
 
 }

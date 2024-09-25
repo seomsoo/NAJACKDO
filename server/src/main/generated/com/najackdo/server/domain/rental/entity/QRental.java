@@ -22,7 +22,7 @@ public class QRental extends EntityPathBase<Rental> {
 
     public static final QRental rental = new QRental("rental");
 
-    public final com.najackdo.server.domain.cart.entity.QCart cartId;
+    public final com.najackdo.server.domain.cart.entity.QCart cart;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
@@ -54,7 +54,7 @@ public class QRental extends EntityPathBase<Rental> {
 
     public QRental(Class<? extends Rental> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.cartId = inits.isInitialized("cartId") ? new com.najackdo.server.domain.cart.entity.QCart(forProperty("cartId"), inits.get("cartId")) : null;
+        this.cart = inits.isInitialized("cart") ? new com.najackdo.server.domain.cart.entity.QCart(forProperty("cart"), inits.get("cart")) : null;
     }
 
 }

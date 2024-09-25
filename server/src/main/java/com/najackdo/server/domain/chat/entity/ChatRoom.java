@@ -33,6 +33,6 @@ public class ChatRoom {
 	private User owner;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "cart_id")
+	@JoinColumn(name = "cart")
 	private Cart cart;
 }

@@ -144,4 +144,5 @@ public class UserController {
 	public SuccessResponse<UserData.ValidResponse> valid(@CurrentUser User user) {
 		return SuccessResponse.of(userService.valid(user));
 	}
+	
 }

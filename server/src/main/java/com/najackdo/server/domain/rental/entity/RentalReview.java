@@ -38,5 +38,12 @@ public class RentalReview extends TimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "review_item_id", nullable = false)
 	private ReviewItems reviewItems;
-	
+
+	public static RentalReview createRentalReview(Rental rental, User user, ReviewItems reviewItems) {
+		RentalReview rentalReview = new RentalReview();
+		rentalReview.rental = rental;
+		rentalReview.user = user;
+		rentalReview.reviewItems = reviewItems;
+		return rentalReview;
+	}
 }

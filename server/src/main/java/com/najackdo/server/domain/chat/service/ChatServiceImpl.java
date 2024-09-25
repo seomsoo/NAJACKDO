@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.najackdo.server.core.configuration.RootConfig;
+import com.najackdo.server.core.exception.BaseException;
+import com.najackdo.server.core.exception.ErrorCode;
 import com.najackdo.server.domain.cart.repository.CartRepository;
 import com.najackdo.server.domain.chat.dto.ChatRoomDTO;
 import com.najackdo.server.domain.chat.entity.Chat;
@@ -44,8 +46,8 @@ public class ChatServiceImpl implements ChatService {
 		ChatRoom chatRoom = ChatRoom.builder()
 			.roomId(UUID.randomUUID().toString())
 			.customer(customer)
-			.owner(userRepository.findById(ownerId).orElseThrow(() -> new IllegalArgumentException("사용자가 존재하지 않습니다.")))
-			.cart(cartRepository.findById(cartId).orElseThrow(() -> new IllegalArgumentException("카트가 존재하지 않습니다.")))
+			.owner(userRepository.findById(ownerId).orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_USER)))
+			.cart(cartRepository.findById(cartId).orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_CART)))
 			.build();
 		chatRoomRepository.save(chatRoom);
 		return rootConfig.getMapper().map(chatRoom, ChatRoomDTO.class);

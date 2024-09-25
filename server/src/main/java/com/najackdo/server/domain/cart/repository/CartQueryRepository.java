@@ -3,6 +3,8 @@ package com.najackdo.server.domain.cart.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.repository.query.Param;
+
 import com.najackdo.server.domain.cart.dto.CartData;
 import com.najackdo.server.domain.cart.entity.Cart;
 
@@ -23,4 +25,6 @@ public interface CartQueryRepository {
 	 * @param id 사용자 ID
 	 */
 	List<CartData.CartInfo> findCartsByUserId(Long id);
+
+	Optional<Cart> findByIdWithCashLogs(@Param("cartId") Long cartId);
 }

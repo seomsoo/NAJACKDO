@@ -16,6 +16,8 @@ import com.najackdo.server.domain.book.entity.UserBook;
 import com.najackdo.server.domain.book.entity.UserBookDetail;
 import com.najackdo.server.domain.cart.dto.CartData;
 import com.najackdo.server.domain.cart.entity.Cart;
+import com.najackdo.server.domain.user.entity.QCashLog;
+import com.najackdo.server.domain.user.entity.QUser;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
@@ -77,6 +79,24 @@ public class CartQueryRepositoryImpl implements CartQueryRepository {
 					.collect(Collectors.toList())
 			))
 			.collect(Collectors.toList());
+	}
+
+	@Override
+	public Optional<Cart> findByIdWithCashLogs(Long cartId) {
+		QUser ownerUser = new QUser("ownerUser");
+		QUser customerUser = new QUser("customerUser");
+		QCashLog ownerCashLog = new QCashLog("ownerCashLog");
+		QCashLog customerCashLog = new QCashLog("customerCashLog");
+
+		return Optional.ofNullable(
+			queryFactory.selectFrom(cart)
+				.leftJoin(cart.owner, ownerUser)
+				.leftJoin(cart.customer, customerUser)
+				.leftJoin(ownerUser.cashLogs, ownerCashLog)
+				.leftJoin(customerUser.cashLogs, customerCashLog)
+				.where(cart.id.eq(cartId))
+				.fetchOne()
+		);
 	}
 
 }

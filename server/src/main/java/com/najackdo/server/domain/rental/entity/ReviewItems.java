@@ -1,7 +1,5 @@
 package com.najackdo.server.domain.rental.entity;
 
-import com.najackdo.server.core.entity.TimeEntity;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(name = "review_items")
 @NoArgsConstructor
-public class ReviewItems extends TimeEntity {
+public class ReviewItems {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
