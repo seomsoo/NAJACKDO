@@ -29,11 +29,11 @@ public class QNotification extends EntityPathBase<Notification> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
-    public final StringPath fcmId = createString("fcmId");
-
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final BooleanPath isRead = createBoolean("isRead");
+
+    public final BooleanPath isSend = createBoolean("isSend");
 
     public final StringPath title = createString("title");
 

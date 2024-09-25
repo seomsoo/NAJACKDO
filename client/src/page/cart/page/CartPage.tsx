@@ -1,62 +1,32 @@
 import { IoIosArrowBack } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 import CartContainer from '../components/CartContainer';
+import { useQuery } from '@tanstack/react-query';
+import { ICartList } from 'atoms/Cart.type';
+import { getCartList } from 'api/cartApi';
 
 const CartPage = () => {
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);
   };
+ 
+  const {
+    data: cartList,
+    isLoading,
+    isError,
+  } = useQuery<ICartList[]>({
+    queryKey: ['cartList'],
+    queryFn: () => getCartList(),
+  })
+  console.log('카트페이지 cartList', cartList);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
-  const cartArray = [
-    {
-      name: '서민수',
-      period: 14,
-      books: [
-        {
-          title: '이기적 유전자',
-          author: '리처드 도킨스',
-          price: 100,
-          status: '상',
-          image: 'https://placehold.co/41x60',
-        },
-        {
-          title: '이기적 유전자',
-          author: '리처드 도킨스',
-          price: 50,
-          status: '하',
-          image: 'https://placehold.co/41x60',
-        },
-      ],
-    },
-    {
-      name: '정하림',
-      period: 30,
-      books: [
-        {
-          title: '이기적 유전자',
-          author: '리처드 도킨스',
-          price: 100,
-          status: '상',
-          image: 'https://placehold.co/41x60',
-        },
-        {
-          title: '이기적 유전자',
-          author: '리처드 도킨스',
-          price: 100,
-          status: '상',
-          image: 'https://placehold.co/41x60',
-        },
-        {
-          title: '이기적 유전자 ',
-          author: '정하림',
-          price: 1000,
-          status: '상',
-          image: 'https://placehold.co/41x60',
-        },
-      ],
-    },
-  ];
+  if (isError) {
+    return <div>Error loading location data.</div>;
+  }
 
   return (
     <div className='mx-6 py-4'>
@@ -68,13 +38,14 @@ const CartPage = () => {
       </div>
 
       <div>
-        {cartArray.map((item, index) => {
+        
+        {cartList.map((item:ICartList, index) => {
+          if (!item.cartItems.length) return null; // 책 다 지우면 장바구니 남아 있나?
           return (
             <CartContainer
-              key={index}
-              name={item.name}
-              period={item.period}
-              books={item.books}
+              cartId={item.cartId} 
+              ownerUsername={item.ownerUsername}
+              cartItems={item.cartItems} 
             />
           );
         })}

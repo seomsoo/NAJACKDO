@@ -17,6 +17,7 @@ import com.najackdo.server.domain.book.dto.BookData;
 import com.najackdo.server.domain.book.dto.UserBookData;
 import com.najackdo.server.domain.book.service.BookService;
 import com.najackdo.server.domain.book.service.UserBooksService;
+import com.najackdo.server.domain.notification.service.NotificationService;
 import com.najackdo.server.domain.user.entity.User;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,13 +25,15 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/book")
-@Tag(name = "도서 관련 API ")
+@Tag(name = "책 관련 API ")
+@Slf4j
 public class BookController {
+
 	private final UserBooksService userBooksService;
+	private final NotificationService notificationService;
 	private final BookService bookService;
 
 	/**
@@ -48,15 +51,7 @@ public class BookController {
 		return SuccessResponse.of(result);
 	}
 
-	/**
-	 * 책 ISBN으로 단일 등록
-	 *
-	 * @param user
-	 * @param create
-	 * @return
-	 */
-	@PostMapping("/regist-book")
-	@Operation(summary = "도서 등록", description = "책 ISBN으로 단일 등록")
+	@PostMapping("/registBook")
 	public SuccessResponse<Void> registBooks(@CurrentUser User user, @RequestBody UserBookData.CreateByISBN create) {
 		userBooksService.addBook(user, create);
 		return SuccessResponse.empty();
@@ -86,6 +81,7 @@ public class BookController {
 	public SuccessResponse<Void> addInterestBook(@CurrentUser User user,
 		@PathVariable("bookId") Long interest) {
 		userBooksService.addInterestBook(user, interest);
+
 		return SuccessResponse.empty();
 	}
 
@@ -121,14 +117,32 @@ public class BookController {
 	public SuccessResponse<BookData.BookCase> getUserBookCaseByNickName(
 		@CurrentUser User user,
 		@PathVariable Long findUserId) {
-		return SuccessResponse.of(bookService.getBookCaseByuserId(findUserId));
+		return SuccessResponse.of(bookService.getBookCaseByuserId(user, findUserId));
 	}
 
+	// @GetMapping("/go")
+	// public SuccessResponse<Void> borrowBooks(@CurrentUser User user) {
+	// 	notificationService.sendNotificationEvent(
+	// 		new NotificationEvent(user.getId(), "hello", "test", NotificationType.BOOK_RENTAL_REQUEST));
+	// 	return SuccessResponse.empty();
+	// }
 
 	@GetMapping("/bookcase/me")
 	@Operation(summary = "나의 책장 목록 조회", description = "나의 책장 목록 조회")
 	public SuccessResponse<BookData.BookCase> getMyBookCaseByNickName(
 		@CurrentUser User user) {
-		return SuccessResponse.of(bookService.getBookCaseByuserId(user.getId()));
+		return SuccessResponse.of(bookService.getMyBookCaseByuserId(user.getId()));
+	}
+
+	/**
+	 * 도서 상세 조회 API
+	 *
+	 * @param bookId
+	 * @return {@link BookData.Search}
+	 */
+	@GetMapping("/{bookId}")
+	@Operation(summary = "도서 상세 조회", description = "도서 상세 조회")
+	public SuccessResponse<BookData.Search> getBookDetail(@PathVariable Long bookId) {
+		return SuccessResponse.of(bookService.getBook(bookId));
 	}
 }

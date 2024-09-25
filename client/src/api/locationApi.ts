@@ -1,6 +1,6 @@
 import instance from "api/clientApi";
 import { BaseResponse, IPaging } from "atoms/Base.type";
-import { INearLocation, ILocationRange } from "atoms/Location.type";
+import { INearLocation, ILocationRange, IMyLocation } from "atoms/Location.type";
 
 // 유저의 위치 기반으로 가까운 순으로 동네 정보 반환
 export const getNearLocation = async (
@@ -53,3 +53,19 @@ export const getLocationRange = async (
 
   return data;
 };
+
+// 사용자 지역/범위 설정
+export const postMyLocation = async (locationData : IMyLocation): Promise<void> => {
+  console.log('locationData', locationData)
+  try {
+    const {
+      data : {success}
+    } = await instance.post<BaseResponse<void>>('/location', locationData) 
+
+    if (!success) {
+      throw new Error("지역 설정 실패");
+    }
+  } catch (error) {
+    throw new Error("지역 설정 실패", error);
+  }
+}

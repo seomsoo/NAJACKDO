@@ -1,26 +1,46 @@
 import { PiXBold } from 'react-icons/pi';
 import { IoIosLeaf } from 'react-icons/io';
+import { useMutation } from '@tanstack/react-query';
+import { postDeleteCartItem } from 'api/cartApi';
+import { useNavigate } from 'react-router-dom';
+import { number } from 'prop-types';
+
 interface BookRentalInfoProps {
-  title: string;
+  cartItemId: number
+  bookTitle: string;
   author: string;
   price: number;
-  status: string;
-  image: string;
+  bookImage: string;
 }
 const BookRentalInfo = ({
-  title,
+  cartItemId,
+  bookTitle,
   author,
   price,
-  status,
-  image,
+  bookImage,
 }: BookRentalInfoProps) => {
+  const navigate = useNavigate();
+
+  const mutation = useMutation({
+    mutationKey: ["cartItemId"],
+    mutationFn: postDeleteCartItem,
+    
+    onSuccess: () => {
+      alert("카트 삭제 성공")
+      navigate(0)
+    }
+  })
+
+  const handleDeleteCartItem = (cartItemId: number) => {
+    mutation.mutate(cartItemId)
+  }
   return (
     <div className='flex flex-row my-2'>
-      <img src={image} alt='book' />
+      <img src={bookImage} alt='book' />
       <div className='ml-2 w-[80%] flex flex-col gap-1'>
         <div className='flex flex-row gap-1 justify-between items-center'>
-          <p className='text-sm font-medium line-clamp-1 h-[1.2rem]'>{title}</p>
-          <PiXBold size={13} color='black' />
+          <p className='text-sm font-medium line-clamp-1 h-[1.2rem]'>{bookTitle}</p>
+          <PiXBold size={13} color='black' onClick={() => handleDeleteCartItem(cartItemId)}/>
         </div>
         <p className='text-xs w-[90%] line-clamp-1 h-[1.2rem]'>{author}</p>
         <div className='flex justify-end items-center mt-auto '>

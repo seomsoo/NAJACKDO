@@ -1,6 +1,5 @@
 package com.najackdo.server.domain.chat.repository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;

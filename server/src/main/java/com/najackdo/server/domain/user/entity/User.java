@@ -1,15 +1,16 @@
 package com.najackdo.server.domain.user.entity;
 
 import java.util.List;
-import java.util.Set;
 
 import org.hibernate.annotations.ColumnDefault;
 
 import com.najackdo.server.core.entity.BaseEntity;
 import com.najackdo.server.domain.book.entity.UserBook;
+import com.najackdo.server.domain.cart.entity.Cart;
 import com.najackdo.server.domain.location.entity.ActivityAreaSetting;
 import com.najackdo.server.domain.user.dto.UserData;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -19,7 +20,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -89,8 +89,7 @@ public class User extends BaseEntity {
 	@ColumnDefault("50")
 	private int mannerScore = 50;
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "activity_areas_id")
+	@OneToOne(mappedBy = "user")
 	private ActivityAreaSetting activityAreaSetting;
 
 	@OneToMany(mappedBy = "following", fetch = FetchType.LAZY)
@@ -111,13 +110,13 @@ public class User extends BaseEntity {
 	// @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
 	// private List<Notification> notifications;
 	//
-	// @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
-	// private List<CashLog> cashLogs;
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+	private List<CashLog> cashLogs;
 	//
-	// @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	// private List<Cart> bookCarts;
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	private List<Cart> bookCarts;
 	//
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private List<UserBook> userBooks;
 	//
 	// @OneToMany(mappedBy = "loner", fetch = FetchType.LAZY)
@@ -155,14 +154,20 @@ public class User extends BaseEntity {
 		this.gender = update.getGender();
 	}
 
-	public void addCash(Integer cash) {
+	public void plusCash(Integer cash) {
 		this.cash += cash;
 	}
 
-	@Override
-	public String toString() {
-		return "User{" +
-			"id=" + id +
-			", username='" + username + '}';
+	public void minusCash(Integer cash) {
+		this.cash -= cash;
 	}
+
+	public void updateCashLog(List<CashLog> cashLog) {
+		this.cashLogs = cashLog;
+	}
+
+	public void pushToken(String Token) {
+		this.fcmToken = Token;
+	}
+
 }

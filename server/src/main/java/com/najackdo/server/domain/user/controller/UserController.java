@@ -25,24 +25,32 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping(value = "/api/v1/user")
 @RequiredArgsConstructor
-@Tag(name = "사용자 관련 API ")
+@Tag(name = "유저 관련 API ")
 public class UserController {
 
 	private final UserService userService;
 
 	/**
 	 * 첫 로그인 후 유저 정보 입력 API
-	 *
 	 * @param user
 	 * @param update
-	 * @return {@link Void}
+	 * @return
 	 */
 	@PostMapping("/info")
-	@Operation(summary = "유저 정보 입력", description = "유저 정보 입력")
 	public SuccessResponse<Void> updateUserInfo(
 		@CurrentUser User user,
 		@RequestBody UserData.Update update) {
 		userService.updateUser(user, update);
+		return SuccessResponse.empty();
+	}
+
+	@PostMapping("/pushToken")
+	public SuccessResponse<Void> pushToken(
+		@CurrentUser User user,
+		@RequestBody UserData.PushToken pushToken
+	) {
+		log.info("들어옴");
+		userService.pushToken(user, pushToken);
 		return SuccessResponse.empty();
 	}
 
@@ -62,7 +70,7 @@ public class UserController {
 	 * 유저 캐시 로그 조회 API
 	 *
 	 * @param user
-	 * @return {@link List<UserData.CashLogResponse>}
+	 * @return {@link List <UserData.CashLogResponse>}
 	 */
 	@GetMapping("/cashlog")
 	@Operation(summary = "유저 캐시 로그 조회", description = "유저 캐시 로그 조회")
@@ -145,4 +153,5 @@ public class UserController {
 	public SuccessResponse<UserData.ValidResponse> valid(@CurrentUser User user) {
 		return SuccessResponse.of(userService.valid(user));
 	}
+
 }

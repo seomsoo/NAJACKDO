@@ -30,8 +30,6 @@ public class QChatRoom extends EntityPathBase<ChatRoom> {
 
     public final StringPath roomId = createString("roomId");
 
-    public final StringPath roomName = createString("roomName");
-
     public QChatRoom(String variable) {
         this(ChatRoom.class, forVariable(variable), INITS);
     }

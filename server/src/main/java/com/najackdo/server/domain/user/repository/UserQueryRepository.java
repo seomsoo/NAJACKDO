@@ -38,7 +38,7 @@ public interface UserQueryRepository {
 	 * @param userId 사용자 ID
 	 * @return {@link List<CashLogResponse>} 사용자 캐시 로그
 	 */
-	List<CashLogResponse> findUserCashLog(Long userId);
+	List<CashLogResponse> findUserCashLog(@Param("userId") Long userId);
 
 	/**
 	 * 사용자 ID로 사용자 리뷰 긍정/부정 개수 조회
@@ -47,5 +47,6 @@ public interface UserQueryRepository {
 	 * @param positive  리뷰 긍정 여부
 	 * @return {@link Long} 리뷰 개수
 	 */
-	Long countUserReviewsByPositive(Long id, boolean positive);
+	Long countUserReviewsByPositive(@Param("id") Long id, @Param("positive") boolean positive);
+
 }

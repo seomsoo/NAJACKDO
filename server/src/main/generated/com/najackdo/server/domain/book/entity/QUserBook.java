@@ -36,8 +36,6 @@ public class QUserBook extends EntityPathBase<UserBook> {
 
     public final com.najackdo.server.domain.user.entity.QUser user;
 
-    public final QUserBookDetail userBookDetail;
-
     public QUserBook(String variable) {
         this(UserBook.class, forVariable(variable), INITS);
     }
@@ -59,7 +57,6 @@ public class QUserBook extends EntityPathBase<UserBook> {
         this.book = inits.isInitialized("book") ? new QBook(forProperty("book")) : null;
         this.locationCode = inits.isInitialized("locationCode") ? new com.najackdo.server.domain.location.entity.QLocation(forProperty("locationCode")) : null;
         this.user = inits.isInitialized("user") ? new com.najackdo.server.domain.user.entity.QUser(forProperty("user"), inits.get("user")) : null;
-        this.userBookDetail = inits.isInitialized("userBookDetail") ? new QUserBookDetail(forProperty("userBookDetail"), inits.get("userBookDetail")) : null;
     }
 
 }

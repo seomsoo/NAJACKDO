@@ -22,7 +22,6 @@ import com.najackdo.server.domain.user.entity.User;
 import com.najackdo.server.domain.user.event.CashLogPaymentEvent;
 import com.najackdo.server.domain.user.event.UserPaymentEvent;
 import com.najackdo.server.domain.user.repository.InterestUserRepository;
-import com.najackdo.server.domain.user.repository.UserQueryRepository;
 import com.najackdo.server.domain.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -37,7 +36,6 @@ public class UserService {
 	private final InterestUserRepository interestUserRepository;
 	private final ApplicationEventPublisher eventPublisher;
 	private final UserRepository userRepository;
-	private final UserQueryRepository userQueryRepository;
 	private final SurveyResultService surveyResultService;
 
 	@Transactional
@@ -59,30 +57,36 @@ public class UserService {
 		User findUser = userRepository.findById(user.getId())
 			.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_USER));
 
-		findUser.addCash(cash);
+		findUser.plusCash(cash);
 		eventPublisher.publishEvent(new CashLogPaymentEvent(user, cash, findUser.getCash(), PAYMENT));
 		userRepository.save(findUser);
 	}
 
+	@Transactional
+	public void pushToken(User user,UserData.PushToken pushToken) {
+		user.pushToken(pushToken.getToken());
+		userRepository.save(user);
+	}
+
 	public UserData.InfoResponse getUserInfo(User user) {
-		String locationName = userQueryRepository.findUserLocationName(user.getId());
-		Long goodReviewCount = userQueryRepository.countUserReviewsByPositive(user.getId(), true);
-		Long badReviewCount = userQueryRepository.countUserReviewsByPositive(user.getId(), false);
-		Integer saveCash = userQueryRepository.findUserSavingCash(user.getId());
-		Integer earnCash = userQueryRepository.findUserEarningCash(user.getId());
+		String locationName = userRepository.findUserLocationName(user.getId());
+		Long goodReviewCount = userRepository.countUserReviewsByPositive(user.getId(), true);
+		Long badReviewCount = userRepository.countUserReviewsByPositive(user.getId(), false);
+		Integer saveCash = userRepository.findUserSavingCash(user.getId());
+		Integer earnCash = userRepository.findUserEarningCash(user.getId());
 		return UserData.InfoResponse.of(user, locationName, goodReviewCount, badReviewCount, saveCash, earnCash);
 	}
 
 	public List<UserData.CashLogResponse> getUserCashLog(User user) {
-		return userQueryRepository.findUserCashLog(user.getId());
+		return userRepository.findUserCashLog(user.getId());
 	}
 
 	public UserData.InfoResponse getUserInfoByNickName(String nickname) {
 		User user = userRepository.findByNickname(nickname)
 			.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_USER));
-		String locationName = userQueryRepository.findUserLocationName(user.getId());
-		Long goodReviewCount = userQueryRepository.countUserReviewsByPositive(user.getId(), true);
-		Long badReviewCount = userQueryRepository.countUserReviewsByPositive(user.getId(), false);
+		String locationName = userRepository.findUserLocationName(user.getId());
+		Long goodReviewCount = userRepository.countUserReviewsByPositive(user.getId(), true);
+		Long badReviewCount = userRepository.countUserReviewsByPositive(user.getId(), false);
 		return UserData.InfoResponse.ofWithoutCash(user, locationName, goodReviewCount,
 			badReviewCount);
 	}

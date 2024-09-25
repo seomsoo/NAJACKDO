@@ -10,16 +10,25 @@ interface UserInfoProps {
   gradeImage: string;
 }
 
-const UserInfo = ({ userName, userLocation, userImage, gradeImage }: UserInfoProps) => {
+const UserInfo = ({
+  userName,
+  userLocation,
+  userImage,
+  gradeImage,
+}: UserInfoProps) => {
   return (
-    <div className="flex flex-row items-center">
-      <img src={userImage} alt="profile" className="h-68 w-68 rounded-full " />
+    <div className='flex flex-row items-center'>
+      <img
+        src={userImage || '/basic_profile.png'}
+        alt='profile'
+        className='h-20 w-20 rounded-full '
+      />
       <div className='ml-3'>
-        <div className='flex flex-row justify-start'>
-          <div className="text-lg font-semibold">{userName}</div>
-          <img src={gradeImage} alt="gradeBage" className="ml-1 h-21 w-21" />
+        <div className='flex  justify-start items-center'>
+          <div className='text-lg font-semibold'>{userName}</div>
+          <img src={gradeImage} alt='gradeBage' className='ml-1 w-6 h-6' />
         </div>
-        <div className="text-sm text-gray-600">{userLocation}</div>
+        <div className='text-sm text-gray-600'>{userLocation}</div>
       </div>
     </div>
   );

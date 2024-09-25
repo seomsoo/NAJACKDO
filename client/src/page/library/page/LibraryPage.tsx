@@ -5,14 +5,15 @@ import { SlArrowRight } from 'react-icons/sl';
 import { useQuery } from '@tanstack/react-query';
 import { getUserInfo } from 'api/profileApi';
 import { getInterestbook } from 'api/bookApi';
+import { getMyBookCase } from 'api/bookcaseApi';
 
 const LibraryPage = () => {
   const navigate = useNavigate();
   const goToMyFavorite = () => {
     navigate('/library/my-favorite');
   };
-  const goToMyLibrary = () => {
-    navigate('/library/my-library');
+  const goToMyBookCase = () => {
+    navigate('/library/my-bookcase');
   };
   const goToMyHistory = () => {
     navigate('/library/my-history');
@@ -28,7 +29,17 @@ const LibraryPage = () => {
     queryFn: getUserInfo,
   });
 
-  // 관심 도서 목록 가져오기 (My Favorite)
+  // 나의 책장 이미지 목록 가져오기
+  const {
+    data: myBookCase,
+    isLoading: isMyBookCaseLoading,
+    isError: isMyBookCaseError,
+  } = useQuery({
+    queryKey: ['myBookCase'],
+    queryFn: getMyBookCase,
+  });
+
+  // 관심 도서 이미지 목록 가져오기 (My Favorite)
   const {
     data: interestBooks,
     isLoading: isInterestBooksLoading,
@@ -39,13 +50,16 @@ const LibraryPage = () => {
   });
 
   // 로딩 상태 처리
-  if (isUserLoading || isInterestBooksLoading) return <div>로딩 중...</div>;
+  if (isUserLoading || isInterestBooksLoading || isMyBookCaseLoading)
+    return <div>로딩 중...</div>;
 
   // 에러 상태 처리
-  if (isUserError || isInterestBooksError)
+  if (isUserError || isInterestBooksError || isMyBookCaseError)
     return <div>오류가 발생했습니다.</div>;
 
-  // 관심 도서 이미지 3장만 추출
+  const myBookCaseImages =
+    myBookCase?.displayBooks.slice(0, 3).map((book) => book.cover) || [];
+
   const favoriteImages =
     interestBooks?.slice(0, 3).map((book) => book.cover) || [];
 
@@ -73,30 +87,29 @@ const LibraryPage = () => {
       <main className=' px-6'>
         <section className='flex flex-col gap-10'>
           <nav>
-            <button onClick={goToMyLibrary}>
+            <button onClick={goToMyBookCase}>
               <article className='flex items-center mb-7'>
                 <span className='font-bold text-2xl'>나의 책장</span>
                 <SlArrowRight className='ml-2 text-[#807B7B] text-xl' />
               </article>
               <article>
                 <div className='flex justify-center gap-8'>
-                  {/* dummy 이미지 */}
-                  <img
-                    src='ssafy.png'
-                    className='w-20 h-28 object-cover'
-                    alt='dummy'
-                  />
-                  <img
-                    src='ssafy.png'
-                    className='w-20 h-28 object-cover'
-                    alt='dummy'
-                  />
-                  <img
-                    src='ssafy.png'
-                    className='w-20 h-28 object-cover'
-                    alt='dummy'
-                  />
+                  {myBookCaseImages.length > 0 ? (
+                    myBookCaseImages.map((src, index) => (
+                      <img
+                        key={index}
+                        src={src}
+                        alt={`bookcase-${index}`}
+                        className='w-20 h-28 object-cover shadow-book-shadow rounded-r-lg rounded-br-lg'
+                      />
+                    ))
+                  ) : (
+                    <span className='hakgyo text-2xl mt-10 mb-12'>
+                      나의 책장이 비었어요.
+                    </span>
+                  )}
                 </div>
+
                 <img src='/images/library/bar.png' alt='bar' />
               </article>
             </button>
@@ -151,7 +164,9 @@ const LibraryPage = () => {
                       />
                     ))
                   ) : (
-                    <p>관심 도서가 없습니다.</p>
+                    <span className='hakgyo text-2xl mt-10 mb-12'>
+                      관심 도서가 없습니다.
+                    </span>
                   )}
                 </div>
                 <img src='/images/library/bar.png' alt='bar' />
