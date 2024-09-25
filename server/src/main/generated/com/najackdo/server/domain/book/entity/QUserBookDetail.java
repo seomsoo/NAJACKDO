@@ -30,6 +30,10 @@ public class QUserBookDetail extends EntityPathBase<UserBookDetail> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final StringPath inspectBackImagePath = createString("inspectBackImagePath");
+
+    public final StringPath inspectFrontImagePath = createString("inspectFrontImagePath");
+
     public final NumberPath<Integer> notch = createNumber("notch", Integer.class);
 
     public final NumberPath<Integer> onedayPrice = createNumber("onedayPrice", Integer.class);
