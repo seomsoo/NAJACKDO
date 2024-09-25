@@ -77,7 +77,8 @@ function App() {
       try {
         console.log("accessToken", accessToken);
         console.log("isSurvey", isSurvey);
-        console.log(accessToken && isSurvey);
+        console.log("isLocation", isLocation);
+        console.log(accessToken && isSurvey && isLocation);
         // 로그인 안되어있을 때
         if (!accessToken) {
           navigate("/sign-in");
@@ -102,15 +103,19 @@ function App() {
           return;
         }
 
+        if (!response.location) {
+          navigate("/setting/location");
+          return;
+        }
         // if (!response.isLocation) {
         //   // 위치 설정 페이지로 이동
         //   return;
         // }
 
-        if (accessToken && response.survey) {
+        if (accessToken && response.survey && response.location) {
           setIsSurvey(true);
-          // setIsLocation(true);
-          if (currentPath === "/sign-in" || currentPath === "/survey") {
+          setIsLocation(true);
+          if (currentPath === "/sign-in" || currentPath === "/survey" || currentPath === "/setting/location") {
             // setLoading(false);
             navigate("/");
             return;
