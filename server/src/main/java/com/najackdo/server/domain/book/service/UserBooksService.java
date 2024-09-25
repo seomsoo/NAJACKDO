@@ -21,6 +21,8 @@ import com.najackdo.server.domain.book.repository.BookRepository;
 import com.najackdo.server.domain.book.repository.UserBooksRepository;
 import com.najackdo.server.domain.location.entity.ActivityAreaSetting;
 import com.najackdo.server.domain.location.repository.ActivityAreaSettingRepository;
+import com.najackdo.server.domain.recommendation.entity.Rental;
+import com.najackdo.server.domain.recommendation.repository.RentalMongoRepository;
 import com.najackdo.server.domain.user.entity.User;
 
 import lombok.RequiredArgsConstructor;
@@ -31,6 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class UserBooksService {
+    private final RentalMongoRepository rentalMongoRepository;
 
     private final UserBooksRepository userBooksRepository;
     private final BookRepository bookRepository;
@@ -106,6 +109,13 @@ public class UserBooksService {
                 throw new BaseException(ErrorCode.BOOKMARK_ALREADY_EXIST);
             }
         );
+
+        Rental rental = new Rental();
+        rental.setUserId(user.getId());
+        rental.setBookId(book.getId());
+        rental.setGenre(book.getGenre());
+        rentalMongoRepository.save(rental);
+
         bookMarkRepository.save(BookMark.createBookMark(user, book));
     }
 
