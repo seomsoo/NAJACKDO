@@ -12,6 +12,7 @@ import com.najackdo.server.domain.book.dto.BookData;
 import com.najackdo.server.domain.book.entity.UserBook;
 import com.najackdo.server.domain.book.repository.BookRepository;
 import com.najackdo.server.domain.user.entity.User;
+import com.najackdo.server.domain.user.repository.InterestUserRepository;
 import com.najackdo.server.domain.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class BookService {
 
 	private final BookRepository bookRepository;
 	private final UserRepository userRepository;
+	private final InterestUserRepository interestUserRepository;
 
 	public List<BookData.BookCase> getBookCaseInterest(User user) {
 		List<UserBook> userBooks = bookRepository.findBookCaseInterestByUser(user);
@@ -44,14 +46,18 @@ public class BookService {
 					))
 					.collect(Collectors.toList());
 
-				return BookData.BookCase.of(userId, nickname, profileImage, displayBooks);
+				return BookData.BookCase.of(userId, true, nickname, profileImage, displayBooks);
 			})
 			.collect(Collectors.toList());
 	}
 
-	public BookData.BookCase getBookCaseByuserId(Long findUserId) {
+	public BookData.BookCase getBookCaseByuserId(User user, Long findUserId) {
+
 		User findUser = userRepository.findById(findUserId)
 			.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_USER));
+
+		// ? 여기서 user가 나고 findUser가 상대방인가? 그럼 이건 내가 누군가를 팔로우하고 있는지 확인는게 맞겠지?
+		boolean isFollow = interestUserRepository.existsByFollowerAndFollowing(user, findUser);
 
 		// DisplayBook 리스트 생성
 		List<BookData.DisplayBook> displayBooks = bookRepository.findBookCaseByUserId(findUser).stream()
@@ -65,15 +71,38 @@ public class BookService {
 
 		return BookData.BookCase.of(
 			findUser.getId(),
+			isFollow,
 			findUser.getNickName(),
 			findUser.getProfileImage(),
 			displayBooks
 		);
 	}
-	
+
 	public BookData.Search getBook(Long bookId) {
 		return bookRepository.findById(bookId)
 			.map(BookData.Search::of)
 			.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_BOOK));
+	}
+
+	public BookData.BookCase getMyBookCaseByuserId(Long id) {
+		User user = userRepository.findById(id)
+			.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_USER));
+
+		// DisplayBook 리스트 생성
+		List<BookData.DisplayBook> displayBooks = bookRepository.findBookCaseByUserId(user).stream()
+			.map(userBook -> BookData.DisplayBook.of(
+				userBook.getBook().getId(),
+				userBook.getId(),
+				userBook.getBook().getCover(), // 커버 이미지 추출
+				userBook.getBookStatus() // 책 상태
+			))
+			.collect(Collectors.toList());
+
+		return BookData.BookCase.ofWithOutIsFollow(
+			user.getId(),
+			user.getNickName(),
+			user.getProfileImage(),
+			displayBooks
+		);
 	}
 }

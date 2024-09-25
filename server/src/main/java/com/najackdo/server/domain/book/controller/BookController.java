@@ -117,7 +117,7 @@ public class BookController {
 	public SuccessResponse<BookData.BookCase> getUserBookCaseByNickName(
 		@CurrentUser User user,
 		@PathVariable Long findUserId) {
-		return SuccessResponse.of(bookService.getBookCaseByuserId(findUserId));
+		return SuccessResponse.of(bookService.getBookCaseByuserId(user, findUserId));
 	}
 
 	// @GetMapping("/go")
@@ -131,7 +131,7 @@ public class BookController {
 	@Operation(summary = "나의 책장 목록 조회", description = "나의 책장 목록 조회")
 	public SuccessResponse<BookData.BookCase> getMyBookCaseByNickName(
 		@CurrentUser User user) {
-		return SuccessResponse.of(bookService.getBookCaseByuserId(user.getId()));
+		return SuccessResponse.of(bookService.getMyBookCaseByuserId(user.getId()));
 	}
 
 	/**
