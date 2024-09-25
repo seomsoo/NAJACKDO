@@ -33,6 +33,7 @@ import OtherProfilePage from 'page/profile/page/OtherProfilePage';
 import ProfilePage from 'page/profile/page/ProfilePage';
 import SearchPage from 'page/search/page/SearchPage';
 import SearchResultPage from 'page/search/page/SearchResultPage';
+import NotFoundPage from 'components/common/NotFoundPage';
 
 import { Route, Routes } from 'react-router-dom';
 
@@ -74,6 +75,7 @@ const MainRoute = () => {
       <Route path='/ai-check/result' element={<AICheckResultPage />} />
       <Route path='/survey' element={<SurveyPage />} />
       <Route path='/cart' element={<CartPage />} />
+      <Route path='*' element={<NotFoundPage />} />
     </Routes>
   );
 };
