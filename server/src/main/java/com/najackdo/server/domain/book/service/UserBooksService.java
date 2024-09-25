@@ -15,14 +15,17 @@ import com.najackdo.server.domain.book.dto.UserBookData;
 import com.najackdo.server.domain.book.entity.Book;
 import com.najackdo.server.domain.book.entity.BookMark;
 import com.najackdo.server.domain.book.entity.UserBook;
+import com.najackdo.server.domain.book.entity.UserBookDetail;
 import com.najackdo.server.domain.book.repository.BookMarkRepository;
 import com.najackdo.server.domain.book.repository.BookRepository;
+import com.najackdo.server.domain.book.repository.UserBookDetailRepository;
 import com.najackdo.server.domain.book.repository.UserBooksRepository;
 import com.najackdo.server.domain.location.entity.ActivityAreaSetting;
 import com.najackdo.server.domain.location.repository.ActivityAreaSettingRepository;
 import com.najackdo.server.domain.recommendation.entity.Rental;
 import com.najackdo.server.domain.recommendation.repository.RentalMongoRepository;
 import com.najackdo.server.domain.user.entity.User;
+import com.najackdo.server.domain.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,12 +35,14 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class UserBooksService {
-	private final RentalMongoRepository rentalMongoRepository;
 
+	private final RentalMongoRepository rentalMongoRepository;
 	private final UserBooksRepository userBooksRepository;
+	private final UserBookDetailRepository userBookDetailRepository;
 	private final BookRepository bookRepository;
 	private final ActivityAreaSettingRepository activityAreaSettingRepository;
 	private final BookMarkRepository bookMarkRepository;
+	private final UserRepository userRepository;
 
 	@Transactional
 	public Map<String, List<String>> addBookList(User user, UserBookData.Create create) {
@@ -133,7 +138,23 @@ public class UserBooksService {
 
 	}
 
-	// public UserBookData.InfoResponse getUserBookInfo(Long userBookId) {
-	//
-	// }
+	public UserBookData.InfoResponse getUserBookInfo(Long userBookId) {
+
+		UserBook userBook = userBooksRepository.findById(userBookId).orElseThrow(
+			() -> new BaseException(ErrorCode.BOOK_NOT_FOUND)
+		);
+
+		User owner = userBook.getUser();
+
+		String locationName = userRepository.findUserLocationName(owner.getId());
+
+		Book book = userBook.getBook();
+
+		UserBookDetail userBookDetail = userBookDetailRepository.findByUserBookId(userBookId).orElseThrow(
+			() -> new BaseException(ErrorCode.BOOK_DETAIL_NOT_FOUND)
+		);
+
+		return UserBookData.InfoResponse.of(owner, locationName, book, userBook, userBookDetail);
+
+	}
 }

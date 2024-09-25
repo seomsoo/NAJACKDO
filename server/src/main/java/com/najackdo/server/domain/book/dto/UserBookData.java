@@ -2,7 +2,10 @@ package com.najackdo.server.domain.book.dto;
 
 import java.util.List;
 
+import com.najackdo.server.domain.book.entity.Book;
 import com.najackdo.server.domain.book.entity.UserBook;
+import com.najackdo.server.domain.book.entity.UserBookDetail;
+import com.najackdo.server.domain.user.entity.User;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -51,32 +54,59 @@ public class UserBookData {
 
 	@Data
 	public static class InfoResponse {
-		private BookOwnerInfo BookOwnerInfo;
-	}
-
-	@Data
-	public static class BookOwnerInfo {
-		private Long userId;
+		// * User
+		private Long ownerId;
 		private String nickname;
 		private String profileImage;
 		private Integer mannerScore;
-		private String location;
-	}
-
-	@Data
-	public static class UserBookInfo {
-		private Long userBookId;
-		private Long bookId;
-
-	}
-
-	@Data
-	public static class UserBookDetailInfo {
-		private Long userBookDetailId;
-		private Integer oneDayPrice;
-		private Integer notch;
+		// *
+		private String locationName;
+		// * Book
+		private String bookTitle;
+		private String bookAuthor;
+		private String bookCover;
+		private String genre;
+		private String bookDescription;
+		// * UserBook
+		private String bookStatus;
+		// * UserBookDetail
+		private Integer ondayPrice;
+		private String backImagePath;
+		private String frontImagePath;
+		private String inspectFrontImagePath;
+		private String inspectBackImagePath;
+		private Integer usedPrice;
 		private Integer ripped;
-		private Integer spot;
+		private Integer wornout;
+
+		public static InfoResponse of(
+			User user,
+			String locationName,
+			Book book,
+			UserBook userBook,
+			UserBookDetail userBookDetail) {
+			InfoResponse response = new InfoResponse();
+			response.ownerId = user.getId();
+			response.nickname = user.getNickName();
+			response.profileImage = user.getProfileImage();
+			response.mannerScore = user.getMannerScore();
+			response.locationName = locationName;
+			response.bookTitle = book.getTitle();
+			response.bookAuthor = book.getAuthor();
+			response.bookCover = book.getCover();
+			response.genre = book.getGenre();
+			response.bookDescription = book.getDescription();
+			response.bookStatus = userBook.getBookStatus().name();
+			response.ondayPrice = userBookDetail.getOnedayPrice();
+			response.backImagePath = userBookDetail.getBackImagePath();
+			response.frontImagePath = userBookDetail.getFrontImagePath();
+			response.inspectFrontImagePath = userBookDetail.getInspectFrontImagePath();
+			response.inspectBackImagePath = userBookDetail.getInspectBackImagePath();
+			response.usedPrice = userBookDetail.getUsedPrice();
+			response.ripped = userBookDetail.getRipped();
+			response.wornout = userBookDetail.getWornout();
+			return response;
+		}
 	}
 
 }
