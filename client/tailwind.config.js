@@ -61,6 +61,10 @@ module.exports = {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		keyframes: {
+				glow: {
+          '0%, 100%': { boxShadow: '0 0 5px #79AC78, 0 0 10px #79AC78' },
+          '50%': { boxShadow: '0 0 20px #79AC78, 0 0 30px #79AC78' },
+        },
 				bounceTwice: {
 					'0%, 100%': { transform: 'translateY(0)' },
           '25%': { transform: 'translateY(-15px)' },  
@@ -109,6 +113,7 @@ module.exports = {
   			}
   		},
   		animation: {
+				glow: 'glow 2s ease-in-out infinite',
 				bounceTwice: 'bounceTwice 1.2s ease-in-out',
 				fadeIn: 'fadeIn 1.5s ease-in-out',
         slideUp: 'slideUp 1.5s ease-in-out',
