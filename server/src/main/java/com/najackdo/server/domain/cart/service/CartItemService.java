@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.najackdo.server.core.exception.BaseException;
+import com.najackdo.server.core.exception.ErrorCode;
 import com.najackdo.server.domain.book.entity.UserBook;
 import com.najackdo.server.domain.book.entity.UserBookDetail;
 import com.najackdo.server.domain.book.repository.UserBookDetailRepository;
@@ -32,14 +34,14 @@ public class CartItemService {
 	public void addCartItem(User customer, Long ownerbookId) {
 
 		UserBook userBook = userBooksRepository.findById(ownerbookId)
-			.orElseThrow(() -> new IllegalArgumentException("해당 책을 찾을 수 없습니다."));
+			.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_USER_BOOK));
 
 		if (customer.getId().equals(userBook.getUser().getId())) {
-			throw new IllegalArgumentException("자신의 책을 장바구니에 담을 수 없습니다.");
+			throw new BaseException(ErrorCode.NOT_ADD_MY_BOOK_TO_CART);
 		}
 
 		UserBookDetail userBookDetail = userBookDetailRepository.findUserBookDetailByUserBookId(ownerbookId)
-			.orElseThrow(() -> new IllegalArgumentException("해당 책의 상세 정보를 찾을 수 없습니다."));
+			.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_USER_BOOK_DETAIL));
 
 		Optional<Cart> existingCart = cartRepository.findCartByUserIdAndBookId(customer.getId(), ownerbookId);
 
@@ -58,10 +60,10 @@ public class CartItemService {
 	@Transactional
 	public void deleteCartItem(User customer, Long cartItemId) {
 		CartItem cartItem = cartItemRepository.findById(cartItemId)
-			.orElseThrow(() -> new IllegalArgumentException("해당 장바구니 아이템을 찾을 수 없습니다."));
+			.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_CART_ITEM));
 
 		if (!cartItem.getCart().getCustomer().getId().equals(customer.getId())) {
-			throw new IllegalArgumentException("해당 장바구니 아이템을 삭제할 수 없습니다.");
+			throw new BaseException(ErrorCode.NOT_YOUR_CART_ITEM);
 		}
 
 		List<CartItem> cartItems = cartItemRepository.findCartItemsByCartId(cartItem.getCart().getId());

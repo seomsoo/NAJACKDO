@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.najackdo.server.core.response.SuccessResponse;
 import com.najackdo.server.domain.rental.dto.RentalData;
 import com.najackdo.server.domain.rental.service.RentalService;
 
@@ -29,7 +30,7 @@ public class RentalController {
 	 */
 	@PostMapping("")
 	@Operation(summary = "렌탈 신청", description = "렌탈 신청")
-	public void rental(@RequestBody RentalData.RentalRequest rentalRequest) {
-		rentalService.rentalCart(rentalRequest);
+	public SuccessResponse<Void> rental(@RequestBody RentalData.RentalRequest rentalRequest) {
+		return rentalService.rentalCart(rentalRequest);
 	}
 }

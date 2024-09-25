@@ -7,6 +7,9 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.najackdo.server.core.exception.BaseException;
+import com.najackdo.server.core.exception.ErrorCode;
+import com.najackdo.server.core.response.SuccessResponse;
 import com.najackdo.server.domain.cart.entity.Cart;
 import com.najackdo.server.domain.cart.repository.CartRepository;
 import com.najackdo.server.domain.rental.dto.RentalData;
@@ -30,7 +33,7 @@ public class RentalService {
 	private final RentalRepository rentalRepository;
 
 	@Transactional
-	public void rentalCart(RentalData.RentalRequest rentalRequest) {
+	public SuccessResponse<Void> rentalCart(RentalData.RentalRequest rentalRequest) {
 
 		Long cartId = rentalRequest.getCartId();
 		int totalCost = rentalRequest.getTotalPrice();
@@ -38,20 +41,20 @@ public class RentalService {
 		int rentalCost = rentalRequest.getRentalCost();
 
 		Cart cart = cartRepository.findByIdWithCashLogs(cartId).orElseThrow(
-			() -> new IllegalArgumentException("해당 장바구니가 존재하지 않습니다.")
+			() -> new BaseException(ErrorCode.NOT_FOUND_CART)
 		);
 
 		Optional<Rental> byCartId = rentalRepository.findByCartId(cartId);
 
 		if (byCartId.isPresent()) {
-			throw new IllegalArgumentException("이미 대여된 장바구니입니다.");
+			throw new BaseException(ErrorCode.RENTAL_CART_ALREADY_RENTED);
 		}
-		
+
 		User customer = cart.getCustomer();
 		User owner = cart.getOwner();
 
 		if (customer.getCash() < rentalCost) {
-			throw new IllegalArgumentException("잔액이 부족합니다.");
+			throw new BaseException(ErrorCode.NOT_ENOUGH_CASH);
 		}
 
 		customer.minusCash(rentalCost);
@@ -71,5 +74,7 @@ public class RentalService {
 		rentalRepository.save(rental);
 
 		// ! 채팅 전송 로직 추가
+
+		return SuccessResponse.empty();
 	}
 }
