@@ -28,6 +28,7 @@ public class ReviewService {
 	private final RentalRepository rentalRepository;
 	private final ReviewItemsRepository reviewItemsRepository;
 
+	// FIXME : 리뷰 종류에 따라서 사용자 매너 점수 업데이트 로직 필요
 	@Transactional
 	public SuccessResponse<Void> review(User user, ReviewData.ReviewRequest reviewRequest) {
 

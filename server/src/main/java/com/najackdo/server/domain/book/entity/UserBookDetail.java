@@ -52,6 +52,12 @@ public class UserBookDetail {
 	@Column(name = "back_image_path", nullable = false)
 	private String backImagePath;
 
+	@Column(name = "inspect_front_image_path", nullable = false)
+	private String inspectFrontImagePath;
+
+	@Column(name = "inspect_back_image_path", nullable = false)
+	private String inspectBackImagePath;
+
 	@Column(name = "used_price")
 	private Integer usedPrice;
 
