@@ -1,56 +1,98 @@
-import { IoIosArrowBack } from "react-icons/io";
-import Review from "../components/Review";
-
+import { IoIosArrowBack } from 'react-icons/io';
+import Review from '../components/Review';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { getUserInfo } from 'api/profileApi';
 
 const GradePage = () => {
-    const navigate = useNavigate();
-    const goBack = () => {
-        navigate(-1);
-      };
-    const reviewArray = [
-    {count : 1, comment : "시간 약속을 안 지켜요."},
-    {count : 22, comment : "시간 약속을 안 지켜요."},
-    {count : 3, comment : "시간 약속을 안 지켜요."},
-  ]
+  const navigate = useNavigate();
+  const goBack = () => {
+    navigate(-1);
+  };
+
+  const {
+    data: profileInfo,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['profile'],
+    queryFn: getUserInfo,
+  });
+
+  if (isLoading) {
+    return <div>로딩 중...</div>;
+  }
+
+  if (isError) {
+    return <div>오류가 발생했습니다.</div>;
+  }
+
+  let gradeImage = '/images/mannertree/씨앗.png';
+  let gradeLevel = 'Lv.1 나작씨앗';
+  if (profileInfo.mannerScore >= 80) {
+    gradeImage = '/images/mannertree/숲.png';
+    gradeLevel = 'Lv.5 나작숲';
+  } else if (profileInfo.mannerScore >= 60) {
+    gradeImage = '/images/mannertree/나무.png';
+    gradeLevel = 'Lv.4 나작나무';
+  } else if (profileInfo.mannerScore >= 40) {
+    gradeImage = '/images/mannertree/가지.png';
+    gradeLevel = 'Lv.3 나작가지';
+  } else if (profileInfo.mannerScore >= 20) {
+    gradeImage = '/images/mannertree/새싹.png';
+    gradeLevel = 'Lv.1 나작씨앗';
+  }
+
+  const reviewArray = [
+    { count: 1, comment: '시간 약속을 안 지켜요.' },
+    { count: 22, comment: '시간 약속을 안 지켜요.' },
+    { count: 3, comment: '시간 약속을 안 지켜요.' },
+  ];
 
   return (
-    <div className='mx-[25px] mt-6'>
+    <div className='p-6 '>
       <button onClick={goBack}>
-        <IoIosArrowBack />
+        <IoIosArrowBack className='text-2xl' />
       </button>
-      <div className="flex flex-row justify-start my-5">
-        <p className="text-xl font-semibold ">{"서민수"}님의&nbsp;</p>
-        <p className="text-xl font-semibold  text-[#79AC78]">신뢰 나무</p>
+      <div className='flex text-xl  items-center font-bold justify-between'>
+        <div className='flex flex-row justify-start my-5'>
+          <p>{profileInfo.nickname}님의&nbsp;</p>
+          <p className=' font-semibold text-[#79AC78]'>신뢰 나무</p>
+        </div>
+        <span className=' text-[#508d1e]'>{profileInfo.mannerScore} 점</span>
       </div>
 
       {/* 신뢰 나무 */}
-      <div className="mt-7 flex justify-center">
-        <div className="w-[167px] h-[167px] rounded-full bg-[#ebe3d5]/30 flex items-center justify-center">
-          <img className="rounded-full" src="https://placehold.co/120x120" alt="grade-bg" />
+      <div className='mt-7 flex justify-center'>
+        <div className='w-44 h-44 rounded-full animate-glow bg-[#ebe3d5]/30 flex items-center justify-center'>
+          <img src={gradeImage} alt='grade-bg' />
         </div>
       </div>
-      <p className="mt-3 mb-3 text-center text-xl font-medium ">{"55점"}</p>
+      <p className='my-3 text-center text-xl font-bold '>
+        <span>{gradeLevel}</span>
+      </p>
 
-      <div className="mt-3 flex justify-center">
-        <div className="w-[340px] p-3 rounded-lg bg-[#79AC78]/20">
-          <p className="text-[15px] font-medium ">받은 매너 칭찬</p>
+      <div className='mt-6 flex justify-center'>
+        <div className='w-[340px] p-3 rounded-lg bg-[#79AC78]/20'>
+          <p className='text-[15px] font-medium '>받은 매너 칭찬</p>
           {reviewArray.map((item, index) => {
-            return <Review key={index} count={item.count} comment={item.comment}/>
+            return (
+              <Review key={index} count={item.count} comment={item.comment} />
+            );
           })}
         </div>
       </div>
 
-      <div className="mt-3 flex justify-center">
-        <div className="w-[340px] p-3 rounded-lg bg-[#B99470]/20">
-          <p className="text-[15px] font-medium ">받은 비매너</p>
+      <div className='mt-4 flex justify-center'>
+        <div className='w-[340px] p-3 rounded-lg bg-[#B99470]/20'>
+          <p className='text-[15px] font-medium '>받은 비매너</p>
           {reviewArray.map((item, index) => {
-            return <Review key={index} count={item.count} comment={item.comment}/>
+            return (
+              <Review key={index} count={item.count} comment={item.comment} />
+            );
           })}
         </div>
       </div>
-      
-
     </div>
   );
 };
