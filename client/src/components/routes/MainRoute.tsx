@@ -17,6 +17,7 @@ import HistoryPage from 'page/library/page/HistoryPage';
 import LibraryPage from 'page/library/page/LibraryPage';
 import MyFavoritePage from 'page/library/page/MyFavoritePage';
 import MyBookCasePage from 'page/library/page/MyBookCasePage';
+import OtherBookCasePage from 'page/library/page/OtherBookCasePage';
 import MyRentalBookDetailPage from 'page/library/page/MyRentalBookDetailPage';
 import RentalBookDetailPage from 'page/library/page/RentalBookDetailPage';
 import LocationPage from 'page/location/page/LocationPage';
@@ -35,7 +36,6 @@ import SearchPage from 'page/search/page/SearchPage';
 import SearchResultPage from 'page/search/page/SearchResultPage';
 
 import { Route, Routes } from 'react-router-dom';
-
 const MainRoute = () => {
   return (
     <Routes>
@@ -47,6 +47,7 @@ const MainRoute = () => {
       <Route path='/library/my-favorite' element={<MyFavoritePage />} />
       <Route path='/library/my-bookcase' element={<MyBookCasePage />} />
       <Route path='/library/my-history' element={<HistoryPage />} />
+      <Route path='/library/bookcase/:userId' element={<OtherBookCasePage />} />
       <Route path='/chat' element={<ChattingPage />} />
       <Route path='/chat/:room_id' element={<ChattingRoomPage />} />
       <Route path='/chat/review' element={<ReviewPage />} />

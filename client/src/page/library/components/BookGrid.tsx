@@ -4,14 +4,12 @@ import { IBookCase } from 'atoms/BookCase.type';
 type BookGridProps = {
   books: IBookCase['displayBooks'];
   isMyBookCase: boolean;
-  checked?: boolean[];
-  onCheck?: (index: number) => void;
+  checked?: boolean[]; // 체크 상태를 받음
+  onCheck?: (index: number) => void; // 체크박스 변경 핸들러
 };
 
 const BookGrid = ({ books, isMyBookCase, checked, onCheck }: BookGridProps) => {
   // 이미지를 3개씩 묶는 함수
-  console.log('book data:', books);
-
   const chunkArray = (
     arr: IBookCase['displayBooks'],
     size: number
