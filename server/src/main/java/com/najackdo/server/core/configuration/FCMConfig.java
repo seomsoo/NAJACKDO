@@ -16,7 +16,7 @@ import java.util.List;
 public class FCMConfig {
     @Bean
     FirebaseMessaging firebaseMessaging() throws IOException {
-        ClassPathResource resource = new ClassPathResource("firebase/najackdo-notice.json");
+        ClassPathResource resource = new ClassPathResource("najackdo-notice.json");
         InputStream refreshToken = resource.getInputStream();
 
         FirebaseApp firebaseApp = null;
