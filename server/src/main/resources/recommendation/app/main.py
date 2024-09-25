@@ -5,16 +5,24 @@ import boto3
 import uuid 
 import dao
 from pymongo import MongoClient
-from pydantic import BaseModel  # 이 줄을 추가하세요.
+from pydantic import BaseModel  
 from fastapi import FastAPI, File, UploadFile, Form
+from dotenv import load_dotenv
+
+
+load_dotenv() 
+
 app = FastAPI()
 
 
-
+aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
+aws_secret_access_key = os.getenv("AWS_SECRET_ACCESS_KEY")
 
 
 s3 = boto3.client(
-    "s3", aws_access_key_id="AKIA3FLDX2N75BJLGD4O", aws_secret_access_key="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"
+    "s3",
+    aws_access_key_id=aws_access_key_id,
+    aws_secret_access_key=aws_secret_access_key
 )
 
 
@@ -52,18 +60,18 @@ async def quality_inspection( user_id: int = Form(...),
     uploaded_files_info = []
     
 
-    # for file in files:
-    #     filename = f"{str(uuid.uuid4())}.jpg"
-    #     s3_key = f"{filename}"
+    for file in files:
+        filename = f"{str(uuid.uuid4())}.jpg"
+        s3_key = f"{filename}"
         
-    #     s3.upload_fileobj(file.file, "najackdo", s3_key)
+        s3.upload_fileobj(file.file, "najackdo", s3_key)
         
         
-    #     # 업로드한 파일의 정보 추가
-    #     uploaded_files_info.append({
-    #         "filename": file.filename,
-    #         "content_type": file.content_type
-    #     })
+        # 업로드한 파일의 정보 추가
+        uploaded_files_info.append({
+            "filename": file.filename,
+            "content_type": file.content_type
+        })
         
         
         
