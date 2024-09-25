@@ -7,9 +7,10 @@ import {
   DialogTrigger,
 } from "components/ui/dialog";
 import { Input } from "components/ui/input";
-import TextApplyResult from "page/library/components/TextApplyResult";
+import TextApplyResult from "page/bookapply/components/TextApplyResult";
 import { IoIosSearch } from "react-icons/io";
 import { LuPencilLine } from "react-icons/lu";
+import { useLocation } from "react-router-dom";
 
 const bookInfo = {
   title: "해리포터와 마법사의 돌 1(해리포터 20주년 개정판)",
@@ -19,11 +20,20 @@ const bookInfo = {
 };
 
 const TextApply = () => {
+  const location = useLocation().pathname.split("/")[1];
   return (
     <Dialog>
       <DialogTrigger className="flex flex-row items-center cursor-pointer">
-        <LuPencilLine size={20} className="mr-3" />
-        <span>텍스트로 등록</span>
+        {location === "apply" ? (
+          <p className="bg-[#B0A695] text-white font-bold w-[153px] h-[54px] rounded-xl mx-2 flex items-center justify-center">
+            텍스트로 등록
+          </p>
+        ) : (
+          <>
+            <LuPencilLine size={20} className="mr-3" />
+            <span>텍스트로 등록</span>
+          </>
+        )}
       </DialogTrigger>
       <DialogContent className="bg-[#F1ECE3] rounded-xl border-none h-3/5">
         <DialogHeader>

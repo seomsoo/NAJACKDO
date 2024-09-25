@@ -1,6 +1,6 @@
 import { Popover, PopoverContent, PopoverTrigger } from "components/ui/popover";
-import ApplyGuide from "page/library/components/ApplyGuide";
-import TextApply from "page/library/components/TextApply";
+import ApplyGuide from "page/bookapply/components/ApplyGuide";
+import TextApply from "page/bookapply/components/TextApply";
 import { IoChevronBack } from "react-icons/io5";
 import { LuCamera } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
@@ -29,7 +29,7 @@ const ApplyPage = () => {
           >
             <div
               className="flex flex-row items-center cursor-pointer"
-              onClick={() => navigate("/apply/book")}
+              onClick={() => navigate("/apply/isbn")}
             >
               <LuCamera size={20} className="mr-3" />
               <span>단일 도서 촬영</span>

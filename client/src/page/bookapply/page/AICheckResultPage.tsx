@@ -1,4 +1,4 @@
-import AIResult from "page/library/components/AIResult";
+import AIResult from "page/bookapply/components/AIResult";
 import { IoChevronBack } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
@@ -20,7 +20,9 @@ const AICheckResultPage = () => {
           <span className="text-xl">책정 일일 대여료 : 150 </span>
           <span className="text-[#868686] ml-1">/ 일</span>
         </div>
-        <span className="text-[#656565] text-xs">(추후 대여 상세 페이지에서 수정 가능)</span>
+        <span className="text-[#656565] text-xs">
+          (추후 대여 상세 페이지에서 수정 가능)
+        </span>
       </div>
       <p className="text-center bg-[#B0A695] w-[330px] mx-auto rounded-md text-white font-bold py-3">
         등록 완료

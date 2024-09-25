@@ -1,4 +1,4 @@
-import ApplyBookInfo from "page/library/components/ApplyBookInfo";
+import ApplyBookInfo from "page/bookapply/components/ApplyBookInfo";
 import { HiOutlineCamera } from "react-icons/hi2";
 import { IoChevronBack } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
