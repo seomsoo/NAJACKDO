@@ -21,12 +21,14 @@ import com.najackdo.server.domain.notification.service.NotificationService;
 import com.najackdo.server.domain.user.entity.User;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/book")
+@Tag(name = "책 관련 API ")
 @Slf4j
 public class BookController {
 
