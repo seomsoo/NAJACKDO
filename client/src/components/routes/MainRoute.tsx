@@ -1,4 +1,5 @@
 import AlarmPage from "page/alarm/page/AlarmPage";
+import ISBNScanPage from "page/bookapply/page/ISBNScanPage";
 import CartPage from "page/cart/page/CartPage";
 import ChattingPage from "page/chatting/page/ChattingPage";
 import ChattingRoomPage from "page/chatting/page/ChattingRoomPage";
@@ -7,12 +8,12 @@ import KaPayApprovePage from "page/kapay/page/KaPayApprovePage";
 import KaPayCancelPage from "page/kapay/page/KaPayCancelPage";
 import KaPayFailPage from "page/kapay/page/KaPayFailPage";
 import KaPayPage from "page/kapay/page/KaPayPage";
-import AICheckPage from "page/library/page/AICheckPage";
-import AICheckResultPage from "page/library/page/AICheckResultPage";
-import ApplyPage from "page/library/page/ApplyPage";
-import BookApplyPage from "page/library/page/BookApplyPage";
+import AICheckPage from "page/bookapply/page/AICheckPage";
+import AICheckResultPage from "page/bookapply/page/AICheckResultPage";
+import ApplyPage from "page/bookapply/page/ApplyPage";
+import BookApplyPage from "page/bookapply/page/BookApplyPage";
 import BookDetailPage from "page/library/page/BookDetailPage";
-import BookcaseApplyPage from "page/library/page/BookcaseApplyPage";
+import BookcaseApplyPage from "page/bookapply/page/BookcaseApplyPage";
 import HistoryPage from "page/library/page/HistoryPage";
 import LibraryPage from "page/library/page/LibraryPage";
 import MyFavoritePage from "page/library/page/MyFavoritePage";
@@ -68,6 +69,7 @@ const MainRoute = () => {
       <Route path="/bookdetail/rental" element={<RentalBookDetailPage />} />
       <Route path="/bookdetail/mybook" element={<MyRentalBookDetailPage />} />
       <Route path="/apply" element={<ApplyPage />} />
+      <Route path="/apply/isbn" element={<ISBNScanPage />} />
       <Route path="/apply/book" element={<BookApplyPage />} />
       <Route path="/apply/bookcase" element={<BookcaseApplyPage />} />
       <Route path="/ai-check" element={<AICheckPage />} />
