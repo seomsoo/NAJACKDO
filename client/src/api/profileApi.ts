@@ -94,7 +94,7 @@ export const getOtherProfile = async (nickname: string): Promise<IProfile> => {
   try {
     const {
       data: { success, data },
-    } = await instance.get<BaseResponse<IProfile>>(`/user/info/${nickname}`);
+    } = await instance.get<BaseResponse<IProfile>>(`/user/info/${encodeURIComponent(nickname)}`);
 
     if (!success) {
       throw new Error("다른 사람 프로필 조회 실패");
