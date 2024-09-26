@@ -57,7 +57,7 @@ const BookcaseContainer = ({
           <img
             key={index}
             src={item}
-            className='w-20 object-cover rounded-sm shadow-xl'
+            className='w-20 h-28  rounded-sm shadow-xl'
             alt='book'
           />
         ))}

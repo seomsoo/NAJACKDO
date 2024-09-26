@@ -1,4 +1,5 @@
 export interface IProfile {
+  userId? :number;
   nickname: string;
   profileImage: string;
   locationName: string;
