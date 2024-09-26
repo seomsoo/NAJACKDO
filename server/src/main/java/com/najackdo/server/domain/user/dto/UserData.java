@@ -39,7 +39,7 @@ public class UserData {
 	@Data
 	public static class InfoResponse {
 
-		private Long id;
+		private Long userId;
 		private String nickname;
 		private String profileImage;
 		private String locationName;
@@ -72,7 +72,7 @@ public class UserData {
 			Long badReviewCount
 		) {
 			InfoResponse response = new InfoResponse();
-			response.id = user.getId();
+			response.userId = user.getId();
 			response.nickname = user.getNickName();
 			response.profileImage = user.getProfileImage();
 			response.locationName = locationName;
