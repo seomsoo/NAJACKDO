@@ -19,7 +19,6 @@ public class LocationData {
 		private Double latitude;
 		private Double longitude;
 
-
 		public static Search fromEntity(Location location) {
 			Search search = new Search();
 			search.setLocationCode(location.getId());
@@ -31,7 +30,7 @@ public class LocationData {
 	}
 
 	@Data
-	public static class SearchWithGeom{
+	public static class SearchWithGeom {
 		private int locationCode;
 		private String locationName;
 		private String locationPoint;
@@ -45,10 +44,16 @@ public class LocationData {
 			search.setPolygon(location.getLocationPolygon().toString());
 			return search;
 		}
+
+		public static SearchWithGeom onlyLocationCode(Location location) {
+			SearchWithGeom search = new SearchWithGeom();
+			search.setLocationCode(location.getId());
+			return search;
+		}
 	}
 
 	@Data
-	public static class Regist{
+	public static class Regist {
 		Integer locationCode;
 		Double distanceMeters;
 	}
