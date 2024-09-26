@@ -3,7 +3,6 @@ package com.najackdo.server.domain.book.controller;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.data.jpa.domain.AbstractAuditable_;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -59,9 +58,8 @@ public class BookController {
 		return SuccessResponse.of(result);
 	}
 
-
 	@PostMapping("/regist-book")
-	public SuccessResponse<Void> registBooks(@CurrentUser User user, @RequestBody UserBookData.CreateByISBN create) {
+	public SuccessResponse<Void> registBook(@CurrentUser User user, @RequestBody UserBookData.CreateByISBN create) {
 		userBooksService.addBook(user, create);
 		return SuccessResponse.empty();
 	}
@@ -81,6 +79,7 @@ public class BookController {
 			throw new BaseException(ErrorCode.INVALID_INPUT_VALUE);
 		}
 	}
+
 	/**
 	 * 유저의 관심 도서들 반환
 	 *
@@ -144,12 +143,10 @@ public class BookController {
 		return SuccessResponse.of(bookService.getBookCaseByuserId(user, findUserId));
 	}
 
-
 	@GetMapping("/bookcase/me")
 	@Operation(summary = "나의 책장 목록 조회", description = "나의 책장 목록 조회")
 	public SuccessResponse<BookData.BookCase> getMyBookCaseByNickName(
 		@CurrentUser User user) {
-
 
 		return SuccessResponse.of(bookService.getMyBookCaseByuserId(user.getId()));
 	}
