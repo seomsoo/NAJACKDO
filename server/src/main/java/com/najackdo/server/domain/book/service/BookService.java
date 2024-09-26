@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.najackdo.server.core.exception.BaseException;
 import com.najackdo.server.core.exception.ErrorCode;
 import com.najackdo.server.domain.book.dto.BookData;
+import com.najackdo.server.domain.book.entity.Book;
 import com.najackdo.server.domain.book.entity.UserBook;
 import com.najackdo.server.domain.book.repository.BookRepository;
 import com.najackdo.server.domain.user.entity.User;
@@ -49,7 +50,6 @@ public class BookService {
 				return BookData.BookCase.of(userId, true, nickname, profileImage, displayBooks);
 			})
 			.collect(Collectors.toList());
-
 
 		return collect;
 	}
@@ -107,5 +107,18 @@ public class BookService {
 			user.getProfileImage(),
 			displayBooks
 		);
+	}
+
+	public BookData.Search getBookByIsbn(Long isbn) {
+		Book book = bookRepository.findByIsbn(isbn).orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_BOOK));
+
+		return BookData.Search.of(book);
+
+	}
+
+	public BookData.Search getBookByTitle(String title) {
+		Book book = bookRepository.findByTitle(title).orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_BOOK));
+
+		return BookData.Search.of(book);
 	}
 }

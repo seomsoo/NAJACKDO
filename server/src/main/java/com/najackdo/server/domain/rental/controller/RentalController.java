@@ -33,6 +33,7 @@ public class RentalController {
 	@PostMapping("")
 	@Operation(summary = "렌탈 신청", description = "렌탈 신청")
 	public SuccessResponse<Void> rental(@RequestBody RentalData.RentalRequest rentalRequest) {
+
 		return rentalService.rentalCart(rentalRequest);
 	}
 
