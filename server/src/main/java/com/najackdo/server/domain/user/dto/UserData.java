@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.najackdo.server.domain.user.entity.CashLog;
 import com.najackdo.server.domain.user.entity.User;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -30,7 +31,7 @@ public class UserData {
 	}
 
 	@Data
-	public static class PushToken{
+	public static class PushToken {
 		@NotBlank(message = "토큰이 비어있습니다.")
 		private String token;
 	}
@@ -38,6 +39,7 @@ public class UserData {
 	@Data
 	public static class InfoResponse {
 
+		private Long id;
 		private String nickname;
 		private String profileImage;
 		private String locationName;
@@ -70,6 +72,7 @@ public class UserData {
 			Long badReviewCount
 		) {
 			InfoResponse response = new InfoResponse();
+			response.id = user.getId();
 			response.nickname = user.getNickName();
 			response.profileImage = user.getProfileImage();
 			response.locationName = locationName;
@@ -129,5 +132,5 @@ public class UserData {
 			return response;
 		}
 	}
-	
+
 }
