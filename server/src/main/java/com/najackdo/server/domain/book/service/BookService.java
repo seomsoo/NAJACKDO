@@ -1,7 +1,6 @@
 package com.najackdo.server.domain.book.service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +8,9 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -123,25 +125,19 @@ public class BookService {
 		);
 	}
 
-	public List<BookData.BookCase> getNearBookCase(User user) {
-		log.info("user : {}", user);
-
+	public Page<BookData.BookCase> getNearBookCase(User user, Pageable pageable) {
 		String userLocationKey = Location_KEY + user.getId();
-
 		Set<Object> myLocationCodes = redisTemplate.opsForSet().members(userLocationKey);
 
 		if (myLocationCodes == null || myLocationCodes.isEmpty()) {
-			return Collections.emptyList();
+			log.info("myLocationCodes is empty");
+			return Page.empty();
 		}
-		log.info("My location codes: {}", myLocationCodes);
 
 		Set<String> allUserKeys = redisTemplate.keys(Location_KEY + "*");
-		log.info("All user keys: {}", allUserKeys);
-
 		Set<String> allUserKeysWithOutMe = Objects.requireNonNull(allUserKeys).stream()
 			.filter(key -> !key.equals(userLocationKey))
 			.collect(Collectors.toSet());
-		log.info("All user keys without me: {}", allUserKeysWithOutMe);
 
 		Set<Long> nearUserIds = new HashSet<>();
 
@@ -156,21 +152,22 @@ public class BookService {
 				}
 			}
 		}
-		log.info("Intersected locations: {}", nearUserIds);
 
 		if (nearUserIds.isEmpty()) {
-			return Collections.emptyList();
+			log.info("nearUserIds is empty");
+			return Page.empty();
 		}
 
-		return getBookCasesForIntersectedUsers(user, nearUserIds);
+		// 페이징 처리
+		List<Long> nearUserIdsList = new ArrayList<>(nearUserIds);
+		int totalElements = nearUserIdsList.size();
+		int start = Math.toIntExact(pageable.getOffset());
+		int end = Math.min(start + pageable.getPageSize(), totalElements);
 
-	}
+		List<Long> paginatedUserIds = nearUserIdsList.subList(start, end);
 
-	public List<BookData.BookCase> getBookCasesForIntersectedUsers(User user, Set<Long> nearUserIds) {
 		List<BookData.BookCase> bookCases = new ArrayList<>();
-
-		for (Long userid : nearUserIds) {
-
+		for (Long userid : paginatedUserIds) {
 			User findUser = userRepository.findById(userid)
 				.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_USER));
 
@@ -194,8 +191,7 @@ public class BookService {
 			));
 		}
 
-		return bookCases;
+		return new PageImpl<>(bookCases, pageable, totalElements);
 	}
-
 }
 
