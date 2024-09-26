@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import com.najackdo.server.domain.chat.entity.Chat;
 
 public interface ChatMongoRepository extends MongoRepository<Chat,String> {
-	List<Chat> findAllByRoomId(String roomId);
 
 	Chat findByRoomId(Long roomId);
 }

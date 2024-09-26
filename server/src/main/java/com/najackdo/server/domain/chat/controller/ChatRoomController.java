@@ -45,10 +45,8 @@ public class ChatRoomController {
 		@CurrentUser User customer,
 		@RequestBody CreateChatRoomDto createChatRoomDto) {
 
+		System.out.println("===========================================================");
 		ChatRoomDTO room = chatService.createRoom(customer, createChatRoomDto.getOwnerId(), createChatRoomDto.getCartId());
-
-
-
 
 		return SuccessResponse.of(room.getRoomId());
 	}
