@@ -2,7 +2,7 @@ import { IoIosArrowBack } from 'react-icons/io';
 import { IoNotificationsOutline } from 'react-icons/io5';
 import { Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { getInterestbook } from 'api/bookApi'; // 관심 도서 조회 API
+import { getInterestbook } from 'api/bookApi';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
 import BookcaseContainer from '../components/BookcaseContainer';
 import BookContainer from '../components/BookContainer';
@@ -23,7 +23,7 @@ const MyFavoritePage = () => {
     queryKey: ['interestBookCase'],
     queryFn: getInterestBookCase,
   });
-  console.log(bookcases);
+
   // 관심 도서 목록 조회
   const {
     data: interestBooks,
@@ -56,7 +56,7 @@ const MyFavoritePage = () => {
       </header>
 
       <main className='px-6'>
-        <Tabs defaultValue='bookcase' className='w-full'>
+        <Tabs defaultValue='book' className='w-full'>
           <TabsList className='grid w-full grid-cols-2'>
             <TabsTrigger value='book'>책</TabsTrigger>
             <TabsTrigger value='bookcase'>책장</TabsTrigger>
@@ -83,7 +83,7 @@ const MyFavoritePage = () => {
                 userId={bookcase.userId}
                 name={bookcase.nickname}
                 imageArray={bookcase.displayBooks.map((book) => book.cover)}
-                isFollowed={true}
+                isFollowed={bookcase.follow}
               />
             ))}
           </TabsContent>
