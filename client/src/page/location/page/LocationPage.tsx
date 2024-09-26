@@ -1,55 +1,19 @@
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import BookcaseContainer from 'page/library/components/BookcaseContainer';
 import { RiArrowDownSLine } from 'react-icons/ri';
 import { getUserInfo } from 'api/profileApi';
 import { getNearBookCase } from 'api/locationApi';
+import { useCallback, useEffect, useRef } from 'react';
 
 const LocationPage = () => {
   const navigate = useNavigate();
   const goToLocationSetting = () => {
     navigate('/setting/location');
   };
-  const user = {
-    location: '수완동',
-  };
-  const bookcaseArray = [
-    {
-      name: '김도영',
-      imageArray: [
-        'https://placehold.co/71x104',
-        'https://placehold.co/71x104',
-        'https://placehold.co/71x104',
-        'https://placehold.co/71x104',
-        'https://placehold.co/71x104',
-        'https://placehold.co/71x104',
-      ],
-    },
-    {
-      name: '이도영',
-      imageArray: [
-        'https://placehold.co/71x104',
-        'https://placehold.co/71x104',
-        'https://placehold.co/71x104',
-      ],
-    },
-    {
-      name: '박도영',
-      imageArray: [
-        'https://placehold.co/71x104',
-        'https://placehold.co/71x104',
-        'https://placehold.co/71x104',
-      ],
-    },
-    {
-      name: '정도영',
-      imageArray: [
-        'https://placehold.co/71x104',
-        'https://placehold.co/71x104',
-        'https://placehold.co/71x104',
-      ],
-    },
-  ];
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+
+  
   // 유저 위치 정보 가져오기
   const {
     data: userInfo,
@@ -61,18 +25,56 @@ const LocationPage = () => {
   });
   // 주변 책장 목록 조회
   const {
-    data: bookcases,
+    data: bookcaseData,
     isLoading: isBookCaseLoading,
     isError: isBookCaseError,
-  } = useQuery({
-    queryKey: ['nearBookCase'],
-    queryFn: getNearBookCase,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: ['nearBookCaseData'],
+    queryFn: ({ pageParam = 0}) => getNearBookCase(pageParam as number),
+    getNextPageParam: (lastPage, pages) => {
+      if (!lastPage.last) {
+        return pages.length;
+      }
+      return undefined;
+    },
+    initialPageParam: 0,
   });
+  const bookcaseArray = bookcaseData?.pages?.flatMap((page) => page.content) || [];
+  bookcaseArray.map((bookcase, index) => ( console.log(bookcase) ));
+  console.log("length", bookcaseArray[0])
 
-  console.log(bookcases);
+  const handleObserver = useCallback(
+    (entries) => {
+      const target = entries[0];
+      if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    },
+    [fetchNextPage, hasNextPage, isFetchingNextPage]
+  );
 
+  useEffect(() => {
+    const option = {
+      root: null, // viewport as root
+      rootMargin: "20px",
+      threshold: 1.0,
+    };
+    const observer = new IntersectionObserver(handleObserver, option);
+    if (loadMoreRef.current) observer.observe(loadMoreRef.current);
+
+    return () => {
+      if (loadMoreRef.current) observer.unobserve(loadMoreRef.current);
+    };
+  }, [handleObserver]);
+
+  
   if (isUserLoading || isBookCaseLoading) return <div>로딩 중...</div>;
   if (isUserError || isBookCaseError) return <div>오류가 발생했습니다.</div>;
+  
+  // const hasNeighbor = bookcaseData && bookcaseData.displayBooks?.length > 0;
 
   return (
     <div className='px-6'>
@@ -87,14 +89,39 @@ const LocationPage = () => {
           </span>
           <span className='font-extrabold'>&nbsp;주변 책장</span>
         </div>
-        {/* <div className="flex flex-row justify-start">
-        <p className="text-[20px] font-semibold  text-[#79AC78]">{user.location}</p>
-        <p className="text-[20px] font-semibold ">&nbsp;주변 책장</p>
-      </div> */}
         <RiArrowDownSLine className='text-3xl ml-2' />
       </button>
-      <div />
-      {bookcases?.map((bookcase) => (
+      {bookcaseArray.length > 0 ? (
+        <div>
+          <ul>
+            {bookcaseArray.map((bookcase, index) => (
+              <li key={index}>
+                {bookcase.displayBooks?.length > 0 ? (
+                  <BookcaseContainer
+                    key={bookcase.userId}
+                    userId={bookcase.userId}
+                    name={bookcase.nickname}
+                    imageArray={bookcase.displayBooks.map((book) => book.cover)}
+                    isFollowed={true}
+                  />
+                ) : null}
+              </li>
+            ))}
+          </ul>
+          <div ref={loadMoreRef} className="loading">
+            {isFetchingNextPage ? "Loading more..." : ""}
+          </div>
+        </div>
+      ) : (
+        <div>
+          <p className='text-center mt-16 text-lg font-semibold'>
+            주변에 책장이 없습니다.
+          </p>
+        </div>
+      )}
+
+
+      {/* {bookcaseData?.map((bookcase) => (
         <BookcaseContainer
           key={bookcase.userId}
           userId={bookcase.userId}
@@ -102,18 +129,8 @@ const LocationPage = () => {
           imageArray={bookcase.displayBooks.map((book) => book.cover)}
           isFollowed={true}
         />
-      ))}
-      {/* {bookcaseArray.map((item, index) => {
-        return (
-          <div className='mb-4  border-b border-opacity-70 '>
-            <BookcaseContainer
-              key={index}
-              name={item.name}
-              imageArray={item.imageArray}
-            />
-          </div>
-        );
-      })} */}
+      ))} */}
+     
     </div>
   );
 };
