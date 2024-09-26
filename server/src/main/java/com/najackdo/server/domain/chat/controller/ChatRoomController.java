@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.najackdo.server.core.annotation.CurrentUser;
 import com.najackdo.server.core.response.SuccessResponse;
-import com.najackdo.server.domain.chat.dto.ChatRoomDTO;
+import com.najackdo.server.domain.chat.dto.ChatRoomData;
 import com.najackdo.server.domain.chat.dto.CreateChatRoomDto;
 import com.najackdo.server.domain.chat.entity.Chat;
 import com.najackdo.server.domain.chat.repository.ChatMongoRepository;
-import com.najackdo.server.domain.chat.service.ChatServiceImpl;
+import com.najackdo.server.domain.chat.service.ChatService;
 import com.najackdo.server.domain.user.entity.User;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,15 +27,15 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping(value = "/api/v1/chatroom")
 @Tag(name = "채팅 관련 API ")
 public class ChatRoomController {
-	private final ChatServiceImpl chatService;
+	private final ChatService chatService;
 	private final ChatMongoRepository chatMongoRepository;
 
 	// 채팅방 목록 조회
 	@GetMapping("")
 	@Operation(summary = "채팅방 목록 조회", description = "채팅방 목록 조회")
-	public SuccessResponse<List<ChatRoomDTO>> chatRoomList(@CurrentUser User user) {
-		List<ChatRoomDTO> chatRoomDTOS = chatService.chatRoomList(user);
-		return SuccessResponse.of(chatRoomDTOS);
+	public SuccessResponse<ChatRoomData.ChatRoomWithUserDTO> chatRoomList(@CurrentUser User user) {
+
+		return SuccessResponse.of(chatService.chatRoomList(user));
 	}
 
 	// 채팅방 생성
@@ -45,8 +45,7 @@ public class ChatRoomController {
 		@CurrentUser User customer,
 		@RequestBody CreateChatRoomDto createChatRoomDto) {
 
-		System.out.println("===========================================================");
-		ChatRoomDTO room = chatService.createRoom(customer, createChatRoomDto.getOwnerId(), createChatRoomDto.getCartId());
+		ChatRoomData.ChatRoomDTO room = chatService.createRoom(customer, createChatRoomDto.getOwnerId(), createChatRoomDto.getCartId());
 
 		return SuccessResponse.of(room.getRoomId());
 	}
