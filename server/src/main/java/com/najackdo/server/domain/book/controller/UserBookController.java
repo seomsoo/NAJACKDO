@@ -34,4 +34,5 @@ public class UserBookController {
 	public SuccessResponse<UserBookData.InfoResponse> getUserBookInfo(@PathVariable Long userBookId) {
 		return SuccessResponse.of(userBooksService.getUserBookInfo(userBookId));
 	}
+
 }

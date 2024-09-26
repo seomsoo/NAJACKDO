@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.jpa.domain.AbstractAuditable_;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -150,6 +152,18 @@ public class BookController {
 
 
 		return SuccessResponse.of(bookService.getMyBookCaseByuserId(user.getId()));
+	}
+
+	/**
+	 * 유저의 위치 기반으로 주변 책장 목록 조회
+	 *
+	 * @param user
+	 * @return {@link List<BookData.BookCase>}
+	 */
+	@GetMapping("/bookcase/near")
+	@Operation(summary = "주변 책장 목록 조회", description = "유저의 위치 기반으로 주변 책장 목록 조회")
+	public SuccessResponse<Page<BookData.BookCase>> getNearBookCase(@CurrentUser User user, Pageable pageable) {
+		return SuccessResponse.of(bookService.getNearBookCase(user, pageable));
 	}
 
 	/**
