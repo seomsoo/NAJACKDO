@@ -1,31 +1,32 @@
+import { ISearch } from "atoms/Search.type";
 import CategoryTag from "components/common/CategoryTag";
+import { useNavigate } from "react-router-dom";
 
 interface TextApplyResultProps {
-  book: {
-    title: string;
-    author: string[];
-    category: string[];
-    imageUrl: string;
-  };
+  book: ISearch;
 }
 
 const TextApplyResult = ({ book }: TextApplyResultProps) => {
+  const categoryList = book.genre.split(">");
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/apply/book", { state: { kind: "isbn", keyword: book.isbn } });
+  };
   return (
-    <div className="flex flex-row text-sm">
-      <img src={book.imageUrl} alt="책 이미지" width={70} height={108} />
+    <div
+      className="flex flex-row text-sm border-b-[1px] border-[#D9D9D9] pb-4"
+      onClick={handleClick}
+    >
+      <img src={book.cover} alt="책 이미지" width={70} height={108} />
       <div className="ml-2 flex flex-col items-start">
         <p className="text-left font-bold">{book.title}</p>
-        <span className="my-2">{book.author.join(" | ")}</span>
-        <div>
-          {book.category.map((category, index) => {
-            return (
-              <CategoryTag
-                category={category}
-                key={index}
-                className="text-xs"
-              />
-            );
-          })}
+        <span className="my-2 text-left">
+          {book.author.split(",").join(" | ")}
+        </span>
+        <div className="flex flex-row mt-1 flex-wrap">
+          <CategoryTag category={categoryList[1]} />
+          <CategoryTag category={categoryList[2]} />
         </div>
       </div>
     </div>

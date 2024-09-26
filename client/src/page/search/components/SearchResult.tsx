@@ -8,7 +8,6 @@ interface SearchResultProps {
 }
 
 const SearchResult = ({ keyword }: SearchResultProps) => {
-  console.log("keyword1", keyword);
   const {
     data: searchData,
     isLoading: searchLoading,
