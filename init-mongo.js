@@ -18,3 +18,7 @@ db.createUser({
   pwd: "najackdo",
   roles: [{ role: "readWrite", db: "najackdo" }],
 });
+
+db.getSiblingDB("najackdo").updateUser("najackdo", {
+  roles: [{ role: "readWrite", db: "najackdo" }],
+});
