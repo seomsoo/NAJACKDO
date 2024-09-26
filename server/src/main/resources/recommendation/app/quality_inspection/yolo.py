@@ -4,9 +4,6 @@ import os
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
 
-
-
-
 # # 상대 경로로 파일 경로 설정
 # model_path = os.path.join(script_dir, "best.pt")
 # image_paths = [os.path.join(script_dir, "image5.jpg"), os.path.join(script_dir, "image6.jpg")]

@@ -65,19 +65,11 @@ def insert_user_book_detail(
                 wornout, 
                 back_image_path, 
                 front_image_path,
+                inspect_front_image_path,
+                inspect_back_image_path,
                 oneday_price,
-                
-                used_price,
-                
-                barcode,
-                notch,
-                spot,
-                tag
-                
-                
-            ) VALUES (%s, %s, %s, %s, %s, %s,
-            %s,
-            0, 0, 0, 0);"""
+                used_price
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"""
 
             cursor.execute(query, (
                 user_book_id, 
@@ -85,6 +77,8 @@ def insert_user_book_detail(
                 worn_out, 
                 front_book_image_url, 
                 back_book_image_url, 
+                inspect_front_book_image_url,
+                inspect_back_book_image_url,
                 one_day_price,
                 one_day_price * 100
             ))

@@ -4,20 +4,26 @@ import os
 import boto3
 import uuid 
 import dao
+import cv2
+import io
+import numpy as np
+from ultralytics import YOLO
 from pymongo import MongoClient
 from pydantic import BaseModel  
 from fastapi import FastAPI, File, UploadFile, Form
 from dotenv import load_dotenv
-
+from PIL import Image 
 
 load_dotenv() 
-
 app = FastAPI()
+
+script_dir = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(script_dir, "quality_inspection/best.pt")
+model = YOLO(model_path)
 
 
 aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
 aws_secret_access_key = os.getenv("AWS_SECRET_ACCESS_KEY")
-
 
 s3 = boto3.client(
     "s3",
@@ -46,35 +52,97 @@ async def recomm_books(bookId : int):
 
 
 @app.post("/item/quality-inspection")
-async def quality_inspection( user_id: int = Form(...),
+async def quality_inspection(user_id: int = Form(...),
                              user_book_id: int = Form(...),
                              files: list[UploadFile] = File(...)):
 
-    standard_price = dao.get_standard_price(user_id, user_book_id)
-
-    print(standard_price)
-    
-    dao.insert_user_book_detail(user_book_id, 2, 2, "1", "2", "3", "4", standard_price)
-    
-    # 파일 정보를 저장할 리스트
     uploaded_files_info = []
-    
+    images = []
+    file_data_streams = []  # 원본 파일 스트림 저장
 
     for file in files:
-        filename = f"{str(uuid.uuid4())}.jpg"
-        s3_key = f"{filename}"
+        image_data = await file.read()
+        image = Image.open(io.BytesIO(image_data)).convert("RGB")
+        images.append(image)
+        file_data_streams.append(io.BytesIO(image_data))  # 파일 데이터 저장
+
+    # YOLO 모델로 예측 수행
+    results = model(images)
+    print(results)
+
+    # 원본 파일 S3에 업로드
+    for i, file in enumerate(files):
+        file_extension = file.filename.split('.')[-1]  # 확장자 추출
+        filename = f"{str(uuid.uuid4())}.{file_extension}"  # UUID와 확장자를 결합
+
+        # ContentType 설정
+        content_type = file.content_type
         
-        s3.upload_fileobj(file.file, "najackdo", s3_key)
-        
-        
+        # S3에 업로드
+        s3.upload_fileobj(file_data_streams[i], "najackdo", filename, ExtraArgs={"ContentType": content_type})
+
         # 업로드한 파일의 정보 추가
         uploaded_files_info.append({
-            "filename": file.filename,
-            "content_type": file.content_type
+            "filename": filename,
+            "content_type": content_type
         })
+
+    count_ripped = 0
+    count_wornout = 0
+    
+    # 주석이 달린 이미지 S3에 업로드
+    for i, result in enumerate(results):
+        boxes = result.boxes.data
+        outputs = np.array(boxes)
+        last_index = outputs.shape[1]-1
+        for output in outputs:
+            if(output[last_index]==1.0):
+                count_ripped+=1
+            else:
+                count_wornout+=1
         
         
+        # 박스가 그려진 이미지를 가져옵니다.
+        annotated_image = result.plot()  # 감지된 객체가 표시된 이미지 (numpy.ndarray 형식)
+
+        # numpy.ndarray를 PIL.Image로 변환
+        annotated_image_pil = Image.fromarray(np.uint8(annotated_image))
+
+        # 박스가 그려진 이미지를 BytesIO로 변환
+        img_byte_array = io.BytesIO()
+        annotated_image_pil.save(img_byte_array, format='JPEG')
+        img_byte_array.seek(0)
+
+        # S3에 업로드
+        filename = f"{str(uuid.uuid4())}.jpeg"
         
+        s3.upload_fileobj(img_byte_array, "najackdo", filename, ExtraArgs={"ContentType": "image/jpeg"})
+
+        # 업로드한 파일의 정보 추가
+        uploaded_files_info.append({
+            "filename": filename,
+            "content_type": "image/jpeg"
+        })
+    
+    print(uploaded_files_info[0]["filename"])
+    print(uploaded_files_info[1]["filename"])
+    print(uploaded_files_info[2]["filename"])
+    print(uploaded_files_info[3]["filename"])
+
+    
+    standard_price = dao.get_standard_price(user_id, user_book_id)   
+    print("====================================")
+    print(user_id, user_book_id)
+    print(standard_price)     
+    print("====================================")
+    
+    
+    dao.insert_user_book_detail(user_book_id, count_ripped, count_wornout, 
+                                uploaded_files_info[0]["filename"],
+                                uploaded_files_info[1]["filename"],
+                                uploaded_files_info[2]["filename"],
+                                uploaded_files_info[3]["filename"],
+                                standard_price)
 
     return {"uploaded_files": uploaded_files_info,
-            "standard_price" : standard_price}
+            "standard_price": standard_price}

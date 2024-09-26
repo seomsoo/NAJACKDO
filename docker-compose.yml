@@ -63,7 +63,7 @@ services:
       - TZ=Asia/Seoul
 
   fastapi:
-    image: ssafysm/najackdo-fast-api:latest
+    image: ssafysm/najackdo_yolo_fast-api_app:yolo_recomm
     container_name: fastapi_app
     ports:
       - "8000:8000"
