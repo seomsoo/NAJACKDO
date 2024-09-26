@@ -1,5 +1,5 @@
 import { deleteInterestBookCase, postInterestBookCase } from 'api/bookcaseApi';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { IoHeart, IoHeartOutline } from 'react-icons/io5';
 
 interface BookcaseContainerProps {
@@ -8,34 +8,34 @@ interface BookcaseContainerProps {
   imageArray: string[];
   isFollowed?: boolean;
 }
+
 const BookcaseContainer = ({
   userId,
   name,
   imageArray,
-  isFollowed,
+  isFollowed = false, // 기본값을 false로 설정
 }: BookcaseContainerProps) => {
-  // console.log('userId:', userId);
   const [heart, setHeart] = useState(isFollowed);
+
+  useEffect(() => {
+    setHeart(isFollowed); // API로부터 받은 값을 상태에 반영
+  }, [isFollowed]);
 
   const handleHeart = async () => {
     try {
-      console.log('userId:', userId);
-
       if (heart) {
-        await deleteInterestBookCase(userId);
-        // console.log(`${name}님의 책장을 관심 목록에서 해제했습니다.`);
+        await deleteInterestBookCase(userId); // 관심 해제
       } else {
-        await postInterestBookCase(userId);
-        // console.log(`${name}님의 책장을 관심 목록에 등록했습니다.`);
+        await postInterestBookCase(userId); // 관심 등록
       }
-      setHeart(!heart);
+      setHeart(!heart); // 상태 변경
     } catch (error) {
-      // console.error('관심 도서 등록/해제 중 오류 발생:', error);
+      console.error('관심 도서 등록/해제 중 오류 발생:', error);
     }
   };
 
   return (
-    <div className=' my-5 bg-white/30 shadow rounded-lg p-4'>
+    <div className='my-5 bg-white/30 shadow rounded-lg p-4'>
       <div className='flex flex-row justify-between'>
         <p className='font-medium mb-2'>{name}님의 책장</p>
         <div onClick={handleHeart}>
@@ -53,16 +53,14 @@ const BookcaseContainer = ({
           msOverflowStyle: 'none',
         }}
       >
-        {imageArray.map((item, index) => {
-          return (
-            <img
-              key={index}
-              src={item}
-              className='w-20  object-cover rounded-sm shadow-xl '
-              alt='book'
-            />
-          );
-        })}
+        {imageArray.map((item, index) => (
+          <img
+            key={index}
+            src={item}
+            className='w-20 object-cover rounded-sm shadow-xl'
+            alt='book'
+          />
+        ))}
       </div>
     </div>
   );

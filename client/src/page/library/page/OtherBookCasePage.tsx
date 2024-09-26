@@ -29,6 +29,15 @@ const OtherBookCasePage = () => {
     queryFn: () => getOtherBookCase(userIdAsNumber),
   });
 
+  // bookcase 데이터가 로드된 후 하트 상태를 설정
+  const [isFollowed, setIsFollowed] = useState(false);
+
+  useEffect(() => {
+    if (bookcase?.follow !== undefined) {
+      setIsFollowed(bookcase.follow); // follow 값을 상태에 반영
+    }
+  }, [bookcase]);
+
   // 책 선택 상태를 관리하는 state
   const [checked, setChecked] = useState<boolean[]>(
     new Array(bookcase?.displayBooks.length || 0).fill(false)
@@ -43,9 +52,6 @@ const OtherBookCasePage = () => {
 
   // 선택된 책이 있는지 확인하는 변수
   const isAnyChecked = checked.some((item) => item);
-
-  // 하트 상태 관리
-  const [isFollowed, setIsFollowed] = useState(false);
 
   const goBack = () => {
     navigate(-1);
