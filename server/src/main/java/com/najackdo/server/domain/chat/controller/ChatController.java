@@ -65,16 +65,16 @@ public class ChatController {
 
 		Chat existingChat = chatRepository.findByRoomId(chatDTO.getRoomId());
 
-		// if (existingChat != null) {
-		// 기존 대화방이 있을 경우 messages 배열에 메시지 추가
-		existingChat.getMessages().add(newMessage);
-		chatRepository.save(existingChat);
-		// } else {
-		// 	// 새로운 대화방 생성
-		// 	Chat newChat = new Chat();
-		// 	newChat.setRoomId(chatDTO.getRoomId());
-		// 	newChat.setMessages(List.of(newMessage));
-		// 	chatRepository.save(newChat);
-		// }
+		if (existingChat != null) {
+			// 기존 대화방이 있을 경우 messages 배열에 메시지 추가
+			existingChat.getMessages().add(newMessage);
+			chatRepository.save(existingChat);
+		} else {
+			// 새로운 대화방 생성
+			Chat newChat = new Chat();
+			newChat.setRoomId(chatDTO.getRoomId());
+			newChat.setMessages(List.of(newMessage));
+			chatRepository.save(newChat);
+		}
 	}
 }
