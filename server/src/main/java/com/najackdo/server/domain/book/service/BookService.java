@@ -29,7 +29,7 @@ public class BookService {
 	public List<BookData.BookCase> getBookCaseInterest(User user) {
 		List<UserBook> userBooks = bookRepository.findBookCaseInterestByUser(user);
 
-		return userBooks.stream()
+		List<BookData.BookCase> collect = userBooks.stream()
 			.collect(Collectors.groupingBy(userBook -> userBook.getUser().getId())) // 사용자별로 그룹화
 			.entrySet().stream()
 			.map(entry -> {
@@ -49,6 +49,9 @@ public class BookService {
 				return BookData.BookCase.of(userId, true, nickname, profileImage, displayBooks);
 			})
 			.collect(Collectors.toList());
+
+
+		return collect;
 	}
 
 	public BookData.BookCase getBookCaseByuserId(User user, Long findUserId) {

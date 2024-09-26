@@ -51,7 +51,7 @@ public class BookController {
 		return SuccessResponse.of(result);
 	}
 
-	@PostMapping("/registBook")
+	@PostMapping("/regist-book")
 	public SuccessResponse<Void> registBooks(@CurrentUser User user, @RequestBody UserBookData.CreateByISBN create) {
 		userBooksService.addBook(user, create);
 		return SuccessResponse.empty();
