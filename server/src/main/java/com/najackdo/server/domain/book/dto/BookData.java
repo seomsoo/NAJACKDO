@@ -70,9 +70,29 @@ public class BookData {
 		private Long userId;
 		private String nickname;
 		private String profileImage;
+		private boolean isFollow;
 		private List<DisplayBook> displayBooks;
 
-		public static BookCase of(Long userId, String nickname, String profileImage, List<DisplayBook> displayBooks) {
+		public static BookCase of(
+			Long userId,
+			boolean isFollow,
+			String nickname,
+			String profileImage,
+			List<DisplayBook> displayBooks) {
+			BookCase response = new BookCase();
+			response.userId = userId;
+			response.isFollow = isFollow;
+			response.nickname = nickname;
+			response.profileImage = profileImage;
+			response.displayBooks = displayBooks;
+			return response;
+		}
+
+		public static BookCase ofWithOutIsFollow(
+			Long userId,
+			String nickname,
+			String profileImage,
+			List<DisplayBook> displayBooks) {
 			BookCase response = new BookCase();
 			response.userId = userId;
 			response.nickname = nickname;

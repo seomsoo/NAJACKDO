@@ -5,8 +5,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "components/ui/carousel";
-import ApplyBook from "page/library/components/ApplyBook";
-import ApplyBookcase from "page/library/components/ApplyBookcase";
+import ApplyBook from "page/bookapply/components/ApplyBook";
+import ApplyBookcase from "page/bookapply/components/ApplyBookcase";
 
 const ApplyGuide = () => {
   return (
@@ -26,7 +26,9 @@ const ApplyGuide = () => {
           <CarouselNext />
         </Carousel>
       </div>
-      <p className="text-xs text-center mt-1.5">책등: 책을 책꽂이에 꽂았을 때의 보이는, 책 제목 등이 쓰여 있는 옆면</p>
+      <p className="text-xs text-center mt-1.5">
+        책등: 책을 책꽂이에 꽂았을 때의 보이는, 책 제목 등이 쓰여 있는 옆면
+      </p>
     </div>
   );
 };

@@ -78,6 +78,7 @@ public enum ErrorCode {
 	NOT_FOUND_USER_BOOK_DETAIL(12001, HttpStatus.NOT_FOUND, "해당 유저 책 상세 정보가 존재하지 않습니다."),
 	NOT_ADD_MY_BOOK_TO_CART(12002, HttpStatus.BAD_REQUEST, "자신의 책을 장바구니에 담을 수 없습니다."),
 	NOT_FOUND_BOOK(12003, HttpStatus.NOT_FOUND, "책을 찾을 수 없습니다."),
+	BOOK_DETAIL_NOT_FOUND(12004, HttpStatus.NOT_FOUND, "책 상세 정보를 찾을 수 없습니다."),
 
 	//REVIEW
 	NOT_FOUND_RENTAL_REVIEW(13000, HttpStatus.NOT_FOUND, "대여 리뷰를 찾을 수 없습니다."),

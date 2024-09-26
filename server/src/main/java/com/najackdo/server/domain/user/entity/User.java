@@ -20,7 +20,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -90,8 +89,7 @@ public class User extends BaseEntity {
 	@ColumnDefault("50")
 	private int mannerScore = 50;
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "activity_areas_id")
+	@OneToOne(mappedBy = "user")
 	private ActivityAreaSetting activityAreaSetting;
 
 	@OneToMany(mappedBy = "following", fetch = FetchType.LAZY)
@@ -168,7 +166,7 @@ public class User extends BaseEntity {
 		this.cashLogs = cashLog;
 	}
 
-	public void pushToken(String Token){
+	public void pushToken(String Token) {
 		this.fcmToken = Token;
 	}
 

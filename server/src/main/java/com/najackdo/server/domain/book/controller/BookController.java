@@ -21,12 +21,14 @@ import com.najackdo.server.domain.notification.service.NotificationService;
 import com.najackdo.server.domain.user.entity.User;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/book")
+@Tag(name = "책 관련 API ")
 @Slf4j
 public class BookController {
 
@@ -115,7 +117,7 @@ public class BookController {
 	public SuccessResponse<BookData.BookCase> getUserBookCaseByNickName(
 		@CurrentUser User user,
 		@PathVariable Long findUserId) {
-		return SuccessResponse.of(bookService.getBookCaseByuserId(findUserId));
+		return SuccessResponse.of(bookService.getBookCaseByuserId(user, findUserId));
 	}
 
 	// @GetMapping("/go")
@@ -129,7 +131,7 @@ public class BookController {
 	@Operation(summary = "나의 책장 목록 조회", description = "나의 책장 목록 조회")
 	public SuccessResponse<BookData.BookCase> getMyBookCaseByNickName(
 		@CurrentUser User user) {
-		return SuccessResponse.of(bookService.getBookCaseByuserId(user.getId()));
+		return SuccessResponse.of(bookService.getMyBookCaseByuserId(user.getId()));
 	}
 
 	/**
