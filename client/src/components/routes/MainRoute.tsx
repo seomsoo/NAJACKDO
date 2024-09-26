@@ -67,9 +67,9 @@ const MainRoute = () => {
       <Route path="/kapay/approve" element={<KaPayApprovePage />} />
       <Route path="/kapay/cancel" element={<KaPayCancelPage />} />
       <Route path="/kapay/fail" element={<KaPayFailPage />} />
-      <Route path="/bookdetail" element={<BookDetailPage />} />
-      <Route path="/bookdetail/rental" element={<RentalBookDetailPage />} />
-      <Route path="/bookdetail/mybook" element={<MyRentalBookDetailPage />} />
+      <Route path="/book/:bookId" element={<BookDetailPage />} />
+      <Route path="/book/:bookId/rental" element={<RentalBookDetailPage />} />
+      <Route path="/book/:bookId/mybook" element={<MyRentalBookDetailPage />} />
       <Route path="/apply" element={<ApplyPage />} />
       <Route path="/apply/isbn" element={<ISBNScanPage />} />
       <Route path="/apply/book" element={<BookApplyPage />} />

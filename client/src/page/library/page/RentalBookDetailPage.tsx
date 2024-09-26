@@ -14,7 +14,7 @@ const RentalBookDetailPage = () => {
 
   return (
     <div>
-      <RentalBookDetail book={book} />
+      {/* <RentalBookDetail book={book} /> */}
       <div className="fixed bg-[#F8F6F3] bottom-0 w-screen max-w-[430px] border-t-[1px] pt-3 flex flex-row justify-center pb-7">
         <AddCart />
         <BookRentalApply dayPrice={book.price / 100} triggerClassName="bg-[#776B5D] text-white font-bold px-8 py-2 rounded-lg mx-5"/>
