@@ -73,11 +73,13 @@ export const postMyLocation = async (locationData : IMyLocation): Promise<void> 
 
 
 // 주변 책장 목록 조회
-export const getNearBookCase = async (): Promise<IBookCase[]> => {
+export const getNearBookCase = async (
+  page: number
+): Promise<IPaging<IBookCase[]>> => {
   const {
     data: { success, data },
-  } = await instance.get<BaseResponse<IBookCase[]>>(
-    "/book/bookcase/interest" // 만들어주면 바꾸기
+  } = await instance.get<BaseResponse<IPaging<IBookCase[]>>>(
+    `/book/bookcase/near?page=${page}` // 만들어주면 바꾸기
   );
 
   console.log("주변 책장 조회 API data", data);
