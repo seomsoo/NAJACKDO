@@ -57,7 +57,6 @@ public class BookController {
 		return SuccessResponse.of(result);
 	}
 
-
 	@PostMapping("/regist-book")
 	public SuccessResponse<Void> registBooks(@CurrentUser User user, @RequestBody UserBookData.CreateByISBN create) {
 		userBooksService.addBook(user, create);
@@ -141,7 +140,6 @@ public class BookController {
 		@PathVariable Long findUserId) {
 		return SuccessResponse.of(bookService.getBookCaseByuserId(user, findUserId));
 	}
-
 
 	@GetMapping("/bookcase/me")
 	@Operation(summary = "나의 책장 목록 조회", description = "나의 책장 목록 조회")

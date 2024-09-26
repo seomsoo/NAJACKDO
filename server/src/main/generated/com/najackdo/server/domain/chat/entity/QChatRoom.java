@@ -28,7 +28,7 @@ public class QChatRoom extends EntityPathBase<ChatRoom> {
 
     public final com.najackdo.server.domain.user.entity.QUser owner;
 
-    public final StringPath roomId = createString("roomId");
+    public final NumberPath<Long> roomId = createNumber("roomId", Long.class);
 
     public QChatRoom(String variable) {
         this(ChatRoom.class, forVariable(variable), INITS);

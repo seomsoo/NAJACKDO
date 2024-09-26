@@ -12,6 +12,8 @@ import com.najackdo.server.core.exception.ErrorCode;
 import com.najackdo.server.core.response.SuccessResponse;
 import com.najackdo.server.domain.cart.entity.Cart;
 import com.najackdo.server.domain.cart.repository.CartRepository;
+import com.najackdo.server.domain.chat.entity.ChatRoom;
+import com.najackdo.server.domain.chat.repository.ChatRoomRepository;
 import com.najackdo.server.domain.rental.dto.RentalData;
 import com.najackdo.server.domain.rental.entity.Rental;
 import com.najackdo.server.domain.rental.entity.RentalStatus;
@@ -31,6 +33,7 @@ public class RentalService {
 
 	private final CartRepository cartRepository;
 	private final RentalRepository rentalRepository;
+	private final ChatRoomRepository chatRoomRepository;
 
 	@Transactional
 	public SuccessResponse<Void> rentalCart(RentalData.RentalRequest rentalRequest) {
@@ -74,6 +77,8 @@ public class RentalService {
 		rentalRepository.save(rental);
 
 		// ! 채팅 전송 로직 추가
+
+		// chatRoomRepository.save()
 
 		return SuccessResponse.empty();
 	}

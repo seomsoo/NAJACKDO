@@ -11,13 +11,15 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ChatRoomDTO {
 
-	private String roomId; // 채팅방 아이디
+	private Long roomId; // 채팅방 아이디
 	private Long customerId;
 	private Long ownerId;
 
-	public ChatRoomDTO(ChatRoom chatRoom) {
-		this.roomId = chatRoom.getRoomId();
-		this.customerId = chatRoom.getCustomer().getId();
-		this.ownerId = chatRoom.getOwner().getId();
+	public static ChatRoomDTO of(ChatRoom chatRoom) {
+		ChatRoomDTO chatRoomDTO = new ChatRoomDTO();
+		chatRoomDTO.roomId = chatRoom.getRoomId();
+		chatRoomDTO.customerId = chatRoom.getCustomer().getId();
+		chatRoomDTO.ownerId = chatRoom.getOwner().getId();
+		return chatRoomDTO;
 	}
 }

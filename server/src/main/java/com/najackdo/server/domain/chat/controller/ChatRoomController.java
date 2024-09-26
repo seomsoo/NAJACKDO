@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.najackdo.server.core.annotation.CurrentUser;
 import com.najackdo.server.core.response.SuccessResponse;
 import com.najackdo.server.domain.chat.dto.ChatRoomDTO;
+import com.najackdo.server.domain.chat.dto.CreateChatRoomDto;
 import com.najackdo.server.domain.chat.entity.Chat;
+import com.najackdo.server.domain.chat.repository.ChatMongoRepository;
 import com.najackdo.server.domain.chat.service.ChatServiceImpl;
 import com.najackdo.server.domain.user.entity.User;
 
@@ -25,24 +28,28 @@ import lombok.RequiredArgsConstructor;
 @Tag(name = "채팅 관련 API ")
 public class ChatRoomController {
 	private final ChatServiceImpl chatService;
+	private final ChatMongoRepository chatMongoRepository;
 
 	// 채팅방 목록 조회
 	@GetMapping("")
 	@Operation(summary = "채팅방 목록 조회", description = "채팅방 목록 조회")
-	public SuccessResponse<List<ChatRoomDTO>> chatRoomList() {
-		List<ChatRoomDTO> chatRoomDTOS = chatService.chatRoomList();
+	public SuccessResponse<List<ChatRoomDTO>> chatRoomList(@CurrentUser User user) {
+		List<ChatRoomDTO> chatRoomDTOS = chatService.chatRoomList(user);
 		return SuccessResponse.of(chatRoomDTOS);
 	}
 
 	// 채팅방 생성
 	@PostMapping("")
 	@Operation(summary = "채팅방 생성", description = "채팅방 생성")
-	public SuccessResponse<String> createRoom(
+	public SuccessResponse<Long> createRoom(
 		@CurrentUser User customer,
-		@RequestParam("owner") Long ownerId,
-		@RequestParam("cart") Long cartId
-	) {
-		ChatRoomDTO room = chatService.createRoom(customer, ownerId, cartId);
+		@RequestBody CreateChatRoomDto createChatRoomDto) {
+
+		ChatRoomDTO room = chatService.createRoom(customer, createChatRoomDto.getOwnerId(), createChatRoomDto.getCartId());
+
+
+
+
 		return SuccessResponse.of(room.getRoomId());
 	}
 
@@ -51,7 +58,7 @@ public class ChatRoomController {
 	@Operation(summary = "채팅방 채팅내용 불러오기", description = "채팅방 채팅내용 불러오기")
 	public SuccessResponse<List<Chat.Message>> getChatList(
 		@CurrentUser User user,
-		@RequestParam("room") String roomId) {
+		@RequestParam("roomId") Long roomId) {
 
 		List<Chat.Message> chatList = chatService.getChatList(roomId, user);
 
