@@ -1,60 +1,86 @@
-import BookcaseContainer from "page/library/components/BookcaseContainer";
-import MannerTree from "page/profile/components/MannerTree";
-import UserInfo from "page/profile/components/UserInfo";
-import { useLocation } from "react-router-dom";
+import { useQuery } from '@tanstack/react-query';
+import { getOtherProfile, getUserInfo } from 'api/profileApi';
+import { getOtherBookCase } from 'api/bookcaseApi';
+import { IProfile } from 'atoms/Profile.type';
+import BookcaseContainer from 'page/library/components/BookcaseContainer';
+import MannerTree from 'page/profile/components/MannerTree';
+import UserInfo from 'page/profile/components/UserInfo';
+import { useNavigate, useParams } from 'react-router-dom';
+import { IBookCase } from 'atoms/BookCase.type';
 
 const OtherProfilePage = () => {
-  const nickname: string = useLocation().pathname.split("/")[1];
+  const { nickname } = useParams();
+  const navigate = useNavigate();
 
-  // const {
-  //   data: profileInfo,
-  //   isLoading,
-  //   isError,
-  // } = useQuery<IProfile>({
-  //   queryKey: ["profile", "other"],
-  //   queryFn: async () => await getOtherProfile(nickname),
-  // });
+  // 로그인된 사용자 정보 가져오기
+  const {
+    data: loggedInUser,
+    isLoading: isUserInfoLoading,
+    isError: isUserInfoError,
+  } = useQuery({
+    queryKey: ['userInfo'],
+    queryFn: getUserInfo,
+  });
 
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
+  // 다른 사용자의 프로필 정보 가져오기
+  const {
+    data: profileInfo,
+    isLoading: isOtherProfileLoading,
+    isError: isOtherProfileError,
+  } = useQuery<IProfile>({
+    queryKey: ['profile', nickname],
+    queryFn: () => getOtherProfile(nickname!),
+  });
 
-  // if (profileInfo) {
-  //   console.log("유저 정보", profileInfo);
-  // }
+  // 다른 사용자의 책장 정보 가져오기
+  const {
+    data: bookcaseInfo,
+    isLoading: isBookcaseLoading,
+    isError: isBookcaseError,
+  } = useQuery<IBookCase>({
+    queryKey: ['otherBookCase', profileInfo?.userId],
+    queryFn: () => getOtherBookCase(profileInfo?.userId!),
+    enabled: !!profileInfo?.userId, // profileInfo.userId가 있을 때만 요청 실행
+  });
 
-  const user = {
-    username: "서민수",
-    userlocation: "수완동",
-    userImage: "https://placehold.co/68x68",
-    myLeaf: 12000,
-    isMine: false,
-    bookCase: [
-      "https://placehold.co/71x104",
-      "https://placehold.co/71x104",
-      "https://placehold.co/71x104",
-      "https://placehold.co/71x104",
-      "https://placehold.co/71x104",
-      "https://placehold.co/71x104",
-    ],
-  };
+  if (isUserInfoLoading || isOtherProfileLoading || isBookcaseLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isUserInfoError || isOtherProfileError || isBookcaseError) {
+    return <div>오류가 발생했습니다.</div>;
+  }
+
+  // 로그인된 유저와 프로필의 유저가 동일하면 나의 프로필로 리다이렉트
+  if (loggedInUser?.nickname === profileInfo?.nickname) {
+    navigate('/profile');
+    return null;
+  }
 
   return (
-    <div className="mx-[25px] mt-6">
-      <p className="text-[32px] font-extrabold tracking-wider mb-6">프로필</p>
+    <div className='mx-6 my-4'>
+      <p className='text-[32px] font-extrabold tracking-wider mb-6'>프로필</p>
       {/* 유저 정보 */}
       <UserInfo
-        userName={user.username}
-        userLocation={user.userlocation}
-        userImage={user.userImage}
-        gradeImage="https://placehold.co/21x21"
+        userName={profileInfo.nickname}
+        userLocation={profileInfo.locationName}
+        userImage={profileInfo.profileImage}
+        mannerScore={profileInfo.mannerScore}
       />
-
-      {/* 신뢰 나무 */}
-      <MannerTree />
-
-      {/* 책장 */}
-      <BookcaseContainer name={user.username} imageArray={user.bookCase} />
+      {/* 신뢰나무 */}
+      <MannerTree
+        nickname={profileInfo.nickname}
+        mannerScore={profileInfo.mannerScore}
+        goodReviewCount={profileInfo.goodReviewCount}
+        badReviewCount={profileInfo.badReviewCount}
+      />
+      {/* 타인 책장 정보 */}
+      <BookcaseContainer
+        userId={bookcaseInfo.userId}
+        name={bookcaseInfo.nickname}
+        imageArray={bookcaseInfo.displayBooks.map((book) => book.cover)}
+        isFollowed={bookcaseInfo.follow}
+      />
     </div>
   );
 };

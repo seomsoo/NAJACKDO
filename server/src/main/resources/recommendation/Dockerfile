@@ -4,6 +4,9 @@ FROM python:3.10
 # Set the working directory
 WORKDIR /app
 
+# 필수 라이브러리 설치
+RUN apt-get update && apt-get install -y libgl1-mesa-glx
+
 # Copy the requirements file into the container
 COPY requirements.txt .
 

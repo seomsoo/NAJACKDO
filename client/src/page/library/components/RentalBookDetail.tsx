@@ -37,7 +37,7 @@ const RentalBookDetail = ({ book }: BookInfoProps) => {
       </div>
       <div className="m-4">
         <SellerInfo />
-        <BookInfo book={book} rental />
+        {/* <BookInfo book={book} rental /> */}
         <DetectionInfo />
         <SellerReview />
         <DetailRecommendBook />

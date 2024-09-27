@@ -10,6 +10,7 @@ import org.locationtech.jts.geom.PrecisionModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,11 +30,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class LocationService {
+
+	private final RedisTemplate<String, String> redisTemplate;
 
 	private final LocationRepository locationRepository;
 	private final ActivityAreaSettingRepository activityAreaSettingRepository;
 	private final UserRepository userRepository;
+
+	private static final String Location_KEY = "location:";
 
 	/**
 	 * 현재 위치를 기준으로 가까운 위치를 조회한다.
@@ -45,7 +51,8 @@ public class LocationService {
 	 */
 	public Page<LocationData.Search> getNearLocation(LocationData.Request request, Pageable pageable) {
 
-		Page<Location> locations = locationRepository.findLocationsByDistance(getPoint(request.getLatitude(), request.getLongitude()), pageable);
+		Page<Location> locations = locationRepository.findLocationsByDistance(
+			getPoint(request.getLatitude(), request.getLongitude()), pageable);
 		List<LocationData.Search> searchResults = locations.stream()
 			.map(LocationData.Search::fromEntity)
 			.collect(Collectors.toList());
@@ -96,10 +103,8 @@ public class LocationService {
 		log.info("result3: {}", result.get(2).size());
 		log.info("result4: {}", result.get(3).size());
 
-
 		return result;
 	}
-
 
 	@Transactional
 	public void registActivityArea(User user, LocationData.Regist request) {
@@ -110,7 +115,8 @@ public class LocationService {
 
 		ActivityAreaSetting existingSetting = activityAreaSettingRepository.findByUser(user)
 			.orElseGet(() -> {
-				ActivityAreaSetting newSetting = ActivityAreaSetting.create(user, location, request.getDistanceMeters());
+				ActivityAreaSetting newSetting = ActivityAreaSetting.create(user, location,
+					request.getDistanceMeters());
 				user.setActivityAreaSetting(newSetting);
 				userRepository.save(user);
 				log.info("newSetting: {}", newSetting.getDistanceMeters());
@@ -124,14 +130,26 @@ public class LocationService {
 
 		activityAreaSettingRepository.save(existingSetting);
 		userRepository.save(user);
-	}
 
+		redisTemplate.delete(Location_KEY + user.getId());
+
+		List<LocationData.SearchWithGeom> result = locationRepository.findLocationsWithPoligonByDistance(
+				location.getLocationPoint(),
+				request.getDistanceMeters()).stream()
+			.map(LocationData.SearchWithGeom::onlyLocationCode)
+			.toList();
+
+		redisTemplate.opsForSet().add(Location_KEY + user.getId(), result.stream()
+			.map(LocationData.SearchWithGeom::getLocationCode)
+			.map(String::valueOf)
+			.toArray(String[]::new));
+
+	}
 
 	private Point getPoint(double latitude, double longitude) {
 		GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 4326);
 		Point point = geometryFactory.createPoint(new Coordinate(longitude, latitude));
 		return point;
 	}
-
 
 }

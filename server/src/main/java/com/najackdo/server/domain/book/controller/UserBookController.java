@@ -2,6 +2,8 @@ package com.najackdo.server.domain.book.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,4 +36,22 @@ public class UserBookController {
 	public SuccessResponse<UserBookData.InfoResponse> getUserBookInfo(@PathVariable Long userBookId) {
 		return SuccessResponse.of(userBooksService.getUserBookInfo(userBookId));
 	}
+
+	/**
+	 * 대여료 수정
+	 *
+	 * @reqest updateRentalCost
+	 * @return {@link }
+	 */
+	@PostMapping("/update/rental-cost")
+	@Operation(summary = "대여료 수정", description = "대여료 수정")
+	public SuccessResponse<Void> updateRentalCost(
+		@RequestBody UserBookData.UpdateRentalCost updateRentalCost
+	) {
+		log.info("userBookId : {}, updateRentalCost : {}", updateRentalCost.getUserBookId(),
+			updateRentalCost.getUpdateRentalCost());
+		userBooksService.updateRentalCost(updateRentalCost.getUserBookId(), updateRentalCost.getUpdateRentalCost());
+		return SuccessResponse.empty();
+	}
+
 }

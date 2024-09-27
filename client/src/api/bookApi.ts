@@ -1,13 +1,13 @@
 import { BaseResponse } from "atoms/Base.type";
-import { IInterestBook } from "atoms/Book.type";
+import { IBookDetail } from "atoms/Book.type";
 import instance from "./clientApi";
 
 // 관심 도서 조회
-export const getInterestbook = async (): Promise<IInterestBook[]> => {
+export const getInterestbook = async (): Promise<IBookDetail[]> => {
   try {
     const {
       data: { success, data },
-    } = await instance.get<BaseResponse<IInterestBook[]>>("/book/interest");
+    } = await instance.get<BaseResponse<IBookDetail[]>>("/book/interest");
 
     if (!success) {
       throw new Error("관심 있는 책 조회 실패");
@@ -79,11 +79,11 @@ export const getBookInfo = async ({
 }: {
   kind: string;
   keyword: string | number;
-}): Promise<IInterestBook> => {
+}): Promise<IBookDetail> => {
   try {
     const {
       data: { success, data },
-    } = await instance.get<BaseResponse<IInterestBook>>(
+    } = await instance.get<BaseResponse<IBookDetail>>(
       `/book?${kind}=${keyword}`
     );
 
@@ -97,4 +97,19 @@ export const getBookInfo = async ({
   } catch (error) {
     throw new Error("도서 검색 실패", error);
   }
+};
+
+// 도서 상세 조회
+export const getBookDetail = async (bookId: number): Promise<IBookDetail> => {
+  const {
+    data: { success, data },
+  } = await instance.get<BaseResponse<IBookDetail>>(`/book/${bookId}`);
+
+  console.log("get", data);
+
+  if (!success) {
+    throw new Error("도서 상세 조회 실패");
+  }
+
+  return data;
 };

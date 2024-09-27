@@ -1,21 +1,29 @@
-import React from 'react';
-
-// const App = ({ message }: AppProps) => <div>{message}</div>;
-// const App<AppProps> = ({ message }) => <div>{message}</div>;
-
 interface UserInfoProps {
   userName: string;
   userLocation: string;
   userImage: string;
-  gradeImage: string;
+  mannerScore: number; // mannerScore 추가
 }
 
 const UserInfo = ({
   userName,
   userLocation,
   userImage,
-  gradeImage,
+  mannerScore, // mannerScore 받기
 }: UserInfoProps) => {
+  // mannerScore에 따른 gradeImage 설정
+  let gradeImage = '/images/mannertree/씨앗.png'; // 기본값: 씨앗
+
+  if (mannerScore >= 80) {
+    gradeImage = '/images/mannertree/숲.png';
+  } else if (mannerScore >= 60) {
+    gradeImage = '/images/mannertree/나무.png';
+  } else if (mannerScore >= 40) {
+    gradeImage = '/images/mannertree/가지.png';
+  } else if (mannerScore >= 20) {
+    gradeImage = '/images/mannertree/새싹.png';
+  }
+
   return (
     <div className='flex flex-row items-center'>
       <img

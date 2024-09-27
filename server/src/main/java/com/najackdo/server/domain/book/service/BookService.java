@@ -1,14 +1,24 @@
 package com.najackdo.server.domain.book.service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.najackdo.server.core.exception.BaseException;
 import com.najackdo.server.core.exception.ErrorCode;
 import com.najackdo.server.domain.book.dto.BookData;
+import com.najackdo.server.domain.book.entity.Book;
 import com.najackdo.server.domain.book.entity.UserBook;
 import com.najackdo.server.domain.book.repository.BookRepository;
 import com.najackdo.server.domain.user.entity.User;
@@ -16,15 +26,25 @@ import com.najackdo.server.domain.user.repository.InterestUserRepository;
 import com.najackdo.server.domain.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class BookService {
 
+	private final RedisTemplate<String, Object> redisTemplate;
+
 	private final BookRepository bookRepository;
 	private final UserRepository userRepository;
 	private final InterestUserRepository interestUserRepository;
+
+	private static final String Location_KEY = "location:";
+
+	private static String apply(Object value) {
+		return ((Map<String, String>)value).get("value");
+	}
 
 	public List<BookData.BookCase> getBookCaseInterest(User user) {
 		List<UserBook> userBooks = bookRepository.findBookCaseInterestByUser(user);
@@ -104,5 +124,88 @@ public class BookService {
 			user.getProfileImage(),
 			displayBooks
 		);
+	}
+
+
+	public BookData.Search getBookByIsbn(Long isbn) {
+		Book book = bookRepository.findByIsbn(isbn).orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_BOOK));
+
+		return BookData.Search.of(book);
+
+	}
+
+	public BookData.Search getBookByTitle(String title) {
+		Book book = bookRepository.findByTitle(title).orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_BOOK));
+
+		return BookData.Search.of(book);
+	}
+
+	public Page<BookData.BookCase> getNearBookCase(User user, Pageable pageable) {
+		String userLocationKey = Location_KEY + user.getId();
+		Set<Object> myLocationCodes = redisTemplate.opsForSet().members(userLocationKey);
+
+		if (myLocationCodes == null || myLocationCodes.isEmpty()) {
+			log.info("myLocationCodes is empty");
+			return Page.empty();
+		}
+
+		Set<String> allUserKeys = redisTemplate.keys(Location_KEY + "*");
+		Set<String> allUserKeysWithOutMe = Objects.requireNonNull(allUserKeys).stream()
+			.filter(key -> !key.equals(userLocationKey))
+			.collect(Collectors.toSet());
+
+		Set<Long> nearUserIds = new HashSet<>();
+
+		for (String otherKey : allUserKeysWithOutMe) {
+			Set<Object> otherUserLocations = redisTemplate.opsForSet().members(otherKey);
+
+			if (otherUserLocations != null) {
+				for (Object location : myLocationCodes) {
+					if (otherUserLocations.contains(location)) {
+						nearUserIds.add(Long.valueOf(otherKey.replace(Location_KEY, "")));
+					}
+				}
+			}
+		}
+
+		if (nearUserIds.isEmpty()) {
+			log.info("nearUserIds is empty");
+			return Page.empty();
+		}
+
+		// 페이징 처리
+		List<Long> nearUserIdsList = new ArrayList<>(nearUserIds);
+		int totalElements = nearUserIdsList.size();
+		int start = Math.toIntExact(pageable.getOffset());
+		int end = Math.min(start + pageable.getPageSize(), totalElements);
+
+		List<Long> paginatedUserIds = nearUserIdsList.subList(start, end);
+
+		List<BookData.BookCase> bookCases = new ArrayList<>();
+		for (Long userid : paginatedUserIds) {
+			User findUser = userRepository.findById(userid)
+				.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_USER));
+
+			boolean isFollow = interestUserRepository.existsByFollowerAndFollowing(user, findUser);
+
+			List<BookData.DisplayBook> displayBooks = bookRepository.findBookCaseByUserId(findUser).stream()
+				.map(userBook -> BookData.DisplayBook.of(
+					userBook.getBook().getId(),
+					userBook.getId(),
+					userBook.getBook().getCover(),
+					userBook.getBookStatus()
+				))
+				.collect(Collectors.toList());
+
+			bookCases.add(BookData.BookCase.of(
+				findUser.getId(),
+				isFollow,
+				findUser.getNickName(),
+				findUser.getProfileImage(),
+				displayBooks
+			));
+		}
+
+		return new PageImpl<>(bookCases, pageable, totalElements);
 	}
 }

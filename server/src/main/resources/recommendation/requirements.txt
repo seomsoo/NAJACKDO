@@ -3,3 +3,12 @@ uvicorn
 pymongo
 pandas
 scikit-learn
+ultralytics
+boto3
+psycopg2
+python-dotenv
+pydantic
+opencv-python
+Pillow
+numpy
+python-multipart==0.0.10

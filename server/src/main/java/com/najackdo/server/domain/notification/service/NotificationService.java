@@ -18,12 +18,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
-
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,10 +44,18 @@ public class NotificationService {
 
     private final NotificationRepository notificationRepository;
     // 안 본 알람 조회
-    public List<NotificationDto.Notification> searchByUserId(long userId, NotificationDto.NotificationPaging paging){
+    public Page<NotificationDto.Notification> searchByUserId(long userId, Pageable pageable ){
 
-        return notificationRepository.searchById(userId,paging);
+        return notificationRepository.searchById(userId,pageable);
     }
+    // 알람 읽음 처리
+    @Transactional
+    public void readSuccess(){
+        notificationRepository.updateNotificationIsRead();
+
+        return;
+    }
+
     // 반납 알림
     @EventListener
     @Transactional(propagation = Propagation.REQUIRES_NEW)

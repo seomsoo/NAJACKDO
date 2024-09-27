@@ -64,7 +64,7 @@ function App() {
 
   const popupPaths = ["/kapay/approve", "/kapay/cancel", "/kapay/fail"];
   const showHeaderPaths = ["/"];
-  const hideFooterPaths = ["/sign-in", "/bookdetail/rental", "/bookdetail/mybook"];
+  const hideFooterPaths = ["/sign-in", "/book/:bookId/rental", "/book/:bookId/mybook"];
 
   const { accessToken } = useAuthStore.getState();
   const { isSurvey, isLocation, setIsSurvey, setIsLocation } =

@@ -116,21 +116,18 @@ public class KapayService {
 				user = userRepository.findById(1L)
 					.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_USER));
 				Integer totalAmount = approveResponse.getAmount().getTotal(); // 결제 금액
-				log.info("totalAmount: {}", totalAmount);
 				eventPublisher.publishEvent(new UserPaymentEvent(user, totalAmount));
 			}
 
 			return ResponseEntity.ok(approveResponse);
 
 		} catch (HttpStatusCodeException ex) {
-			log.error("KakaoPay API error1: {}", ex.getResponseBodyAsString());
 			String responseBody = ex.getResponseBodyAsString();
 			ObjectMapper objectMapper = new ObjectMapper();
 			JsonNode jsonNode;
 			try {
 				jsonNode = objectMapper.readTree(responseBody);
 			} catch (JsonProcessingException e) {
-				log.error("Error processing JSON: {}", e.getMessage());
 				return ResponseEntity.status(ex.getStatusCode())
 					.body(ErrorResponse.of(ErrorCode.KAKAO_PAY_API_ERROR, "Error processing JSON", null));
 			}
@@ -143,7 +140,6 @@ public class KapayService {
 			return ResponseEntity.status(ex.getStatusCode())
 				.body(ErrorResponse.of(ErrorCode.KAKAO_PAY_API_ERROR, errorMessage, extrasNode));
 		} catch (Exception ex) {
-			log.error("KakaoPay API error2: {}", ex.getMessage());
 			return ResponseEntity.status(500).body(ErrorResponse.of(ErrorCode.SERVER_ERROR, ex.getMessage()));
 		}
 	}
