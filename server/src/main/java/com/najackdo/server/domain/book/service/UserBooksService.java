@@ -157,4 +157,15 @@ public class UserBooksService {
 		return UserBookData.InfoResponse.of(owner, locationName, book, userBook, userBookDetail);
 
 	}
+
+	@Transactional
+	public void updateRentalCost(Long userBookId, Integer updateRentalCost) {
+
+		UserBookDetail userBookDetail = userBookDetailRepository.findByUserBookId(userBookId).orElseThrow(
+			() -> new BaseException(ErrorCode.BOOK_DETAIL_NOT_FOUND)
+		);
+
+		userBookDetail.updateRentalCost(updateRentalCost);
+
+	}
 }

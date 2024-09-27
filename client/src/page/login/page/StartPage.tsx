@@ -11,7 +11,7 @@ const StartPage: React.FC = () => {
   }, []);
 
   return (
-    <div className='flex flex-col items-center h-screen my-32'>
+    <div className='flex flex-col items-center mt-20'>
       <div className='text-2xl flex flex-col items-center gap-2 animate-fadeIn'>
         <span>
           <span className='maplestory text-4xl text-[#4E5944]'>
@@ -34,11 +34,6 @@ const StartPage: React.FC = () => {
         <br />
         <span className='font-semibold text-gray-500'>- 빌 게이츠</span>
       </p>
-      <div className='mt-auto w-full'>
-        <button className='bg-[#776B5D] font-bold w-full text-lg text-white py-3 rounded-lg animate-fadeIn'>
-          시작하기
-        </button>
-      </div>
     </div>
   );
 };

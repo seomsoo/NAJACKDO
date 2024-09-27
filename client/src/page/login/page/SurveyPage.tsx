@@ -1,17 +1,25 @@
-import { useState } from "react";
-import { IoIosArrowBack } from "react-icons/io";
-import Consent from "../components/Consent";
-import Age from "../components/Age";
-import Gender from "../components/Gender";
-import Nickname from "../components/Nickname";
-import Interest from "../components/Interest";
-import useSurveyStore from "store/useSurveyStore";
-import { setUserInfo } from "api/profileApi";
-import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { IoIosArrowBack } from 'react-icons/io';
+import Consent from '../components/Consent';
+import Age from '../components/Age';
+import Gender from '../components/Gender';
+import Nickname from '../components/Nickname';
+import Interest from '../components/Interest';
+import useSurveyStore from 'store/useSurveyStore';
+import { setUserInfo } from 'api/profileApi';
+import { useNavigate } from 'react-router-dom';
+import StartPage from './StartPage';
 
 const SurveyPage = () => {
   const [currentStep, setCurrentStep] = useState(1); // 현재 단계 관리
-  const { age, gender, nickname, avaliableNickname, interests, consentAccepted } = useSurveyStore();
+  const {
+    age,
+    gender,
+    nickname,
+    avaliableNickname,
+    interests,
+    consentAccepted,
+  } = useSurveyStore();
   const navigate = useNavigate();
 
   // 완료 버튼 클릭 시 호출되는 API
@@ -23,11 +31,11 @@ const SurveyPage = () => {
         nickname,
         interest: interests,
       });
-      console.log("설문 완료 및 정보 저장 성공");
+      console.log('설문 완료 및 정보 저장 성공');
       // 추가적인 완료 처리 로직 (예: 페이지 이동)
-      navigate("/setting/location");
+      navigate('/setting/location');
     } catch (error) {
-      console.error("설문 완료 시 오류:", error);
+      console.error('설문 완료 시 오류:', error);
       // 오류 처리 로직 (예: 사용자에게 오류 메시지 표시)
     }
   };
@@ -42,7 +50,9 @@ const SurveyPage = () => {
       case 3:
         return nickname.length > 0 && avaliableNickname; // 닉네임 입력 완료 확인
       case 4:
-        return interests.length >= 3; // 관심 분야 3개 이상 선택 확인
+        return interests.length >= 3;
+      case 5:
+        return true; // 관심 분야 3개 이상 선택 확인
       default:
         return false;
     }
@@ -51,7 +61,7 @@ const SurveyPage = () => {
   // 다음 단계로 이동하는 함수
   const handleNextStep = () => {
     if (checkStepCompletion()) {
-      if (currentStep < 4) {
+      if (currentStep < 5) {
         setCurrentStep((prevStep) => prevStep + 1);
       } else {
         handleComplete();
@@ -78,28 +88,32 @@ const SurveyPage = () => {
         return <Nickname />;
       case 4:
         return <Interest />;
+      case 5:
+        return <StartPage />;
       default:
         return null;
     }
   };
 
   return (
-    <div className="flex flex-col px-4 h-screen">
-      {currentStep > 1 && (
-        <button className="pt-7" onClick={handlePrevStep}>
-          <IoIosArrowBack className="text-4xl" />
+    <div className='flex flex-col px-4 pt-14'>
+      {currentStep > 1 && currentStep < 5 && (
+        <button className='pt-7' onClick={handlePrevStep}>
+          <IoIosArrowBack className='text-4xl' />
         </button>
       )}
       {renderStep()}
-      <div className="mt-auto w-full mb-32">
+      <div className='o w-full pt-12'>
         <button
           onClick={handleNextStep}
           className={`bg-[#776B5D] font-bold w-full text-lg text-white py-3 rounded-lg ${
-            checkStepCompletion() ? "opacity-100" : "opacity-50 cursor-not-allowed"
+            checkStepCompletion()
+              ? 'opacity-100'
+              : 'opacity-50 cursor-not-allowed'
           }`}
           disabled={!checkStepCompletion()}
         >
-          {currentStep === 4 ? "완료" : "다음"}
+          {currentStep === 5 ? '시작하기' : '다음'}
         </button>
       </div>
     </div>

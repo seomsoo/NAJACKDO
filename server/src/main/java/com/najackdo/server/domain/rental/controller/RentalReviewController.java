@@ -36,4 +36,5 @@ public class RentalReviewController {
 	public SuccessResponse<Void> review(@CurrentUser User user, @RequestBody ReviewData.ReviewRequest reviewRequest) {
 		return reviewService.review(user, reviewRequest);
 	}
+
 }

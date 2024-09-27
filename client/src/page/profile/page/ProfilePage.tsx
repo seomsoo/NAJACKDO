@@ -37,13 +37,14 @@ const ProfilePage = () => {
       />
       {/* 신뢰 나무 */}
       <MannerTree
+        nickname={profileInfo.nickname}
         mannerScore={profileInfo.mannerScore}
         goodReviewCount={profileInfo.goodReviewCount}
         badReviewCount={profileInfo.badReviewCount}
       />
 
       {/* 나의 책잎 */}
-      <MyLeaf leaf={profileInfo.cash} />
+      <MyLeaf />
       <LogoutButton />
     </div>
   );

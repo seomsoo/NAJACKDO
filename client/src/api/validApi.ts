@@ -9,8 +9,6 @@ export const getValid = async (): Promise<IValid> => {
       data: { success, data },
     } = await instance.get<BaseResponse<IValid>>("/user/valid");
 
-    console.log(data, success);
-
     if (!success) {
       throw new Error("유효성 검사에 실패했습니다.");
     }

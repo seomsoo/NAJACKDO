@@ -1,10 +1,11 @@
 import { IoIosArrowBack } from 'react-icons/io';
 import Review from '../components/Review';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { getUserInfo } from 'api/profileApi';
+import { getOtherProfile } from 'api/profileApi';
 
 const GradePage = () => {
+  const { nickname } = useParams();
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);
@@ -12,18 +13,19 @@ const GradePage = () => {
 
   const {
     data: profileInfo,
-    isLoading,
-    isError,
+    isLoading: isOtherProfileLoading,
+    isError: isOtherProfileError,
   } = useQuery({
-    queryKey: ['profile'],
-    queryFn: getUserInfo,
+    queryKey: ['profile', nickname],
+    queryFn: () => getOtherProfile(nickname || ''),
+    enabled: !!nickname,
   });
 
-  if (isLoading) {
+  if (isOtherProfileLoading) {
     return <div>로딩 중...</div>;
   }
 
-  if (isError) {
+  if (isOtherProfileError) {
     return <div>오류가 발생했습니다.</div>;
   }
 
@@ -73,7 +75,7 @@ const GradePage = () => {
       </p>
 
       <div className='mt-6 flex justify-center'>
-        <div className='w-[340px] p-3 rounded-lg bg-[#79AC78]/20'>
+        <div className='w-full p-3 rounded-lg bg-[#79AC78]/20'>
           <p className='text-[15px] font-medium '>받은 매너 칭찬</p>
           {reviewArray.map((item, index) => {
             return (
@@ -84,7 +86,7 @@ const GradePage = () => {
       </div>
 
       <div className='mt-4 flex justify-center'>
-        <div className='w-[340px] p-3 rounded-lg bg-[#B99470]/20'>
+        <div className='w-full p-3 rounded-lg bg-[#B99470]/20'>
           <p className='text-[15px] font-medium '>받은 비매너</p>
           {reviewArray.map((item, index) => {
             return (

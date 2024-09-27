@@ -1,8 +1,10 @@
 import Quagga from "@ericblade/quagga2";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 interface ScannerProps {
-  onDetected: (result: string) => void;
+  onDetected: (result: number) => void;
+  scan: boolean;
+  setScan: (scan: boolean) => void;
 }
 
 const config = {
@@ -30,7 +32,7 @@ const config = {
   locate: false, // 바코드를 자동으로 찾을 지 여부 -> 우리는 네모칸 안으로 들어와야 스캔
 };
 
-const Scanner = ({ onDetected }: ScannerProps) => {
+const Scanner = ({ onDetected, scan, setScan }: ScannerProps) => {
   useEffect(() => {
     Quagga.init(config, (error) => {
       Quagga.start();
@@ -52,15 +54,16 @@ const Scanner = ({ onDetected }: ScannerProps) => {
     onDetected(result.codeResult.code);
   };
 
-  const [scan, setScan] = useState<boolean>(true);
-
   useEffect(() => {
     const timer = setTimeout(() => {
       Quagga.stop();
       setScan(false);
-    }, 5000);
+    }, 300000);
 
-    return () => clearTimeout(timer);
+    return () => {
+      Quagga.stop();
+      clearTimeout(timer);
+    };
   }, []);
 
   return <div id="interactive" className="viewport w-4/5 h-4/5 mt-10" />;

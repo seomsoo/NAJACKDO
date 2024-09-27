@@ -1,4 +1,3 @@
-import ApplyBookInfo from "page/bookapply/components/ApplyBookInfo";
 import { useState } from "react";
 import { HiOutlineCamera } from "react-icons/hi2";
 import { IoChevronBack } from "react-icons/io5";
@@ -54,12 +53,13 @@ const BookcaseApplyPage = () => {
           <div className="space-y-4">
             {books.map((book, index) => {
               return (
-                <ApplyBookInfo
-                  book={book}
-                  key={index}
-                  bookcase
-                  setSelectedCount={setSelectedCount}
-                />
+                <></>
+                // <ApplyBookInfo
+                //   book={book}
+                //   key={index}
+                //   bookcase
+                //   setSelectedCount={setSelectedCount}
+                // />
               );
             })}
           </div>

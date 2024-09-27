@@ -67,7 +67,9 @@ const OtherProfilePage = () => {
         userImage={profileInfo.profileImage}
         mannerScore={profileInfo.mannerScore}
       />
+      {/* 신뢰나무 */}
       <MannerTree
+        nickname={profileInfo.nickname}
         mannerScore={profileInfo.mannerScore}
         goodReviewCount={profileInfo.goodReviewCount}
         badReviewCount={profileInfo.badReviewCount}
