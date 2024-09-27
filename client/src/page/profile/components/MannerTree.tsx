@@ -7,22 +7,27 @@ interface MannerTreeProps {
   mannerScore: number;
   goodReviewCount: number;
   badReviewCount: number;
+  nickname: string;
 }
 
 const MannerTree = ({
   mannerScore,
   goodReviewCount,
   badReviewCount,
+  nickname,
 }: MannerTreeProps) => {
   const navigate = useNavigate();
   const goToGrade = () => {
-    navigate('/profile/my-grade');
+    navigate(`/profile/${nickname}/my-grade`);
   };
 
   const totalReviewCount = goodReviewCount + badReviewCount;
 
   return (
-    <div onClick={goToGrade} className='my-6 bg-white/30 shadow rounded-lg p-4'>
+    <div
+      onClick={goToGrade}
+      className='cursor-pointer my-6 bg-white/30 shadow rounded-lg p-4'
+    >
       <div className='flex flex-row items-center mb-2'>
         <p className='font-bold'>신뢰 나무</p>
         <IoIosArrowForward size={15} color='black' />
