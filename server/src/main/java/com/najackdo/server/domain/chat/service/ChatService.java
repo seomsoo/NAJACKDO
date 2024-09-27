@@ -75,7 +75,7 @@ public class ChatService {
 
 	}
 
-	public List<Chat.Message> getChatList(Long roomId, User user) {
+	public Chat getChatList(Long roomId, User user) {
 		// chatRoomRepository.findById(roomId)
 		// 	.orElseThrow(() -> new IllegalArgumentException("채팅방이 존재하지 않습니다."));
 
@@ -83,9 +83,10 @@ public class ChatService {
 		// if (!usersByRoomId.contains(user)) {
 		// 	throw new IllegalArgumentException("사용자가 채팅방에 존재하지 않습니다.");
 		// }
+		Chat chat = chatRepository.findByRoomId(roomId);
+		chat.setUserId(user.getId());
 
-
-		return chatRepository.findByRoomId(roomId).getMessages();
+		return chat;
 
 	}
 }

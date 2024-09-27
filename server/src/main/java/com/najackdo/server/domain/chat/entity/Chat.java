@@ -19,6 +19,7 @@ public class Chat {
 
 	@Id
 	private String id;
+	private Long userId;
 	private Long roomId; // 방 번호
 	private List<Message> messages = new ArrayList<>(); // 채팅 메시지
 
