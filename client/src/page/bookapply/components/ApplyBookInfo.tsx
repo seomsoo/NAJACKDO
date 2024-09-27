@@ -1,14 +1,10 @@
+import { IBookDetail } from "atoms/Book.type";
+import CategoryTag from "components/common/CategoryTag";
 import { useState } from "react";
 import { FaCheck } from "react-icons/fa";
 
 interface ApplyBookInfoProps {
-  book: {
-    title: string;
-    author: string[];
-    isbn: string;
-    imageUrl: string;
-    category: string[];
-  };
+  book: IBookDetail;
   bookcase?: boolean;
   setSelectedCount?: (count: (prev: number) => number) => void;
 }
@@ -18,6 +14,7 @@ const ApplyBookInfo = ({
   bookcase = false,
   setSelectedCount,
 }: ApplyBookInfoProps) => {
+  const categoryList = book.genre.split(">");
   const [isChecked, setIsChecked] = useState<boolean>(true);
 
   const handleClick = () => {
@@ -42,30 +39,16 @@ const ApplyBookInfo = ({
           {isChecked && <FaCheck size={11} color="white" />}
         </div>
       )}
-      <img src="/chemistryCover.png" alt="why 화학" width={90} height={125} />
+      <img src={book.cover} alt={book.title} width={90} height={125} />
       <div className="flex flex-col text-sm ml-3">
         <span className="text-base font-bold">{book.title}</span>
         <div className="flex flex-row">
-          {book.author.map((author, index) => {
-            return (
-              <span key={index} className="pt-1 pb-2 pr-2">
-                {author}
-              </span>
-            );
-          })}
+          {book.author.split(",").join(" | ")}
         </div>
         <span className="pb-2">ISBN: {book.isbn}</span>
         <div className="flex flex-wrap text-xs">
-          {book.category.map((category, index) => {
-            return (
-              <span
-                key={index}
-                className="bg-[#79AC78] text-[#FEFAE0] px-2 py-1 m-0.5 rounded-xl"
-              >
-                {category}
-              </span>
-            );
-          })}
+          <CategoryTag category={categoryList[1]} />
+          <CategoryTag category={categoryList[2]} />
         </div>
       </div>
     </div>

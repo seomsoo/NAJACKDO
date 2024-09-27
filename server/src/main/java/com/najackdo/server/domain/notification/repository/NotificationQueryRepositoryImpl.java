@@ -7,6 +7,9 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -23,42 +26,31 @@ public class NotificationQueryRepositoryImpl implements NotificationQueryReposit
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<NotificationDto.Notification> searchById(long userId,NotificationDto.NotificationPaging paging) {
-        OrderSpecifier[] orderSpecifiers = createOrderSpecifier(paging);
-
-        if(paging.getPageNumber()>0){
-            paging.setPageNumber((paging.getPageNumber()-1)*paging.getPageSize());
-        }else{
-            paging.setPageNumber(0);
-        }
-
-        return queryFactory.select(Projections.constructor(NotificationDto.Notification.class,
+    public Page<NotificationDto.Notification> searchById(long userId, Pageable pageable) {
+        List<NotificationDto.Notification> content = queryFactory.select(Projections.constructor(NotificationDto.Notification.class,
                                 user.id,
-                        notification.content,
-                        notification.title,
-                        notification.createdAt,
-                        notification.updatedAt,
-                        notification.type
+                                notification.content,
+                                notification.title,
+                                notification.createdAt,
+                                notification.updatedAt,
+                                notification.type
                         )
                 ).from(notification)
                 .join(notification.user,user)
                 .where(notification.isRead.eq(false),user.id.eq(userId))
-                .orderBy(orderSpecifiers)
-                .offset(paging.getPageNumber())
-                .limit(paging.getPageSize())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
+
+        long total = queryFactory
+                .select(notification)
+                .from(notification)
+                .join(notification.user,user)
+                .where(notification.isRead.eq(false),user.id.eq(userId))
+                .fetchCount();
+
+        return new PageImpl<>(content, pageable, total);
     }
 
-
-    private OrderSpecifier[] createOrderSpecifier(NotificationDto.NotificationPaging paging) {
-
-        List<OrderSpecifier> orderSpecifiers = new ArrayList<>();
-        if (paging.getOrderType()== OrderType.ASC) {
-            orderSpecifiers.add(new OrderSpecifier(Order.ASC, notification.createdAt));
-        } else{
-            orderSpecifiers.add(new OrderSpecifier(Order.DESC, notification.createdAt));
-        }
-        return orderSpecifiers.toArray(new OrderSpecifier[orderSpecifiers.size()]);
-    }
 
 }

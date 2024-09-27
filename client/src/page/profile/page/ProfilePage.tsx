@@ -37,6 +37,7 @@ const ProfilePage = () => {
       />
       {/* 신뢰 나무 */}
       <MannerTree
+        nickname={profileInfo.nickname}
         mannerScore={profileInfo.mannerScore}
         goodReviewCount={profileInfo.goodReviewCount}
         badReviewCount={profileInfo.badReviewCount}

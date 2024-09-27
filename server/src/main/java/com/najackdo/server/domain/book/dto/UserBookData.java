@@ -68,6 +68,7 @@ public class UserBookData {
 		private String genre;
 		private String bookDescription;
 		// * UserBook
+		private Long userBookId;
 		private String bookStatus;
 		// * UserBookDetail
 		private Integer ondayPrice;
@@ -96,6 +97,7 @@ public class UserBookData {
 			response.bookCover = book.getCover();
 			response.genre = book.getGenre();
 			response.bookDescription = book.getDescription();
+			response.userBookId = userBook.getId();
 			response.bookStatus = userBook.getBookStatus().name();
 			response.ondayPrice = userBookDetail.getOnedayPrice();
 			response.backImagePath = userBookDetail.getBackImagePath();
@@ -109,4 +111,9 @@ public class UserBookData {
 		}
 	}
 
+	@Data
+	public static class UpdateRentalCost {
+		private Long userBookId;
+		private Integer updateRentalCost;
+	}
 }

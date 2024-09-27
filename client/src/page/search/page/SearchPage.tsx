@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import { getAutoSearchText, getPopularSearch, getRecentSearch } from "api/searchApi";
 import { IAutoArray } from "atoms/Search.type";
 import { Input } from "components/ui/input";
@@ -7,7 +8,6 @@ import RecentSearch from "page/search/components/RecentSearch";
 import RecommendBook from "page/search/components/RecommendBook";
 import { useState } from "react";
 import { IoIosArrowBack, IoIosSearch } from "react-icons/io";
-import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 const SearchPage = () => {
