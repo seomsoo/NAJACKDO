@@ -1,50 +1,92 @@
 import { useNavigate } from 'react-router-dom';
 import { IoIosArrowBack } from 'react-icons/io';
 import Alarm from 'page/alarm/components/Alarm';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import {getAlarm} from 'api/alarmApi';
+import { useCallback, useEffect, useRef } from 'react';
+import { getAlarmReadSucess } from 'api/alarmApi';
+
 
 const AlarmPage = () => {
-  const alarmHistoryArray = [
-    {
-      type: '대출 신청',
-      message: '김도영님이 ‘당신이 누군가를 죽였다’ 책에 대출을 신청했습니다.',
-      time: new Date(),
-    },
-    {
-      type: '대출 신청',
-      message: '김도영님이 ‘당신이 누군가를 죽였다’ 책에 대출을 신청했습니다.',
-      time: '2024-09-10T09:30:00',
-    },
-    {
-      type: '대출 가능',
-      message: '예약하신 ‘당신이 누군가를 죽였다’ 책이 대출 가능합니다.',
-      time: '2024-09-10T07:30:00',
-    },
-    {
-      type: '좋아요',
-      message: '김도영님이 회원님의 책장을 좋아합니다. ',
-      time: '2024-09-09T14:30:00',
-    },
-    {
-      type: '반납 7일전',
-      message: '대출하신 ‘당신이 누군가를 죽였다’ 외 3권의 반납 7일 전 입니다.',
-      time: '2024-09-09T08:30:00',
-    },
-    {
-      type: '반납 3일전',
-      message: '대출하신 ‘당신이 누군가를 죽였다’ 외 3권의 반납 3일 전 입니다.',
-      time: '2024-07-09T08:30:00',
-    },
-    {
-      type: '반납 1일전',
-      message: '대출하신 ‘당신이 누군가를 죽였다’ 외 3권의 반납 1일 전 입니다.',
-      time: '2023-09-08T09:30:00',
-    },
-  ];
+
 
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);
   };
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+
+
+
+  
+  const {
+    data: alarmData,
+    isLoading: isAlarmLoading,
+    isError: isAlarmError,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: ["alarms"],
+    queryFn: ({ pageParam = 0 }) => getAlarm(pageParam as number),
+    getNextPageParam: (lastPage, pages) => {
+      if (!lastPage.last) {
+        return pages.length;
+      }
+      return undefined;
+    },
+    initialPageParam: 0,
+  });
+  
+  
+
+  const alarmArray = alarmData?.pages?.flatMap((page) => page.content) || [];
+
+  // 알람 리스트 읽기 성공
+  const {
+    data: success,
+    isLoading: isUserLoading,
+    isError: isUserError,
+  } = useQuery({
+    queryKey: ['success'],
+    queryFn: getAlarmReadSucess,
+    enabled: alarmArray.length > 0 && !isAlarmError,
+  });
+  console.log("AlarmReadSucess", alarmArray.length > 0 && !isAlarmError);
+  console.log("length", alarmArray.length);
+  console.log("isAlarmError", isAlarmError);
+
+  const handleObserver = useCallback(
+    (entries) => {
+      const target = entries[0];
+      if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    },
+    [fetchNextPage, hasNextPage, isFetchingNextPage]
+  );
+
+  useEffect(() => {
+    const option = {
+      root: null, // viewport as root
+      rootMargin: "20px",
+      threshold: 1.0,
+    };
+    const observer = new IntersectionObserver(handleObserver, option);
+    if (loadMoreRef.current) observer.observe(loadMoreRef.current);
+
+    return () => {
+      if (loadMoreRef.current) observer.unobserve(loadMoreRef.current);
+    };
+  }, [handleObserver]);
+
+  if (isAlarmLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isAlarmError) {
+    return <div>Error loading location data.</div>;
+  }
 
   return (
     <div>
@@ -55,16 +97,22 @@ const AlarmPage = () => {
         <p className='text-2xl font-bold '>알림</p>
       </div>
 
-      {alarmHistoryArray.map((item, index) => {
+      {alarmArray.map((item, index) => {
         return (
           <Alarm
             key={index}
+            userId={item.userId}
+            content={item.content}
+            title={item.title}
+            createAt={item.createAt}
+            updateAt={item.updateAt}
             type={item.type}
-            message={item.message}
-            time={new Date(item.time)}
           />
         );
       })}
+            <div ref={loadMoreRef} className="loading">
+        {isFetchingNextPage ? "Loading more..." : ""}
+      </div>
     </div>
   );
 };

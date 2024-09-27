@@ -29,6 +29,7 @@ public class RentalController {
 	 * 렌탈 신청 api
 	 *
 	 * @param rentalRequest
+	 * @return {@link SuccessResponse<Void>}
 	 */
 	@PostMapping("")
 	@Operation(summary = "렌탈 신청", description = "렌탈 신청")

@@ -113,3 +113,22 @@ export const getBookDetail = async (bookId: number): Promise<IBookDetail> => {
 
   return data;
 };
+
+// 비슷한 책 추천
+export const getRecommendbook = async (bookId: number): Promise<IBookDetail[]> => {
+  try {
+    const {
+      data: { success, data },
+    } = await instance.get<BaseResponse<IBookDetail[]>>(`/recommend//${bookId}`);
+
+    if (!success) {
+      throw new Error("비슷한 책 추천 실패");
+    }
+
+    console.log("getRecommendbook");
+
+    return data;
+  } catch (error) {
+    throw new Error("비슷한 책 추천 실패", error);
+  }
+};

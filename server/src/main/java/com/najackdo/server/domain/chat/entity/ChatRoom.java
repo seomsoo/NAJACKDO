@@ -13,8 +13,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -41,7 +39,7 @@ public class ChatRoom {
 	private Cart cart;
 
 
-	public static ChatRoom createChatRoom( User customer, User owner, Cart cart) {
+	public static ChatRoom create( User customer, User owner, Cart cart) {
 		ChatRoom chatRoom = new ChatRoom();
 		chatRoom.customer = customer;
 		chatRoom.owner = owner;
