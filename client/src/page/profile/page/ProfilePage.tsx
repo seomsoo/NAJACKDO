@@ -44,7 +44,7 @@ const ProfilePage = () => {
       />
 
       {/* 나의 책잎 */}
-      <MyLeaf leaf={profileInfo.cash} />
+      <MyLeaf />
       <LogoutButton />
     </div>
   );
