@@ -43,7 +43,9 @@ public class CartItemService {
 		UserBookDetail userBookDetail = userBookDetailRepository.findUserBookDetailByUserBookId(ownerbookId)
 			.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_USER_BOOK_DETAIL));
 
-		Optional<Cart> existingCart = cartRepository.findCartByUserIdAndBookId(customer.getId(), ownerbookId);
+		User owner = userBook.getUser();
+
+		Optional<Cart> existingCart = cartRepository.findCartByUserIdAndOwnerId(customer.getId(), owner.getId());
 
 		Cart cart;
 		if (existingCart.isEmpty()) {
