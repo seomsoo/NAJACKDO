@@ -1,23 +1,12 @@
 const AIResult = () => {
   const detection = [
     {
-      title: "베임",
-      count: 2,
-    },
-    {
-      title: "찢김",
+      title: '찢김',
       count: 0,
     },
+
     {
-      title: "얼룩",
-      count: 1,
-    },
-    {
-      title: "태그",
-      count: 0,
-    },
-    {
-      title: "닳음",
+      title: '닳음',
       count: 4,
     },
   ];
@@ -32,7 +21,7 @@ const AIResult = () => {
       </div>
       <div className="border-[1px] border-[#776B5D] rounded-xl w-[330px] h-[400px] flex flex-col justify-center items-center">
         <div className="flex flex-row justify-center space-x-4">
-          <div className="w-[116px] h-40 bg-gray-300">책 앞면 사진</div>
+          <div className="w-[116px] h-52 bg-gray-300">책 앞면 사진</div>
           <div className="w-[116px] h-40  bg-gray-300">책 뒷면 사진</div>
         </div>
         <div className="flex flex-row space-x-6 my-6">
