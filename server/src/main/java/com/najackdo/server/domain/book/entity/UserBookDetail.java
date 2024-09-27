@@ -51,4 +51,8 @@ public class UserBookDetail {
 
 	@Column(name = "oneday_price")
 	private Integer onedayPrice;
+
+	public void updateRentalCost(Integer updateRentalCost) {
+		this.onedayPrice = updateRentalCost;
+	}
 }
