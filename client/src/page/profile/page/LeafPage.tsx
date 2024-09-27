@@ -1,7 +1,10 @@
 import { IoIosArrowBack, IoIosLeaf } from "react-icons/io";
 import History from "../components/History";
 
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { isError } from "util";
+import { getCashLog } from "api/cashlogApi";
+import { useQuery } from "@tanstack/react-query";
 
 const LeafPage = () => {
   const navigate = useNavigate();
@@ -12,40 +15,25 @@ const LeafPage = () => {
   const goLeafCharge = () => {
     navigate("/profile/my-leaf/charge");
   };
+  const location = useLocation();
+  const { leaf, userName } = location.state || {};
 
-  // const {
-  //   data: leafLog,
-  //   isLoading,
-  //   isError,
-  // } = useQuery<ILeafLog[]>({
-  //   queryKey: ["leafLog"],
-  //   queryFn: getLeafLog,
-  // });
+  // 사용 내역 조회
+  const {
+    data: cashlogData,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['cashlog'],
+    queryFn: getCashLog,
+  });
+  console.log("cashlogData", cashlogData);
 
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (leafLog) {
-  //   console.log("책잎 로그", leafLog);
-  // }
-
-  const myLeaf = 1200;
-  const historyArray = [
-    {
-      date: "09-24",
-      name: "도서 대출",
-      detail: "프랭클린 익스프레스 123 123 1234123 외 3권",
-      leaf: 10000,
-    },
-    { date: "09-24", name: "책잎 충전", detail: "", leaf: 100 },
-    {
-      date: "09-24",
-      name: "도서 대여",
-      detail: "프랭클린 익스프레스 외 2권",
-      leaf: 250,
-    },
-  ];
+  let year = "";
+  if (isLoading)
+    return <div>로딩 중...</div>;
+  if (isError)
+    return <div>오류가 발생했습니다.</div>;
 
   return (
     <div className="mx-[25px] mt-6">
@@ -54,7 +42,7 @@ const LeafPage = () => {
       </button>
       <div className="flex flex-row justify-start mt-5 mb-7">
         <p className="text-xl font-semibold ">
-          {"서민수"}님의 <span className="text-[#79AC78]">책잎</span>
+          {userName}님의 <span className="text-[#79AC78]">책잎</span>
         </p>
       </div>
 
@@ -62,7 +50,7 @@ const LeafPage = () => {
         <div className="flex flex-row items-center">
           <IoIosLeaf size={30} color="#79AC78" />
           <p className="text-[25px] text-[#776B5D]">
-            {myLeaf.toLocaleString()}
+            {leaf.toLocaleString()}
           </p>
         </div>
         <button
@@ -72,18 +60,42 @@ const LeafPage = () => {
           충전하기
         </button>
       </div>
-      <div className="w-[340px]">
-        {historyArray.map((item, index) => {
+      <div className="w-full p-1 border-b-[1px] pt-1 border-[#776B5D]/30">
+      {cashlogData.map((cashlog, index) => {
+          const currentYear = cashlog.createdAt.split("T")[0].split("-")[0];
+          console.log("currentYear", currentYear);
+          let showYear = false;
+
+          if (currentYear !== year) {
+            showYear = true;
+            year = currentYear; 
+          }
+
           return (
-            <History
-              key={index}
-              date={item.date}
-              name={item.name}
-              detail={item.detail}
-              leaf={item.leaf}
-            />
+            <div key={index}>
+              {showYear && (
+                <p className="text-lg font-bold mt-4 border-t-[1px] pt-3 border-[#776B5D]/30 ">{currentYear}년</p>
+              )}
+              <History
+                cash={cashlog.cash}
+                resultCash={cashlog.resultCash}
+                type={cashlog.type}
+                createdAt={cashlog.createdAt}
+              />
+            </div>
           );
         })}
+
+        {/* {cashlogData.map((cashlog, index) => {
+          return (
+            <History
+            cash={ cashlog.cash}
+            resultCash={ cashlog.resultCash}
+            type={ cashlog.type}
+            createdAt={ cashlog.createdAt}
+            />
+          );
+        })} */}
       </div>
     </div>
   );

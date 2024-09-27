@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.repository.query.Param;
 
+import com.najackdo.server.domain.user.dto.UserData;
 import com.najackdo.server.domain.user.dto.UserData.CashLogResponse;
 
 public interface UserQueryRepository {
@@ -47,6 +48,6 @@ public interface UserQueryRepository {
 	 * @param positive  리뷰 긍정 여부
 	 * @return {@link Long} 리뷰 개수
 	 */
-	Long countUserReviewsByPositive(@Param("id") Long id, @Param("positive") boolean positive);
+	List<UserData.reviewInfo> countUserReviewsByPositive(@Param("id") Long id, @Param("positive") boolean positive);
 
 }

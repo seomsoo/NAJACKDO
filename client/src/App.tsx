@@ -27,15 +27,12 @@ function App() {
   // Initialize Firebase Cloud Messaging and get a reference to the service
   const messaging = getMessaging(app);
 
-  console.log(messaging);
-
   const setupNotifications = async () => {
     try {
       // Request permission for notifications
       const permission = await Notification.requestPermission();
 
       if (permission === 'granted') {
-        console.log('Notification permission granted.');
         // Get the FCM token
         const token = await getToken(messaging, {
           vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY,
@@ -76,59 +73,57 @@ function App() {
   // const [loading, setLoading] = useState<boolean>(false);
   const [validData, setValidData] = useState<IValid | null>(null);
 
-  // useEffect(() => {
-  //   const checkValidation = async () => {
-  //     try {
-  //       console.log("accessToken", accessToken);
-  //       console.log("isSurvey", isSurvey);
-  //       console.log(accessToken && isSurvey);
-  //       // 로그인 안되어있을 때
-  //       if (!accessToken) {
-  //         navigate("/sign-in");
-  //         return;
-  //       }
+  useEffect(() => {
+    const checkValidation = async () => {
+      try {
+        console.log("accessToken", accessToken);
+        // 로그인 안되어있을 때
+        if (!accessToken) {
+          navigate("/sign-in");
+          return;
+        }
 
-  //       if (accessToken && isSurvey) {
-  //         if (currentPath === "/sign-in" || currentPath === "/survey") {
-  //           navigate("/");
-  //           return;
-  //         }
-  //       }
+        if (accessToken && isSurvey) {
+          if (currentPath === "/sign-in" || currentPath === "/survey") {
+            navigate("/");
+            return;
+          }
+        }
 
-  //       // setLoading(true);
+        // setLoading(true);
 
-  //       const response = await getValid();
-  //       setValidData(response);
+        const response = await getValid();
+        setValidData(response);
 
-  //       if (!response.survey) {
-  //         // setLoading(false);
-  //         navigate("/survey");
-  //         return;
-  //       }
+        if (!response.survey) {
+          // setLoading(false);
+          navigate("/survey");
+          return;
+        }
 
-  //       // if (!response.isLocation) {
-  //       //   // 위치 설정 페이지로 이동
-  //       //   return;
-  //       // }
+        // if (!response.isLocation) {
+        //   // 위치 설정 페이지로 이동
+        //   return;
+        // }
 
-  //       if (accessToken && response.survey) {
-  //         setIsSurvey(true);
-  //         // setIsLocation(true);
-  //         if (currentPath === "/sign-in" || currentPath === "/survey") {
-  //           // setLoading(false);
-  //           navigate("/");
-  //           return;
-  //         }
-  //       }
-  //       // setLoading(false);
-  //     } catch (error) {
-  //       console.error("유효성 검사 실패", error);
-  //       // setLoading(false);
-  //       navigate("/sign-in");
-  //     }
-  //   };
-  //   checkValidation();
-  // }, [currentPath, navigate, accessToken, isSurvey, setIsSurvey]);
+        if (accessToken && response.survey) {
+          setIsSurvey(true);
+          // setIsLocation(true);
+          if (currentPath === "/sign-in" || currentPath === "/survey") {
+            // setLoading(false);
+            navigate("/");
+            return;
+          }
+        }
+        // setLoading(false);
+      } catch (error) {
+        console.error("유효성 검사 실패", error);
+        // setLoading(false);
+        navigate("/sign-in");
+      }
+    };
+    checkValidation();
+  }, [currentPath, navigate, accessToken, isSurvey, setIsSurvey]);
 
   // if (loading) {
   //   return <div>Loading...</div>;

@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Repository;
 
 import com.najackdo.server.domain.user.dto.UserData;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -99,17 +100,27 @@ public class UserQueryRepositoryImpl implements UserQueryRepository {
 	}
 
 	@Override
-	public Long countUserReviewsByPositive(Long id, boolean positive) {
-
+	public List<UserData.reviewInfo> countUserReviewsByPositive(Long id, boolean positive) {
 		return queryFactory
-			.select(
-				rentalReview.count()
-			)
+			.select(Projections.fields(
+				UserData.reviewInfo.class,   // 반환할 클래스
+				reviewItems.Id.as("reviewId"),     // reviewId
+				reviewItems.content, // content
+				reviewItems.count().as("count")  // count
+			))
 			.from(rentalReview)
 			.join(rentalReview.reviewItems, reviewItems)
 			.where(rentalReview.user.id.eq(id)
-				.and(reviewItems.positive.eq(positive)))
-			.fetchOne();
+				.and(reviewItems.positive.eq(positive))
+			)
+			.groupBy(reviewItems.Id)
+			.fetch().stream()
+			.map(tuple -> UserData.reviewInfo.of(
+				tuple.getReviewId(),
+				tuple.getContent(),
+				tuple.getCount()
+			))
+			.collect(Collectors.toList());
 	}
 
 }
