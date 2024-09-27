@@ -30,8 +30,8 @@ const BookApplyPage = () => {
     },
 
     onError: (error) => {
-      console.log("apply error", error)
-    }
+      console.log("apply error", error);
+    },
   });
 
   const handleApply = () => {
@@ -73,20 +73,23 @@ const BookApplyPage = () => {
         <div>
           <p className="font-bold text-base text-center my-4">등록 도서 정보</p>
           <ApplyBookInfo book={bookInfo} />
-          <div className="flex flex-row justify-center items-center  ml-auto bg-[#C0C78C] py-1 mt-2 rounded-lg w-5/12" onClick={() => navigate("/apply/isbn")}>
+        </div>
+        <div className="flex flex-row justify-center space-x-4 my-8">
+          <div
+            className="flex flex-row justify-center items-center bg-[#C0C78C] px-5 py-2 rounded-lg cursor-pointer"
+            onClick={() => navigate("/apply/isbn")}
+          >
             <span className="text-white font-bold text-sm">
               도서 다시 촬영하기
             </span>
             <HiOutlineCamera color="white" className="ml-1" />
           </div>
-        </div>
-        <div className="flex flex-row justify-center space-x-6 my-8">
-          <button
+          {/* <button
             className="bg-[#D96363] text-white text-sm font-bold rounded-lg px-8 py-3"
             onClick={() => navigate("/library")}
           >
             등록 취소
-          </button>
+          </button> */}
           <button
             className="bg-[#776B5D] text-white text-sm font-bold rounded-lg px-8 py-3"
             onClick={handleApply}
