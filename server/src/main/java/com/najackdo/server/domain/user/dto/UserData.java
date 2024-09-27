@@ -37,6 +37,21 @@ public class UserData {
 	}
 
 	@Data
+	public static class reviewInfo {
+		private Long reviewId;
+		private String content;
+		private Long count;
+
+		public static reviewInfo of(Long reviewId, String content, Long count) {
+			reviewInfo response = new reviewInfo();
+			response.reviewId = reviewId;
+			response.content = content;
+			response.count = count;
+			return response;
+		}
+	}
+
+	@Data
 	public static class InfoResponse {
 
 		private Long userId;
@@ -44,8 +59,8 @@ public class UserData {
 		private String profileImage;
 		private String locationName;
 		private int mannerScore;
-		private Long goodReviewCount;
-		private Long badReviewCount;
+		List<reviewInfo> goodReviewInfo;
+		List<reviewInfo> badReviewInfo;
 		private int cash;
 		private Integer saveCash;
 		private Integer earnCash;
@@ -53,12 +68,12 @@ public class UserData {
 		public static InfoResponse of(
 			User user,
 			String locationName,
-			Long goodReviewCount,
-			Long badReviewCount,
+			List<reviewInfo> goodReviewInfo,
+			List<reviewInfo> badReviewInfo,
 			Integer saveCash,
 			Integer earnCash
 		) {
-			InfoResponse response = ofWithoutCash(user, locationName, goodReviewCount, badReviewCount);
+			InfoResponse response = ofWithoutCash(user, locationName, goodReviewInfo, badReviewInfo);
 			response.cash = user.getCash();
 			response.saveCash = saveCash;
 			response.earnCash = earnCash;
@@ -68,8 +83,8 @@ public class UserData {
 		public static InfoResponse ofWithoutCash(
 			User user,
 			String locationName,
-			Long goodReviewCount,
-			Long badReviewCount
+			List<reviewInfo> goodReviewInfo,
+			List<reviewInfo> badReviewInfo
 		) {
 			InfoResponse response = new InfoResponse();
 			response.userId = user.getId();
@@ -77,8 +92,8 @@ public class UserData {
 			response.profileImage = user.getProfileImage();
 			response.locationName = locationName;
 			response.mannerScore = user.getMannerScore();
-			response.goodReviewCount = goodReviewCount;
-			response.badReviewCount = badReviewCount;
+			response.goodReviewInfo = goodReviewInfo;
+			response.badReviewInfo = badReviewInfo;
 			return response;
 		}
 	}
