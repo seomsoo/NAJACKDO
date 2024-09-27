@@ -4,12 +4,13 @@ import { IValid } from 'atoms/Valid.type';
 import Footer from 'components/common/Footer';
 import Header from 'components/common/Header';
 import MainRoute from 'components/routes/MainRoute';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { useAuthStore } from 'store/useAuthStore';
 import { useValidStore } from 'store/useValidStore';
 import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+import { getValid } from 'api/validApi';
 
 function App() {
   const firebaseConfig = {
@@ -76,16 +77,16 @@ function App() {
   useEffect(() => {
     const checkValidation = async () => {
       try {
-        console.log("accessToken", accessToken);
+        console.log('accessToken', accessToken);
         // 로그인 안되어있을 때
         if (!accessToken) {
-          navigate("/sign-in");
+          navigate('/sign-in');
           return;
         }
 
         if (accessToken && isSurvey) {
-          if (currentPath === "/sign-in" || currentPath === "/survey") {
-            navigate("/");
+          if (currentPath === '/sign-in' || currentPath === '/survey') {
+            navigate('/');
             return;
           }
         }
@@ -97,7 +98,7 @@ function App() {
 
         if (!response.survey) {
           // setLoading(false);
-          navigate("/survey");
+          navigate('/survey');
           return;
         }
 
@@ -109,17 +110,17 @@ function App() {
         if (accessToken && response.survey) {
           setIsSurvey(true);
           // setIsLocation(true);
-          if (currentPath === "/sign-in" || currentPath === "/survey") {
+          if (currentPath === '/sign-in' || currentPath === '/survey') {
             // setLoading(false);
-            navigate("/");
+            navigate('/');
             return;
           }
         }
         // setLoading(false);
       } catch (error) {
-        console.error("유효성 검사 실패", error);
+        console.error('유효성 검사 실패', error);
         // setLoading(false);
-        navigate("/sign-in");
+        navigate('/sign-in');
       }
     };
     checkValidation();
@@ -133,12 +134,12 @@ function App() {
   const shouldHideHeaderFooter = popupPaths.includes(currentPath) && isPopup;
   return (
     <QueryClientProvider client={queryClient}>
-      <div className='pb-[86px] relative'>
+      <div className="pb-[86px] relative">
         {!shouldHideHeaderFooter && showHeaderPaths.includes(currentPath) && (
           <Header />
         )}
         <Routes>
-          <Route path='/*' element={<MainRoute />} />
+          <Route path="/*" element={<MainRoute />} />
         </Routes>
         {!shouldHideHeaderFooter && !hideFooterPaths.includes(currentPath) && (
           <Footer />
