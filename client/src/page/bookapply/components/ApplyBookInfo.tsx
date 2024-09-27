@@ -1,10 +1,10 @@
-import { IInterestBook } from "atoms/Book.type";
+import { IBookDetail } from "atoms/Book.type";
 import CategoryTag from "components/common/CategoryTag";
 import { useState } from "react";
 import { FaCheck } from "react-icons/fa";
 
 interface ApplyBookInfoProps {
-  book: IInterestBook;
+  book: IBookDetail;
   bookcase?: boolean;
   setSelectedCount?: (count: (prev: number) => number) => void;
 }

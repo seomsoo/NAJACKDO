@@ -30,15 +30,12 @@ function App() {
   // Initialize Firebase Cloud Messaging and get a reference to the service
   const messaging = getMessaging(app);
 
-  console.log(messaging);
-
   const setupNotifications = async () => {
     try {
       // Request permission for notifications
       const permission = await Notification.requestPermission();
       
       if (permission === 'granted') {
-        console.log('Notification permission granted.');
         // Get the FCM token
         const token = await getToken(messaging, {vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY})
         console.log('FCM Token:', token);
@@ -76,8 +73,6 @@ function App() {
     const checkValidation = async () => {
       try {
         console.log("accessToken", accessToken);
-        console.log("isSurvey", isSurvey);
-        console.log(accessToken && isSurvey);
         // 로그인 안되어있을 때
         if (!accessToken) {
           navigate("/sign-in");
