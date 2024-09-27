@@ -88,3 +88,37 @@ def insert_user_book_detail(
     except Exception as e:
         print(f"오류 발생: {e}")
         connection.rollback()
+        
+def need_to_getBook(local_book_count):
+    
+    try:
+        with connection.cursor() as cursor:
+            query = """
+            SELECT count(*) FROM books;
+            """
+            
+            cursor.execute(query) 
+
+            db_book_count = cursor.fetchone()
+
+    except Exception as e:
+        print(f"오류 발생: {e}")
+
+    return True if local_book_count == db_book_count[0] else False
+
+def get_book_data():
+    
+    try:
+        with connection.cursor() as cursor:
+            query = """
+            SELECT b.title FROM books as b;
+            """
+            
+            cursor.execute(query) 
+
+            list = cursor.fetchall()
+
+    except Exception as e:
+        print(f"오류 발생: {e}")
+
+    return list

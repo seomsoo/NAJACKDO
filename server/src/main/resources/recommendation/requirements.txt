@@ -12,3 +12,5 @@ opencv-python
 Pillow
 numpy
 python-multipart==0.0.10
+rapidfuzz
+easyocr
