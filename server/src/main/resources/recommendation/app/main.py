@@ -13,6 +13,8 @@ from pydantic import BaseModel
 from fastapi import FastAPI, File, UploadFile, Form
 from dotenv import load_dotenv
 from PIL import Image 
+from math import log10
+
 
 load_dotenv() 
 app = FastAPI()
@@ -68,7 +70,6 @@ async def quality_inspection(user_id: int = Form(...),
 
     # YOLO 모델로 예측 수행
     results = model(images)
-    print(results)
 
     # 원본 파일 S3에 업로드
     for i, file in enumerate(files):
@@ -124,25 +125,18 @@ async def quality_inspection(user_id: int = Form(...),
             "content_type": "image/jpeg"
         })
     
-    print(uploaded_files_info[0]["filename"])
-    print(uploaded_files_info[1]["filename"])
-    print(uploaded_files_info[2]["filename"])
-    print(uploaded_files_info[3]["filename"])
-
     
-    standard_price = dao.get_standard_price(user_id, user_book_id)   
-    print("====================================")
-    print(user_id, user_book_id)
-    print(standard_price)     
-    print("====================================")
-    
+    book = dao.get_book(user_id, user_book_id)
     
     dao.insert_user_book_detail(user_book_id, count_ripped, count_wornout, 
                                 uploaded_files_info[0]["filename"],
                                 uploaded_files_info[1]["filename"],
                                 uploaded_files_info[2]["filename"],
                                 uploaded_files_info[3]["filename"],
-                                standard_price)
+                                book["price_standard"]* (2 - log10(10 + 2 * min((count_ripped + count_wornout), 30)  )) / 100)
 
     return {"uploaded_files": uploaded_files_info,
-            "standard_price": standard_price}
+            "book": book,
+            "one_day_price": book["price_standard"]* (2 - log10(10 + 2 * min((count_ripped + count_wornout), 30)  )) / 100,
+            "count_ripped" :count_ripped,
+            "count_wornout": count_wornout}
