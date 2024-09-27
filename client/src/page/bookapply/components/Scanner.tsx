@@ -2,7 +2,7 @@ import Quagga from "@ericblade/quagga2";
 import { useEffect } from "react";
 
 interface ScannerProps {
-  onDetected: (result: number) => void
+  onDetected: (result: number) => void;
   scan: boolean;
   setScan: (scan: boolean) => void;
 }
@@ -58,12 +58,12 @@ const Scanner = ({ onDetected, scan, setScan }: ScannerProps) => {
     const timer = setTimeout(() => {
       Quagga.stop();
       setScan(false);
-    }, 5000);
+    }, 300000);
 
     return () => {
       Quagga.stop();
       clearTimeout(timer);
-    }
+    };
   }, []);
 
   return <div id="interactive" className="viewport w-4/5 h-4/5 mt-10" />;

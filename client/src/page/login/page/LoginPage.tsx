@@ -5,11 +5,11 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "components/ui/carousel";
-import KakaoLogin from "page/login/components/KakaoLogin";
-import OnBoarding from "page/login/components/OnBoarding";
-import { useEffect, useState } from "react";
-import { FaCircle } from "react-icons/fa";
+} from 'components/ui/carousel';
+import KakaoLogin from 'page/login/components/KakaoLogin';
+import OnBoarding from 'page/login/components/OnBoarding';
+import { useEffect, useState } from 'react';
+import { FaCircle } from 'react-icons/fa';
 
 const LoginPage = () => {
   interface onBoardingData {
@@ -25,29 +25,29 @@ const LoginPage = () => {
   useEffect(() => {
     if (!api) return;
 
-    api.on("select", () => {
+    api.on('select', () => {
       setCarouselIndex(api.selectedScrollSnap());
     });
   }, [api]);
 
   const onBoardingArray: onBoardingData[] = [
     {
-      title: "Read",
+      title: 'Read',
       content:
-        "당신의 주변에 있는 다양한 책을 발견해 보세요. <br/> 이웃과 함께 책을 나누고, <br/> 새로운 독서 경험을 시작하세요.",
-      onboardingImage: "images/onBoarding/onboarding_first.png",
+        '당신의 주변에 있는 다양한 책을 발견해 보세요. <br/> 이웃과 함께 책을 나누고, <br/> 새로운 독서 경험을 시작하세요.',
+      onboardingImage: 'images/onBoarding/onboarding_first.png',
     },
     {
-      title: "Share",
+      title: 'Share',
       content:
-        "책장에 잠들어 있는 책을 등록하고, <br/> 다른 사용자와 공유하세요. <br/> 나의 책이 누군가의 새로운 이야기가 될 수 있습니다.",
-      onboardingImage: "images/onBoarding/onboarding_second.png",
+        '책장에 잠들어 있는 책을 등록하고, <br/> 다른 사용자와 공유하세요. <br/> 나의 책이 누군가의 새로운 이야기가 될 수 있습니다.',
+      onboardingImage: 'images/onBoarding/onboarding_second.png',
     },
     {
-      title: "Connect",
+      title: 'Connect',
       content:
-        "책을 통해 이웃과 연결되고, <br/> 신뢰를 쌓으며 책을 대여하거나 판매하세요. <br/> 함께 독서를 통해 더 가까워집니다.",
-      onboardingImage: "images/onBoarding/onboarding_third.png",
+        '책을 통해 이웃과 연결되고, <br/> 신뢰를 쌓으며 책을 대여하거나 판매하세요. <br/> 함께 독서를 통해 더 가까워집니다.',
+      onboardingImage: 'images/onBoarding/onboarding_third.png',
     },
   ];
 
@@ -60,24 +60,24 @@ const LoginPage = () => {
   }, [carouselIndex]);
 
   return (
-    <div className="mx-16 h-[calc(screen-86px)] flex flex-col justify-between">
-      <div className="flex flex-row justify-end mt-16 mb-2">
+    <div className='mx-6 h-[calc(screen-86px)] flex flex-col justify-between'>
+      <div className='flex flex-row justify-end mt-16 mb-2'>
         <FaCircle
           size={10}
-          className="mr-2"
-          color={carouselIndex === 0 ? "#000000" : "#888888"}
+          className='mr-2'
+          color={carouselIndex === 0 ? '#000000' : '#888888'}
         />
         <FaCircle
           size={10}
-          className="mr-2"
-          color={carouselIndex === 1 ? "#000000" : "#888888"}
+          className='mr-2'
+          color={carouselIndex === 1 ? '#000000' : '#888888'}
         />
         <FaCircle
           size={10}
-          color={carouselIndex === 2 ? "#000000" : "#888888"}
+          color={carouselIndex === 2 ? '#000000' : '#888888'}
         />
       </div>
-      <Carousel className="mb-16" setApi={setApi}>
+      <Carousel className='mb-20' setApi={setApi}>
         <CarouselContent>
           {onBoardingArray.map((onBoarding, index) => {
             return (
@@ -91,8 +91,8 @@ const LoginPage = () => {
             );
           })}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        <CarouselPrevious className='ml-10' />
+        <CarouselNext className='mr-10' />
       </Carousel>
       <KakaoLogin active={active} />
     </div>

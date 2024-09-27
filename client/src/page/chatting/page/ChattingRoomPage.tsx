@@ -1,7 +1,4 @@
 import { Client } from "@stomp/stompjs";
-import { useQuery } from "@tanstack/react-query";
-import { getChatList } from "api/chatApi";
-import { IChatList } from "atoms/Chat.type";
 import { Input } from "components/ui/input";
 import ChatBookInfo from "page/chatting/components/ChatBookInfo";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
