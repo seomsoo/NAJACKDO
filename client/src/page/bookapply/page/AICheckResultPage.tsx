@@ -1,6 +1,6 @@
-import AIResult from "page/bookapply/components/AIResult";
-import { IoChevronBack } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import AIResult from 'page/bookapply/components/AIResult';
+import { IoChevronBack } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
 
 const AICheckResultPage = () => {
   const navigate = useNavigate();
@@ -9,10 +9,10 @@ const AICheckResultPage = () => {
     <div>
       <div
         onClick={() => navigate(-1)}
-        className="cursor-pointer p-4 flex flex-row items-center"
+        className="cursor-pointer p-6 py-4 flex flex-row items-center"
       >
-        <IoChevronBack size={25} color="#545454" />
-        <span className="font-bold text-xl ml-2">도서 등록 - AI 인증</span>
+        <IoChevronBack className="text-2xl" color="#545454" />
+        <span className="font-bold text-2xl ml-2">도서 등록 - AI 인증</span>
       </div>
       <AIResult />
       <div className="font-bold my-5 flex flex-col items-center">
@@ -24,9 +24,11 @@ const AICheckResultPage = () => {
           (추후 대여 상세 페이지에서 수정 가능)
         </span>
       </div>
-      <p className="text-center bg-[#B0A695] w-[330px] mx-auto rounded-md text-white font-bold py-3">
-        등록 완료
-      </p>
+      <div className="px-6">
+        <p className="text-center bg-[#776B5D] w-full  mt-10 rounded-xl text-white font-bold py-3 ">
+          등록 완료
+        </p>
+      </div>
     </div>
   );
 };
