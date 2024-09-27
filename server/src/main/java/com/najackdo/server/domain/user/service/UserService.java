@@ -63,18 +63,21 @@ public class UserService {
 	}
 
 	@Transactional
-	public void pushToken(User user,UserData.PushToken pushToken) {
+	public void pushToken(User user, UserData.PushToken pushToken) {
 		user.pushToken(pushToken.getToken());
 		userRepository.save(user);
 	}
 
 	public UserData.InfoResponse getUserInfo(User user) {
 		String locationName = userRepository.findUserLocationName(user.getId());
-		Long goodReviewCount = userRepository.countUserReviewsByPositive(user.getId(), true);
-		Long badReviewCount = userRepository.countUserReviewsByPositive(user.getId(), false);
+
+		List<UserData.reviewInfo> goodReviews = userRepository.countUserReviewsByPositive(user.getId(), true);
+		List<UserData.reviewInfo> badReviews = userRepository.countUserReviewsByPositive(user.getId(), false);
+		log.info("goodReviews : {}", goodReviews);
+		log.info("badReviews : {}", badReviews);
 		Integer saveCash = userRepository.findUserSavingCash(user.getId());
 		Integer earnCash = userRepository.findUserEarningCash(user.getId());
-		return UserData.InfoResponse.of(user, locationName, goodReviewCount, badReviewCount, saveCash, earnCash);
+		return UserData.InfoResponse.of(user, locationName, goodReviews, badReviews, saveCash, earnCash);
 	}
 
 	public List<UserData.CashLogResponse> getUserCashLog(User user) {
@@ -85,10 +88,10 @@ public class UserService {
 		User user = userRepository.findByNickname(nickname)
 			.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_USER));
 		String locationName = userRepository.findUserLocationName(user.getId());
-		Long goodReviewCount = userRepository.countUserReviewsByPositive(user.getId(), true);
-		Long badReviewCount = userRepository.countUserReviewsByPositive(user.getId(), false);
-		return UserData.InfoResponse.ofWithoutCash(user, locationName, goodReviewCount,
-			badReviewCount);
+		List<UserData.reviewInfo> goodReviews = userRepository.countUserReviewsByPositive(user.getId(), true);
+		List<UserData.reviewInfo> badReviews = userRepository.countUserReviewsByPositive(user.getId(), false);
+		return UserData.InfoResponse.ofWithoutCash(user, locationName, goodReviews,
+			badReviews);
 	}
 
 	@Transactional

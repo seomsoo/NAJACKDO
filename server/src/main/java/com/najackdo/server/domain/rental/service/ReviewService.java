@@ -18,7 +18,9 @@ import com.najackdo.server.domain.rental.repository.ReviewItemsRepository;
 import com.najackdo.server.domain.user.entity.User;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -35,16 +37,25 @@ public class ReviewService {
 		Long rentalId = reviewRequest.getRentalId();
 		List<Long> reviewItemIds = reviewRequest.getReviewItemIds();
 
+		log.info("rentalId : {}", rentalId);
+		log.info("reviewItemIds : {}", reviewItemIds);
+
 		Rental rental = rentalRepository.findById(rentalId).orElseThrow(
 			() -> new BaseException(ErrorCode.NOT_FOUND_RENTAL)
 		);
+
+		//FIXME
+		User reviewee =
+			rental.getCart().getCustomer().getId().equals(user.getId())
+				? rental.getCart().getOwner()
+				: rental.getCart().getCustomer();
 
 		reviewItemIds.stream()
 			.map(itemId -> {
 				ReviewItems reviewItems = reviewItemsRepository.findById(itemId).orElseThrow(
 					() -> new BaseException(ErrorCode.NOT_FOUND_RENTAL_REVIEW)
 				);
-				return RentalReview.createRentalReview(rental, user, reviewItems);
+				return RentalReview.createRentalReview(rental, reviewee, reviewItems);
 			})
 			.forEach(rentalReviewRepository::save);
 
