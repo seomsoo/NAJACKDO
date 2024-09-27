@@ -12,23 +12,30 @@ interface AlarmProps {
   type: string;
 }
 
+// BOOK_RENTAL_REQUEST, BOOK_RETURN_REMINDER, CHAT
 const iconSettings: { [key: string]: { icon: JSX.Element; color: string } } = {
-  '대출 신청': {
+  'BOOK_RENTAL_REQUEST': {
     icon: <IoIosLeaf size={24} color='#79AC78' />,
     color: '#79AC78',
   },
-  '대출 가능': {
+  'CHAT': {
     icon: <TbBellRingingFilled size={24} color='#5F6F52' />,
     color: '#5F6F52',
   },
-  좋아요: { icon: <IoHeart size={24} color='#D96363' />, color: '#D96363' },
-  반납: { icon: <TbArrowBack size={24} color='#EBCA52' />, color: '#DFAE00' },
+  좋아요: { 
+    icon: <IoHeart size={24} color='#D96363' />, 
+    color: '#D96363' 
+  },
+  BOOK_RETURN_REMINDER: { 
+    icon: <TbArrowBack size={24} color='#EBCA52' />, 
+    color: '#DFAE00' 
+  },
 };
 
 
 
 const Alarm = ({ userId, content, title, createAt, updateAt, type }: AlarmProps) => {
-  const { icon, color } = iconSettings[type] || iconSettings['반납'];
+  const { icon, color } = iconSettings[type] || iconSettings['CHAT'];
   const receivedTime = useTime(createAt);
 
   return (
