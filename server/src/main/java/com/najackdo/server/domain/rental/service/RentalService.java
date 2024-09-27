@@ -12,7 +12,6 @@ import com.najackdo.server.core.exception.ErrorCode;
 import com.najackdo.server.core.response.SuccessResponse;
 import com.najackdo.server.domain.cart.entity.Cart;
 import com.najackdo.server.domain.cart.repository.CartRepository;
-import com.najackdo.server.domain.chat.entity.ChatRoom;
 import com.najackdo.server.domain.chat.repository.ChatRoomRepository;
 import com.najackdo.server.domain.rental.dto.RentalData;
 import com.najackdo.server.domain.rental.entity.Rental;
@@ -94,13 +93,15 @@ public class RentalService {
 			() -> new BaseException(ErrorCode.NOT_FOUND_RENTAL)
 		);
 
-		if (!rental.getCart().getCustomer().getId().equals(customerId)
-			|| !rental.getCart().getOwner().getId().equals(ownerId)) {
+		if (!rental.getCart().getOwner().getId().equals(ownerId)) {
 			throw new BaseException(ErrorCode.ACCESS_DENIED);
 		}
 
-		rental.updateRentalEndDate(LocalDateTime.now()); // 반납일 업데이트
-		rental.updateStatus(RentalStatus.RETURNED); // 상태 업데이트
+		rental.updateRentalEndDate(LocalDateTime.now());
+		rental.updateStatus(RentalStatus.RETURNED);
+
+		Cart cart = rental.getCart();
+		cart.deleteCart();
 
 		// ! 채팅 전송 로직 추가
 

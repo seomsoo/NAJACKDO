@@ -70,7 +70,7 @@ public class CartItemService {
 
 		cartItemRepository.delete(cartItem);
 
-		if (cartItems.size() <= 1) {
+		if (cartItems.isEmpty()) {
 			Cart cart = cartItem.getCart();
 			cart.deleteCart();
 		}
