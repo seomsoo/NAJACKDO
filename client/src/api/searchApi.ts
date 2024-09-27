@@ -40,7 +40,7 @@ export const getRecentSearch = async (): Promise<string[]> => {
   }
 };
 
-// 검색
+// 키워드로 검색
 export const getSearch = async (keyword: string): Promise<ISearch[]> => {
   try {
     console.log("keyword", keyword);
@@ -66,6 +66,7 @@ export const getSearch = async (keyword: string): Promise<ISearch[]> => {
 export const getAutoSearchText = async (
   keyword: string
 ): Promise<IAutoArray> => {
+  console.log("keyword", keyword);
   try {
     const {
       data: { success, data },

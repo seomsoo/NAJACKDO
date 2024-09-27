@@ -6,7 +6,6 @@ interface IAutoSearchProps {
 }
 
 const AutoSearch = ({ autoSearch }: IAutoSearchProps) => {
-  console.log("AutoSearch", autoSearch);
   return (
     <div className="my-2 flex flex-col">
       {autoSearch.length === 0 ? (

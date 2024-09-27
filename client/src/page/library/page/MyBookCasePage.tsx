@@ -43,7 +43,7 @@ const MyBookCasePage = () => {
           </button>
         </div>
         <div className='flex justify-between text-3xl gap-5 text-[#545454]'>
-          <Link to='/apply/book'>
+          <Link to='/apply'>
             <BiBookAdd />
           </Link>
           <Link to='/alarm'>
@@ -78,7 +78,7 @@ const MyBookCasePage = () => {
                 책장이 텅 비었네요! 첫 책을 추가해보세요.
               </p>
               <Link
-                to='/apply/book'
+                to='/apply'
                 className='mt-14 p py-4 w-full bg-[#5f6f52] text-white rounded-lg hover:bg-[#4e5e42]'
               >
                 책 추가하기
