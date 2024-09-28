@@ -7,9 +7,10 @@ import dao
 import cv2
 import io
 import csv
-from rapidfuzz import fuzz
 import easyocr
 import numpy as np
+import book_spine_detection
+from rapidfuzz import fuzz
 from ultralytics import YOLO
 from pymongo import MongoClient
 from pydantic import BaseModel  
@@ -19,6 +20,7 @@ from PIL import Image
 from math import log10
 
 
+
 load_dotenv() 
 app = FastAPI()
 
@@ -26,6 +28,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 model_path = os.path.join(script_dir, "quality_inspection/best.pt")
 spine_model_path = os.path.join(script_dir, "book_spine_detection/best.pt")
 model = YOLO(model_path)
+spine_model = YOLO(spine_model_path)
 
 
 aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
@@ -161,13 +164,12 @@ async def quality_inspection(imageFile: UploadFile = File(...)):
             for book in book_list:
                 csv_writer.writerow([book])  # 각 제목을 새로운 행으로 추가
 
-    model = YOLO(spine_model_path)
     reader = easyocr.Reader(['ko','en'])
 
     image_data = await imageFile.read()
     img = Image.open(io.BytesIO(image_data)).convert("RGB")
     # img = Image.open('image2.png')
-    result = model(img,device="cpu")
+    result = spine_model(img,device="cpu")
     output = np.array(result[0].boxes.data)
 
     title_list = []
