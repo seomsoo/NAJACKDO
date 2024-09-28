@@ -39,6 +39,7 @@ public class ChatRoomData {
 		public static class SearchElement {
 
 			private Long roomId; // 채팅방 아이디
+			private Long cartId;
 
 			private Long customerId;
 			private String customerNickname;
@@ -58,6 +59,7 @@ public class ChatRoomData {
 			public static SearchElement search(ChatRoom chatRoom, LocalDateTime lastChatTime, String lastChatMessage) {
 				SearchElement chatRoomDTO = new SearchElement();
 				chatRoomDTO.setRoomId(chatRoom.getRoomId());
+				chatRoomDTO.setCartId(chatRoom.getCart().getId());
 
 				chatRoomDTO.setCustomerId(chatRoom.getCustomer().getId());
 				chatRoomDTO.setCustomerNickname(chatRoom.getCustomer().getNickName());
