@@ -16,15 +16,15 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
 
 	@Query("""
 		select cr from ChatRoom cr
-		join fetch cr.customer
-		join fetch cr.customer.activityAreaSetting
-		join fetch cr.customer.activityAreaSetting.location
-		join fetch cr.owner
-		join fetch cr.owner.activityAreaSetting
-		join fetch cr.owner.activityAreaSetting.location
-		join fetch cr.cart
-		join fetch cr.cart.cartItems ci
-		join fetch ci.userBookDetail
+		left join fetch cr.customer
+		left join fetch cr.customer.activityAreaSetting
+		left join fetch cr.customer.activityAreaSetting.location
+		left join fetch cr.owner
+		left join fetch cr.owner.activityAreaSetting
+		left join fetch cr.owner.activityAreaSetting.location
+		left join fetch cr.cart
+		left join fetch cr.cart.cartItems ci
+		left join fetch ci.userBookDetail
 		where cr.customer = :user or cr.owner = :user
 	""")
 	List<ChatRoom> findChatRoomsByUser(User user);
