@@ -45,17 +45,12 @@ public class ChatService {
 				);
 
 
-				List<Chat.Message> messages = chatMongoRepository.findByRoomId(chatRoom.getRoomId()).getMessages();
+//				List<Chat.Message> messages = chatMongoRepository.findByRoomId(chatRoom.getRoomId()).getMessages();
 
-				Chat.Message message;
+				Chat.Message message = new Chat.Message();
+				message.setTime(LocalDateTime.now());
+				message.setMessage("");
 
-				if (messages.isEmpty()) {
-					message = new Chat.Message();
-					message.setTime(LocalDateTime.now());
-					message.setMessage("");
-				} else {
-					message = messages.get(messages.size() - 1);
-				}
 
 				result.add(
 					ChatRoomData.Search.SearchElement.search(chatRoom,
