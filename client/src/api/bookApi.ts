@@ -55,6 +55,29 @@ export const deleteInterestbook = async (bookId: number): Promise<void> => {
   }
 };
 
+// AI 도서 인증
+export const postAiCheckBook = async (formData: FormData): Promise<BaseResponse<any>> => {
+  try {
+    const { data } = await instance.post<BaseResponse<any>>(
+      '/item/quality-inspection', 
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+
+    if (!data.success) {
+      throw new Error('AI 도서 인증 실패');
+    }
+
+    return data;
+  } catch (error) {
+    console.error('AI 도서 인증 실패:', error);
+    throw error;
+  }
+};
 // isbn으로 도서 등록
 export const postRegisterBook = async (isbn: number): Promise<void> => {
   console.log("post isbn", isbn);
