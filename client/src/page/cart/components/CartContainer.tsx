@@ -1,41 +1,56 @@
-import BookRentalInfo from './BookRentalInfo';
-import { LuPencilLine } from 'react-icons/lu';
-import { IoIosLeaf } from 'react-icons/io';
-import BookRentalApply from "page/library/components/BookRentalApply";
-import { ICartItem } from 'atoms/Cart.type';
-
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-} from 'components/ui/dialog';
-import { Slider } from 'components/ui/slider';
-
-import { useEffect, useState } from 'react';
+import { useMutation } from "@tanstack/react-query";
+import { postCreateChatRoom } from "api/chatApi";
+import { ICartItem } from "atoms/Cart.type";
+import { IoIosLeaf } from "react-icons/io";
+import BookRentalInfo from "./BookRentalInfo";
 
 interface CartContainerProps {
   cartId: number;
+  ownerId: number;
   ownerUsername: string;
   cartItems: ICartItem[];
 }
 
-const CartContainer = ({ cartId, ownerUsername, cartItems }: CartContainerProps) => {
+const CartContainer = ({
+  cartId,
+  ownerId,
+  ownerUsername,
+  cartItems,
+}: CartContainerProps) => {
   const sumPrice = cartItems.reduce((sum, cartItem) => sum + cartItem.price, 0);
 
+  const mutation = useMutation({
+    mutationKey: ["chat", "create"],
+    mutationFn: () => postCreateChatRoom({ ownerId, cartId }),
+
+    onSuccess: (data) => {
+      console.log("채팅방 생성 성공, mongoDB roomId : ", data);
+    },
+
+    onError: (error) => {
+      console.log("채팅방 생성 실패", error);
+    },
+  });
+
+  const handleCreateChatRoom = () => {
+    mutation.mutate();
+  };
+
   return (
-    <div className='mx-3 my-5 bg-white/30 shadow rounded-lg p-4'>
-      <div className='flex flex-row item-center justify-between'>
-        <span className='flex font-semibold'>
-          <p className='text-[#79AC78]'>{ownerUsername}</p>
+    <div className="mx-3 my-5 bg-white/30 shadow rounded-lg p-4">
+      <div className="flex flex-row item-center justify-between">
+        <span className="flex font-semibold">
+          <p className="text-[#79AC78]">{ownerUsername}</p>
           님의 책장
         </span>
       </div>
-      <div className='border-y-[1px] border-[#776B5D]/50' id={cartId.toString()}>
+      <div
+        className="border-y-[1px] border-[#776B5D]/50"
+        id={cartId.toString()}
+      >
         {cartItems.map((item, index) => {
           return (
-            <div className='w-[95%] mx-auto'>
+            <div className="w-[95%] mx-auto" key={index}>
               <BookRentalInfo
                 key={item.cartItemId}
                 cartItemId={item.cartItemId}
@@ -45,22 +60,30 @@ const CartContainer = ({ cartId, ownerUsername, cartItems }: CartContainerProps)
                 bookImage={item.bookImage}
               />
               <div
-                key={index}
-                className={`${index !== cartItems.length - 1 ? 'border-b opacity-50 border-[#776B5D]/30' : ''}`}
+                className={`${index !== cartItems.length - 1 ? "border-b opacity-50 border-[#776B5D]/30" : ""}`}
               />
             </div>
           );
         })}
       </div>
-      <div className='flex flex-row justify-between mt-3 px-3'>
+      <div className="flex flex-row justify-between mt-3 px-3">
         <p>금액</p>
-        <div className='flex flex-row justify-end items-center mt-auto '>
-          <IoIosLeaf size={16} color='#79AC78' />
-          <p>{sumPrice.toLocaleString()} <span className='text-[12px]'>/ 일</span></p>
+        <div className="flex flex-row justify-end items-center mt-auto ">
+          <IoIosLeaf size={16} color="#79AC78" />
+          <p>
+            {sumPrice.toLocaleString()}{" "}
+            <span className="text-[12px]">/ 일</span>
+          </p>
         </div>
       </div>
-      <div className='flex justify-center mt-4'>
-        <BookRentalApply dayPrice={sumPrice} triggerClassName="w-[265px] bg-[#776B5D] text-[12px] text-white rounded-[12px] p-2" />
+      <div className="flex justify-center mt-4">
+        <button
+          className="w-4/5 bg-[#776B5D] text-[12px] text-white rounded-[12px] p-2 text-center"
+          onClick={handleCreateChatRoom}
+        >
+          도서 대출 신청
+        </button>
+        {/* <BookRentalApply dayPrice={sumPrice} triggerClassName="w-[265px] bg-[#776B5D] text-[12px] text-white rounded-[12px] p-2" /> */}
       </div>
     </div>
   );

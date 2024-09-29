@@ -4,26 +4,26 @@ import {
   DialogDescription,
   DialogTrigger,
 } from "components/ui/dialog";
+import { ChatRentalStep } from "page/chatting/components/ChatBookInfo";
 import { IoLibrary } from "react-icons/io5";
 import { MdLibraryAddCheck } from "react-icons/md";
 
 interface RentalModalProps {
-  step: number;
-  rentalStep: number;
+  step: ChatRentalStep;
   isOwner: boolean;
 }
 
-const RentalModal = ({ step, rentalStep, isOwner }: RentalModalProps) => {
+const RentalModal = ({ step, isOwner }: RentalModalProps) => {
   return (
     <Dialog>
       <DialogTrigger>
         <span className="bg-[#776B5D] text-white rounded-lg py-3 px-4">
-          {rentalStep}
+          {step}
         </span>
       </DialogTrigger>
       <DialogContent className="bg-[#F1ECE3] rounded-2xl">
         <DialogDescription className="flex flex-col items-center space-y-7 text-center text-black text-bol">
-          {step === 0 && (
+          {step === ChatRentalStep.PAY && (
             <>
               <IoLibrary size={35} color="#5F6F52" />
               <span className="text-lg">
@@ -40,7 +40,7 @@ const RentalModal = ({ step, rentalStep, isOwner }: RentalModalProps) => {
               </div>
             </>
           )}
-          {step === 1 && (
+          {step === ChatRentalStep.RETURN && (
             <>
               <MdLibraryAddCheck size={35} color="#776B5D" />
               <span className="text-lg">반납을 확인하시겠습니까?</span>

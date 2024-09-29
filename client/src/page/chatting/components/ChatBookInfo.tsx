@@ -11,35 +11,16 @@ interface ChatBookInfoProps {
   };
 }
 
-enum ChatRentalStep {
-  PAY,
-  RETURN,
-  REVIEW,
+export enum ChatRentalStep {
+  PAY = "송금하기",
+  RETURN = "반납하기",
+  REVIEW = "후기 보내기",
 }
 
 const ChatBookInfo = ({ book }: ChatBookInfoProps) => {
   const navigate = useNavigate();
   const [step, setStep] = useState<ChatRentalStep>(ChatRentalStep.REVIEW);
-  let rentalStep;
   const isOwner = false;
-
-  switch (step) {
-    case 0:
-      rentalStep = "송금하기";
-      break;
-
-    case 1:
-      rentalStep = "반납하기";
-      break;
-
-    case 2:
-      rentalStep = "후기 보내기";
-      break;
-
-    default:
-      rentalStep = "송금하기";
-      break;
-  }
 
   const handleReview = () => {
     navigate("/chat/review");
@@ -58,14 +39,14 @@ const ChatBookInfo = ({ book }: ChatBookInfoProps) => {
           </div>
         </div>
       </div>
-      {step !== 2 ? (
-        <RentalModal step={step} rentalStep={rentalStep} isOwner={isOwner} />
+      {step !== ChatRentalStep.REVIEW ? (
+        <RentalModal step={step} isOwner={isOwner} />
       ) : (
         <button
           className="bg-[#776B5D] text-white rounded-lg py-2 px-3"
           onClick={handleReview}
         >
-          {rentalStep}
+          {step}
         </button>
       )}
     </div>

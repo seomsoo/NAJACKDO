@@ -18,7 +18,10 @@ interface BookRentalApplyProps {
   triggerClassName?: string;
 }
 
-const BookRentalApply = ({ dayPrice, triggerClassName}: BookRentalApplyProps) => {
+const BookRentalApply = ({
+  dayPrice,
+  triggerClassName,
+}: BookRentalApplyProps) => {
   const [date, setDate] = useState<number[]>([14]);
   const [sale, setSale] = useState<number | null>(null);
   const [totalPrice, setTotalPrice] = useState<number>(0);
@@ -41,7 +44,12 @@ const BookRentalApply = ({ dayPrice, triggerClassName}: BookRentalApplyProps) =>
   return (
     <Drawer>
       <DrawerTrigger>
-      <p className={triggerClassName || 'bg-[#776B5D] text-white font-bold px-8 py-2 rounded-lg mx-5'}>
+        <p
+          className={
+            triggerClassName ||
+            "bg-[#776B5D] text-white font-bold px-8 py-2 rounded-lg mx-5"
+          }
+        >
           도서 대출 신청
         </p>
       </DrawerTrigger>

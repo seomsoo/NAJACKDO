@@ -8,13 +8,10 @@ interface IAutoSearchProps {
 const AutoSearch = ({ autoSearch }: IAutoSearchProps) => {
   return (
     <div className="my-2 flex flex-col">
-      {autoSearch.length === 0 ? (
-        <></>
-      ) : (
+      {autoSearch &&
         autoSearch.map((search, index) => (
           <AutoSearchText key={index} text={search.value} />
-        ))
-      )}
+        ))}
     </div>
   );
 };

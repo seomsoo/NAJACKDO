@@ -1,8 +1,8 @@
 export interface ICartList {
   cartId: number;
+  ownerId: number;
   ownerUsername: string;
   cartItems: ICartItem[];
-  
 }
 
 export interface ICartItem {
@@ -10,5 +10,5 @@ export interface ICartItem {
   bookImage: string;
   bookTitle: string;
   author: string;
-  price: number
+  price: number;
 }

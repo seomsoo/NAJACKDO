@@ -40,3 +40,4 @@ export const postDeleteCartItem = async (cartItemId  : number): Promise<void> =>
     throw new Error("장바구니 아이템 삭제 실패", error);
   }
 }
+

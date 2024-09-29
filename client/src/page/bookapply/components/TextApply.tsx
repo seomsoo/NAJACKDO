@@ -59,6 +59,7 @@ const TextApply = () => {
     queryKey: ["search", "result"],
     queryFn: () => getSearch(searchText),
     enabled: !!searchText && isClicked,
+    initialData: [],
   });
 
   const handleClick = () => {

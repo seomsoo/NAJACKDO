@@ -25,7 +25,7 @@ export const getChatRoom = async (): Promise<IChat> => {
 export const getChatList = async (roomId: number): Promise<IChatList> => {
   try {
     const {
-      data: { success, data, message },
+      data: { success, data },
     } = await instance.get<BaseResponse<IChatList>>("/chatroom/chat", {
       params: {
         roomId: roomId,
@@ -40,5 +40,22 @@ export const getChatList = async (roomId: number): Promise<IChatList> => {
   } catch (error) {
     console.log(error.response.data);
     throw new Error("채팅 내역 조회 실패", error);
+  }
+};
+
+// 채팅방 생성
+export const postCreateChatRoom = async (ChattingData): Promise<number> => {
+  try {
+    const {
+      data: { success, data },
+    } = await instance.post<BaseResponse<number>>("/chatroom", ChattingData);
+
+    if (!success) {
+      throw new Error("채팅방 생성 실패");
+    }
+
+    return data;
+  } catch (error) {
+    throw new Error("채팅방 생성 실패", error);
   }
 };
