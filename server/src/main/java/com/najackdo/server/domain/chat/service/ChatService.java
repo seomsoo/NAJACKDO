@@ -40,9 +40,9 @@ public class ChatService {
 		chatRoomRepository.findChatRoomsByUser(user)
 			.forEach(chatRoom -> {
 
-				log.info("{}",
-					chatRoom.getCart().getCartItems().get(0).getUserBookDetail().getFrontImagePath()
-				);
+//				log.info("{}",
+//					chatRoom.getCart().getCartItems().get(0).getUserBookDetail().getFrontImagePath()
+//				);
 
 
 //				List<Chat.Message> messages = chatMongoRepository.findByRoomId(chatRoom.getRoomId()).getMessages();

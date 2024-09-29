@@ -73,7 +73,7 @@ public class ChatRoomData {
 
 				chatRoomDTO.setLastChatTime(lastChatTime);
 				chatRoomDTO.setLastChatMessage(lastChatMessage);
-				chatRoomDTO.setDisplayImagePath(chatRoom.getCart().getCartItems().get(0).getUserBookDetail().getFrontImagePath());
+//				chatRoomDTO.setDisplayImagePath(chatRoom.getCart().getCartItems().get(0).getUserBookDetail().getFrontImagePath());
 
 				return chatRoomDTO;
 			}
