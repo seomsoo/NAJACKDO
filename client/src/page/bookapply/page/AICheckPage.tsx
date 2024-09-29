@@ -106,7 +106,7 @@ const AICheckPage = () => {
         </div>
       </div>
       <div className="px-6">
-        <p className="text-center bg-[#776B5D] w-full  mt-10 rounded-xl text-white font-bold py-3 ">
+        <p  onClick={() => navigate("/ai-check/upload")} className="text-center bg-[#776B5D] w-full  mt-10 rounded-xl text-white font-bold py-3 ">
           AI 인증 하러 가기
         </p>
       </div>
