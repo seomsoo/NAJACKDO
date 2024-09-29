@@ -20,7 +20,7 @@ public class CustomExceptionAdvice {
     @ExceptionHandler(Exception.class)
     public ErrorResponse exception(Exception e) {
         if (!e.getMessage().contains("No static resource")) {
-            log.error("message: {}", e.getMessage());
+            log.error("message: {}", e.getMessage(), e);
         }
         return ErrorResponse.of(ErrorCode.SERVER_ERROR);
     }

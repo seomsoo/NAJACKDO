@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getUserInfo } from "api/profileApi";
 import LeafBarGraph from "page/profile/components/LeafBarGraph";
+import { useMemo } from "react";
 import { IoIosArrowForward, IoIosLeaf } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
@@ -15,12 +16,14 @@ const MyLeaf = () => {
     queryKey: ["profile"],
     queryFn: getUserInfo,
   });
-  if (isLoading) {
-    return <div>로딩 중...</div>;
-  }
 
-  const leaf = profileInfo.cash;
-  const userName = profileInfo.nickname;
+  const { leaf, userName } = useMemo(
+    () => ({
+      leaf: profileInfo.cash || 0,
+      userName: profileInfo.nickname || "",
+    }),
+    [profileInfo]
+  );
 
   const goToLeaf = () => {
     navigate("/profile/my-leaf", { state: { leaf, userName } });

@@ -8,17 +8,12 @@ import { getAlarmReadSucess } from 'api/alarmApi';
 
 
 const AlarmPage = () => {
-
-
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);
   };
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
-
-
-  
   const {
     data: alarmData,
     isLoading: isAlarmLoading,
