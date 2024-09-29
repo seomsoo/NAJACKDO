@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { getValid } from "api/validApi";
 import Footer from "components/common/Footer";
 import Header from "components/common/Header";
-import Loading from "components/common/Loading";
+// import Loading from "components/common/Loading";
 import MainRoute from "components/routes/MainRoute";
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
@@ -142,7 +142,7 @@ function App() {
   const shouldHideHeaderFooter = popupPaths.includes(currentPath) && isPopup;
   return (
     <QueryClientProvider client={queryClient}>
-      <Suspense fallback={<Loading />}>
+      {/* <Suspense fallback={<Loading />}> */}
         <div className="pb-[86px] relative">
           {!shouldHideHeaderFooter && showHeaderPaths.includes(currentPath) && (
             <Header />
@@ -153,7 +153,7 @@ function App() {
           {!shouldHideHeaderFooter &&
             !hideFooterPaths.includes(currentPath) && <Footer />}
         </div>
-      </Suspense>
+      {/* </Suspense> */}
     </QueryClientProvider>
   );
 }
