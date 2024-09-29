@@ -5,7 +5,7 @@ import DetectionInfo from "page/library/components/DetectionInfo";
 import SellerInfo from "page/library/components/SellerInfo";
 import SellerReview from "page/library/components/SellerReview";
 import { IoChevronBack } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface BookInfoProps {
   book: {
@@ -19,7 +19,9 @@ interface BookInfoProps {
 }
 
 const RentalBookDetail = ({ book }: BookInfoProps) => {
+  const { bookId } = useParams();
   const navigate = useNavigate();
+  const bookIdAsNumber = parseInt(bookId, 10);
 
   return (
     <div>
@@ -40,7 +42,7 @@ const RentalBookDetail = ({ book }: BookInfoProps) => {
         {/* <BookInfo book={book} rental /> */}
         <DetectionInfo />
         <SellerReview />
-        <DetailRecommendBook />
+        <DetailRecommendBook bookId={bookIdAsNumber} />
       </div>
       <div className="fixed bg-[#F8F6F3] bottom-0 w-screen max-w-[430px] border-t-[1px] pt-3 flex flex-row justify-center pb-7"></div>
     </div>

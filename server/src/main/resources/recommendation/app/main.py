@@ -6,20 +6,29 @@ import uuid
 import dao
 import cv2
 import io
+import csv
+import easyocr
 import numpy as np
+import book_spine_detection
+from rapidfuzz import fuzz
 from ultralytics import YOLO
 from pymongo import MongoClient
 from pydantic import BaseModel  
 from fastapi import FastAPI, File, UploadFile, Form
 from dotenv import load_dotenv
 from PIL import Image 
+from math import log10
+
+
 
 load_dotenv() 
 app = FastAPI()
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 model_path = os.path.join(script_dir, "quality_inspection/best.pt")
+spine_model_path = os.path.join(script_dir, "book_spine_detection/best.pt")
 model = YOLO(model_path)
+spine_model = YOLO(spine_model_path)
 
 
 aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
@@ -68,7 +77,6 @@ async def quality_inspection(user_id: int = Form(...),
 
     # YOLO 모델로 예측 수행
     results = model(images)
-    print(results)
 
     # 원본 파일 S3에 업로드
     for i, file in enumerate(files):
@@ -123,26 +131,71 @@ async def quality_inspection(user_id: int = Form(...),
             "filename": filename,
             "content_type": "image/jpeg"
         })
-    
-    print(uploaded_files_info[0]["filename"])
-    print(uploaded_files_info[1]["filename"])
-    print(uploaded_files_info[2]["filename"])
-    print(uploaded_files_info[3]["filename"])
 
     
-    standard_price = dao.get_standard_price(user_id, user_book_id)   
-    print("====================================")
-    print(user_id, user_book_id)
-    print(standard_price)     
-    print("====================================")
-    
+    book = dao.get_book(user_id, user_book_id)
     
     dao.insert_user_book_detail(user_book_id, count_ripped, count_wornout, 
                                 uploaded_files_info[0]["filename"],
                                 uploaded_files_info[1]["filename"],
                                 uploaded_files_info[2]["filename"],
                                 uploaded_files_info[3]["filename"],
-                                standard_price)
+                                book["price_standard"]* (2 - log10(10 + 2 * min((count_ripped + count_wornout), 30)  )) / 100)
 
     return {"uploaded_files": uploaded_files_info,
-            "standard_price": standard_price}
+            "book": book,
+            "one_day_price": book["price_standard"]* (2 - log10(10 + 2 * min((count_ripped + count_wornout), 30)  )) / 100,
+            "count_ripped" :count_ripped,
+            "count_wornout": count_wornout}
+
+@app.post("/item/bookSpineDetection")
+async def quality_inspection(imageFile: UploadFile = File(...)):
+    # 책 리스트를 캐시 파일에서 가져옴
+    book_list = book_spine_detection.get_book_from_csv()
+    # 캐시 파일과 db의 책 갯수 비교 후, 업데이트
+    if dao.need_to_getBook(len(book_list)) == False:
+        book_list = dao.get_book_data()
+        #print(book_list)
+        file_path = 'titles.csv'
+
+        with open(file_path, mode='w', encoding='utf-8', newline='') as file:
+            csv_writer = csv.writer(file)
+            csv_writer.writerow(['Title'])  # 헤더 작성 (필요한 경우)
+            for book in book_list:
+                csv_writer.writerow([book])  # 각 제목을 새로운 행으로 추가
+
+    reader = easyocr.Reader(['ko','en'])
+
+    image_data = await imageFile.read()
+    img = Image.open(io.BytesIO(image_data)).convert("RGB")
+    # img = Image.open('image2.png')
+    result = spine_model(img,device="cpu")
+    output = np.array(result[0].boxes.data)
+
+    title_list = []
+    rotate_list = [90]
+
+    for idx, book in enumerate(output):
+        crop_image = img.crop((book[0],book[1],book[2],book[3]))
+        for rotate in rotate_list:
+            rotate_image = crop_image.rotate(rotate, expand=1)
+            titles = reader.readtext(np.array(rotate_image))
+
+            # print(titles)
+
+            save_title = ""
+            save_Qratio = 0.0
+            for idx,title in enumerate(titles):
+                if(len(title[1])<=1) :
+                    continue
+                # 모든 책 제목 리스트에서 rapidfuzz를 사용해 가장 가까운 책 제목 뽑아내, title_list에 추가
+                for bookTitle in book_list:
+                    Qratio = fuzz.ratio(bookTitle[0],title[1])
+                    if(Qratio > save_Qratio):
+                        save_Qratio=Qratio
+                        save_title=bookTitle[0]
+        if(save_title==""):
+            continue
+
+        title_list.append(save_title)
+    return {"titles": title_list}

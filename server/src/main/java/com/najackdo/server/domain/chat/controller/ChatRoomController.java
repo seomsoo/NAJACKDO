@@ -1,7 +1,5 @@
 package com.najackdo.server.domain.chat.controller;
 
-import java.util.List;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,7 +31,7 @@ public class ChatRoomController {
 	// 채팅방 목록 조회
 	@GetMapping("")
 	@Operation(summary = "채팅방 목록 조회", description = "채팅방 목록 조회")
-	public SuccessResponse<ChatRoomData.ChatRoomWithUserDTO> chatRoomList(@CurrentUser User user) {
+	public SuccessResponse<ChatRoomData.Search> chatRoomList(@CurrentUser User user) {
 
 		return SuccessResponse.of(chatService.chatRoomList(user));
 	}
@@ -45,9 +43,8 @@ public class ChatRoomController {
 		@CurrentUser User customer,
 		@RequestBody CreateChatRoomDto createChatRoomDto) {
 
-		ChatRoomData.ChatRoomDTO room = chatService.createRoom(customer, createChatRoomDto.getOwnerId(), createChatRoomDto.getCartId());
-
-		return SuccessResponse.of(room.getRoomId());
+		Long roomId = chatService.createRoom(customer, createChatRoomDto.getOwnerId(), createChatRoomDto.getCartId());
+		return SuccessResponse.of(roomId);
 	}
 
 	// 채팅방 채팅내용 불러오기 (방 열기)
@@ -56,7 +53,6 @@ public class ChatRoomController {
 	public Chat getChatList(
 		@CurrentUser User user,
 		@RequestParam("roomId") Long roomId) {
-
 
 		return chatService.getChatList(roomId, user);
 	}

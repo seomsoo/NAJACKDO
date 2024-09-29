@@ -29,14 +29,17 @@ public class CartQueryRepositoryImpl implements CartQueryRepository {
 	private final JPAQueryFactory queryFactory;
 
 	@Override
-	public Optional<Cart> findCartByUserIdAndBookId(Long userId, Long bookId) {
+	public Optional<Cart> findCartByUserIdAndOwnerId(Long customerId, Long ownerId) {
+		QUser customerUser = new QUser("customerUser");
+		QUser ownerUser = new QUser("ownerUser");
 
 		return Optional.ofNullable(
 			queryFactory.selectFrom(cart)
-				.join(userBook).on(userBook.book.id.eq(bookId))
+				.leftJoin(cart.customer, customerUser)
+				.leftJoin(cart.owner, ownerUser)
 				.where(
-					cart.customer.id.eq(userId),
-					cart.owner.id.eq(userBook.user.id),
+					cart.customer.id.eq(customerId),
+					cart.owner.id.eq(ownerId),
 					cart.isDelete.isFalse()
 				)
 				.fetchOne()

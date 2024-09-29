@@ -11,13 +11,13 @@ import com.najackdo.server.domain.cart.entity.Cart;
 public interface CartQueryRepository {
 
 	/**
-	 * 사용자 id와 도서 id로 장바구니 조회
+	 * 사용자 id와 책주인 id로 장바구니 조회
 	 *
-	 * @param userId 사용자 id
-	 * @param bookId 도서 id
+	 * @param customerId 소비자 id
+	 * @param customerId 책주인
 	 * @return {@link Optional<Cart>} 장바구니
 	 */
-	Optional<Cart> findCartByUserIdAndBookId(Long userId, Long bookId);
+	Optional<Cart> findCartByUserIdAndOwnerId(Long customerId, Long ownerId);
 
 	/**
 	 * 사용자 ID로 사용자의 카트 조회

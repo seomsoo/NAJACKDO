@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.najackdo.server.core.exception.BaseException;
 import com.najackdo.server.core.exception.ErrorCode;
 import com.najackdo.server.domain.cart.entity.Cart;
+import com.najackdo.server.domain.cart.entity.CartItem;
 import com.najackdo.server.domain.cart.repository.CartRepository;
 import com.najackdo.server.domain.chat.dto.ChatRoomData;
 import com.najackdo.server.domain.chat.entity.Chat;
@@ -31,61 +32,54 @@ public class ChatService {
 	private final CartRepository cartRepository;
 	private final ChatMongoRepository chatMongoRepository;
 
-	public ChatRoomData.ChatRoomWithUserDTO chatRoomList(User user) {
+	public ChatRoomData.Search chatRoomList(User user) {
 
-		List<ChatRoomData.ChatRoomDTO> result = new LinkedList<>();
+		List<ChatRoomData.Search.SearchElement> result = new LinkedList<>();
 
 		chatRoomRepository.findChatRoomsByUser(user)
 			.forEach(chatRoom -> {
 
+				log.info("{}",
+					chatRoom.getCart().getCartItems().get(0).getUserBookDetail().getFrontImagePath()
+				);
 
 
 				List<Chat.Message> messages = chatMongoRepository.findByRoomId(chatRoom.getRoomId()).getMessages();
 				Chat.Message message = messages.get(messages.size() - 1);
 
 				result.add(
-					ChatRoomData.ChatRoomDTO.search(chatRoom,
-					message.getTime(),
-					message.getMessage()
+					ChatRoomData.Search.SearchElement.search(chatRoom,
+						message.getTime(),
+						message.getMessage()
 					)
 				);
 
 			});
-		return ChatRoomData.ChatRoomWithUserDTO.create(user.getId(), result);
+		return ChatRoomData.Search.create(user.getId(), result);
 
 
 	}
 
 	@Transactional
-	public ChatRoomData.ChatRoomDTO createRoom(User customer, Long ownerId, Long cartId) {
+	public Long createRoom(User customer, Long ownerId, Long cartId) {
 
 		User owner = userRepository.findById(ownerId).orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_USER));
 		Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_CART));
 
 		ChatRoom chatRoom = chatRoomRepository.save(
-			ChatRoom.createChatRoom(customer, owner, cart)
+			ChatRoom.create(customer, owner, cart)
 		);
 
 		Chat chat = new Chat();
 		chat.setRoomId(chatRoom.getRoomId());
 		chatMongoRepository.save(chat);
 
-		return ChatRoomData.ChatRoomDTO.create(chatRoom);
-		// return rootConfig.getMapper().map(chatRoom, ChatRoomDTO.class);
-
+		return chatRoom.getRoomId();
 	}
 
 	public Chat getChatList(Long roomId, User user) {
-		// chatRoomRepository.findById(roomId)
-		// 	.orElseThrow(() -> new IllegalArgumentException("채팅방이 존재하지 않습니다."));
-
-		// List<User> usersByRoomId = chatRoomRepository.findUsersByRoomId(roomId);
-		// if (!usersByRoomId.contains(user)) {
-		// 	throw new IllegalArgumentException("사용자가 채팅방에 존재하지 않습니다.");
-		// }
 		Chat chat = chatRepository.findByRoomId(roomId);
 		chat.setUserId(user.getId());
-
 		return chat;
 
 	}
