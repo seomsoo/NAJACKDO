@@ -9,10 +9,10 @@ import org.springframework.data.repository.query.Param;
 import com.najackdo.server.domain.chat.entity.ChatRoom;
 import com.najackdo.server.domain.user.entity.User;
 
-public interface ChatRoomRepository extends JpaRepository<ChatRoom,String> {
+public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
 
 	@Query("select c from ChatRoom c where c.roomId = :roomId")
-	List<User> findUsersByRoomId(@Param("roomId") String roomId);
+	List<User> findUsersByRoomId(@Param("roomId") Long roomId);
 
 	@Query("""
 		select cr from ChatRoom cr
@@ -26,6 +26,6 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom,String> {
 		join fetch cr.cart.cartItems ci
 		join fetch ci.userBookDetail
 		where cr.customer = :user or cr.owner = :user
-		""")
+	""")
 	List<ChatRoom> findChatRoomsByUser(User user);
 }
