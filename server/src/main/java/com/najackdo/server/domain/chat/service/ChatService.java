@@ -1,5 +1,6 @@
 package com.najackdo.server.domain.chat.service;
 
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -45,7 +46,16 @@ public class ChatService {
 
 
 				List<Chat.Message> messages = chatMongoRepository.findByRoomId(chatRoom.getRoomId()).getMessages();
-				Chat.Message message = messages.get(messages.size() - 1);
+
+				Chat.Message message;
+
+				if (messages.isEmpty()) {
+					message = new Chat.Message();
+					message.setTime(LocalDateTime.now());
+					message.setMessage("");
+				} else {
+					message = messages.get(messages.size() - 1);
+				}
 
 				result.add(
 					ChatRoomData.Search.SearchElement.search(chatRoom,

@@ -124,10 +124,6 @@ const ChattingRoomPage = () => {
     return () => disconnect();
   }, []);
 
-  // if (isLoading) {
-  //   return <div>채팅 내역 불러오는중...</div>;
-  // }
-
   return (
     <div>
       <div
