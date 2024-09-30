@@ -45,12 +45,21 @@ public class ChatService {
 //				);
 
 
-//				List<Chat.Message> messages = chatMongoRepository.findByRoomId(chatRoom.getRoomId()).getMessages();
+				List<Chat.Message> messages = chatMongoRepository.findByRoomId(chatRoom.getRoomId()).getMessages();
+
+				
+				// 메시지 내역이 없으면 그냥  null로 채워서 리턴
+				if (messages.isEmpty()) {
+					result.add(
+						ChatRoomData.Search.SearchElement.search(chatRoom,
+							null,
+							""
+						)
+					);
+					return;
+				}
 
 				Chat.Message message = new Chat.Message();
-				message.setTime(LocalDateTime.now());
-				message.setMessage("");
-
 
 				result.add(
 					ChatRoomData.Search.SearchElement.search(chatRoom,
@@ -58,7 +67,6 @@ public class ChatService {
 						message.getMessage()
 					)
 				);
-
 			});
 		return ChatRoomData.Search.create(user.getId(), result);
 
@@ -86,6 +94,5 @@ public class ChatService {
 		Chat chat = chatRepository.findByRoomId(roomId);
 		chat.setUserId(user.getId());
 		return chat;
-
 	}
 }
