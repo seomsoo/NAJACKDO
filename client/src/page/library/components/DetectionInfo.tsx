@@ -1,27 +1,9 @@
-const DetectionInfo = () => {
-  const detection = [
-    {
-      title: "베임",
-      count: 2,
-    },
-    {
-      title: "찢김",
-      count: 0,
-    },
-    {
-      title: "얼룩",
-      count: 1,
-    },
-    {
-      title: "태그",
-      count: 0,
-    },
-    {
-      title: "닳음",
-      count: 4,
-    },
-  ];
+interface DetectionInfoProps {
+  ripped: number;
+  wornout: number;
+}
 
+const DetectionInfo = ({ ripped, wornout }: DetectionInfoProps) => {
   return (
     <div>
       <div className="flex flex-row mt-10 mb-3">
@@ -29,14 +11,15 @@ const DetectionInfo = () => {
         <span className="bg-[#5F6F52] text-white rounded-full px-1.5 ms-1.5">중</span>
       </div>
       <div className="flex flex-row justify-around">
-        {detection.map((detect, index) => {
-          return (
-            <div key={index} className="flex flex-col items-center border border-[#5F6F52] rounded-xl px-3 py-1.5">
-              <span>{detect.title}</span>
-              <span className="maplestory">{detect.count}</span>
-            </div>
-          );
-        })}
+
+        <div className="flex flex-col items-center border border-[#5F6F52] rounded-xl px-3 py-1.5">
+          <span>찢김</span>
+          <span className="maplestory">{ripped}</span>
+        </div>
+        <div className="flex flex-col items-center border border-[#5F6F52] rounded-xl px-3 py-1.5">
+          <span>닳음</span>
+          <span className="maplestory">{wornout}</span>
+        </div>
       </div>
     </div>
   );
