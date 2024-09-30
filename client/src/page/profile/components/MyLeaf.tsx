@@ -17,13 +17,12 @@ const MyLeaf = () => {
     queryFn: getUserInfo,
   });
 
-  const { leaf, userName } = useMemo(
-    () => ({
-      leaf: profileInfo.cash || 0,
-      userName: profileInfo.nickname || "",
-    }),
-    [profileInfo]
-  );
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  const leaf = profileInfo?.cash;
+  const userName = profileInfo?.nickname;
 
   const goToLeaf = () => {
     navigate("/profile/my-leaf", { state: { leaf, userName } });
@@ -46,9 +45,7 @@ const MyLeaf = () => {
       </div>
       <div className="flex flex-row items-center">
         <IoIosLeaf size={20} color="#A6B37D" />
-        <p className="text-2xl ml-1 text-[#776B5D]">
-          {profileInfo.cash?.toLocaleString()}
-        </p>
+        <p className="text-2xl ml-1 text-[#776B5D]">{profileInfo.cash?.toLocaleString()}</p>
       </div>
 
       {/* LeafBarGraph에 API로 받은 saveCash와 earnCash 전달 */}
