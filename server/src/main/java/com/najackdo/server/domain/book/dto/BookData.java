@@ -23,8 +23,9 @@ public class BookData {
 		private int starPoint;
 		private String pubDate;
 		private Long isbn;
+		private boolean isInterest;
 
-		public static Search of(Book book) {
+		public static Search from(Book book) {
 			Search search = new Search();
 			search.bookId = book.getId();
 			search.title = book.getTitle();
@@ -40,6 +41,13 @@ public class BookData {
 			search.isbn = book.getIsbn();
 			return search;
 		}
+
+		public static Search of(Book book, List<Book> userInterestingBooks){
+			Search search = from(book);
+			search.isInterest = userInterestingBooks.contains(book);
+			return search;
+		}
+
 	}
 
 	@Data

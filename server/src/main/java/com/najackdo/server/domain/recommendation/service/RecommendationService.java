@@ -3,10 +3,8 @@ package com.najackdo.server.domain.recommendation.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 
-import com.najackdo.server.core.response.SuccessResponse;
 import com.najackdo.server.domain.book.dto.BookData;
 import com.najackdo.server.domain.book.repository.BookRepository;
 import com.najackdo.server.domain.recommendation.dto.BookMarkDto;
@@ -40,7 +38,7 @@ public class RecommendationService {
 
 		List<Integer> bookIds = restTemplate.getForObject(BASE_URL + bookId, RecommendationResponse.class).getBookIds();
 
-		return  bookRepository.findByIds(bookIds).stream().map(BookData.Search::of).filter(book -> book.getBookId() != bookId).toList();
+		return  bookRepository.findByIds(bookIds).stream().map(BookData.Search::from).filter(book -> book.getBookId() != bookId).toList();
 	}
 
 	/**
@@ -58,32 +56,32 @@ public class RecommendationService {
 		visitMongoRepository.save(visit);
 	}
 
-	/**
-	 * 몽고에 저장하는 책 좋아요 기록
-	 * @param user
-	 * @param bookMarkDto
-	 */
-	public void createMongoBookMark(User user, BookMarkDto bookMarkDto) {
-		BookMark bookMark = new BookMark();
-		bookMark.setUserId(user.getId());
-		bookMark.setBookId(bookMarkDto.getBookId());
-		bookMark.setGenre(bookMarkDto.getGenre());
-
-		bookMarkMongoRepository.save(bookMark);
-
-	}
-
-
-	/**
-	 * 몽고에 저장하는 대여 기록
-	 * @param user
-	 * @param rentalDto
-	 */
-	public void createMongoRental(User user, RentalDto rentalDto) {
-		Rental rental = new Rental();
-		rental.setUserId(user.getId());
-		rental.setBookId(rentalDto.getBookId());
-		rental.setGenre(rentalDto.getGenre());
-		rentalMongoRepository.save(rental);
-	}
+	// /**
+	//  * 몽고에 저장하는 책 좋아요 기록
+	//  * @param user
+	//  * @param bookMarkDto
+	//  */
+	// public void createMongoBookMark(User user, BookMarkDto bookMarkDto) {
+	// 	BookMark bookMark = new BookMark();
+	// 	bookMark.setUserId(user.getId());
+	// 	bookMark.setBookId(bookMarkDto.getBookId());
+	// 	bookMark.setGenre(bookMarkDto.getGenre());
+	//
+	// 	bookMarkMongoRepository.save(bookMark);
+	//
+	// }
+	//
+	//
+	// /**
+	//  * 몽고에 저장하는 대여 기록
+	//  * @param user
+	//  * @param rentalDto
+	//  */
+	// public void createMongoRental(User user, RentalDto rentalDto) {
+	// 	Rental rental = new Rental();
+	// 	rental.setUserId(user.getId());
+	// 	rental.setBookId(rentalDto.getBookId());
+	// 	rental.setGenre(rentalDto.getGenre());
+	// 	rentalMongoRepository.save(rental);
+	// }
 }
