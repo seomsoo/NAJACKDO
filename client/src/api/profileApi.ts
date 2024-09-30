@@ -75,9 +75,7 @@ export const availableNickname = async (nickname: string): Promise<boolean> => {
   try {
     const {
       data: { success, data },
-    } = await instance.get<BaseResponse<boolean>>(
-      `/user/available-nickname/${nickname}`
-    );
+    } = await instance.get<BaseResponse<boolean>>(`/user/available-nickname/${nickname}`);
 
     if (!success) {
       throw new Error("닉네임 중복 조회 실패");
@@ -105,5 +103,14 @@ export const getOtherProfile = async (nickname: string): Promise<IProfile> => {
     return data;
   } catch (error) {
     throw new Error("다른 사람 프로필 조회 실패", error);
+  }
+};
+
+// 로그아웃
+export const postSignOut = async (): Promise<void> => {
+  try {
+    await instance.post<void>("/auth/sign-out");
+  } catch (error) {
+    throw new Error("로그아웃 실패", error);
   }
 };
