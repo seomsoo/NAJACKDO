@@ -9,10 +9,10 @@ public class CartData {
 	@Data
 	public static class CartInfo {
 
-		private Long cartId;
-		private Long ownerId;
-		private String ownerUsername;
-		private List<CartItemInfo> cartItems;
+		private Long cartId; // cart
+		private Long ownerId; // cart
+		private String ownerUsername; // cart -> user
+		private List<CartItemInfo> cartItems; // cart -> cartItems
 
 		public static CartInfo of(Long cartId, Long ownerId, String ownerUsername, List<CartItemInfo> cartItems) {
 			CartInfo cartInfo = new CartInfo();
@@ -27,11 +27,11 @@ public class CartData {
 	@Data
 	public static class CartItemInfo {
 
-		private Long cartItemId;
-		private String bookImage;
-		private String bookTitle;
-		private String author;
-		private int price;
+		private Long cartItemId; // cartItem
+		private String bookImage; // cartItem -> userBookDetail
+		private String bookTitle; // cartItem -> userBookDetail -> userBook-> book
+		private String author; // cartItem -> userBookDetail -> userBook-> book
+		private int price; // cartItem -> userBookDetail
 
 		public static CartItemInfo of(Long cartItemId, String bookImage, String bookTitle, String author, int price) {
 			CartItemInfo cartItemInfo = new CartItemInfo();
