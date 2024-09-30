@@ -100,7 +100,7 @@ public class BookService {
 
 	public BookData.Search getBook(Long bookId) {
 		return bookRepository.findById(bookId)
-			.map(BookData.Search::of)
+			.map(BookData.Search::from)
 			.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_BOOK));
 	}
 
@@ -130,14 +130,14 @@ public class BookService {
 	public BookData.Search getBookByIsbn(Long isbn) {
 		Book book = bookRepository.findByIsbn(isbn).orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_BOOK));
 
-		return BookData.Search.of(book);
+		return BookData.Search.from(book);
 
 	}
 
 	public BookData.Search getBookByTitle(String title) {
 		Book book = bookRepository.findByTitle(title).orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_BOOK));
 
-		return BookData.Search.of(book);
+		return BookData.Search.from(book);
 	}
 
 	public Page<BookData.BookCase> getNearBookCase(User user, Pageable pageable) {
