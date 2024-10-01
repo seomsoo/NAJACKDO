@@ -131,6 +131,7 @@ const OtherBookCasePage = () => {
               isMyBookCase={false}
               checked={checked} // 체크 상태 전달
               onCheck={handleCheck} // 체크 핸들러 전달
+              userId={bookcase.userId}
             />
           ) : (
             <div className='flex flex-col items-center mt-16'>
