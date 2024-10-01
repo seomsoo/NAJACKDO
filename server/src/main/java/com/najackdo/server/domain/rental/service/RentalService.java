@@ -87,9 +87,8 @@ public class RentalService {
 
 		Long ownerId = user.getId();
 		Long customerId = returnRequest.getCustomerId();
-		Long rentalId = returnRequest.getRentalId();
 
-		Rental rental = rentalRepository.findById(rentalId).orElseThrow(
+		Rental rental = rentalRepository.findByCartId(returnRequest.getCartId()).orElseThrow(
 			() -> new BaseException(ErrorCode.NOT_FOUND_RENTAL)
 		);
 

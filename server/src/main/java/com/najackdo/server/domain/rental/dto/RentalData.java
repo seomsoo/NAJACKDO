@@ -19,7 +19,7 @@ public class RentalData {
 
 	@Data
 	public static class ReturnRequest {
-		private Long rentalId;
+		private Long cartId;
 		private Long customerId;
 	}
 
