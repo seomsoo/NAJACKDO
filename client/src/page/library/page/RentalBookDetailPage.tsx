@@ -8,27 +8,36 @@ import SellerInfo from "../components/SellerInfo";
 import DetectionInfo from "../components/DetectionInfo";
 import SellerReview from "../components/SellerReview";
 import DetailRecommendBook from "../components/DetailRecommendBook";
+import { getUserInfo } from "api/profileApi";
+import UpdatePrice from "../components/UpdatePrice";
 
 const RentalBookDetailPage = () => {
   const { bookId } = useParams();
   const navigate = useNavigate();
   const bookIdAsNumber = parseInt(bookId, 10);
-  console.log("bookIdAsNumber", bookIdAsNumber);
   
 
   // 대여 도서 상세 정보 조회
   const {
     data: bookData,
-    isLoading,
-    isError,
+    isLoading: isDetailLoading,
+    isError: isDetailError,
   } = useQuery({
     queryKey: ['bookdetail', bookIdAsNumber],
     queryFn: () => getUserBookDetail(bookIdAsNumber),
   });
-  console.log("bookData", bookData);
-  console.log("지은이", );
-
-
+  
+  // 로그인된 사용자 정보 가져오기
+  const {
+    data: loggedInUser,
+    isLoading: isUserInfoLoading,
+    isError: isUserInfoError,
+  } = useQuery({
+    queryKey: ['userInfo'],
+    queryFn: getUserInfo,
+  });
+  
+  
   
   const mutation = useMutation({
     mutationKey: ["ownerbookId"],
@@ -42,19 +51,22 @@ const RentalBookDetailPage = () => {
       }
     } 
   })
-
+  
   const handleAddCartItem = (ownerbookId: number) => {
     mutation.mutate(ownerbookId)
   }
-
-  if (isLoading) {
-    return <div>로딩 중...</div>;
+  
+  if (isDetailLoading || isUserInfoLoading) {
+    return <div>Loading...</div>;
   }
-
-  if (isError) {
-    return <div>에러가 발생했습니다.</div>;
+  
+  if (isDetailError || isUserInfoError) {
+    return <div>오류가 발생했습니다.</div>;
   }
+  
+  const isMyBook = bookData.ownerId === loggedInUser.userId;
 
+  console.log("내 책인가?", bookData.ownerId === loggedInUser.userId);
 
   const seller = {
     nickname: bookData?.nickname,
@@ -74,12 +86,16 @@ const RentalBookDetailPage = () => {
           {/* <BookInfo book={book} rental /> */}
           <DetectionInfo ripped={bookData.ripped} wornout={bookData.wornout}/>
           <SellerReview nickname={bookData?.nickname}/>
+          <p className="mt-5 font-bold mb-3">추천 도서</p>
           <DetailRecommendBook bookId={bookIdAsNumber} />
       </div>
       </div>
       <div className="fixed bg-[#F8F6F3] bottom-0 w-screen max-w-[430px] border-t-[1px] pt-3 flex flex-row justify-center pb-7">
         <div onClick={() => handleAddCartItem(bookIdAsNumber)}>
-          <AddCart />
+          { !isMyBook ? <AddCart /> : (
+            <UpdatePrice userBookId={bookIdAsNumber} price={bookData.ondayPrice / 100} />
+          )
+          }
         </div>
       </div>
     </div>

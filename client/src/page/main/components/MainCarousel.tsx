@@ -19,35 +19,7 @@ const MainCarousel = () => {
     {
       bookId: 3,
       bookImg: "/pubao.png",
-    },
-    {
-      bookId: 4,
-      bookImg: "/harrypotter.png",
-    },
-    {
-      bookId: 5,
-      bookImg: "/pubao.png",
-    },
-    {
-      bookId: 6,
-      bookImg: "/harrypotter.png",
-    },
-    {
-      bookId: 7,
-      bookImg: "/pubao.png",
-    },
-    {
-      bookId: 8,
-      bookImg: "/harrypotter.png",
-    },
-    {
-      bookId: 9,
-      bookImg: "/pubao.png",
-    },
-    {
-      bookId: 10,
-      bookImg: "/harrypotter.png",
-    },
+    }
   ];
 
   return (
