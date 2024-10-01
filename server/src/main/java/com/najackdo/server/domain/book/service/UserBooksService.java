@@ -1,10 +1,9 @@
 package com.najackdo.server.domain.book.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import com.najackdo.server.domain.recommendation.dto.BookSpineDetectionResponse;
+import com.najackdo.server.domain.recommendation.dto.RecommendationResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,16 +25,31 @@ import com.najackdo.server.domain.recommendation.entity.Rental;
 import com.najackdo.server.domain.recommendation.repository.RentalMongoRepository;
 import com.najackdo.server.domain.user.entity.User;
 import com.najackdo.server.domain.user.repository.UserRepository;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 
+import java.util.HashMap;
+import java.util.Map;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Slf4j
 public class UserBooksService {
 
+	private final String BookSpineURL = "http://localhost:8000/item/bookSpineDetection";
+
+	private final RestTemplate restTemplate;
 	private final RentalMongoRepository rentalMongoRepository;
 	private final UserBooksRepository userBooksRepository;
 	private final UserBookDetailRepository userBookDetailRepository;
@@ -43,6 +57,35 @@ public class UserBooksService {
 	private final ActivityAreaSettingRepository activityAreaSettingRepository;
 	private final BookMarkRepository bookMarkRepository;
 	private final UserRepository userRepository;
+
+
+	public List<String> postBookSpineDetection(MultipartFile file) {
+		ResponseEntity<BookSpineDetectionResponse> responseEntity;
+		try {
+			// HttpHeaders 설정
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(org.springframework.http.MediaType.MULTIPART_FORM_DATA);
+
+			// MultiValueMap을 사용하여 요청 본문 생성
+			MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+			body.add("imageFile", new org.springframework.core.io.ByteArrayResource(file.getBytes()) {
+				@Override
+				public String getFilename() {
+					return file.getOriginalFilename(); // 파일 이름 설정
+				}
+			});
+
+			// 요청 본문 생성
+			HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+			responseEntity = restTemplate.exchange(BookSpineURL, HttpMethod.POST, requestEntity, BookSpineDetectionResponse.class);
+			log.info(responseEntity.getBody().getTitles().toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new BaseException(ErrorCode.BOOK_NOT_FOUND);
+		}
+
+		return responseEntity.getBody().getTitles();
+	}
 
 	@Transactional
 	public Map<String, List<String>> addBookList(User user, UserBookData.Create create) {
@@ -54,8 +97,10 @@ public class UserBooksService {
 
 		List<String> notFoundBooks = new ArrayList<>();
 		List<String> alreadyExistBooks = new ArrayList<>();
-
-		for (String title : create.getTitles()) {
+		postBookSpineDetection(create.getFile());
+		List<String> titles = postBookSpineDetection(create.getFile());
+		log.info("titles: {}", titles);
+		for (String title : titles) {
 
 			Book book = bookRepository.findFirstByTitle(title).orElseGet(() -> {
 				notFoundBooks.add(title);
