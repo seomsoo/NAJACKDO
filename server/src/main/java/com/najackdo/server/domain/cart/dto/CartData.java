@@ -2,6 +2,8 @@ package com.najackdo.server.domain.cart.dto;
 
 import java.util.List;
 
+import com.najackdo.server.domain.rental.entity.RentalStatus;
+
 import lombok.Data;
 
 public class CartData {
@@ -12,13 +14,15 @@ public class CartData {
 		private Long cartId; // cart
 		private Long ownerId; // cart
 		private String ownerUsername; // cart -> user
+		private RentalStatus status; // cart
 		private List<CartItemInfo> cartItems; // cart -> cartItems
 
-		public static CartInfo of(Long cartId, Long ownerId, String ownerUsername, List<CartItemInfo> cartItems) {
+		public static CartInfo of(Long cartId, Long ownerId, String ownerUsername, List<CartItemInfo> cartItems, RentalStatus status) {
 			CartInfo cartInfo = new CartInfo();
 			cartInfo.cartId = cartId;
 			cartInfo.ownerId = ownerId;
 			cartInfo.ownerUsername = ownerUsername;
+			cartInfo.status = status;
 			cartInfo.cartItems = cartItems;
 			return cartInfo;
 		}

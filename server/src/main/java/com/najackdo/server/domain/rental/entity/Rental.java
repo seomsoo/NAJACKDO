@@ -30,7 +30,7 @@ public class Rental {
 	private Long id;
 
 	@OneToOne
-	@JoinColumn(name = "cart")
+	@JoinColumn(name = "cart_id")
 	private Cart cart;
 
 	@Column(name = "rental_start_date")
