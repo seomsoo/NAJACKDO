@@ -108,4 +108,8 @@ public class RentalService {
 		return SuccessResponse.empty();
 
 	}
+
+	// public SuccessResponse<List<RentalData.RentalResponse>> rentalList(User user) {
+	//
+	// }
 }

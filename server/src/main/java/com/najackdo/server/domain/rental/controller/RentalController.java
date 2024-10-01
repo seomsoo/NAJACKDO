@@ -1,5 +1,7 @@
 package com.najackdo.server.domain.rental.controller;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,4 +51,16 @@ public class RentalController {
 		@RequestBody RentalData.ReturnRequest returnRequest) {
 		return rentalService.returnRental(user, returnRequest);
 	}
+
+	/**
+	 * 렌탈 조회 api
+	 *
+	 * @param user
+	 * @return {@link SuccessResponse<List<RentalData.RentalResponse>>}
+	 */
+	// @GetMapping("/list")
+	// @Operation(summary = "렌탈 조회", description = "렌탈 조회")
+	// public SuccessResponse<List<RentalData.RentalResponse>> rentalList(@CurrentUser User user) {
+	// 	return rentalService.rentalList(user);
+	// }
 }
