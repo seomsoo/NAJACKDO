@@ -5,6 +5,7 @@ export interface IChat {
 
 export interface IChatRoom {
   roomId: number;
+  cartId: number;
   customerId: number;
   customerNickname: string;
   customerProfile: string;
@@ -15,6 +16,7 @@ export interface IChatRoom {
   ownerLocation: string;
   lastChatTime: string;
   lastChatMessage: string;
+  displayImagePath: string;
 }
 
 export interface IChatList {

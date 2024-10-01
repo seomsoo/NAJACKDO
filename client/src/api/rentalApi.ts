@@ -2,7 +2,7 @@ import instance from "api/clientApi";
 import { BaseResponse } from "atoms/Base.type";
 import { IRental, IReturn, IReview } from "atoms/Rental.type";
 
-// 렌탈 신청 
+// 렌탈 신청
 export const postRental = async (RentalData: IRental): Promise<object> => {
   try {
     const {

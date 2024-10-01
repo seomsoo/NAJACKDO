@@ -52,14 +52,14 @@ const BookRentalApply = ({
   return (
     <Drawer>
       <DrawerTrigger>
-        <span className="bg-[#776B5D] text-white rounded-lg py-3 px-4">
+        <span className="bg-[#776B5D] text-white rounded-lg py-3 px-2 w-1/5">
           송금하기
         </span>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle className="text-start text-base mx-2">
-            대여 기간을 선택해주세요.
+            <p>대여 기간을 선택해주세요.</p>
           </DrawerTitle>
           <DrawerDescription className="mt-5">
             <div className="flex flex-row justify-center items-end font-bold space-x-2">

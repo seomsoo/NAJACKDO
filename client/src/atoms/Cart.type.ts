@@ -2,6 +2,7 @@ export interface ICartList {
   cartId: number;
   ownerId: number;
   ownerUsername: string;
+  status?: string;
   cartItems: ICartItem[];
 }
 
