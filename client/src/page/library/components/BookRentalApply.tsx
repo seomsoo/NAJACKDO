@@ -14,44 +14,47 @@ import { useEffect, useState } from "react";
 import { IoIosLeaf } from "react-icons/io";
 
 interface BookRentalApplyProps {
-  dayPrice: number;
-  triggerClassName?: string;
+  dayprice: number;
+  totalLeaf: number;
+  setTotalLeaf: (totalLeaf: number) => void;
+  rentalPeriod: number[];
+  setRentalPeriod: (rentalPeriod: number[]) => void;
+  handleClick: () => void;
 }
 
 const BookRentalApply = ({
-  dayPrice,
-  triggerClassName,
+  dayprice,
+  totalLeaf,
+  setTotalLeaf,
+  rentalPeriod,
+  setRentalPeriod,
+  handleClick,
 }: BookRentalApplyProps) => {
-  const [date, setDate] = useState<number[]>([14]);
   const [sale, setSale] = useState<number | null>(null);
-  const [totalPrice, setTotalPrice] = useState<number>(0);
 
   useEffect(() => {
-    if (date[0] < 30) {
+    if (rentalPeriod[0] < 30) {
       setSale(null);
-    } else if (date[0] < 45) {
+    } else if (rentalPeriod[0] < 45) {
       setSale(10);
-    } else if (date[0] < 60) {
+    } else if (rentalPeriod[0] < 60) {
       setSale(15);
     } else {
       setSale(20);
     }
-    setTotalPrice(
-      Math.floor((dayPrice * date[0] * ((100 - (sale || 0)) / 100)) / 10) * 10
+    setTotalLeaf(
+      Math.floor(
+        (dayprice * rentalPeriod[0] * ((100 - (sale || 0)) / 100)) / 10
+      ) * 10
     );
-  }, [date, dayPrice, sale]);
+  }, [rentalPeriod, dayprice, sale]);
 
   return (
     <Drawer>
       <DrawerTrigger>
-        <p
-          className={
-            triggerClassName ||
-            "bg-[#776B5D] text-white font-bold px-8 py-2 rounded-lg mx-5"
-          }
-        >
-          도서 대출 신청
-        </p>
+        <span className="bg-[#776B5D] text-white rounded-lg py-3 px-4">
+          송금하기
+        </span>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
@@ -60,7 +63,7 @@ const BookRentalApply = ({
           </DrawerTitle>
           <DrawerDescription className="mt-5">
             <div className="flex flex-row justify-center items-end font-bold space-x-2">
-              <span className="text-2xl">{date} 일</span>
+              <span className="text-2xl">{rentalPeriod} 일</span>
               {sale && (
                 <span className="text-[#FF6B6B] text-base pb-0.5">
                   {sale}% 할인
@@ -68,11 +71,11 @@ const BookRentalApply = ({
               )}
             </div>
             <Slider
-              defaultValue={date}
+              defaultValue={rentalPeriod}
               min={14}
               max={60}
               minStepsBetweenThumbs={1}
-              onValueChange={(i) => setDate(i)}
+              onValueChange={(i) => setRentalPeriod(i)}
             />
             <div className="flex justify-around w-full">
               {[14, 30, 45, 60].map((day, index) => (
@@ -92,11 +95,14 @@ const BookRentalApply = ({
           <div className="flex flex-row items-center">
             <IoIosLeaf color="#A6B37D" size={25} className="mr-2" />
             <span className="font-bold text-[#5F6F52] text-lg">
-              {totalPrice}
+              {totalLeaf}
             </span>
           </div>
-          <DrawerClose className="bg-[#776B5D] text-white font-bold px-8 py-2 rounded-lg mx-5">
-            도서 대출 신청
+          <DrawerClose
+            className="bg-[#776B5D] text-white font-bold px-8 py-2 rounded-lg mx-5"
+            onClick={handleClick}
+          >
+            송금하기
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>

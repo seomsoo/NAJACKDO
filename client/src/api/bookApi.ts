@@ -67,6 +67,7 @@ export const postAiCheckBook = async (formData: FormData): Promise<BaseResponse<
         },
       }
     );
+    console.log(data); 
 
     if (!data.success) {
       throw new Error('AI 도서 인증 실패');

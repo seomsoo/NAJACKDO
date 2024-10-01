@@ -1,5 +1,5 @@
 import { IoChevronBack } from 'react-icons/io5';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom'; // useLocation 추가
 import {
   Carousel,
   CarouselApi,
@@ -13,25 +13,22 @@ import { FaCircle } from 'react-icons/fa';
 import AiOnBoarding from '../components/AiOnBoarding';
 
 const AICheckPage = () => {
-  interface aiOnBoardingData {
-    content: string;
-    onboardingImage: string;
-  }
-
   const navigate = useNavigate();
+  const location = useLocation();
+  const { userId, userBookId } = location.state; // BookGrid에서 전달받은 userId, userBookId
+
   const [api, setApi] = useState<CarouselApi>();
   const [carouselIndex, setCarouselIndex] = useState<number>(0);
-  const [active, setActive] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!api) return;
-
-    api.on('select', () => {
-      setCarouselIndex(api.selectedScrollSnap());
-    });
+    if (api) {
+      api.on('select', () => {
+        setCarouselIndex(api.selectedScrollSnap());
+      });
+    }
   }, [api]);
 
-  const onBoardingArray: aiOnBoardingData[] = [
+  const onBoardingArray = [
     {
       content: '앞면',
       onboardingImage: 'images/onBoarding/front.png',
@@ -41,14 +38,6 @@ const AICheckPage = () => {
       onboardingImage: 'images/onBoarding/back.png',
     },
   ];
-
-  useEffect(() => {
-    if (carouselIndex === 2) {
-      setActive(true);
-    } else {
-      setActive(false);
-    }
-  }, [carouselIndex]);
 
   return (
     <div>
@@ -106,7 +95,12 @@ const AICheckPage = () => {
         </div>
       </div>
       <div className="px-6">
-        <p  onClick={() => navigate("/ai-check/upload")} className="text-center bg-[#776B5D] w-full  mt-10 rounded-xl text-white font-bold py-3 ">
+        <p
+          onClick={() =>
+            navigate(`/ai-check/upload`, { state: { userId, userBookId } })
+          } // userId, userBookId를 함께 넘김
+          className="text-center bg-[#776B5D] w-full  mt-10 rounded-xl text-white font-bold py-3"
+        >
           AI 인증 하러 가기
         </p>
       </div>

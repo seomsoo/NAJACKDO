@@ -2,7 +2,6 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { getUserBookDetail } from "api/bookApi";
 import { postAddCartItem } from "api/cartApi";
 import AddCart from "page/library/components/AddCart";
-import BookRentalApply from "page/library/components/BookRentalApply";
 import RentalBookDetail from "page/library/components/RentalBookDetail";
 import { useNavigate, useParams } from "react-router-dom";
 import SellerInfo from "../components/SellerInfo";
@@ -79,9 +78,13 @@ const RentalBookDetailPage = () => {
       </div>
       </div>
       <div className="fixed bg-[#F8F6F3] bottom-0 w-screen max-w-[430px] border-t-[1px] pt-3 flex flex-row justify-center pb-7">
+<<<<<<< HEAD
         <div onClick={() => handleAddCartItem(bookIdAsNumber)}>
           <AddCart />
         </div>
+=======
+        <AddCart />
+>>>>>>> origin/develop
       </div>
     </div>
   );

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.najackdo.server.domain.book.dto.BookData;
+import com.najackdo.server.domain.book.entity.Book;
 import com.najackdo.server.domain.book.repository.BookRepository;
 import com.najackdo.server.domain.search.dto.AutocompleteResponse;
 
@@ -50,11 +51,15 @@ public class SearchService {
 		addAutocomplete(keyword);
 
 		String key = SEARCH_KEY + userId;
+
+		List<Book> userInterestingBooks = bookRepository.findInterestingBooks(userId);
+
 		// 검색어에 해당하는 책 제목 검색
 		List<BookData.Search> searchBooks = bookRepository.findByTitleContains(keyword)
 			.stream()
-			.map(BookData.Search::of)
+			.map(book -> BookData.Search.of(book, userInterestingBooks))  // of 메서드를 사용하여 관심 여부 반영
 			.toList();
+
 
 		// 검색 결과가 있으면 Redis에 검색어 저장 및 관련 통계 업데이트
 		if (!searchBooks.isEmpty()) {
@@ -62,6 +67,7 @@ public class SearchService {
 			incrementSearchCount(keyword);
 			updatePopularKeywordsList(keyword);
 		}
+
 		return searchBooks;
 	}
 

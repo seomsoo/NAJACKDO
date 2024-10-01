@@ -1,21 +1,20 @@
 import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 interface AuthState {
   accessToken: string | null;
   setAccessToken: (accessToken: string) => void;
-  clearTokens: () => void;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
-  accessToken: sessionStorage.getItem("accessToken"),
+export const useAuthStore = create(
+  persist<AuthState>(
+    (set) => ({
+      accessToken: "",
 
-  setAccessToken: (accessToken) => {
-    sessionStorage.setItem("accessToken", accessToken);
-    set({ accessToken });
-  },
-
-  clearTokens: () => {
-    sessionStorage.removeItem("accessToken");
-    set({ accessToken: null });
-  },
-}));
+      setAccessToken: (accessToken) => {
+        set({ accessToken });
+      },
+    }),
+    { name: "auth-store", storage: createJSONStorage(() => sessionStorage) }
+  )
+);

@@ -25,16 +25,14 @@ export const getChatRoom = async (): Promise<IChat> => {
 export const getChatList = async (roomId: number): Promise<IChatList> => {
   try {
     const {
-      data: { success, data },
+      data: { data },
     } = await instance.get<BaseResponse<IChatList>>("/chatroom/chat", {
       params: {
         roomId: roomId,
       },
     });
 
-    if (!success) {
-      throw new Error("채팅 내역 조회 실패");
-    }
+    console.log("getChatList", data);
 
     return data;
   } catch (error) {

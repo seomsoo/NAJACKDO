@@ -27,9 +27,7 @@ const KapayPage = () => {
       /windows phone/i,
     ];
 
-    const detectedDeviceType = mobileDevices.some((device) =>
-      userAgent.match(device)
-    )
+    const detectedDeviceType = mobileDevices.some((device) => userAgent.match(device))
       ? "mobile"
       : "pc";
 
@@ -89,10 +87,7 @@ const KapayPage = () => {
 
   return (
     <div className="mx-[25px]">
-      <div
-        onClick={() => navigate(-1)}
-        className="cursor-pointer py-4 flex flex-row items-center"
-      >
+      <div onClick={() => navigate(-1)} className="cursor-pointer py-4 flex flex-row items-center">
         <IoChevronBack size={25} color="#545454" />
       </div>
       <p className="font-bold text-xl my-4">
