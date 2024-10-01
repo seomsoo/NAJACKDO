@@ -3,19 +3,20 @@ import MannerBarGraph from 'page/profile/components/MannerBarGraph';
 import { IoIosArrowForward } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 
-interface MannerTreeProps {
-  mannerScore: number;
-  goodReviewCount: number;
-  badReviewCount: number;
-  nickname: string;
-}
+// interface MannerTreeProps {
+//   mannerScore: number;
+//   goodReviewCount: number;
+//   badReviewCount: number;
+//   nickname: string;
+// }
 
 const MannerTree = ({
   mannerScore,
   goodReviewCount,
   badReviewCount,
   nickname,
-}: MannerTreeProps) => {
+}) => {
+  console.log(typeof goodReviewCount)
   const navigate = useNavigate();
   const goToGrade = () => {
     navigate(`/profile/${nickname}/my-grade`);

@@ -26,7 +26,7 @@ public class Book {
 	@Column(name = "isbn", nullable = false)
 	private Long isbn;
 
-	@Column(name = "description")
+	@Column(name = "description", columnDefinition = "TEXT")
 	private String description;
 
 	@Column(name = "genre")

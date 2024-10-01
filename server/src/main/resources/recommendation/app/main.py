@@ -18,11 +18,18 @@ from fastapi import FastAPI, File, UploadFile, Form
 from dotenv import load_dotenv
 from PIL import Image 
 from math import log10
+from fastapi.middleware.cors import CORSMiddleware
 
 
 
 load_dotenv() 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 model_path = os.path.join(script_dir, "quality_inspection/best.pt")
@@ -60,7 +67,7 @@ async def recomm_books(bookId : int):
 
 
 
-@app.post("/item/quality-inspection")
+@app.post("/python/item/quality-inspection")
 async def quality_inspection(user_id: int = Form(...),
                              user_book_id: int = Form(...),
                              files: list[UploadFile] = File(...)):
@@ -132,7 +139,7 @@ async def quality_inspection(user_id: int = Form(...),
             "content_type": "image/jpeg"
         })
 
-    
+
     book = dao.get_book(user_id, user_book_id)
     
     dao.insert_user_book_detail(user_book_id, count_ripped, count_wornout, 

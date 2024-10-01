@@ -1,5 +1,5 @@
 import { BaseResponse } from "atoms/Base.type";
-import { IBookDetail } from "atoms/Book.type";
+import { IBookDetail, IRentalCost, IUserBookDetail } from "atoms/Book.type";
 import instance, { pythoninstance } from "./clientApi";
 
 // 관심 도서 조회
@@ -150,5 +150,36 @@ export const getRecommendbook = async (bookId: number): Promise<IBookDetail[]> =
     return data;
   } catch (error) {
     throw new Error("비슷한 책 추천 실패", error);
+  }
+};
+
+// 대여 도서 상세 조회
+export const getUserBookDetail = async (userBookId: number): Promise<IUserBookDetail> => {
+  const {
+    data: { success, data },
+  } = await instance.get<BaseResponse<IUserBookDetail>>(`/user-book/${userBookId}`);
+
+  console.log("getUserBookDetail", data);
+
+  if (!success) {
+    throw new Error("대여 도서 상세 조회 실패");
+  }
+
+  return data;
+};
+
+// 대여료 수정
+export const postUpdateRentalCost = async (RentalCostData): Promise<void> => {
+  try {
+    const {
+      data: { success, data },
+    } = await instance.post<BaseResponse<IRentalCost>>("/user-book/update/rental-cost", RentalCostData);
+
+    if (!success) {
+      throw new Error("대여료 수정 실패");
+    }
+
+  } catch (error) {
+    throw new Error("대여료 수정 실패", error);
   }
 };

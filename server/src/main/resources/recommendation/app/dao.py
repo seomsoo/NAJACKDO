@@ -15,26 +15,26 @@ connection = psycopg2.connect(
 
 
 def get_book(user_id, user_book_id):
-    
     try:
         with connection.cursor(cursor_factory=RealDictCursor) as cursor:
             query = f"""
             SELECT b.title, b.publisher, b.genre, b.author, b.isbn, b.book_id, b.star_point, b.price_standard
             FROM books as b
             JOIN user_book as ub on b.book_id = ub.book_id
-            WHERE ub.user_book_id = {user_book_id} and ub.user_id = {user_id};
+            WHERE ub.user_book_id = %s AND ub.user_id = %s;
             """
-            
-            cursor.execute(query) 
-
+            cursor.execute(query, (user_book_id, user_id))
             row = cursor.fetchone()
-            
-            print(row)
+
+            if row:
+                print(row)
+            else:
+                print("No book found for given user_book_id and user_id")
+            return row  # 데이터를 반환
 
     except Exception as e:
         print(f"오류 발생: {e}")
-
-    return row
+        return None  # 예외 발생 시 None을 반환
 
 
 
@@ -46,8 +46,7 @@ def insert_user_book_detail(
     back_book_image_url, 
     inspect_front_book_image_url, 
     inspect_back_book_image_url,
-    standard_price
-):
+    standard_price):
     
     
     
@@ -56,11 +55,11 @@ def insert_user_book_detail(
     try:
         with connection.cursor() as cursor:
             
-            
-            
+
             query = """
             INSERT INTO user_book_details (
-                user_books_id, 
+                book_detail_id
+                user_books_id,
                 ripped, 
                 wornout, 
                 back_image_path, 
@@ -69,10 +68,11 @@ def insert_user_book_detail(
                 inspect_back_image_path,
                 oneday_price,
                 used_price
-            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"""
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"""
 
             cursor.execute(query, (
-                user_book_id, 
+                user_book_id,
+                user_book_id,
                 ripped, 
                 worn_out, 
                 front_book_image_url, 

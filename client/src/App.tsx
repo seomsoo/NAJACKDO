@@ -3,11 +3,14 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { getValid } from "api/validApi";
 import Footer from "components/common/Footer";
 import Header from "components/common/Header";
+import NotFoundPage from "components/common/NotFoundPage";
+import LibraryRoute from "components/routes/LibraryRoute";
 import MainRoute from "components/routes/MainRoute";
+import ProfileRoute from "components/routes/ProfileRoute";
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import { useEffect, useState } from "react";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useMatch, useNavigate } from "react-router-dom";
 import { useAuthStore } from "store/useAuthStore";
 import { useValidStore } from "store/useValidStore";
 
@@ -59,12 +62,16 @@ function App() {
 
   const popupPaths = ["/kapay/approve", "/kapay/cancel", "/kapay/fail"];
   const showHeaderPaths = ["/"];
+
+
+  const isRentalPage = useMatch("/book/:bookId/rental");
+  const isMyBookPage = useMatch("/book/:bookId/mybook");
+
   const hideFooterPaths = [
     "/sign-in",
-    "/book/:bookId/rental",
-    "/book/:bookId/mybook",
     "/survey",
     "/setting/location",
+    "/404",
   ];
 
   const [isRequested, setIsRequested] = useState(false);
@@ -147,8 +154,11 @@ function App() {
         )}
         <Routes>
           <Route path="/*" element={<MainRoute />} />
+          <Route path="/profile/*" element={<ProfileRoute />} />
+          <Route path="/library/*" element={<LibraryRoute />} />
+          <Route path="/404" element={<NotFoundPage />} />
         </Routes>
-        {!shouldHideHeaderFooter && !hideFooterPaths.includes(currentPath) && (
+        {!isRentalPage && !isMyBookPage && !shouldHideHeaderFooter && !hideFooterPaths.includes(currentPath)  && (
           <Footer />
         )}
       </div>

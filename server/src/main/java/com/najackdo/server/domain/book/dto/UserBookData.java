@@ -9,6 +9,7 @@ import com.najackdo.server.domain.user.entity.User;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 public class UserBookData {
 
@@ -26,12 +27,11 @@ public class UserBookData {
 	@Data
 	public static class Create {
 
-		@NotNull
-		private List<String> titles;
+		private MultipartFile file;
 
-		public static Create of(List<String> titles) {
+		public static Create of(MultipartFile file) {
 			Create create = new Create();
-			create.titles = titles;
+			create.file = file;
 			return create;
 		}
 

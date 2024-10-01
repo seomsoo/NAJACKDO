@@ -36,7 +36,7 @@ const BookRentalInfo = ({
   }
   return (
     <div className='flex flex-row my-2'>
-      <img src={bookImage} alt='book' />
+      <img src={bookImage} alt='book' className='w-[50px]' />
       <div className='ml-2 w-[80%] flex flex-col gap-1'>
         <div className='flex flex-row gap-1 justify-between items-center'>
           <p className='text-sm font-medium line-clamp-1 h-[1.2rem]'>{bookTitle}</p>

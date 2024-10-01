@@ -21,6 +21,10 @@ const RecentSearchText = ({ text }: IRecentSearchTextProps) => {
       queryClient.invalidateQueries({
         queryKey: ["search", "recent"],
       });
+
+      queryClient.setQueryData<string[]>(["search", "recent"], (oldData) => {
+        return oldData?.filter((item) => item !== text) || [];
+      });
     },
   });
 
@@ -32,10 +36,7 @@ const RecentSearchText = ({ text }: IRecentSearchTextProps) => {
     <div className="mx-2 my-4 flex flex-row justify-between">
       <div className="flex flex-row cursor-pointer">
         <IoMdTime size={25} color="#545454" />
-        <span
-          className="ml-3"
-          onClick={() => navigate(`/search/result?keyword=${text}`)}
-        >
+        <span className="ml-3" onClick={() => navigate(`/search/result?keyword=${text}`)}>
           {text}
         </span>
       </div>
