@@ -3,7 +3,7 @@ import { BaseResponse } from "atoms/Base.type";
 import { ILeafLog, INickname, IProfile, IUserInfo } from "atoms/Profile.type";
 
 // 유저 정보 입력
-export const setUserInfo = async (data: IUserInfo): Promise<void> => {
+export const postUserInfo = async (data: IUserInfo): Promise<void> => {
   try {
     const {
       data: { success },

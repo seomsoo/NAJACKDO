@@ -63,7 +63,7 @@ instance.interceptors.response.use(
         return instance(originalRequest);
       } catch (refreshError) {
         // refreshToken도 만료된 경우 로그아웃 처리
-        useAuthStore.getState().clearTokens();
+        useAuthStore.persist.clearStorage(); // sessionStorage 초기화
         window.location.href = "/sign-in";
         return Promise.reject(refreshError);
       }

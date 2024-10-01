@@ -83,7 +83,6 @@ const CartContainer = ({
         >
           도서 대출 신청
         </button>
-        {/* <BookRentalApply dayPrice={sumPrice} triggerClassName="w-[265px] bg-[#776B5D] text-[12px] text-white rounded-[12px] p-2" /> */}
       </div>
     </div>
   );
