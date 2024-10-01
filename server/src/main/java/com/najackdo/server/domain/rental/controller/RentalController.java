@@ -2,6 +2,7 @@ package com.najackdo.server.domain.rental.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.najackdo.server.core.annotation.CurrentUser;
 import com.najackdo.server.core.response.SuccessResponse;
 import com.najackdo.server.domain.rental.dto.RentalData;
+import com.najackdo.server.domain.rental.entity.Rental;
 import com.najackdo.server.domain.rental.service.RentalService;
 import com.najackdo.server.domain.user.entity.User;
 
@@ -63,4 +65,27 @@ public class RentalController {
 	// public SuccessResponse<List<RentalData.RentalResponse>> rentalList(@CurrentUser User user) {
 	// 	return rentalService.rentalList(user);
 	// }
+
+	/**
+	 * 빌려준 내역 조회 api
+	 */
+	@GetMapping("/lend")
+	@Operation(summary = "빌려준 내역 조회", description = "빌려준 내역 조회")
+	public SuccessResponse<List<RentalData.RentalHistory>> lendList(@CurrentUser User user) {
+
+		return SuccessResponse.of(rentalService.lendList(user));
+	}
+
+
+	/**
+	 * 빌린 내역 조회 api
+	 */
+	@GetMapping("/borrow")
+	@Operation(summary = "빌린 내역 조회", description = "빌린 내역 조회")
+	public SuccessResponse<List<RentalData.RentalHistory>> borrowList(@CurrentUser User user) {
+		return SuccessResponse.of(rentalService.borrowList(user));
+	}
+
 }
+
+
