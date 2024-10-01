@@ -73,6 +73,7 @@ function App() {
     "/setting/location",
     "/404",
   ];
+  
 
   const [isRequested, setIsRequested] = useState(false);
   const { accessToken } = useAuthStore.getState();

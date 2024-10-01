@@ -1,5 +1,5 @@
 import { BaseResponse } from "atoms/Base.type";
-import { IBookDetail, IRentalCost, IUserBookDetail } from "atoms/Book.type";
+import { IBookDetail, IRentalCost, ITimeSpent, IUserBookDetail } from "atoms/Book.type";
 import instance from "./clientApi";
 
 // 관심 도서 조회
@@ -185,5 +185,22 @@ export const postUpdateRentalCost = async (RentalCostData): Promise<void> => {
 
   } catch (error) {
     throw new Error("대여료 수정 실패", error);
+  }
+};
+
+
+// 체류시간 저장
+export const postTimeSpent = async (TimeData): Promise<void> => {
+  try {
+    const {
+      data: { success, data },
+    } = await instance.post<BaseResponse<ITimeSpent>>("/recommend/visits", TimeData);
+
+    if (!success) {
+      throw new Error("체류 시간 저장 실패");
+    }
+
+  } catch (error) {
+    throw new Error("체류 시간 저장 실패", error);
   }
 };
