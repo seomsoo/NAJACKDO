@@ -6,13 +6,13 @@ import {
   IoHeartOutline,
   IoNotificationsOutline,
 } from 'react-icons/io5'; // 하트 아이콘 유지
-import BookGrid from '../components/BookGrid';
 import {
   getOtherBookCase,
   postInterestBookCase,
   deleteInterestBookCase,
 } from 'api/bookcaseApi'; // API 호출 함수
 import { useState, useEffect } from 'react';
+import OtherBookGrid from '../components/OtherBookGrid';
 
 const OtherBookCasePage = () => {
   const navigate = useNavigate();
@@ -126,12 +126,11 @@ const OtherBookCasePage = () => {
         {/* 다른 사용자의 책장을 보여주는 BookGrid */}
         <section className='flex flex-col items-center text-center mt-12 gap-6'>
           {bookcase.displayBooks?.length > 0 ? (
-            <BookGrid
+            <OtherBookGrid
               books={bookcase.displayBooks}
-              isMyBookCase={false}
               checked={checked} // 체크 상태 전달
               onCheck={handleCheck} // 체크 핸들러 전달
-              userId={bookcase.userId}
+            
             />
           ) : (
             <div className='flex flex-col items-center mt-16'>
@@ -144,7 +143,7 @@ const OtherBookCasePage = () => {
 
       {/* 책이 선택된 경우 모달 표시 */}
       {isAnyChecked && (
-        <aside className='fixed bottom-20 w-full text-white flex text-lg justify-around rounded-t-xl items-center bg-[#776B5D]'>
+        <aside className='fixed bottom-20 w-full max-w-[430px] text-white flex text-lg justify-around rounded-t-xl items-center bg-[#776B5D]'>
           <button className='px-12 p-8'>담기</button>
           <span className='ml-1'>|</span>
           <button className='p-8'>대여 신청</button>

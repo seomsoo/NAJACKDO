@@ -3,8 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { BiBookAdd } from 'react-icons/bi';
 import { IoIosArrowBack } from 'react-icons/io';
 import { IoNotificationsOutline } from 'react-icons/io5';
-import BookGrid from '../components/BookGrid'; // BookGrid 컴포넌트 불러오기
 import { getMyBookCase } from 'api/bookcaseApi'; // API 호출 함수
+import MyBookGrid from '../components/MyBookGrid';
 
 const MyBookCasePage = () => {
   const navigate = useNavigate();
@@ -69,9 +69,8 @@ const MyBookCasePage = () => {
         <section className="flex flex-col items-center text-center mt-12 gap-6">
           {/* 책 데이터가 있을 때 */}
           {hasBooks ? (
-            <BookGrid
+            <MyBookGrid
               books={bookcase.displayBooks}
-              isMyBookCase={true}
               userId={bookcase.userId} // userId를 BookGrid에 전달
             />
           ) : (
