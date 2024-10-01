@@ -91,7 +91,7 @@ public class UserData {
 			response.nickname = user.getNickName();
 			response.profileImage = user.getProfileImage();
 			response.locationName = locationName;
-			response.mannerScore = user.getMannerScore();
+			response.mannerScore = calMannerScore(goodReviewInfo.size(), badReviewInfo.size());
 			response.goodReviewInfo = goodReviewInfo;
 			response.badReviewInfo = badReviewInfo;
 			return response;
@@ -148,4 +148,12 @@ public class UserData {
 		}
 	}
 
+
+	public static int calMannerScore(int positive, int negative) {
+		double alpha = 0.1;  // 평가 수에 대한 가중치를 조정하는 상수
+		int totalReviews = positive + negative;
+		return totalReviews == 0 ? 50 :
+			(int)	((100 * positive / (double) totalReviews) *
+				(1 - Math.exp(-alpha * totalReviews)));
+	}
 }

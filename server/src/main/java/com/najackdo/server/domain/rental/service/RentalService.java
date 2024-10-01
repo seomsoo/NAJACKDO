@@ -105,10 +105,62 @@ public class RentalService {
 		// ! 채팅 전송 로직 추가
 
 		return SuccessResponse.empty();
+	}
+
+	public List<RentalData.RentalHistory> lendList(User user) {
+		List<Rental> lendList = rentalRepository.findLendListByUserId(user.getId());
+
+
+		return lendList.stream().map(rental ->
+			RentalData.RentalHistory.create(
+				rental.getId(),
+				rental.getCart().getCustomer().getNickName(),
+				rental.getCart().getCustomer().getProfileImage(),
+				rental.getRentalStartDate(),
+				rental.getRentalEndDate(),
+				rental.getStatus(),
+				rental.getRentalCost(),
+				rental.getRentalPeriod(),
+				rental.getCart().getCartItems().stream().map(cartItem ->
+					RentalData.RentalBook.create(
+						cartItem.getUserBookDetail().getUserBook().getBook().getCover(),
+						cartItem.getUserBookDetail().getUserBook().getBook().getTitle(),
+						cartItem.getUserBookDetail().getUserBook().getBook().getAuthor(),
+						cartItem.getUserBookDetail().getUserBook().getBook().getPublisher(),
+						cartItem.getUserBookDetail().getUsedPrice() / 100
+					)
+				).toList()
+			)
+		).toList();
 
 	}
 
-	// public SuccessResponse<List<RentalData.RentalResponse>> rentalList(User user) {
-	//
-	// }
+
+
+	public List<RentalData.RentalHistory> borrowList(User user) {
+		List<Rental> borrowList = rentalRepository.findBorrowListByUserId(user.getId());
+
+		return borrowList.stream().map(rental ->
+			RentalData.RentalHistory.create(
+				rental.getId(),
+				rental.getCart().getOwner().getNickName(),
+				rental.getCart().getOwner().getProfileImage(),
+				rental.getRentalStartDate(),
+				rental.getRentalEndDate(),
+				rental.getStatus(),
+				rental.getRentalCost(),
+				rental.getRentalPeriod(),
+				rental.getCart().getCartItems().stream().map(cartItem ->
+					RentalData.RentalBook.create(
+						cartItem.getUserBookDetail().getUserBook().getBook().getCover(),
+						cartItem.getUserBookDetail().getUserBook().getBook().getTitle(),
+						cartItem.getUserBookDetail().getUserBook().getBook().getAuthor(),
+						cartItem.getUserBookDetail().getUserBook().getBook().getPublisher(),
+						cartItem.getUserBookDetail().getUsedPrice() / 100
+					)
+				).toList()
+			)
+		).toList();
+	}
+
 }
