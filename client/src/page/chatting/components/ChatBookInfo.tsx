@@ -1,7 +1,10 @@
+import { useMutation } from "@tanstack/react-query";
+import { postRental } from "api/rentalApi";
 import RentalModal from "page/chatting/components/RentalModal";
+import ReviewButton from "page/chatting/components/ReviewButton";
+import BookRentalApply from "page/library/components/BookRentalApply";
 import { useState } from "react";
 import { IoIosLeaf } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
 
 interface ChatBookInfoProps {
   book: {
@@ -12,18 +15,52 @@ interface ChatBookInfoProps {
 }
 
 export enum ChatRentalStep {
+  CHECK = "대여기간 체크",
   PAY = "송금하기",
+  NO_LEAF = "책잎 부족",
   RETURN = "반납하기",
   REVIEW = "후기 보내기",
 }
 
 const ChatBookInfo = ({ book }: ChatBookInfoProps) => {
-  const navigate = useNavigate();
-  const [step, setStep] = useState<ChatRentalStep>(ChatRentalStep.REVIEW);
+  const [step, setStep] = useState<ChatRentalStep>(ChatRentalStep.CHECK);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [totalLeaf, setTotalLeaf] = useState<number>(book.dayPrice * 14);
+  const [rentalPeriod, setRentalPeriod] = useState<number[]>([14]);
   const isOwner = false;
 
-  const handleReview = () => {
-    navigate("/chat/review");
+  const payMutation = useMutation({
+    mutationKey: ["rental", "pay"],
+    mutationFn: postRental,
+
+    onSuccess: () => {
+      setStep(ChatRentalStep.RETURN);
+    },
+
+    onError: (error) => {
+      setStep(ChatRentalStep.NO_LEAF);
+      setModalOpen(true);
+      setTimeout(() => {
+        setModalOpen(false);
+        setStep(ChatRentalStep.CHECK);
+      }, 2000);
+    },
+  });
+
+  const handleClick = () => {
+    if (step === ChatRentalStep.CHECK) {
+      setStep(ChatRentalStep.PAY);
+      setModalOpen(true);
+    } else if (step === ChatRentalStep.PAY) {
+      payMutation.mutate({
+        cartId: 3,
+        rentalCost: book.dayPrice,
+        rentalPeriod: 14,
+        totalPrice: totalLeaf,
+      });
+    } else if (step === ChatRentalStep.RETURN) {
+      setStep(ChatRentalStep.REVIEW);
+    }
   };
 
   return (
@@ -39,16 +76,36 @@ const ChatBookInfo = ({ book }: ChatBookInfoProps) => {
           </div>
         </div>
       </div>
-      {step !== ChatRentalStep.REVIEW ? (
-        <RentalModal step={step} isOwner={isOwner} />
-      ) : (
-        <button
-          className="bg-[#776B5D] text-white rounded-lg py-2 px-3"
-          onClick={handleReview}
-        >
-          {step}
-        </button>
+      {step === ChatRentalStep.CHECK && !isOwner && (
+        <BookRentalApply
+          dayprice={book.dayPrice}
+          handleClick={handleClick}
+          totalLeaf={totalLeaf}
+          setTotalLeaf={setTotalLeaf}
+          rentalPeriod={rentalPeriod}
+          setRentalPeriod={setRentalPeriod}
+        />
       )}
+      {step === ChatRentalStep.PAY && !isOwner && (
+        <RentalModal
+          totalLeaf={totalLeaf}
+          step={step}
+          modalOpen={modalOpen}
+          setModalOpen={setModalOpen}
+          setStep={setStep}
+          handleClick={handleClick}
+        />
+      )}
+      {step === ChatRentalStep.RETURN && isOwner && (
+        <RentalModal
+          step={step}
+          modalOpen={modalOpen}
+          setModalOpen={setModalOpen}
+          setStep={setStep}
+          handleClick={handleClick}
+        />
+      )}
+      {step === ChatRentalStep.REVIEW && !isOwner && <ReviewButton />}
     </div>
   );
 };

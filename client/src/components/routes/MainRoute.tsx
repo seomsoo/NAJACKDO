@@ -51,7 +51,7 @@ const MainRoute = () => {
       <Route path='/library/my-history' element={<HistoryPage />} />
       <Route path='/library/bookcase/:userId' element={<OtherBookCasePage />} />
       <Route path='/chat' element={<ChattingPage />} />
-      <Route path='/chat/:room_id' element={<ChattingRoomPage />} />
+      <Route path='/chat/:roomId' element={<ChattingRoomPage />} />
       <Route path='/chat/review' element={<ReviewPage />} />
       <Route path='/profile' element={<ProfilePage />} />
       <Route path='/profile/:nickname' element={<OtherProfilePage />} />

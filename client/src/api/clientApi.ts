@@ -12,7 +12,7 @@ export const KAKAO_AUTH_URL = `${BASE_URL}/oauth2/authorization/kakao?redirect_u
 const REFRESH_URI = `${BASE_URL}/api/v1/auth/refresh`;
 
 const instance = axios.create({
-  baseURL: BASE_URL + '/api/v1',  
+  baseURL: BASE_URL + "/api/v1",
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -65,7 +65,7 @@ instance.interceptors.response.use(
         return instance(originalRequest);
       } catch (refreshError) {
         // refreshToken도 만료된 경우 로그아웃 처리
-        useAuthStore.getState().clearTokens();
+        useAuthStore.persist.clearStorage(); // sessionStorage 초기화
         window.location.href = "/sign-in";
         alert("로그인 세션이 만료되었습니다. 다시 로그인해주세요.");
         return Promise.reject(refreshError);

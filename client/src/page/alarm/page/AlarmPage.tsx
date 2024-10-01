@@ -1,11 +1,9 @@
-import { useNavigate } from 'react-router-dom';
-import { IoIosArrowBack } from 'react-icons/io';
-import Alarm from 'page/alarm/components/Alarm';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import {getAlarm} from 'api/alarmApi';
-import { useCallback, useEffect, useRef } from 'react';
-import { getAlarmReadSucess } from 'api/alarmApi';
-
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { getAlarm, getAlarmReadSucess } from "api/alarmApi";
+import Alarm from "page/alarm/components/Alarm";
+import { useCallback, useEffect, useRef } from "react";
+import { IoIosArrowBack } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 const AlarmPage = () => {
   const navigate = useNavigate();
@@ -32,8 +30,6 @@ const AlarmPage = () => {
     },
     initialPageParam: 0,
   });
-  
-  
 
   const alarmArray = alarmData?.pages?.flatMap((page) => page.content) || [];
 
@@ -43,7 +39,7 @@ const AlarmPage = () => {
     isLoading: isUserLoading,
     isError: isUserError,
   } = useQuery({
-    queryKey: ['success'],
+    queryKey: ["success"],
     queryFn: getAlarmReadSucess,
     enabled: alarmArray.length > 0 && !isAlarmError,
   });
@@ -85,11 +81,11 @@ const AlarmPage = () => {
 
   return (
     <div>
-      <div className='flex flex-row mx-6 gap-1 py-4 '>
+      <div className="flex flex-row mx-6 gap-1 py-4 ">
         <button onClick={goBack}>
-          <IoIosArrowBack className='text-xl' />
+          <IoIosArrowBack className="text-xl" />
         </button>
-        <p className='text-2xl font-bold '>알림</p>
+        <p className="text-2xl font-bold ">알림</p>
       </div>
 
       {alarmArray.map((item, index) => {
@@ -105,7 +101,7 @@ const AlarmPage = () => {
           />
         );
       })}
-            <div ref={loadMoreRef} className="loading">
+      <div ref={loadMoreRef} className="loading">
         {isFetchingNextPage ? "Loading more..." : ""}
       </div>
     </div>

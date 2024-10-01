@@ -3,11 +3,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { getValid } from "api/validApi";
 import Footer from "components/common/Footer";
 import Header from "components/common/Header";
-// import Loading from "components/common/Loading";
 import MainRoute from "components/routes/MainRoute";
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
-import { Suspense, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore } from "store/useAuthStore";
 import { useValidStore } from "store/useValidStore";
@@ -73,7 +72,7 @@ function App() {
   const { isSurvey, isLocation, setIsSurvey, setIsLocation } =
     useValidStore.getState();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (isRequested) return;
 
     const checkValidation = async () => {
@@ -142,18 +141,17 @@ function App() {
   const shouldHideHeaderFooter = popupPaths.includes(currentPath) && isPopup;
   return (
     <QueryClientProvider client={queryClient}>
-      {/* <Suspense fallback={<Loading />}> */}
-        <div className="pb-[86px] relative">
-          {!shouldHideHeaderFooter && showHeaderPaths.includes(currentPath) && (
-            <Header />
-          )}
-          <Routes>
-            <Route path="/*" element={<MainRoute />} />
-          </Routes>
-          {!shouldHideHeaderFooter &&
-            !hideFooterPaths.includes(currentPath) && <Footer />}
-        </div>
-      {/* </Suspense> */}
+      <div className="pb-[86px] relative">
+        {!shouldHideHeaderFooter && showHeaderPaths.includes(currentPath) && (
+          <Header />
+        )}
+        <Routes>
+          <Route path="/*" element={<MainRoute />} />
+        </Routes>
+        {!shouldHideHeaderFooter && !hideFooterPaths.includes(currentPath) && (
+          <Footer />
+        )}
+      </div>
     </QueryClientProvider>
   );
 }
