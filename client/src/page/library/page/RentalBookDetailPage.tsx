@@ -74,7 +74,7 @@ const RentalBookDetailPage = () => {
           <SellerInfo seller={seller} />
           {/* <BookInfo book={book} rental /> */}
           <DetectionInfo ripped={bookData.ripped} wornout={bookData.wornout}/>
-          <SellerReview />
+          <SellerReview nickname={bookData?.nickname}/>
           <DetailRecommendBook bookId={bookIdAsNumber} />
       </div>
       </div>

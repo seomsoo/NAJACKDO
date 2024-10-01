@@ -17,6 +17,10 @@ const MyLeaf = () => {
     queryFn: getUserInfo,
   });
 
+  if (isLoading) {
+    return 
+  }
+
   const { leaf, userName } = useMemo(
     () => ({
       leaf: profileInfo.cash || 0,

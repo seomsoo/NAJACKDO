@@ -1,6 +1,6 @@
 import { IoIosLeaf } from "react-icons/io";
 
-interface BookInfoProps {
+interface SellerInfoProps {
   seller : {
     nickname: string;
     mannerScore: number;
@@ -10,7 +10,7 @@ interface BookInfoProps {
   }
 }
 
-const SellerInfo = ({ seller }: BookInfoProps) => {
+const SellerInfo = ({ seller }: SellerInfoProps) => {
   return (
     <div className="flex flex-row justify-between items-center my-5">
       <div className="flex flex-row">
@@ -22,7 +22,7 @@ const SellerInfo = ({ seller }: BookInfoProps) => {
               {seller.mannerScore} 점
             </p>
             <p className="text-[#5F6F52] bg-[#C0C78C] rounded-xl px-2 py-0.5 text-sm">
-              {seller.locationName}
+              {seller.locationName.split(' ').slice(-1)[0]}
             </p>
           </div>
         </div>
