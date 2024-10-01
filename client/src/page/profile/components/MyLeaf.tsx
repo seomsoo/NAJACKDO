@@ -38,7 +38,7 @@ const MyLeaf = () => {
   const totalCash = Math.max(earnCash, saveCash); // 비교 기준
 
   return (
-    <div onClick={goToLeaf} className="my-6 bg-[#FAF9F7] shadow rounded-lg p-4">
+    <div onClick={goToLeaf} className="my-6 bg-[#FAF9F7] cursor-pointer shadow rounded-lg p-4">
       <div className="flex flex-row items-center mb-2">
         <p className="font-bold">나의 책잎</p>
         <IoIosArrowForward size={15} color="black" />
