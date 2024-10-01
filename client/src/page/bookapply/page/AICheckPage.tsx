@@ -46,7 +46,7 @@ const AICheckPage = () => {
         className="cursor-pointer p-6 py-4 flex flex-row items-center"
       >
         <IoChevronBack className="text-2xl" color="#545454" />
-        <span className="font-bold text-2xl ml-2">도서 등록 - AI 인증</span>
+        <span className="font-bold text-2xl ml-2">도서 등록 - AI 인증 가이드</span>
       </div>
       <div className="flex flex-col mt-6 items-center">
         <div className="  flex flex-col justify-center items-center">
@@ -95,14 +95,14 @@ const AICheckPage = () => {
         </div>
       </div>
       <div className="px-6">
-        <p
+        <button
           onClick={() =>
             navigate(`/ai-check/upload`, { state: { userId, userBookId } })
           } // userId, userBookId를 함께 넘김
           className="text-center bg-[#776B5D] w-full  mt-10 rounded-xl text-white font-bold py-3"
         >
           AI 인증 하러 가기
-        </p>
+        </button>
       </div>
     </div>
   );

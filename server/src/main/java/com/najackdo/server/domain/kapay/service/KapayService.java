@@ -14,7 +14,6 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.najackdo.server.core.exception.BaseException;
 import com.najackdo.server.core.exception.ErrorCode;
 import com.najackdo.server.core.response.ErrorResponse;
 import com.najackdo.server.domain.kapay.dto.ApproveRequest;
@@ -23,7 +22,6 @@ import com.najackdo.server.domain.kapay.dto.ReadyRequest;
 import com.najackdo.server.domain.kapay.dto.ReadyResponse;
 import com.najackdo.server.domain.user.entity.User;
 import com.najackdo.server.domain.user.event.UserPaymentEvent;
-import com.najackdo.server.domain.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,10 +44,7 @@ public class KapayService {
 	private String tid;
 
 	private final ApplicationEventPublisher eventPublisher;
-	//! 테스트에서만 사용
-	private final UserRepository userRepository;
 
-	//!=================
 	public ReadyResponse ready(String agent, String openType, String itemName, Integer totalAmount) {
 		// 요청 헤더 설정
 		HttpHeaders headers = new HttpHeaders();
@@ -79,6 +74,8 @@ public class KapayService {
 			ReadyResponse.class
 		);
 
+		log.info("response: {}", response);
+
 		// TID 저장 (승인 요청 시 사용)
 		this.tid = response.getBody().getTid();
 		return response.getBody();
@@ -87,6 +84,10 @@ public class KapayService {
 	@Transactional
 	public ResponseEntity<?> approve(String pgToken, User user) {
 		try {
+
+			log.info("pgToken: {}", pgToken);
+			log.info("user: {}", user);
+
 			// 요청 헤더 설정
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("Authorization", "SECRET_KEY " + kakaopaySecretKey);
@@ -109,12 +110,14 @@ public class KapayService {
 				String.class
 			);
 
+			log.info("response: {}", response);
+
 			ObjectMapper objectMapper = new ObjectMapper();
 			ApproveResponse approveResponse = objectMapper.readValue(response.getBody(), ApproveResponse.class);
 
+			log.info("approveResponse: {}", approveResponse);
+			
 			if (approveResponse != null) {
-				user = userRepository.findById(1L)
-					.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_USER));
 				Integer totalAmount = approveResponse.getAmount().getTotal(); // 결제 금액
 				eventPublisher.publishEvent(new UserPaymentEvent(user, totalAmount));
 			}
@@ -136,7 +139,6 @@ public class KapayService {
 			String errorMessage =
 				jsonNode.has("error_message") ? jsonNode.get("error_message").asText() : "Unknown error";
 
-			// ErrorResponse 생성 시 extras 필드를 포함
 			return ResponseEntity.status(ex.getStatusCode())
 				.body(ErrorResponse.of(ErrorCode.KAKAO_PAY_API_ERROR, errorMessage, extrasNode));
 		} catch (Exception ex) {

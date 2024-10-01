@@ -69,7 +69,11 @@ const MyBookCasePage = () => {
         <section className="flex flex-col items-center text-center mt-12 gap-6">
           {/* 책 데이터가 있을 때 */}
           {hasBooks ? (
-            <BookGrid books={bookcase.displayBooks} isMyBookCase={true} />
+            <BookGrid
+              books={bookcase.displayBooks}
+              isMyBookCase={true}
+              userId={bookcase.userId} // userId를 BookGrid에 전달
+            />
           ) : (
             // 책 데이터가 없을 때
             <div className="flex flex-col items-center mt-16">

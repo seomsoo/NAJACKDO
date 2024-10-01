@@ -32,6 +32,8 @@ public class QCart extends EntityPathBase<Cart> {
 
     public final com.najackdo.server.domain.user.entity.QUser owner;
 
+    public final com.najackdo.server.domain.rental.entity.QRental rental;
+
     public final NumberPath<Integer> rentalPeriod = createNumber("rentalPeriod", Integer.class);
 
     public QCart(String variable) {
@@ -54,6 +56,7 @@ public class QCart extends EntityPathBase<Cart> {
         super(type, metadata, inits);
         this.customer = inits.isInitialized("customer") ? new com.najackdo.server.domain.user.entity.QUser(forProperty("customer"), inits.get("customer")) : null;
         this.owner = inits.isInitialized("owner") ? new com.najackdo.server.domain.user.entity.QUser(forProperty("owner"), inits.get("owner")) : null;
+        this.rental = inits.isInitialized("rental") ? new com.najackdo.server.domain.rental.entity.QRental(forProperty("rental"), inits.get("rental")) : null;
     }
 
 }

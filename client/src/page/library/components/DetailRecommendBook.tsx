@@ -32,8 +32,7 @@ const DetailRecommendBook = ({ bookId }: DetailRecommendBookProps) => {
     <div className="mt-10 mb-6">
       
       <div className="grid grid-cols-4 gap-3">
-        {recommendData ? 
-        (recommendData.map((book, index) => {
+        {recommendData.map((book, index) => {
           return (
             <img
               src={book.cover}
@@ -42,7 +41,7 @@ const DetailRecommendBook = ({ bookId }: DetailRecommendBookProps) => {
               className="rounded-e-md"
             />
         );
-        })) : <div>추천 도서가 없습니다.</div>}
+        })}
       </div>
     </div>
   );

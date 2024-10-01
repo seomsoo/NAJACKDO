@@ -46,7 +46,7 @@ const MyFavoritePage = () => {
           <button onClick={goBack} className='text-2xl'>
             <IoIosArrowBack />
           </button>
-          <span className='font-extrabold text-2xl'>My Favorite</span>
+          <span className='font-extrabold text-2xl'>내가 좋아하는 책들</span>
         </div>
         <div className=' text-3xl text-[#545454]'>
           <Link to='/alarm'>
