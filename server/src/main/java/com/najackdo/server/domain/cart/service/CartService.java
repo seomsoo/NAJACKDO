@@ -1,7 +1,6 @@
 package com.najackdo.server.domain.cart.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,9 +13,9 @@ import com.najackdo.server.domain.book.repository.UserBookDetailRepository;
 import com.najackdo.server.domain.book.repository.UserBooksRepository;
 import com.najackdo.server.domain.cart.dto.CartData;
 import com.najackdo.server.domain.cart.entity.Cart;
-import com.najackdo.server.domain.cart.entity.CartItem;
 import com.najackdo.server.domain.cart.repository.CartItemRepository;
 import com.najackdo.server.domain.cart.repository.CartRepository;
+import com.najackdo.server.domain.rental.entity.RentalStatus;
 import com.najackdo.server.domain.user.entity.User;
 import com.najackdo.server.domain.user.repository.UserRepository;
 
@@ -45,15 +44,10 @@ public class CartService {
 
 	public CartData.CartInfo getCart(Long cartId) {
 
-		Cart cart = cartRepository.findById(cartId)
+		Cart cart = cartRepository.findCartInfoById(cartId)
 			.orElseThrow(() -> new IllegalArgumentException("해당 장바구니가 존재하지 않습니다."));
 
-		User owner = userRepository.findById(cart.getOwner().getId())
-			.orElseThrow(() -> new IllegalArgumentException("해당 사용자가 존재하지 않습니다."));
-
-		List<CartItem> cartItems = cartItemRepository.findCartItemsByCartId(cartId);
-
-		List<CartData.CartItemInfo> cartItemInfoList = cartItems.stream().map(cartItem -> {
+		List<CartData.CartItemInfo> cartItemInfoList = cart.getCartItems().stream().map(cartItem -> {
 
 			UserBookDetail userBookDetail = userBookDetailRepository.findById(cartItem.getUserBookDetail().getId())
 				.orElseThrow(() -> new IllegalArgumentException("해당 도서 정보가 존재하지 않습니다."));
@@ -64,6 +58,7 @@ public class CartService {
 			Book book = bookRepository.findById(userBook.getBook().getId())
 				.orElseThrow(() -> new IllegalArgumentException("해당 책이 존재하지 않습니다."));
 
+
 			return CartData.CartItemInfo.of(
 				cartItem.getId(),
 				userBookDetail.getFrontImagePath(),
@@ -71,10 +66,11 @@ public class CartService {
 				book.getAuthor(),
 				userBookDetail.getOnedayPrice()
 			);
+		}).toList();
 
-		}).collect(Collectors.toList());
+		RentalStatus rentalStatus = (cart.getRental() != null ? cart.getRental().getStatus() : RentalStatus.READY);
 
-		return CartData.CartInfo.of(cart.getId(), owner.getId(), owner.getUsername(), cartItemInfoList);
+		return CartData.CartInfo.of(cart.getId(), cart.getOwner().getId(), cart.getOwner().getUsername(), cartItemInfoList, rentalStatus);
 	}
 
 }

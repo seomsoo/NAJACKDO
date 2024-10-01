@@ -16,6 +16,7 @@ import com.najackdo.server.domain.book.entity.UserBook;
 import com.najackdo.server.domain.book.entity.UserBookDetail;
 import com.najackdo.server.domain.cart.dto.CartData;
 import com.najackdo.server.domain.cart.entity.Cart;
+import com.najackdo.server.domain.rental.entity.RentalStatus;
 import com.najackdo.server.domain.user.entity.QCashLog;
 import com.najackdo.server.domain.user.entity.QUser;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -56,6 +57,7 @@ public class CartQueryRepositoryImpl implements CartQueryRepository {
 			.leftJoin(cart.cartItems, cartItem).fetchJoin()
 			.leftJoin(cartItem.userBookDetail, userBookDetail).fetchJoin()
 			.leftJoin(userBookDetail.userBook, userBook).fetchJoin()
+			.leftJoin(cart.rental).fetchJoin()
 			.where(cart.customer.id.eq(userId)
 				.and(cart.isDelete.isFalse())
 			)
@@ -79,7 +81,8 @@ public class CartQueryRepositoryImpl implements CartQueryRepository {
 
 						);
 					})
-					.collect(Collectors.toList())
+					.collect(Collectors.toList()),
+				c.getRental() != null ? c.getRental().getStatus() : RentalStatus.READY
 			))
 			.collect(Collectors.toList());
 	}
