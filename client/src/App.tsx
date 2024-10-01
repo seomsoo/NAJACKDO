@@ -3,7 +3,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { getValid } from "api/validApi";
 import Footer from "components/common/Footer";
 import Header from "components/common/Header";
+import NotFoundPage from "components/common/NotFoundPage";
+import LibraryRoute from "components/routes/LibraryRoute";
 import MainRoute from "components/routes/MainRoute";
+import ProfileRoute from "components/routes/ProfileRoute";
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import { useEffect, useState } from "react";
@@ -65,6 +68,7 @@ function App() {
     "/book/:bookId/mybook",
     "/survey",
     "/setting/location",
+    "/404",
   ];
 
   const [isRequested, setIsRequested] = useState(false);
@@ -147,6 +151,9 @@ function App() {
         )}
         <Routes>
           <Route path="/*" element={<MainRoute />} />
+          <Route path="/profile/*" element={<ProfileRoute />} />
+          <Route path="/library/*" element={<LibraryRoute />} />
+          <Route path="/404" element={<NotFoundPage />} />
         </Routes>
         {!shouldHideHeaderFooter && !hideFooterPaths.includes(currentPath) && (
           <Footer />
