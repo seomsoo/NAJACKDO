@@ -1,4 +1,4 @@
-import Quagga from "@ericblade/quagga2";
+import Quagga, { QuaggaJSConfigObject } from "@ericblade/quagga2";
 import { useEffect } from "react";
 
 interface ScannerProps {
@@ -7,13 +7,13 @@ interface ScannerProps {
   setScan: (scan: boolean) => void;
 }
 
-const config = {
+const config :QuaggaJSConfigObject = {
   inputStream: {
     name: "Live",
     type: "LiveStream",
     constraints: {
       facingMode: "environment",
-      focusMode: "continuous",
+      // focusMode: "continuous",
       aspectRatio: {
         min: 1,
         max: 2,
