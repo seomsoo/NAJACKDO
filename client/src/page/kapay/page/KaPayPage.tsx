@@ -1,9 +1,10 @@
-import axios from "axios";
 import { Button } from "components/ui/button";
 import { useEffect, useState } from "react";
 import { IoIosLeaf } from "react-icons/io";
 import { IoChevronBack } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { chargeKapay } from "api/kapayApi"; // API 함수 가져오기
+import { useMutation } from "@tanstack/react-query"; // useMutation 사용
 
 const KapayPage = () => {
   const navigate = useNavigate();
@@ -12,7 +13,6 @@ const KapayPage = () => {
   const [openType, setOpenType] = useState<string | undefined>();
   const [itemName, setItemName] = useState<string>("책잎");
   const [totalAmount, setTotalAmount] = useState<number>(0);
-  const [_, setRedirectUrl] = useState<string | null>(null);
 
   useEffect(() => {
     const userAgent = navigator.userAgent.toLowerCase();
@@ -35,29 +35,14 @@ const KapayPage = () => {
     setOpenType(detectedDeviceType === "mobile" ? "redirect" : "popup");
   }, []);
 
-  const payButtonClick = async (itemName: string, amount: number) => {
-    setItemName(itemName);
+  const setAmount = (amount: number) => {
     setTotalAmount(amount);
+  };
 
-    try {
-      const response = await axios.get(
-        `https://www.najackdo.kro.kr/api/v1/kapay/ready/${deviceType}/${openType}`,
-        {
-          params: {
-            itemName,
-            totalAmount: amount,
-          },
-        }
-      );
-
-      const redirectUrl = response.data.data;
-      setRedirectUrl(redirectUrl);
-
-      if (!redirectUrl) {
-        console.error("Redirect URL이 설정되지 않았습니다.");
-        return;
-      }
-
+  const mutation = useMutation({
+    mutationKey: ["kapay", "charge"],
+    mutationFn: () => chargeKapay(deviceType as string, openType as string, itemName, totalAmount),
+    onSuccess: (redirectUrl) => {
       if (deviceType === "pc") {
         const width = 426;
         const height = 510;
@@ -74,15 +59,24 @@ const KapayPage = () => {
           console.error("Popup을 열 수 없습니다!");
           return;
         }
-
+        console.log("redirectUrl", redirectUrl);
         popup.location.href = redirectUrl;
-        return;
+      } else {
+        window.location.replace(redirectUrl);
       }
+    },
+    onError: (error) => {
+      console.error("결제 준비 중 오류가 발생했습니다:", error);
+    },
+  });
 
-      window.location.replace(redirectUrl);
-    } catch (error) {
-      console.error("결제 준비 요청 중 오류가 발생했습니다.", error);
+  const handleChargeClick = () => {
+    if (totalAmount === 0) {
+      console.error("충전할 금액이 선택되지 않았습니다.");
+      return;
     }
+
+    mutation.mutate(); // 결제 준비 API 호출
   };
 
   return (
@@ -93,7 +87,7 @@ const KapayPage = () => {
       <p className="font-bold text-xl my-4">
         <span className="text-[22px] text-[#79AC78]">책잎</span> 충전하기
       </p>
-      <div>
+      <div className="flex flex-col">
         <div className="flex flex-row items-center mt-10">
           <IoIosLeaf color="#79AC78" size={29} className="mx-2" />
           <p className="font-bold text-xl text-end">
@@ -108,15 +102,19 @@ const KapayPage = () => {
             <Button
               key={amount}
               className="bg-[#B0A695] hover:bg-[#776B5D]"
-              onClick={() => payButtonClick(`${amount} 책잎`, amount)}
+              onClick={() => setAmount(amount)}
             >
               {amount.toLocaleString()}원
             </Button>
           ))}
         </div>
-        <p className="bg-[#776B5D] rounded-xl text-white h-10 flex items-center justify-center mt-16">
+        <Button
+          className="bg-[#776B5D] hover:bg-[#776B5D] rounded-xl text-white h-10 flex items-center justify-center mt-16"
+          onClick={handleChargeClick}
+        >
           충전하기
-        </p>
+        </Button>
+        {mutation.isError && <p className="text-red-500 mt-2">결제 준비 중 오류가 발생했습니다.</p>}
       </div>
     </div>
   );

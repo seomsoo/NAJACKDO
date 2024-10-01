@@ -14,7 +14,6 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.najackdo.server.core.exception.BaseException;
 import com.najackdo.server.core.exception.ErrorCode;
 import com.najackdo.server.core.response.ErrorResponse;
 import com.najackdo.server.domain.kapay.dto.ApproveRequest;
@@ -79,6 +78,8 @@ public class KapayService {
 			ReadyResponse.class
 		);
 
+		log.info("response: {}", response);
+
 		// TID 저장 (승인 요청 시 사용)
 		this.tid = response.getBody().getTid();
 		return response.getBody();
@@ -113,8 +114,6 @@ public class KapayService {
 			ApproveResponse approveResponse = objectMapper.readValue(response.getBody(), ApproveResponse.class);
 
 			if (approveResponse != null) {
-				user = userRepository.findById(1L)
-					.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_USER));
 				Integer totalAmount = approveResponse.getAmount().getTotal(); // 결제 금액
 				eventPublisher.publishEvent(new UserPaymentEvent(user, totalAmount));
 			}
