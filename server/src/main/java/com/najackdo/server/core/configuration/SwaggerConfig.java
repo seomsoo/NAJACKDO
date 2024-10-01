@@ -38,6 +38,10 @@ public class SwaggerConfig {
 	private Info apiInfo() {
 		return new Info()
 			.title("나작도 API 문서") // API의 제목
-			.version("1.0.0"); // API의 버전
+			.version("1.0.1"); // API의 버전
 	}
+
+
+
+
 }
