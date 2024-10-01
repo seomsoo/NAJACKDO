@@ -30,15 +30,11 @@ const RecentSearchText = ({ text }: IRecentSearchTextProps) => {
 
   return (
     <div className="mx-2 my-4 flex flex-row justify-between">
-      <div className="flex flex-row">
+      <div className="flex flex-row cursor-pointer">
         <IoMdTime size={25} color="#545454" />
         <span
           className="ml-3"
-          onClick={() =>
-            navigate('/search/result', {
-              state: { keyword: text },
-            })
-          }
+          onClick={() => navigate(`/search/result?keyword=${text}`)}
         >
           {text}
         </span>
