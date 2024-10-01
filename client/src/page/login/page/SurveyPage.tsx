@@ -1,14 +1,13 @@
-import { useState } from 'react';
-import { IoIosArrowBack } from 'react-icons/io';
-import Consent from '../components/Consent';
-import Age from '../components/Age';
-import Gender from '../components/Gender';
-import Nickname from '../components/Nickname';
-import Interest from '../components/Interest';
-import useSurveyStore from 'store/useSurveyStore';
-import { setUserInfo } from 'api/profileApi';
-import { useNavigate } from 'react-router-dom';
-import StartPage from './StartPage';
+import { postUserInfo } from "api/profileApi";
+import { useState } from "react";
+import { IoIosArrowBack } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
+import useSurveyStore from "store/useSurveyStore";
+import Age from "../components/Age";
+import Gender from "../components/Gender";
+import Interest from "../components/Interest";
+import Nickname from "../components/Nickname";
+import StartPage from "./StartPage";
 
 const SurveyPage = () => {
   const [currentStep, setCurrentStep] = useState(1); // 현재 단계 관리
@@ -25,17 +24,17 @@ const SurveyPage = () => {
   // 완료 버튼 클릭 시 호출되는 API
   const handleComplete = async () => {
     try {
-      await setUserInfo({
+      await postUserInfo({
         age,
         gender,
         nickname,
         interest: interests,
       });
-      console.log('설문 완료 및 정보 저장 성공');
+      console.log("설문 완료 및 정보 저장 성공");
       // 추가적인 완료 처리 로직 (예: 페이지 이동)
-      navigate('/setting/location');
+      navigate("/setting/location");
     } catch (error) {
-      console.error('설문 완료 시 오류:', error);
+      console.error("설문 완료 시 오류:", error);
       // 오류 처리 로직 (예: 사용자에게 오류 메시지 표시)
     }
   };
@@ -96,24 +95,24 @@ const SurveyPage = () => {
   };
 
   return (
-    <div className='flex flex-col px-4 pt-14'>
+    <div className="flex flex-col px-4 pt-14">
       {currentStep > 1 && currentStep < 5 && (
-        <button className='pt-7' onClick={handlePrevStep}>
-          <IoIosArrowBack className='text-4xl' />
+        <button className="pt-7" onClick={handlePrevStep}>
+          <IoIosArrowBack className="text-4xl" />
         </button>
       )}
       {renderStep()}
-      <div className='o w-full pt-12'>
+      <div className="o w-full pt-12">
         <button
           onClick={handleNextStep}
           className={`bg-[#776B5D] font-bold w-full text-lg text-white py-3 rounded-lg ${
             checkStepCompletion()
-              ? 'opacity-100'
-              : 'opacity-50 cursor-not-allowed'
+              ? "opacity-100"
+              : "opacity-50 cursor-not-allowed"
           }`}
           disabled={!checkStepCompletion()}
         >
-          {currentStep === 5 ? '시작하기' : '다음'}
+          {currentStep === 5 ? "시작하기" : "다음"}
         </button>
       </div>
     </div>

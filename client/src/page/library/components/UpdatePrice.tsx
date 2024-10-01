@@ -1,3 +1,5 @@
+import { useMutation } from "@tanstack/react-query";
+import { postUpdateRentalCost } from "api/bookApi";
 import {
   Drawer,
   DrawerClose,
@@ -10,13 +12,36 @@ import {
 } from "components/ui/drawer";
 import { useEffect, useState } from "react";
 import { IoIosLeaf } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 interface UpdatePriceProps {
+  userBookId: number
   price: number;
 }
 
-const UpdatePrice = ({ price }: UpdatePriceProps) => {
+const UpdatePrice = ({ userBookId, price }: UpdatePriceProps) => {
   const [updatePrice, setUpdatePrice] = useState(price);
+  const navigate = useNavigate();
+
+
+  const mutation = useMutation({
+    mutationKey: ["RentalCostData"],
+    mutationFn: postUpdateRentalCost,
+
+    onSuccess: () => {
+      navigate(0);
+    },
+
+    onError: (error) => {
+      console.log("update error", error);
+    },
+  });
+  const handleUpdateRentalCost = () => {
+    mutation.mutate({
+      userBookId: userBookId,
+      updateRentalCost: updatePrice,
+    });
+  };
 
   useEffect(() => {
     console.log(updatePrice);
@@ -47,7 +72,7 @@ const UpdatePrice = ({ price }: UpdatePriceProps) => {
         </DrawerHeader>
         <DrawerFooter className="flex flex-row items-center justify-center space-x-11">
           <DrawerClose className="bg-[#776B5D] text-white font-bold px-8 py-2 rounded-lg mx-5">
-            <p className="bg-[#776B5D] text-white font-bold rounded-lg px-20">
+            <p onClick={handleUpdateRentalCost} className="bg-[#776B5D] text-white font-bold rounded-lg px-20">
               대여 가격 수정
             </p>
           </DrawerClose>
