@@ -12,3 +12,33 @@ export interface IBookDetail {
   pubDate: string;
   isbn: number;
 }
+
+export interface IUserBookDetail {
+  ownerId: number;
+  nickname: string;
+  profileImage: string;
+  mannerScore: number;
+  locationName: string;
+  bookTitle: string;
+  bookAuthor: string;
+  bookCover: string;
+  genre: string;
+  bookDescription: string;
+  userBookId: number;
+  bookStatus: string;
+  ondayPrice: number;
+  backImagePath: string;
+  frontImagePath: string;
+  inspectFrontImagePath: string;
+  inspectBackImagePath: string;
+  usedPrice: number;
+  ripped: number;
+  wornout: number;
+}
+
+export interface IRentalCost {
+  userBookId: number;
+  updateRentalCost: number;
+}
+
+

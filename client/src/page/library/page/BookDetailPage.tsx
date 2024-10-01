@@ -15,7 +15,7 @@ const BookDetailPage = () => {
   console.log("bookIdAsNumber", bookIdAsNumber);
 
 
-  // 다른 사용자의 책장 정보 조회
+  // 도서 상세 정보 조회
   const {
     data: bookData,
     isLoading,
@@ -53,6 +53,7 @@ const BookDetailPage = () => {
       <div className="m-4">
         <BookInfo book={bookData} />
         <RentableBook />
+        <p className="mt-5 font-bold mb-3">추천 도서</p>
         <DetailRecommendBook bookId={bookIdAsNumber} />
       </div>
     </div>
