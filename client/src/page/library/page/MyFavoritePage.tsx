@@ -36,6 +36,7 @@ const MyFavoritePage = () => {
 
   if (isInterestBooksLoading || isBookcasesLoading)
     return <div>로딩 중...</div>;
+  
   if (isInterestBooksError || isBookcasesError)
     return <div>오류가 발생했습니다.</div>;
 
