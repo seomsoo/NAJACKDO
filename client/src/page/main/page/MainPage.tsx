@@ -1,11 +1,11 @@
 import Loading from "components/common/Loading";
 import C105Recommend from "page/main/components/C105Recommend";
 import CategoryRecommend from "page/main/components/CategoryRecommend";
-import GetUserInfo from "page/main/components/GetUserInfo";
 import MainCarousel from "page/main/components/MainCarousel";
 import { Suspense } from "react";
 import { FaRankingStar } from "react-icons/fa6";
-import LoactionRecommend from "../components/LoactionRecommend";
+import LoactionRecommend from "page/main/components/LoactionRecommend";
+import { GetUserInfo } from "page/main/components/GetUserInfo";
 
 const MainPage = () => {
   return (
