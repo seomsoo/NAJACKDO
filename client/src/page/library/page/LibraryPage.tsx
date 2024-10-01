@@ -149,7 +149,7 @@ const LibraryPage = () => {
           <nav>
             <button onClick={goToMyFavorite}>
               <article className='flex items-center mb-7'>
-                <span className='font-bold text-2xl'>My Favorite</span>
+                <span className='font-bold text-2xl'>내가 좋아하는 책들</span>
                 <SlArrowRight className='ml-2 text-[#807B7B] text-xl' />
               </article>
               <article>

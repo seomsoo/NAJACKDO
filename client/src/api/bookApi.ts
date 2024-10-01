@@ -1,6 +1,6 @@
 import { BaseResponse } from "atoms/Base.type";
 import { IBookDetail, IRentalCost, IUserBookDetail } from "atoms/Book.type";
-import instance from "./clientApi";
+import instance, { pythoninstance } from "./clientApi";
 
 // 관심 도서 조회
 export const getInterestbook = async (): Promise<IBookDetail[]> => {
@@ -56,9 +56,9 @@ export const deleteInterestbook = async (bookId: number): Promise<void> => {
 };
 
 // AI 도서 인증
-export const postAiCheckBook = async (formData: FormData): Promise<BaseResponse<any>> => {
+export const postAiCheckBook = async (formData: FormData): Promise<any> => {
   try {
-    const { data } = await instance.post<BaseResponse<any>>(
+    const { data } = await pythoninstance.post<any>(
       '/item/quality-inspection', 
       formData,
       {
@@ -68,10 +68,6 @@ export const postAiCheckBook = async (formData: FormData): Promise<BaseResponse<
       }
     );
     console.log(data); 
-
-    if (!data.success) {
-      throw new Error('AI 도서 인증 실패');
-    }
 
     return data;
   } catch (error) {
