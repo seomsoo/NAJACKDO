@@ -8,11 +8,11 @@ import { Navigate, Route, Routes } from "react-router-dom";
 const ProfileRoute = () => {
   return (
     <Routes>
-      <Route path="/profile" element={<ProfilePage />} />
-      <Route path="/profile/:nickname" element={<OtherProfilePage />} />
-      <Route path="/profile/:nickname/my-grade" element={<GradePage />} />
-      <Route path="/profile/my-leaf" element={<LeafPage />} />
-      <Route path="/profile/my-leaf/charge" element={<LeafChargePage />} />
+      <Route path="/" element={<ProfilePage />} />
+      <Route path="/:nickname" element={<OtherProfilePage />} />
+      <Route path="/:nickname/my-grade" element={<GradePage />} />
+      <Route path="/my-leaf" element={<LeafPage />} />
+      <Route path="/my-leaf/charge" element={<LeafChargePage />} />
       <Route path="*" element={<Navigate to="/404" />} />
     </Routes>
   );

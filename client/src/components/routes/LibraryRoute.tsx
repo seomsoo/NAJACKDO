@@ -8,11 +8,11 @@ import { Navigate, Route, Routes } from "react-router-dom";
 const LibraryRoute = () => {
   return (
     <Routes>
-      <Route path="/library" element={<LibraryPage />} />
-      <Route path="/library/my-favorite" element={<MyFavoritePage />} />
-      <Route path="/library/my-bookcase" element={<MyBookCasePage />} />
-      <Route path="/library/my-history" element={<HistoryPage />} />
-      <Route path="/library/bookcase/:userId" element={<OtherBookCasePage />} />
+      <Route path="/" element={<LibraryPage />} />
+      <Route path="/my-favorite" element={<MyFavoritePage />} />
+      <Route path="/my-bookcase" element={<MyBookCasePage />} />
+      <Route path="/my-history" element={<HistoryPage />} />
+      <Route path="/bookcase/:userId" element={<OtherBookCasePage />} />
       <Route path="*" element={<Navigate to="/404" />} />
     </Routes>
   );
