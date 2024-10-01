@@ -1,7 +1,7 @@
 import { postAiCheckBook } from 'api/bookApi';
 import { useState, useEffect } from 'react';
 import { IoChevronBack } from 'react-icons/io5';
-import { useNavigate, useLocation } from 'react-router-dom'; // useLocation 추가
+import { useNavigate, useLocation } from 'react-router-dom'; 
 import {
   Carousel,
   CarouselApi,
@@ -19,9 +19,7 @@ const AICheckUploadPage = () => {
 
   const [frontImage, setFrontImage] = useState<File | null>(null);
   const [backImage, setBackImage] = useState<File | null>(null);
-  const [frontImagePreview, setFrontImagePreview] = useState<string | null>(
-    null
-  );
+  const [frontImagePreview, setFrontImagePreview] = useState<string | null>(null);
   const [backImagePreview, setBackImagePreview] = useState<string | null>(null);
   const [carouselIndex, setCarouselIndex] = useState<number>(0);
   const [api, setApi] = useState<CarouselApi | null>(null);
@@ -34,43 +32,44 @@ const AICheckUploadPage = () => {
     }
   }, [api]);
 
-  const handleFrontImageUpload = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleFrontImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       setFrontImage(file);
       setFrontImagePreview(URL.createObjectURL(file));
+      console.log('Front Image File:', file); 
     }
   };
-
-  const handleBackImageUpload = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  
+  const handleBackImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       setBackImage(file);
       setBackImagePreview(URL.createObjectURL(file));
+      console.log('Back Image File:', file); 
     }
   };
-
+  
   const handleSubmit = async () => {
     if (frontImage && backImage) {
       const formData = new FormData();
       formData.append('files', frontImage);
       formData.append('files', backImage);
-      formData.append('user_id', userId); // 전달받은 userId 사용
-      formData.append('user_book_id', userBookId); // 전달받은 userBookId 사용
+      formData.append('user_id', userId); 
+      formData.append('user_book_id', userBookId);
+
+      // FormData 확인용
+      // formData.forEach((value, key) => {
+      //   console.log(`FormData Key: ${key}, Value:`, value);
+      // });
 
       try {
         const response = await postAiCheckBook(formData);
-        if (response.success) {
-          navigate('/ai-check/result', {
-            state: { resultData: response },
-          });
-        } else {
-          alert('AI 도서 인증에 실패했습니다.');
-        }
+
+      
+        navigate('/ai-check/result', {
+          state: { resultData: response }, 
+        });
       } catch (error) {
         console.error('AI 인증 실패:', error);
         alert('AI 인증에 실패했습니다. 다시 시도해주세요.');
@@ -169,12 +168,12 @@ const AICheckUploadPage = () => {
       </div>
 
       <div className="px-6">
-        <p
+        <button
           onClick={handleSubmit}
           className="text-center bg-[#776B5D] w-full mt-10 rounded-xl text-white font-bold py-3 cursor-pointer"
         >
           AI 인증 요청
-        </p>
+        </button>
       </div>
     </div>
   );

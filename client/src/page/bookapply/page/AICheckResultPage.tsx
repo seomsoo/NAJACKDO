@@ -1,14 +1,34 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { IoChevronBack } from 'react-icons/io5';
+import { IoIosArrowBack, IoIosLeaf } from "react-icons/io";
+import { Carousel, CarouselApi, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from 'components/ui/carousel'; // 캐러셀 관련 컴포넌트 추가
+import { useEffect, useState } from 'react';
+import { FaCircle } from 'react-icons/fa';
 
 const AICheckResultPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { resultData } = location.state || {};
+  
+  const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null);
+  const [carouselIndex, setCarouselIndex] = useState<number>(0);
 
   if (!resultData) {
     return <p>결과를 불러오는 중 오류가 발생했습니다.</p>;
   }
+
+  const getImageUrl = (filename: string) => {
+    return `https://d16os79fbmszq4.cloudfront.net/${filename}`;
+  };
+
+  const oneDayPrice = Math.round(resultData.one_day_price);
+
+  useEffect(() => {
+    if (carouselApi) {
+      carouselApi.on('select', () => {
+        setCarouselIndex(carouselApi.selectedScrollSnap());
+      });
+    }
+  }, [carouselApi]);
 
   return (
     <div>
@@ -16,30 +36,70 @@ const AICheckResultPage = () => {
         onClick={() => navigate(-1)}
         className="cursor-pointer p-6 py-4 flex flex-row items-center"
       >
-        <IoChevronBack className="text-2xl" color="#545454" />
-        <span className="font-bold text-2xl ml-2">도서 등록 - AI 인증</span>
+        <IoIosArrowBack className="text-2xl" color="#545454" />
+        <span className="font-bold text-2xl ml-2">도서 등록 - AI 인증 결과</span>
       </div>
 
-      <h2>AI 도서 인증 결과</h2>
+  
 
-      <div>
-        <p>업로드된 파일 정보:</p>
-        {resultData.uploaded_files.map((file: any, index: number) => (
-          <div key={index}>
-            <p>파일 이름: {file.filename}</p>
-            <p>파일 유형: {file.content_type}</p>
+      <div className="mt-6">
+        <Carousel className="w-full max-w-md pt-6" setApi={setCarouselApi}>
+          <CarouselContent>
+            {resultData.uploaded_files.slice(2, 4).map((file: any, index: number) => (
+              <CarouselItem key={index} className="flex flex-col items-center">
+                <img
+                  src={getImageUrl(file.filename)}
+                  alt={`Uploaded file ${index + 3}`}
+                  className="w-full h-auto mb-4"
+                />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="ml-12" />
+          <CarouselNext className="mr-12" />
+        </Carousel>
+
+        <div className="flex justify-center py-4">
+          <FaCircle
+            size={10}
+            className="mr-3"
+            color={carouselIndex === 0 ? '#000000' : '#888888'}
+          />
+          <FaCircle
+            size={10}
+            color={carouselIndex === 1 ? '#000000' : '#888888'}
+          />
+        </div>
+      </div>
+
+      {/* 도서 정보 및 일일 대여료 */}
+      <div className='flex flex-col items-center gap-6 mt-5'>
+        <div className='flex justify-center gap-12'>
+          <div className='flex flex-col items-center border justify-center text-[#e32929] border-[#e32929] hakgyo w-20 h-20 rounded-2xl gap-2 text-2xl text-nowrap'>
+            <span>닳음</span>
+            {resultData.count_wornout}
           </div>
-        ))}
+          <div className='flex flex-col items-center border justify-center text-[#b9ad26] border-[#e1cf0c] hakgyo w-20 h-20 rounded-2xl gap-2 text-2xl text-nowrap'>
+            <span>찢김</span>
+            {resultData.count_ripped}
+          </div>
+        </div>
+
+        <div className='flex flex-col items-center'>
+          <span className='text-2xl font-bold'>
+            책정 일일 대여료: <IoIosLeaf className="inline-block mb-2 text-4xl text-[#79AC78]" />
+            {oneDayPrice}
+            <span className='text-xl text-[#868686]'> / 일</span>
+          </span>
+          <span className='text-xs text-[#656565]'>(추후 대여 상세 페이지에서 수정 가능)</span>
+        </div>
       </div>
 
-      <div>
-        <p>찢김 상태: {resultData.count_ripped}</p>
-        <p>닳음 상태: {resultData.count_wornout}</p>
-        <p>책정 일일 대여료: {resultData.one_day_price}원</p>
-      </div>
-
-      <div className="w-full mt-6">
-        <button className="w-full bg-green-500 text-white py-3 rounded-lg font-semibold">
+      <div className="px-6">
+        <button
+          onClick={() => navigate('/library/my-bookcase')}
+          className="text-center bg-[#776B5D] w-full mt-10 rounded-xl text-white font-bold py-3 cursor-pointer"
+        >
           등록 완료
         </button>
       </div>

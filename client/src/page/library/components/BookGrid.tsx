@@ -5,11 +5,12 @@ import { useNavigate } from 'react-router-dom'; // useNavigate 추가
 type BookGridProps = {
   books: IBookCase['displayBooks'];
   isMyBookCase: boolean;
+  userId: number; // userId를 추가
   checked?: boolean[]; // 체크 상태를 받음
   onCheck?: (index: number) => void; // 체크박스 변경 핸들러
 };
 
-const BookGrid = ({ books, isMyBookCase, checked, onCheck }: BookGridProps) => {
+const BookGrid = ({ books, isMyBookCase, userId, checked, onCheck }: BookGridProps) => {
   const navigate = useNavigate(); // navigate 선언
 
   // 이미지를 3개씩 묶는 함수
@@ -69,7 +70,7 @@ const BookGrid = ({ books, isMyBookCase, checked, onCheck }: BookGridProps) => {
   const handleBookClick = (book: IBookCase['displayBooks'][0]) => {
     if (book.bookStatus === 'NOT_INSPECTED') {
       // 인증 필요 상태일 경우에만 이동
-      navigate(`/ai-check`, { state: { userId: 1, userBookId: book.bookId } }); // userId와 bookId를 state로 전달
+      navigate(`/ai-check`, { state: { userId, userBookId: book.userBookId } }); // userId와 userBookId를 state로 전달
     } else {
       alert('인증이 필요하지 않은 책입니다.');
     }
