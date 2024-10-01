@@ -50,10 +50,10 @@ public class ChatRoomController {
 	// 채팅방 채팅내용 불러오기 (방 열기)
 	@GetMapping("/chat")
 	@Operation(summary = "채팅방 채팅내용 불러오기", description = "채팅방 채팅내용 불러오기")
-	public Chat getChatList(
+	public SuccessResponse<Chat> getChatList(
 		@CurrentUser User user,
 		@RequestParam("roomId") Long roomId) {
 
-		return chatService.getChatList(roomId, user);
+		return SuccessResponse.of(chatService.getChatList(roomId, user));
 	}
 }

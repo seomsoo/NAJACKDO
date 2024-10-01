@@ -4,9 +4,7 @@ import { useAuthStore } from "store/useAuthStore";
 const BASE_URL = process.env.REACT_APP_BACKEND_PROD_HOST;
 
 export const host =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:3000"
-    : "https://www.najackdo.kro.kr";
+  process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://www.najackdo.kro.kr";
 
 export const KAKAO_AUTH_URL = `${BASE_URL}/oauth2/authorization/kakao?redirect_uri=${host}`;
 const REFRESH_URI = `${BASE_URL}/api/v1/auth/refresh`;
@@ -67,7 +65,6 @@ instance.interceptors.response.use(
         // refreshToken도 만료된 경우 로그아웃 처리
         useAuthStore.persist.clearStorage(); // sessionStorage 초기화
         window.location.href = "/sign-in";
-        alert("로그인 세션이 만료되었습니다. 다시 로그인해주세요.");
         return Promise.reject(refreshError);
       }
     }

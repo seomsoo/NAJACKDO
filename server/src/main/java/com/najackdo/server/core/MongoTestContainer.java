@@ -59,17 +59,5 @@ public class MongoTestContainer {
 	}
 
 
-	@PostMapping("/visits")
-	public SuccessResponse<Void> createVisit(@CurrentUser User user, @RequestBody VisitDto visitDto) {
 
-		Visit visit = new Visit();
-		visit.setUserId(user.getId());
-		visit.setBookId(visitDto.getBookId());
-		visit.setGenre(visitDto.getGenre());
-		visit.setTimeSpent(visitDto.getTimeSpent());
-
-		System.out.println(visit);
-		visitMongoRepository.save(visit);
-		return SuccessResponse.empty();
-	}
 }

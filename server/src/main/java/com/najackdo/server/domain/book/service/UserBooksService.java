@@ -100,7 +100,7 @@ public class UserBooksService {
 	}
 
 	public List<BookData.Search> getInterestBooks(User user) {
-		return bookRepository.findInterestingBooks(user.getId()).stream().map(BookData.Search::of).toList();
+		return bookRepository.findInterestingBooks(user.getId()).stream().map(BookData.Search::from).toList();
 	}
 
 	@Transactional

@@ -18,7 +18,7 @@ const MyBookCasePage = () => {
     queryKey: ['myBookCase'],
     queryFn: getMyBookCase,
   });
-
+  console.log(bookcase);
   const goBack = () => {
     navigate(-1);
   };
@@ -36,50 +36,50 @@ const MyBookCasePage = () => {
 
   return (
     <div>
-      <header className='sticky top-0 z-10 bg-[#F8F6F3] flex items-center justify-between p-6 py-4'>
-        <div className='items-center flex gap-2'>
-          <button onClick={goBack} className='text-2xl'>
+      <header className="sticky top-0 z-10 bg-[#F8F6F3] flex items-center justify-between p-6 py-4">
+        <div className="items-center flex gap-2">
+          <button onClick={goBack} className="text-2xl">
             <IoIosArrowBack />
           </button>
         </div>
-        <div className='flex justify-between text-3xl gap-5 text-[#545454]'>
-          <Link to='/apply'>
+        <div className="flex justify-between text-3xl gap-5 text-[#545454]">
+          <Link to="/apply">
             <BiBookAdd />
           </Link>
-          <Link to='/alarm'>
+          <Link to="/alarm">
             <IoNotificationsOutline />
           </Link>
         </div>
       </header>
 
-      <main className='px-6'>
-        <article className='flex items-center w-full justify-between font-extrabold text-2xl mb-5'>
-          <div className='flex items-center'>
+      <main className="px-6">
+        <article className="flex items-center w-full justify-between font-extrabold text-2xl mb-5">
+          <div className="flex items-center">
             <span>나의 책장</span>
           </div>
           <button>
             <img
               src={bookcase?.profileImage || '/basic_profile.png'} // 기본 이미지 처리
-              alt='profile'
-              className='rounded-full w-16 h-16  '
+              alt="profile"
+              className="rounded-full w-16 h-16  "
             />
           </button>
         </article>
 
-        <section className='flex flex-col items-center text-center mt-12 gap-6'>
+        <section className="flex flex-col items-center text-center mt-12 gap-6">
           {/* 책 데이터가 있을 때 */}
           {hasBooks ? (
             <BookGrid books={bookcase.displayBooks} isMyBookCase={true} />
           ) : (
             // 책 데이터가 없을 때
-            <div className='flex flex-col items-center mt-16'>
-              <img src='/book_icon.png' alt='book' className='w-40 h-40 mb-6' />
-              <p className='text-lg font-semibold'>
+            <div className="flex flex-col items-center mt-16">
+              <img src="/book_icon.png" alt="book" className="w-40 h-40 mb-6" />
+              <p className="text-lg font-semibold">
                 책장이 텅 비었네요! 첫 책을 추가해보세요.
               </p>
               <Link
-                to='/apply'
-                className='mt-14 p py-4 w-full bg-[#5f6f52] text-white rounded-lg hover:bg-[#4e5e42]'
+                to="/apply"
+                className="mt-14 p py-4 w-full bg-[#5f6f52] text-white rounded-lg hover:bg-[#4e5e42]"
               >
                 책 추가하기
               </Link>

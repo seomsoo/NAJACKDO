@@ -1,6 +1,5 @@
 package com.najackdo.server.domain.book.entity;
 
-import static com.najackdo.server.domain.book.entity.BookStatus.*;
 
 import org.hibernate.annotations.ColumnDefault;
 
@@ -51,7 +50,7 @@ public class UserBook {
 
 	@Column(name = "book_status", nullable = false)
 	@Enumerated(EnumType.STRING)
-	private BookStatus bookStatus = UNAVAILABLE;
+	private BookStatus bookStatus = BookStatus.NOT_INSPECTED;
 
 	@Column(name = "is_deleted", nullable = false)
 	@ColumnDefault("false")
