@@ -20,7 +20,9 @@ const ChatList = ({ chat, userId }: ChatListProps) => {
   )[2];
 
   const goChattingRoom = () => {
-    navigate(`/chat/${chat.roomId}`);
+    navigate(`/chat/${chat.roomId}`, {
+      state: { cartId: chat.cartId, ownerName: chat.ownerNickname },
+    });
   };
 
   return (
@@ -34,7 +36,7 @@ const ChatList = ({ chat, userId }: ChatListProps) => {
           alt={isOwner ? chat.customerNickname : chat.ownerNickname}
           className="rounded-full w-12 h-12 mr-4"
         />
-        <div className="flex flex-col">
+        <div className="flex flex-col justify-start">
           <div className="flex flex-row font-bold items-center">
             <span className="mr-2">
               {isOwner ? chat.customerNickname : chat.ownerNickname}
@@ -47,8 +49,8 @@ const ChatList = ({ chat, userId }: ChatListProps) => {
         </div>
       </div>
       <img
-        src="chemistry.png"
-        alt="책 찍은 사진"
+        src={chat.displayImagePath}
+        alt="rental-book"
         className="w-14 h-14 rounded-lg"
       />
     </div>

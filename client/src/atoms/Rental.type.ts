@@ -6,8 +6,7 @@ export interface IRental {
 }
 
 export interface IReturn {
-  rentalId: number;
-  customerId: number;
+  cartId: number;
 }
 
 export interface IReview {

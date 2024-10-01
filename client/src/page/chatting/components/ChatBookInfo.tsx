@@ -1,84 +1,155 @@
-import { useMutation } from "@tanstack/react-query";
-import { postRental } from "api/rentalApi";
+import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
+import { getCartItem } from "api/cartApi";
+import { postRental, postReturn } from "api/rentalApi";
+import { ICartItem, ICartList } from "atoms/Cart.type";
+import CartModal from "page/chatting/components/CartModal";
 import RentalModal from "page/chatting/components/RentalModal";
 import ReviewButton from "page/chatting/components/ReviewButton";
 import BookRentalApply from "page/library/components/BookRentalApply";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosLeaf } from "react-icons/io";
+import { useUserStore } from "store/useUserStore";
 
 interface ChatBookInfoProps {
-  book: {
-    title: string;
-    dayPrice: number;
-    imageUrl: string;
-  };
+  cartId: number;
+  ownerName: string;
 }
 
 export enum ChatRentalStep {
-  CHECK = "대여기간 체크",
+  READY = "대여기간 체크",
   PAY = "송금하기",
   NO_LEAF = "책잎 부족",
-  RETURN = "반납하기",
-  REVIEW = "후기 보내기",
+  RENTED = "반납하기",
+  RETURNED = "후기 보내기",
 }
 
-const ChatBookInfo = ({ book }: ChatBookInfoProps) => {
-  const [step, setStep] = useState<ChatRentalStep>(ChatRentalStep.CHECK);
+const ChatBookInfo = ({ cartId, ownerName }: ChatBookInfoProps) => {
+  const [step, setStep] = useState<ChatRentalStep>(ChatRentalStep.READY);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [totalLeaf, setTotalLeaf] = useState<number>(book.dayPrice * 14);
+  const [cartOpen, setCartOpen] = useState<boolean>(false);
   const [rentalPeriod, setRentalPeriod] = useState<number[]>([14]);
-  const isOwner = false;
+  const [isOwner, setIsOwner] = useState<boolean>(false);
+  const [book, setBook] = useState<ICartItem>({
+    cartItemId: 1,
+    bookImage: "",
+    bookTitle: "",
+    author: "",
+    price: 1,
+  });
+  const [totalLeaf, setTotalLeaf] = useState<number>(0);
+  const userId = useUserStore.getState().userId;
+
+  const { data: bookData } = useSuspenseQuery<ICartList>({
+    queryKey: ["cart", "book"],
+    queryFn: () => getCartItem(cartId),
+  });
+
+  useEffect(() => {
+    if (bookData) {
+      setIsOwner(bookData.ownerId === userId);
+      setBook(bookData.cartItems[0]);
+      if (bookData.status === "READY") {
+        setStep(ChatRentalStep.READY);
+        return;
+      }
+
+      if (bookData.status === "RENTED") {
+        setStep(ChatRentalStep.RENTED);
+        return;
+      }
+
+      if (bookData.status === "RETURNED") {
+        setStep(ChatRentalStep.RETURNED);
+        return;
+      }
+    }
+  }, [bookData]);
 
   const payMutation = useMutation({
     mutationKey: ["rental", "pay"],
     mutationFn: postRental,
 
     onSuccess: () => {
-      setStep(ChatRentalStep.RETURN);
+      setStep(ChatRentalStep.RENTED);
     },
 
     onError: (error) => {
+      console.log("error", error);
       setStep(ChatRentalStep.NO_LEAF);
-      setModalOpen(true);
-      setTimeout(() => {
-        setModalOpen(false);
-        setStep(ChatRentalStep.CHECK);
-      }, 2000);
+    },
+  });
+
+  const returnMutation = useMutation({
+    mutationKey: ["rental", "return"],
+    mutationFn: postReturn,
+
+    onSuccess: () => {
+      setModalOpen(false);
+      setStep(ChatRentalStep.RETURNED);
     },
   });
 
   const handleClick = () => {
-    if (step === ChatRentalStep.CHECK) {
+    if (step === ChatRentalStep.READY) {
       setStep(ChatRentalStep.PAY);
       setModalOpen(true);
-    } else if (step === ChatRentalStep.PAY) {
+      return;
+    }
+
+    if (step === ChatRentalStep.PAY) {
       payMutation.mutate({
-        cartId: 3,
-        rentalCost: book.dayPrice,
-        rentalPeriod: 14,
+        cartId: cartId,
+        rentalCost: book.price,
+        rentalPeriod: rentalPeriod[0],
         totalPrice: totalLeaf,
       });
-    } else if (step === ChatRentalStep.RETURN) {
-      setStep(ChatRentalStep.REVIEW);
+      return;
+    }
+
+    if (step === ChatRentalStep.RENTED) {
+      returnMutation.mutate({
+        cartId: cartId,
+      });
+      return;
     }
   };
 
+  const showModal =
+    (step === ChatRentalStep.PAY && !isOwner) ||
+    (step === ChatRentalStep.NO_LEAF && !isOwner) ||
+    (step === ChatRentalStep.RENTED && isOwner);
+
   return (
     <div className="bg-[#DBD6D3] w-full h-24 px-4 flex flex-row items-center justify-between">
-      <div className="flex flex-row items-center">
-        <img src={book.imageUrl} alt="사진" className="rounded-2xl w-16 h-16" />
+      <div
+        className="flex flex-row items-center w-4/5"
+        onClick={() => setCartOpen(true)}
+      >
+        <img
+          src={book.bookImage}
+          alt="사진"
+          className="rounded-2xl w-16 h-16"
+        />
         <div className="ml-2">
-          <span>{book.title}</span>
+          <span>{book.bookTitle}</span>
           <div className="flex flex-row items-center">
             <span className="text-black/50 text-sm">일일</span>
-            <span className="ml-2 mr-1 font-bold">{book.dayPrice}</span>
+            <span className="ml-2 mr-1 font-bold">{book.price}</span>
             <IoIosLeaf color="#79AC78" size={20} />
           </div>
         </div>
       </div>
-      {step === ChatRentalStep.CHECK && !isOwner && (
+      {cartOpen && (
+        <CartModal
+          cartOpen={cartOpen}
+          setCartOpen={setCartOpen}
+          ownerUsername={bookData.ownerUsername}
+          cartItems={bookData.cartItems}
+        />
+      )}
+      {step === ChatRentalStep.READY && !isOwner && (
         <BookRentalApply
-          dayprice={book.dayPrice}
+          dayprice={book.price}
           handleClick={handleClick}
           totalLeaf={totalLeaf}
           setTotalLeaf={setTotalLeaf}
@@ -86,7 +157,7 @@ const ChatBookInfo = ({ book }: ChatBookInfoProps) => {
           setRentalPeriod={setRentalPeriod}
         />
       )}
-      {step === ChatRentalStep.PAY && !isOwner && (
+      {showModal && (
         <RentalModal
           totalLeaf={totalLeaf}
           step={step}
@@ -96,16 +167,7 @@ const ChatBookInfo = ({ book }: ChatBookInfoProps) => {
           handleClick={handleClick}
         />
       )}
-      {step === ChatRentalStep.RETURN && isOwner && (
-        <RentalModal
-          step={step}
-          modalOpen={modalOpen}
-          setModalOpen={setModalOpen}
-          setStep={setStep}
-          handleClick={handleClick}
-        />
-      )}
-      {step === ChatRentalStep.REVIEW && !isOwner && <ReviewButton />}
+      {step === ChatRentalStep.RETURNED && isOwner && <ReviewButton />}
     </div>
   );
 };
