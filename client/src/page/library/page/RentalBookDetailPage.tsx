@@ -91,12 +91,11 @@ const RentalBookDetailPage = () => {
       </div>
       </div>
       <div className="fixed bg-[#F8F6F3] bottom-0 w-screen max-w-[430px] border-t-[1px] pt-3 flex flex-row justify-center pb-7">
-        <div onClick={() => handleAddCartItem(bookIdAsNumber)}>
-          { !isMyBook ? <AddCart /> : (
+          { !isMyBook ? 
+            <AddCart ownerbookId={bookIdAsNumber}/> : (
             <UpdatePrice userBookId={bookIdAsNumber} price={bookData.ondayPrice / 100} />
           )
           }
-        </div>
       </div>
     </div>
   );

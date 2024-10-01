@@ -158,7 +158,7 @@ function App() {
           <Route path="/library/*" element={<LibraryRoute />} />
           <Route path="/404" element={<NotFoundPage />} />
         </Routes>
-        {!isRentalPage && !isMyBookPage&& !shouldHideHeaderFooter && !hideFooterPaths.includes(currentPath)  && (
+        {!isRentalPage && !isMyBookPage && !shouldHideHeaderFooter && !hideFooterPaths.includes(currentPath)  && (
           <Footer />
         )}
       </div>
