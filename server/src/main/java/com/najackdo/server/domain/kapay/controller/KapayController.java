@@ -39,7 +39,7 @@ public class KapayController {
 		@RequestParam("totalAmount") Integer totalAmount
 	) {
 
-		ReadyResponse readyResponse = kapayService.ready(agent, openType, itemName, totalAmount);
+		ReadyResponse readyResponse = kapayService.ready(user, agent, openType, itemName, totalAmount);
 		String redirectUrl = getRedirectUrl(agent, openType, readyResponse);
 
 		return SuccessResponse.of(redirectUrl);
@@ -47,12 +47,11 @@ public class KapayController {
 
 	@GetMapping("/approve/{agent}/{openType}")
 	public RedirectView approve(
-		@CurrentUser User user,
 		@PathVariable String agent,
 		@PathVariable String openType,
 		@RequestParam("pg_token") String pgToken
 	) {
-		ResponseEntity<?> approveResponseEntity = kapayService.approve(pgToken, user);
+		ResponseEntity<?> approveResponseEntity = kapayService.approve(pgToken);
 
 		if (approveResponseEntity.getStatusCode() == HttpStatus.OK) {
 			return new RedirectView("http://localhost:3000/kapay/approve");
