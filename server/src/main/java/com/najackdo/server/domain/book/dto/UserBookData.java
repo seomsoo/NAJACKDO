@@ -116,4 +116,26 @@ public class UserBookData {
 		private Long userBookId;
 		private Integer updateRentalCost;
 	}
+
+
+
+
+	@Data
+	public static class AvailableNearBook{
+		private Long userBookId;
+		private String imagePath;
+		private Integer OneDayPrice;
+		private String bookStatus;
+
+		public static AvailableNearBook create(Long userBookId, String imagePath, Integer OneDayPrice, String bookStatus){
+			AvailableNearBook availableNearBook = new AvailableNearBook();
+			availableNearBook.userBookId = userBookId;
+			availableNearBook.imagePath = imagePath;
+			availableNearBook.OneDayPrice = OneDayPrice;
+			availableNearBook.bookStatus = bookStatus;
+			return availableNearBook;
+		}
+	}
+
+
 }

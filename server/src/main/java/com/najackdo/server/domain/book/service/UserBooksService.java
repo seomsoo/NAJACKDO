@@ -2,8 +2,9 @@ package com.najackdo.server.domain.book.service;
 
 import java.util.*;
 
+import com.najackdo.server.domain.location.repository.LocationCacheRepository;
 import com.najackdo.server.domain.recommendation.dto.BookSpineDetectionResponse;
-import com.najackdo.server.domain.recommendation.dto.RecommendationResponse;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,11 +37,11 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -57,7 +58,7 @@ public class UserBooksService {
 	private final ActivityAreaSettingRepository activityAreaSettingRepository;
 	private final BookMarkRepository bookMarkRepository;
 	private final UserRepository userRepository;
-
+	private final LocationCacheRepository locationCacheRepository;
 
 	public List<String> postBookSpineDetection(MultipartFile file) {
 		ResponseEntity<BookSpineDetectionResponse> responseEntity;
@@ -213,4 +214,22 @@ public class UserBooksService {
 		userBookDetail.updateRentalCost(updateRentalCost);
 
 	}
+
+
+	public List<UserBookData.AvailableNearBook> isNearAvailableBook(User user, Long bookId) {
+		Set<Integer> locations = locationCacheRepository.getUserNearLocation(user.getId()).stream()
+			.map(obj -> Integer.parseInt((String)obj))
+			.collect(Collectors.toSet());
+
+		return userBooksRepository.findUserBooksByLocations(bookId, locations).stream().map(
+			userBook ->
+				UserBookData.AvailableNearBook.create(
+					userBook.getId(),
+					userBook.getUserBookDetail().getFrontImagePath(),
+					userBook.getUserBookDetail().getOnedayPrice(),
+					userBook.getBookStatus().name()
+				)
+		).toList();
+	}
+
 }

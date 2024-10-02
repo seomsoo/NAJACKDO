@@ -32,9 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BookController {
 
 	private final UserBooksService userBooksService;
-	private final NotificationService notificationService;
 	private final BookService bookService;
-	private final BookRepository bookRepository;
 
 	/**
 	 * 책 제목으로 다중 등록
@@ -167,13 +165,5 @@ public class BookController {
 		return SuccessResponse.of(bookService.getBook(bookId));
 	}
 
-	/**
-	 * 책에 대해서 주변에 대여할 수 있는 책이 있는지 확인하는 API
-	 */
-	@GetMapping("/near-available/{bookId}")
-	@Operation(summary = "특정 책에 대해 주변 책 대여 가능 여부 확인", description = "주변 책 대여 가능 여부 확인")
-	public SuccessResponse<Boolean> isNearRental(@CurrentUser User user, @PathVariable Long bookId) {
 
-		return SuccessResponse.of(bookService.isNearRental(user, bookId));
-	}
 }
