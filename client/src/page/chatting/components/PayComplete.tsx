@@ -1,11 +1,15 @@
 import { IoIosLeaf } from "react-icons/io";
 
-const PayComplete = () => {
+interface PayCompleteProps {
+  totalLeaf: number;
+}
+
+const PayComplete = ({ totalLeaf }: PayCompleteProps) => {
   return (
     <div className="w-[180px] h-[170px] border-2 border-[#B9B7B7] rounded-xl flex flex-col items-center justify-center space-y-3">
       <span className="font-bold">송금이 완료되었습니다.</span>
       <div className="flex items-center space-x-1">
-        <span className="font-bold">7000</span>
+        <span className="font-bold">{totalLeaf}</span>
         <IoIosLeaf color="#79AC78" size={24} />
       </div>
       <p>
