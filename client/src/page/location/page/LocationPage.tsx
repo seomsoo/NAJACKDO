@@ -5,6 +5,7 @@ import { RiArrowDownSLine } from 'react-icons/ri';
 import { getUserInfo } from 'api/profileApi';
 import { getNearBookCase } from 'api/locationApi';
 import { useCallback, useEffect, useRef } from 'react';
+import { IoSettingsOutline } from "react-icons/io5";
 
 const LocationPage = () => {
   const navigate = useNavigate();
@@ -76,12 +77,11 @@ const LocationPage = () => {
   
   // const hasNeighbor = bookcaseData && bookcaseData.displayBooks?.length > 0;
 
+  console.log("bookcaseArray.length", bookcaseArray.length);
   return (
     <div className='px-6'>
-      <button
-        onClick={goToLocationSetting}
-        className='flex  items-center py-4 mb-4'
-      >
+
+      <div className="flex flex-row justify-between mt-2 mb-6 items-center">
         <div className='text-2xl font-bold'>
           <span className='text-[#79AC78]'>
             {' '}
@@ -89,16 +89,17 @@ const LocationPage = () => {
           </span>
           <span className='font-extrabold'>&nbsp;주변 책장</span>
         </div>
-        <RiArrowDownSLine className='text-3xl ml-2' />
-      </button>
-      {bookcaseArray.length > 0 ? (
+        <IoSettingsOutline size={20} className='text-3xl ml-2' onClick={goToLocationSetting} />
+      </div>
+
+      {bookcaseArray.length ? (
         <div>
           <ul>
             {bookcaseArray.map((bookcase, index) => (
               <li key={index}>
                 {bookcase.displayBooks?.length > 0 ? (
                   <BookcaseContainer
-                    key={bookcase.userId}
+                    key={index}
                     userId={bookcase.userId}
                     name={bookcase.nickname}
                     imageArray={bookcase.displayBooks.map((book) => book.cover)}
@@ -113,9 +114,11 @@ const LocationPage = () => {
           </div>
         </div>
       ) : (
-        <div>
-          <p className='text-center mt-16 text-lg font-semibold'>
-            주변에 책장이 없습니다.
+        // 주변 책장 데이터가 없을 때
+        <div className="flex flex-col items-center mt-40">
+          <img src="/book_icon.png" alt="book" className="w-40 h-40 mb-6" />
+          <p className="text-lg font-semibold">
+            아직 주변 책장이 없어요! 조금 더 기다려주세요.
           </p>
         </div>
       )}
