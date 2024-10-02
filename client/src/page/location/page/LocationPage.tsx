@@ -103,7 +103,7 @@ const LocationPage = () => {
                     userId={bookcase.userId}
                     name={bookcase.nickname}
                     imageArray={bookcase.displayBooks.map((book) => book.cover)}
-                    isFollowed={true}
+                    isFollowed={bookcase.follow}
                   />
                 ) : null}
               </li>

@@ -19,7 +19,6 @@ const BookcaseContainer = ({
   const [heart, setHeart] = useState(isFollowed);
   const navigate = useNavigate();
 
-
   useEffect(() => {
     setHeart(isFollowed); // API로부터 받은 값을 상태에 반영
   }, [isFollowed]);
@@ -36,22 +35,25 @@ const BookcaseContainer = ({
       console.error('관심 도서 등록/해제 중 오류 발생:', error);
     }
   };
+  const handleBookcaseClick = () => {
+    navigate(`/library/bookcase/${userId}`);
+  };
 
   return (
-    <div className='my-5 bg-white/30 shadow rounded-lg p-4'>
-      <div className='flex flex-row justify-between'>
-        <p className='font-medium mb-2' onClick={() => navigate(`/library/bookcase/${userId}`)}>{name}님의 책장</p>
+    <div className="my-5 bg-white/30 shadow rounded-lg p-4">
+      <div className="flex flex-row justify-between">
+        <p className="font-medium mb-2">{name}님의 책장</p>
         <div onClick={handleHeart}>
           {heart ? (
-            <IoHeart size={15} color='#D96363' />
+            <IoHeart size={15} color="#D96363" />
           ) : (
-            <IoHeartOutline size={15} color='#D96363' />
+            <IoHeartOutline size={15} color="#D96363" />
           )}
         </div>
       </div>
       <div
-        className='flex overflow-x-auto whitespace-nowrap space-x-5'
-        onClick={() => navigate(`/library/bookcase/${userId}`)}
+        onClick={handleBookcaseClick}
+        className="flex overflow-x-auto cursor-pointer whitespace-nowrap space-x-5"
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
@@ -61,8 +63,8 @@ const BookcaseContainer = ({
           <img
             key={index}
             src={item}
-            className='w-20 h-28  rounded-sm shadow-xl'
-            alt='book'
+            className="w-20 h-28  rounded-sm shadow-xl"
+            alt="book"
           />
         ))}
       </div>

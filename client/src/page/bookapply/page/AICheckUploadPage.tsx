@@ -1,7 +1,7 @@
 import { postAiCheckBook } from 'api/bookApi';
 import { useState, useEffect } from 'react';
 import { IoChevronBack } from 'react-icons/io5';
-import { useNavigate, useLocation } from 'react-router-dom'; 
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Carousel,
   CarouselApi,
@@ -19,7 +19,9 @@ const AICheckUploadPage = () => {
 
   const [frontImage, setFrontImage] = useState<File | null>(null);
   const [backImage, setBackImage] = useState<File | null>(null);
-  const [frontImagePreview, setFrontImagePreview] = useState<string | null>(null);
+  const [frontImagePreview, setFrontImagePreview] = useState<string | null>(
+    null
+  );
   const [backImagePreview, setBackImagePreview] = useState<string | null>(null);
   const [carouselIndex, setCarouselIndex] = useState<number>(0);
   const [api, setApi] = useState<CarouselApi | null>(null);
@@ -32,30 +34,34 @@ const AICheckUploadPage = () => {
     }
   }, [api]);
 
-  const handleFrontImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFrontImageUpload = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files?.[0];
     if (file) {
       setFrontImage(file);
       setFrontImagePreview(URL.createObjectURL(file));
-      console.log('Front Image File:', file); 
+      console.log('Front Image File:', file);
     }
   };
-  
-  const handleBackImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleBackImageUpload = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files?.[0];
     if (file) {
       setBackImage(file);
       setBackImagePreview(URL.createObjectURL(file));
-      console.log('Back Image File:', file); 
+      console.log('Back Image File:', file);
     }
   };
-  
+
   const handleSubmit = async () => {
     if (frontImage && backImage) {
       const formData = new FormData();
       formData.append('files', frontImage);
       formData.append('files', backImage);
-      formData.append('user_id', userId); 
+      formData.append('user_id', userId);
       formData.append('user_book_id', userBookId);
 
       // FormData 확인용
@@ -66,9 +72,8 @@ const AICheckUploadPage = () => {
       try {
         const response = await postAiCheckBook(formData);
 
-      
         navigate('/ai-check/result', {
-          state: { resultData: response }, 
+          state: { resultData: response },
         });
       } catch (error) {
         console.error('AI 인증 실패:', error);
