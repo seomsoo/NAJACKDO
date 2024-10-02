@@ -1,5 +1,6 @@
 package com.najackdo.server.domain.kapay.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,9 @@ import lombok.extern.slf4j.Slf4j;
 @Tag(name = "카카오 페이 관련 API ")
 public class KapayController {
 
+	@Value("${kakaopay.redirect.url}")
+	private String baseUrl;
+
 	private final KapayService kapayService;
 	private final UserRepository userRepository;
 
@@ -39,7 +43,7 @@ public class KapayController {
 		@RequestParam("totalAmount") Integer totalAmount
 	) {
 
-		ReadyResponse readyResponse = kapayService.ready(agent, openType, itemName, totalAmount);
+		ReadyResponse readyResponse = kapayService.ready(user, agent, openType, itemName, totalAmount);
 		String redirectUrl = getRedirectUrl(agent, openType, readyResponse);
 
 		return SuccessResponse.of(redirectUrl);
@@ -47,17 +51,16 @@ public class KapayController {
 
 	@GetMapping("/approve/{agent}/{openType}")
 	public RedirectView approve(
-		@CurrentUser User user,
 		@PathVariable String agent,
 		@PathVariable String openType,
 		@RequestParam("pg_token") String pgToken
 	) {
-		ResponseEntity<?> approveResponseEntity = kapayService.approve(pgToken, user);
+		ResponseEntity<?> approveResponseEntity = kapayService.approve(pgToken);
 
 		if (approveResponseEntity.getStatusCode() == HttpStatus.OK) {
-			return new RedirectView("http://localhost:3000/kapay/approve");
+			return new RedirectView(baseUrl + "/kapay/approve");
 		} else {
-			return new RedirectView("http://localhost:3000/kapay/fail");
+			return new RedirectView(baseUrl + "/kapay/fail");
 		}
 	}
 
@@ -68,7 +71,7 @@ public class KapayController {
 	) {
 		System.out.println("cancel");
 
-		String redirectUrl = "http://localhost:3000/kapay/cancel";
+		String redirectUrl = baseUrl + "/kapay/cancel";
 
 		return new RedirectView(redirectUrl);
 	}
@@ -79,7 +82,7 @@ public class KapayController {
 		@PathVariable String openType
 	) {
 		System.out.println("fail");
-		return new RedirectView("http://localhost:3000/kapay/fail");
+		return new RedirectView(baseUrl + "/kapay/fail");
 	}
 
 	private String getRedirectUrl(String agent, String openType, ReadyResponse readyResponse) {

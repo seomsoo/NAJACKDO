@@ -4,7 +4,7 @@ import { IoHeart, IoHeartOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 
 interface BookcaseContainerProps {
-  userId?: number;
+  userId: number;
   name: string;
   imageArray: string[];
   isFollowed?: boolean;
@@ -16,8 +16,8 @@ const BookcaseContainer = ({
   imageArray,
   isFollowed = false, // 기본값을 false로 설정
 }: BookcaseContainerProps) => {
-  const navigate = useNavigate();
   const [heart, setHeart] = useState(isFollowed);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setHeart(isFollowed); // API로부터 받은 값을 상태에 반영
@@ -43,7 +43,7 @@ const BookcaseContainer = ({
     <div className="my-5 bg-white/30 shadow rounded-lg p-4">
       <div className="flex flex-row justify-between">
         <p className="font-medium mb-2">{name}님의 책장</p>
-        <div className="cursor-pointer" onClick={handleHeart}>
+        <div onClick={handleHeart}>
           {heart ? (
             <IoHeart size={15} color="#D96363" />
           ) : (
@@ -53,7 +53,7 @@ const BookcaseContainer = ({
       </div>
       <div
         onClick={handleBookcaseClick}
-        className=" flex overflow-x-auto cursor-pointer whitespace-nowrap space-x-5"
+        className="flex overflow-x-auto cursor-pointer whitespace-nowrap space-x-5"
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',

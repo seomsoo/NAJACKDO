@@ -183,3 +183,20 @@ export const postUpdateRentalCost = async (RentalCostData): Promise<void> => {
     throw new Error("대여료 수정 실패", error);
   }
 };
+
+
+// 체류시간 저장
+export const postTimeSpent = async (TimeData): Promise<void> => {
+  try {
+    const {
+      data: { success, data },
+    } = await instance.post<BaseResponse<ITimeSpent>>("/recommend/visits", TimeData);
+
+    if (!success) {
+      throw new Error("체류 시간 저장 실패");
+    }
+
+  } catch (error) {
+    throw new Error("체류 시간 저장 실패", error);
+  }
+};

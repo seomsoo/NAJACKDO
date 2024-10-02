@@ -32,10 +32,10 @@ public class Book {
 	@Column(name = "genre")
 	private String genre;
 
-	@Column(name = "title")
+	@Column(name = "title", columnDefinition = "TEXT")
 	private String title;
 
-	@Column(name = "author")
+	@Column(name = "author", columnDefinition = "TEXT")
 	private String author;
 
 	@Column(name = "cover")

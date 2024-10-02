@@ -43,9 +43,14 @@ public class KapayService {
 
 	private String tid;
 
+	private User user;
+
 	private final ApplicationEventPublisher eventPublisher;
 
-	public ReadyResponse ready(String agent, String openType, String itemName, Integer totalAmount) {
+	public ReadyResponse ready(User user, String agent, String openType, String itemName, Integer totalAmount) {
+
+		this.user = user;
+
 		// 요청 헤더 설정
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "DEV_SECRET_KEY " + kakaopaySecretKey);
@@ -82,7 +87,7 @@ public class KapayService {
 	}
 
 	@Transactional
-	public ResponseEntity<?> approve(String pgToken, User user) {
+	public ResponseEntity<?> approve(String pgToken) {
 		try {
 
 			log.info("pgToken: {}", pgToken);
@@ -116,7 +121,7 @@ public class KapayService {
 			ApproveResponse approveResponse = objectMapper.readValue(response.getBody(), ApproveResponse.class);
 
 			log.info("approveResponse: {}", approveResponse);
-			
+
 			if (approveResponse != null) {
 				Integer totalAmount = approveResponse.getAmount().getTotal(); // 결제 금액
 				eventPublisher.publishEvent(new UserPaymentEvent(user, totalAmount));
