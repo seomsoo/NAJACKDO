@@ -41,4 +41,10 @@ export interface IRentalCost {
   updateRentalCost: number;
 }
 
+export interface ITimeSpent {
+  bookId: number;
+  genre: string;
+  timeSpent: number;
+}
+
 
