@@ -35,34 +35,37 @@ const ReviewPage = ({ ownerName, cartId }: ReviewPageProps) => {
 
   const checkboxOptions: {
     like: {
-      id: 1 | 2 | 3 | 4;
+      id: "clean" | "punctual" | "polite" | "responsive";
       label: string;
     }[];
     dislike: {
-      id: 5 | 6 | 7 | 8;
+      id: "clean" | "punctual" | "polite" | "responsive";
       label: string;
     }[];
   } = {
     like: [
-      { id: 1, label: "책이 매우 깨끗해요." }, // 1
-      { id: 2, label: "시간 약속을 잘 지켜요." }, // 2
-      { id: 3, label: "친절하고 매너가 좋아요." }, // 3
-      { id: 4, label: "응답이 빨라요." }, // 4
+      { id: "clean", label: "책이 매우 깨끗해요." }, // 1
+      { id: "punctual", label: "시간 약속을 잘 지켜요." }, // 2
+      { id: "polite", label: "친절하고 매너가 좋아요." }, // 3
+      { id: "responsive", label: "응답이 빨라요." }, // 4
     ],
     dislike: [
-      { id: 5, label: "책 상태가 사진과 달라요." }, // 5
-      { id: 6, label: "시간 약속을 안 지켜요." }, // 6
-      { id: 7, label: "약속 장소에 나타나지 않았어요." }, // 7
-      { id: 8, label: "책을 분실 혹은 훼손 했어요." }, // 8
+      { id: "clean", label: "책 상태가 사진과 달라요." }, // 5
+      { id: "punctual", label: "시간 약속을 안 지켜요." }, // 6
+      { id: "polite", label: "약속 장소에 나타나지 않았어요." }, // 7
+      { id: "responsive", label: "책을 분실 혹은 훼손 했어요." }, // 8
     ],
   };
 
-  const handleCheckboxChange = (item: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8) => {
+  const handleCheckboxChange = (item: "clean" | "punctual" | "polite" | "responsive") => {
     setCheckedItems((prevItems) => ({
       ...prevItems,
       [item]: !prevItems[item],
     }));
-    console.log("checkedItems", checkedItems[item])
+    // if (prevItems)
+    // if (submitList.includes(item)) submitList?.item
+    // const id = { "clean":}
+    // console.log("checkedItems", checkedItems[item])
     // console.log("ID", checkedItems.get)
     
     // if (checkedItems[item]) {
@@ -81,7 +84,6 @@ const ReviewPage = ({ ownerName, cartId }: ReviewPageProps) => {
   // 이모지 선택 시 상태 초기화 및 업데이트
   const handleEmojiSelect = (emoji: "like" | "dislike") => {
     setSelectedEmoji(emoji);
-    console.log("emoji", emoji)
     setCheckedItems(initialState); // 체크박스 상태 초기화
   };
 
