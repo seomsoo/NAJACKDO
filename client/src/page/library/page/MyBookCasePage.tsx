@@ -1,13 +1,15 @@
-import { useQuery } from '@tanstack/react-query';
-import { Link, useNavigate } from 'react-router-dom';
-import { BiBookAdd } from 'react-icons/bi';
-import { IoIosArrowBack } from 'react-icons/io';
-import { IoNotificationsOutline } from 'react-icons/io5';
-import { getMyBookCase } from 'api/bookcaseApi'; // API 호출 함수
-import MyBookGrid from '../components/MyBookGrid';
+import { useQuery } from "@tanstack/react-query";
+import { Link, useNavigate } from "react-router-dom";
+import { BiBookAdd } from "react-icons/bi";
+import { IoIosArrowBack } from "react-icons/io";
+import { IoNotificationsOutline } from "react-icons/io5";
+import { getMyBookCase } from "api/bookcaseApi"; // API 호출 함수
+import MyBookGrid from "../components/MyBookGrid";
 
 const MyBookCasePage = () => {
   const navigate = useNavigate();
+
+  const IMG_BASE_URL = process.env.PUBLIC_URL;
 
   // 나의 책장 데이터 조회 (단일 객체로 처리)
   const {
@@ -15,7 +17,7 @@ const MyBookCasePage = () => {
     isLoading: isBookcaseLoading,
     isError: isBookcaseError,
   } = useQuery({
-    queryKey: ['myBookCase'],
+    queryKey: ["myBookCase"],
     queryFn: getMyBookCase,
   });
   console.log(bookcase);
@@ -59,7 +61,7 @@ const MyBookCasePage = () => {
           </div>
           <button>
             <img
-              src={bookcase?.profileImage || '/basic_profile.png'} // 기본 이미지 처리
+              src={bookcase?.profileImage || "/basic_profile.png"} // 기본 이미지 처리
               alt="profile"
               className="rounded-full w-16 h-16  "
             />
@@ -76,10 +78,8 @@ const MyBookCasePage = () => {
           ) : (
             // 책 데이터가 없을 때
             <div className="flex flex-col items-center mt-16">
-              <img src="/book_icon.png" alt="book" className="w-40 h-40 mb-6" />
-              <p className="text-lg font-semibold">
-                책장이 텅 비었네요! 첫 책을 추가해보세요.
-              </p>
+              <img src={`${IMG_BASE_URL}/book_icon.png`} alt="book" className="w-40 h-40 mb-6" />
+              <p className="text-lg font-semibold">책장이 텅 비었네요! 첫 책을 추가해보세요.</p>
               <Link
                 to="/apply"
                 className="mt-14 p py-4 w-full bg-[#5f6f52] text-white rounded-lg hover:bg-[#4e5e42]"

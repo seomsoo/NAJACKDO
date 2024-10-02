@@ -3,11 +3,10 @@ import { getUserInfo } from "api/profileApi";
 import { useUserStore } from "store/useUserStore";
 
 export const GetUserInfo = () => {
-  const { setUserId, setNickname, setProfileImage, setCash } = useUserStore.getState();
+  const { userId, setUserId, nickname, setNickname, profileImage, setProfileImage, cash, setCash } =
+    useUserStore.getState();
 
-  if (!setUserId || !setNickname || !setProfileImage || !setCash) {
-    console.log("GetUserInfo");
-
+  if (!userId || !nickname || !profileImage || !cash) {
     const { data: userInfo } = useSuspenseQuery({
       queryKey: ["user", "info"],
       queryFn: getUserInfo,

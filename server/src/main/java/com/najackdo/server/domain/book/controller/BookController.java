@@ -32,9 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BookController {
 
 	private final UserBooksService userBooksService;
-	private final NotificationService notificationService;
 	private final BookService bookService;
-	private final BookRepository bookRepository;
 
 	/**
 	 * 책 제목으로 다중 등록
@@ -128,7 +126,7 @@ public class BookController {
 	 * @return {@link BookData.BookCase}
 	 */
 	@GetMapping("/bookcase/{findUserId}")
-	@Operation(summary = "책장 목록 조회", description = "유저 닉네임으로 책장 목록 조회")
+	@Operation(summary = "책장 목록 조회", description = "유저 아이디로 책장 목록 조회")
 	public SuccessResponse<BookData.BookCase> getUserBookCaseByNickName(
 		@CurrentUser User user,
 		@PathVariable Long findUserId) {
@@ -166,4 +164,6 @@ public class BookController {
 	public SuccessResponse<BookData.Search> getBookDetail(@PathVariable Long bookId) {
 		return SuccessResponse.of(bookService.getBook(bookId));
 	}
+
+
 }

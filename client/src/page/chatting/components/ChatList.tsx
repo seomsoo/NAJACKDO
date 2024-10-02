@@ -21,7 +21,13 @@ const ChatList = ({ chat, userId }: ChatListProps) => {
 
   const goChattingRoom = () => {
     navigate(`/chat/${chat.roomId}`, {
-      state: { cartId: chat.cartId, ownerName: chat.ownerNickname },
+      state: {
+        cartId: chat.cartId,
+        ownerName: chat.ownerNickname,
+        ownerId: chat.ownerId,
+        customerName: chat.customerNickname,
+        customerId: chat.customerId,
+      },
     });
   };
 

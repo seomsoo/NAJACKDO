@@ -1,5 +1,7 @@
 import useSurveyStore from "store/useSurveyStore";
 
+const IMG_BASE_URL = process.env.PUBLIC_URL;
+
 const Gender = () => {
   const { gender, setGender } = useSurveyStore();
 
@@ -18,13 +20,13 @@ const Gender = () => {
       <div className="grid grid-cols-2  mt-28 w-full max-w-sm">
         <div className="flex flex-col items-center gap-4">
           <button onClick={() => setGender("M")} className={getButtonClass("M")}>
-            <img src="/images/survey/male.png" alt="male" />
+            <img src={`${IMG_BASE_URL}/images/survey/male.png`} alt="male" />
           </button>
           <span className="text-xl font-semibold">남성</span>
         </div>
         <div className="flex flex-col items-center gap-4">
           <button onClick={() => setGender("F")} className={getButtonClass("F")}>
-            <img src="/images/survey/female.png" alt="female" />
+            <img src={`${IMG_BASE_URL}/images/survey/female.png`} alt="female" />
           </button>
           <span className="text-xl font-semibold">여성</span>
         </div>

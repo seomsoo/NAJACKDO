@@ -1,21 +1,92 @@
+import { Client } from "@stomp/stompjs";
 import Loading from "components/common/Loading";
-import ChatBookInfo from "page/chatting/components/ChatBookInfo";
-import ChattingBox from "page/chatting/components/ChattingBox";
+import ChatBookInfo, {
+  ChatRentalStep,
+} from "page/chatting/components/ChatBookInfo";
+import ChattingBox, { Message } from "page/chatting/components/ChattingBox";
 import ChattingRoomHeader from "page/chatting/components/ChattingRoomHeader";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
+import SockJS from "sockjs-client";
 
 const ChattingRoomPage = () => {
   const { roomId } = useParams();
   const {
-    state: { cartId, ownerName },
+    state: { cartId, ownerId, ownerName, customerId, customerName },
   } = useLocation();
+  const [totalLeaf, setTotalLeaf] = useState<number>(0);
+  const [step, setStep] = useState<ChatRentalStep>(ChatRentalStep.READY);
+
+  // 웹소켓
+  const [client, setClient] = useState<Client | null>(null);
+
+  // 채팅방 메시지 리스트
+  const [messages, setMessages] = useState<Message[]>([]);
+
+  // 웹소켓 연결
+  const connect = () => {
+    if (client) return;
+
+    const stompClient = new Client();
+    stompClient?.configure({
+      webSocketFactory: () => new SockJS("https://www.najackdo.kro.kr/ws"),
+    });
+
+    stompClient.onConnect = () => {
+      console.log("connected");
+      // 채팅방 구독
+      stompClient?.subscribe(
+        `/exchange/chat.exchange/room.${roomId}`,
+        (message) => {
+          // 메시지를 리스트에 추가
+          const newMessage = JSON.parse(message.body);
+          console.log("fefef", message.body);
+          setMessages((prevMessages) => [...prevMessages, newMessage]);
+        }
+      );
+    };
+
+    if (!stompClient.connected) {
+      stompClient.activate();
+      setClient(stompClient);
+    }
+  };
+
+  // 웹소켓 연결 해제
+  const disconnect = () => {
+    if (client) {
+      client.deactivate();
+    }
+  };
+
+  useEffect(() => {
+    connect();
+
+    return () => disconnect();
+  }, []);
 
   return (
     <Suspense fallback={<Loading />}>
       <ChattingRoomHeader ownerName={ownerName} />
-      <ChatBookInfo cartId={cartId} ownerName={ownerName} />
-      <ChattingBox roomId={Number(roomId)} />
+      <ChatBookInfo
+        client={client}
+        cartId={cartId}
+        roomId={Number(roomId)}
+        ownerId={ownerId}
+        ownerName={ownerName}
+        customerId={customerId}
+        customerName={customerName}
+        totalLeaf={totalLeaf}
+        setTotalLeaf={setTotalLeaf}
+        step={step}
+        setStep={setStep}
+      />
+      <ChattingBox
+        client={client}
+        roomId={Number(roomId)}
+        totalLeaf={totalLeaf}
+        messages={messages}
+      />
     </Suspense>
   );
 };

@@ -30,5 +30,6 @@ export interface IChatContent {
   senderId: number;
   senderNickname: string;
   message: string;
+  talkType: "MESSAGE" | "PAY" | "RETURN";
   time: string;
 }

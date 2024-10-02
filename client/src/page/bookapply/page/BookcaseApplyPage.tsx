@@ -34,10 +34,7 @@ const BookcaseApplyPage = () => {
 
   return (
     <div>
-      <div
-        onClick={() => navigate(-1)}
-        className="cursor-pointer p-4 flex flex-row items-center"
-      >
+      <div onClick={() => navigate(-1)} className="cursor-pointer p-4 flex flex-row items-center">
         <IoChevronBack size={25} color="#545454" />
         <span className="font-bold text-xl ml-2">도서 등록 - 책장 촬영</span>
       </div>
@@ -64,9 +61,7 @@ const BookcaseApplyPage = () => {
             })}
           </div>
           <div className="flex flex-row justify-center items-center  ml-auto bg-[#C0C78C] py-1 mt-2 rounded-lg w-5/12 ">
-            <span className="text-white font-bold text-sm">
-              책장 다시 촬영하기
-            </span>
+            <span className="text-white font-bold text-sm">책장 다시 촬영하기</span>
             <HiOutlineCamera color="white" className="ml-1" />
           </div>
         </div>

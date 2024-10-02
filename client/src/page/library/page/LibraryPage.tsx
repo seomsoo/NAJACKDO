@@ -1,22 +1,22 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { IoIosSearch } from 'react-icons/io';
-import { IoCartOutline, IoNotificationsOutline } from 'react-icons/io5';
-import { SlArrowRight } from 'react-icons/sl';
-import { useQuery } from '@tanstack/react-query';
-import { getUserInfo } from 'api/profileApi';
-import { getInterestbook } from 'api/bookApi';
-import { getMyBookCase } from 'api/bookcaseApi';
+import { Link, useNavigate } from "react-router-dom";
+import { IoIosSearch } from "react-icons/io";
+import { IoCartOutline, IoNotificationsOutline } from "react-icons/io5";
+import { SlArrowRight } from "react-icons/sl";
+import { useQuery } from "@tanstack/react-query";
+import { getUserInfo } from "api/profileApi";
+import { getInterestbook } from "api/bookApi";
+import { getMyBookCase } from "api/bookcaseApi";
 
 const LibraryPage = () => {
   const navigate = useNavigate();
   const goToMyFavorite = () => {
-    navigate('/library/my-favorite');
+    navigate("/library/my-favorite");
   };
   const goToMyBookCase = () => {
-    navigate('/library/my-bookcase');
+    navigate("/library/my-bookcase");
   };
   const goToMyHistory = () => {
-    navigate('/library/my-history');
+    navigate("/library/my-history");
   };
 
   // 유저 정보 가져오기 (닉네임)
@@ -25,7 +25,7 @@ const LibraryPage = () => {
     isLoading: isUserLoading,
     isError: isUserError,
   } = useQuery({
-    queryKey: ['userInfo'],
+    queryKey: ["userInfo"],
     queryFn: getUserInfo,
   });
 
@@ -35,7 +35,7 @@ const LibraryPage = () => {
     isLoading: isMyBookCaseLoading,
     isError: isMyBookCaseError,
   } = useQuery({
-    queryKey: ['myBookCase'],
+    queryKey: ["myBookCase"],
     queryFn: getMyBookCase,
   });
 
@@ -45,23 +45,20 @@ const LibraryPage = () => {
     isLoading: isInterestBooksLoading,
     isError: isInterestBooksError,
   } = useQuery({
-    queryKey: ['interestBooks'],
+    queryKey: ["interestBooks"],
     queryFn: getInterestbook,
   });
 
   // 로딩 상태 처리
-  if (isUserLoading || isInterestBooksLoading || isMyBookCaseLoading)
-    return <div>로딩 중...</div>;
+  if (isUserLoading || isInterestBooksLoading || isMyBookCaseLoading) return <div>로딩 중...</div>;
 
   // 에러 상태 처리
   if (isUserError || isInterestBooksError || isMyBookCaseError)
     return <div>오류가 발생했습니다.</div>;
 
-  const myBookCaseImages =
-    myBookCase?.displayBooks.slice(0, 3).map((book) => book.cover) || [];
+  const myBookCaseImages = myBookCase?.displayBooks.slice(0, 3).map((book) => book.cover) || [];
 
-  const favoriteImages =
-    interestBooks?.slice(0, 3).map((book) => book.cover) || [];
+  const favoriteImages = interestBooks?.slice(0, 3).map((book) => book.cover) || [];
 
   return (
     <div>
@@ -104,13 +101,10 @@ const LibraryPage = () => {
                       />
                     ))
                   ) : (
-                    <span className="hakgyo text-2xl mt-10 mb-12">
-                      나의 책장이 비었어요.
-                    </span>
+                    <span className="hakgyo text-2xl mt-10 mb-12">나의 책장이 비었어요.</span>
                   )}
                 </div>
-
-                <img src="/images/library/bar.png" alt="bar" />
+                <img src="/images/Library/bar.png" alt="bar" />
               </article>
             </button>
           </nav>
@@ -124,23 +118,11 @@ const LibraryPage = () => {
               <article>
                 <div className="flex justify-center gap-8">
                   {/* dummy 이미지 */}
-                  <img
-                    src="ssafy.png"
-                    className="w-20 h-28 object-cover"
-                    alt="dummy"
-                  />
-                  <img
-                    src="ssafy.png"
-                    className="w-20 h-28 object-cover"
-                    alt="dummy"
-                  />
-                  <img
-                    src="ssafy.png"
-                    className="w-20 h-28 object-cover"
-                    alt="dummy"
-                  />
+                  <img src="ssafy.png" className="w-20 h-28 object-cover" alt="dummy" />
+                  <img src="ssafy.png" className="w-20 h-28 object-cover" alt="dummy" />
+                  <img src="ssafy.png" className="w-20 h-28 object-cover" alt="dummy" />
                 </div>
-                <img src="/images/library/bar.png" alt="bar" />
+                <img src="/images/Library/bar.png" alt="bar" />
               </article>
             </button>
           </nav>
@@ -164,12 +146,10 @@ const LibraryPage = () => {
                       />
                     ))
                   ) : (
-                    <span className="hakgyo text-2xl mt-10 mb-12">
-                      관심 도서가 없습니다.
-                    </span>
+                    <span className="hakgyo text-2xl mt-10 mb-12">관심 도서가 없습니다.</span>
                   )}
                 </div>
-                <img src="/images/library/bar.png" alt="bar" />
+                <img src="/images/Library/bar.png" alt="bar" />
               </article>
             </button>
           </nav>

@@ -3,6 +3,7 @@ import EmojiSelector from "../components/EmojiSelector";
 import CheckboxGroup from "../components/CheckboxGroup";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { host } from "api/clientApi";
 
 function ReviewPage() {
   const navigate = useNavigate();

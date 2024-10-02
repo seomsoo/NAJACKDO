@@ -3,16 +3,29 @@ import { getCartItem } from "api/cartApi";
 import { postRental, postReturn } from "api/rentalApi";
 import { ICartItem, ICartList } from "atoms/Cart.type";
 import CartModal from "page/chatting/components/CartModal";
+import { Message } from "page/chatting/components/ChattingBox";
+import PayComplete from "page/chatting/components/PayComplete";
 import RentalModal from "page/chatting/components/RentalModal";
+import ReturnComplete from "page/chatting/components/ReturnComplete";
 import ReviewButton from "page/chatting/components/ReviewButton";
 import BookRentalApply from "page/library/components/BookRentalApply";
 import { useEffect, useState } from "react";
+import ReactDOMServer from "react-dom/server";
 import { IoIosLeaf } from "react-icons/io";
 import { useUserStore } from "store/useUserStore";
 
 interface ChatBookInfoProps {
+  client: any;
   cartId: number;
+  roomId: number;
+  ownerId: number;
   ownerName: string;
+  customerId: number;
+  customerName: string;
+  totalLeaf: number;
+  setTotalLeaf: (totalLeaf: number) => void;
+  step: ChatRentalStep;
+  setStep: (step: ChatRentalStep) => void;
 }
 
 export enum ChatRentalStep {
@@ -23,8 +36,19 @@ export enum ChatRentalStep {
   RETURNED = "후기 보내기",
 }
 
-const ChatBookInfo = ({ cartId, ownerName }: ChatBookInfoProps) => {
-  const [step, setStep] = useState<ChatRentalStep>(ChatRentalStep.READY);
+const ChatBookInfo = ({
+  client,
+  cartId,
+  roomId,
+  ownerId,
+  ownerName,
+  customerId,
+  customerName,
+  totalLeaf,
+  setTotalLeaf,
+  step,
+  setStep,
+}: ChatBookInfoProps) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [cartOpen, setCartOpen] = useState<boolean>(false);
   const [rentalPeriod, setRentalPeriod] = useState<number[]>([14]);
@@ -36,7 +60,7 @@ const ChatBookInfo = ({ cartId, ownerName }: ChatBookInfoProps) => {
     author: "",
     price: 1,
   });
-  const [totalLeaf, setTotalLeaf] = useState<number>(0);
+
   const userId = useUserStore.getState().userId;
 
   const { data: bookData } = useSuspenseQuery<ICartList>({
@@ -71,6 +95,7 @@ const ChatBookInfo = ({ cartId, ownerName }: ChatBookInfoProps) => {
 
     onSuccess: () => {
       setStep(ChatRentalStep.RENTED);
+      complete("PAY");
     },
 
     onError: (error) => {
@@ -86,8 +111,35 @@ const ChatBookInfo = ({ cartId, ownerName }: ChatBookInfoProps) => {
     onSuccess: () => {
       setModalOpen(false);
       setStep(ChatRentalStep.RETURNED);
+      complete("RETURN");
     },
   });
+
+  const complete = (talkType) => {
+    console.log("talkType", talkType);
+    const completeMessage = ReactDOMServer.renderToString(
+      talkType === "PAY" ? (
+        <PayComplete totalLeaf={totalLeaf} />
+      ) : (
+        <ReturnComplete />
+      )
+    );
+
+    // 송금 완료는 빌리는 사람이
+    // 반납 완료는 빌려주는 사람이
+    const messageData: Message = {
+      roomId: roomId,
+      senderId: talkType === "PAY" ? customerId : ownerId,
+      senderNickname: talkType === "PAY" ? customerName : ownerName,
+      talkType: talkType,
+      message: completeMessage,
+    };
+
+    client.publish({
+      destination: `/pub/chat.message.${roomId}`,
+      body: JSON.stringify(messageData),
+    });
+  };
 
   const handleClick = () => {
     if (step === ChatRentalStep.READY) {
@@ -122,7 +174,7 @@ const ChatBookInfo = ({ cartId, ownerName }: ChatBookInfoProps) => {
   return (
     <div className="bg-[#DBD6D3] w-full h-24 px-4 flex flex-row items-center justify-between">
       <div
-        className="flex flex-row items-center w-4/5"
+        className="flex flex-row items-center w-7/12"
         onClick={() => setCartOpen(true)}
       >
         <img
@@ -165,9 +217,10 @@ const ChatBookInfo = ({ cartId, ownerName }: ChatBookInfoProps) => {
           setModalOpen={setModalOpen}
           setStep={setStep}
           handleClick={handleClick}
+          ownerName={ownerName}
         />
       )}
-      {step === ChatRentalStep.RETURNED && isOwner && <ReviewButton />}
+      {step === ChatRentalStep.RETURNED && <ReviewButton />}
     </div>
   );
 };
