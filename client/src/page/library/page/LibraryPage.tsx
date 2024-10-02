@@ -64,7 +64,9 @@ const LibraryPage = () => {
     <div>
       <header className="flex items-center justify-between p-4 px-6 mb-3 ">
         <span className="font-extrabold text-2xl">
-          <span className="hakgyo text-3xl text-[#5F6F52]">{userInfo?.nickname || "사용자"}</span>
+          <span className="hakgyo text-3xl text-[#5F6F52]">
+            {userInfo?.nickname || '사용자'}
+          </span>
           님의 서재
         </span>
         <div className="flex justify-between text-3xl gap-3 text-[#545454]">

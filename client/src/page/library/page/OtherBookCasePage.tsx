@@ -1,16 +1,24 @@
-import { useQuery } from "@tanstack/react-query";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { IoIosArrowBack } from "react-icons/io";
-import { IoHeart, IoHeartOutline, IoNotificationsOutline } from "react-icons/io5"; // 하트 아이콘 유지
-import { getOtherBookCase, postInterestBookCase, deleteInterestBookCase } from "api/bookcaseApi"; // API 호출 함수
-import { useState, useEffect } from "react";
-import OtherBookGrid from "../components/OtherBookGrid";
+import { useQuery } from '@tanstack/react-query';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { IoIosArrowBack } from 'react-icons/io';
+import {
+  IoHeart,
+  IoHeartOutline,
+  IoNotificationsOutline,
+} from 'react-icons/io5';
+import {
+  getOtherBookCase,
+  postInterestBookCase,
+  deleteInterestBookCase,
+} from 'api/bookcaseApi';
+import { useState, useEffect } from 'react';
+import OtherBookGrid from '../components/OtherBookGrid';
 
 const OtherBookCasePage = () => {
   const IMG_BASE_URL = process.env.PUBLIC_URL;
 
   const navigate = useNavigate();
-  const { userId } = useParams(); // URL에서 userId 가져옴
+  const { userId } = useParams();
   const userIdAsNumber = parseInt(userId, 10);
 
   // 다른 사용자의 책장 정보 조회
@@ -28,7 +36,7 @@ const OtherBookCasePage = () => {
 
   useEffect(() => {
     if (bookcase?.follow !== undefined) {
-      setIsFollowed(bookcase.follow); // follow 값을 상태에 반영
+      setIsFollowed(bookcase.follow);
     }
   }, [bookcase]);
 
@@ -37,15 +45,13 @@ const OtherBookCasePage = () => {
     new Array(bookcase?.displayBooks.length || 0).fill(false)
   );
 
-  // 책 선택 시 체크 상태를 업데이트하는 함수
   const handleCheck = (index: number) => {
-    const newChecked = [...checked];
-    newChecked[index] = !newChecked[index];
-    setChecked(newChecked);
+    setChecked((prevChecked) => {
+      const newChecked = [...prevChecked]; // 기존 상태 복사
+      newChecked[index] = !newChecked[index]; // 선택된 책 상태 토글
+      return newChecked; // 업데이트된 배열 반환
+    });
   };
-
-  // 선택된 책이 있는지 확인하는 변수
-  const isAnyChecked = checked.some((item) => item);
 
   const goBack = () => {
     navigate(-1);
@@ -126,6 +132,7 @@ const OtherBookCasePage = () => {
               books={bookcase.displayBooks}
               checked={checked} // 체크 상태 전달
               onCheck={handleCheck} // 체크 핸들러 전달
+              setChecked={setChecked}
             />
           ) : (
             <div className="flex flex-col items-center mt-16">
@@ -135,15 +142,6 @@ const OtherBookCasePage = () => {
           )}
         </section>
       </main>
-
-      {/* 책이 선택된 경우 모달 표시 */}
-      {isAnyChecked && (
-        <aside className="fixed bottom-20 w-full max-w-[430px] text-white flex text-lg justify-around rounded-t-xl items-center bg-[#776B5D]">
-          <button className="px-12 p-8">담기</button>
-          <span className="ml-1">|</span>
-          <button className="p-8">대여 신청</button>
-        </aside>
-      )}
     </div>
   );
 };
