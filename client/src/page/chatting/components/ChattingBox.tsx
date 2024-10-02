@@ -12,15 +12,13 @@ export interface Message {
   roomId: number;
   senderId: number;
   senderNickname: string;
-  messageType: "MESSAGE" | "PAY" | "RETURN";
+  talkType: "MESSAGE" | "PAY" | "RETURN";
   message: string;
 }
 
 interface ChattingBoxProps {
   client: any;
   roomId: number;
-  isPay: boolean;
-  isReturn: boolean;
   totalLeaf: number;
   messages: Message[];
 }
@@ -28,6 +26,7 @@ interface ChattingBoxProps {
 const ChattingBox = ({ client, roomId, messages }: ChattingBoxProps) => {
   const senderNickname = useUserStore.getState().nickname;
   const senderId = useUserStore.getState().userId;
+  console.log("userId", senderId);
 
   // 채팅 내역 불러오기
   const { data: chattingList } = useSuspenseQuery<IChatList>({
@@ -46,7 +45,7 @@ const ChattingBox = ({ client, roomId, messages }: ChattingBoxProps) => {
       roomId: roomId,
       senderId: senderId,
       senderNickname: senderNickname,
-      messageType: "MESSAGE",
+      talkType: "MESSAGE",
       message: message,
     };
 
@@ -74,7 +73,16 @@ const ChattingBox = ({ client, roomId, messages }: ChattingBoxProps) => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  useEffect(() => scrollToBottom, [messages]);
+  const [first, setFirst] = useState<boolean>(true);
+
+  useEffect(() => {
+    scrollToBottom();
+
+    if (first) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
+      setFirst(false);
+    }
+  }, [messages]);
 
   return (
     <div className="mx-[25px]">
@@ -92,13 +100,13 @@ const ChattingBox = ({ client, roomId, messages }: ChattingBoxProps) => {
               <SendMessage
                 key={index}
                 message={chat.message}
-                messageType="MESSAGE"
+                talkType={chat.talkType}
               />
             ) : (
               <ReceiveMessage
                 key={index}
                 message={chat.message}
-                messageType="MESSAGE"
+                talkType={chat.talkType}
               />
             );
           })}
@@ -107,13 +115,13 @@ const ChattingBox = ({ client, roomId, messages }: ChattingBoxProps) => {
               <SendMessage
                 key={index}
                 message={message.message}
-                messageType={message.messageType}
+                talkType={message.talkType}
               />
             ) : (
               <ReceiveMessage
                 key={index}
                 message={message.message}
-                messageType={message.messageType}
+                talkType={message.talkType}
               />
             );
           })}
