@@ -36,34 +36,34 @@ const MyFavoritePage = () => {
 
   if (isInterestBooksLoading || isBookcasesLoading)
     return <div>로딩 중...</div>;
-  
+
   if (isInterestBooksError || isBookcasesError)
     return <div>오류가 발생했습니다.</div>;
 
   return (
     <div>
-      <header className='sticky top-0 z-10 bg-[#F8F6F3] flex items-center justify-between p-6 py-4 mb-4'>
-        <div className='items-center flex gap-2'>
-          <button onClick={goBack} className='text-2xl'>
+      <header className="sticky top-0 z-10 bg-[#F8F6F3] flex items-center justify-between p-6 py-4 mb-4">
+        <div className="items-center flex gap-2">
+          <button onClick={goBack} className="text-2xl">
             <IoIosArrowBack />
           </button>
-          <span className='font-extrabold text-2xl'>내가 좋아하는 책들</span>
+          <span className="font-extrabold text-2xl">내가 좋아하는 책들</span>
         </div>
-        <div className=' text-3xl text-[#545454]'>
-          <Link to='/alarm'>
+        <div className=" text-3xl text-[#545454]">
+          <Link to="/alarm">
             <IoNotificationsOutline />
           </Link>
         </div>
       </header>
 
-      <main className='px-6'>
-        <Tabs defaultValue='book' className='w-full'>
-          <TabsList className='grid w-full grid-cols-2'>
-            <TabsTrigger value='book'>책</TabsTrigger>
-            <TabsTrigger value='bookcase'>책장</TabsTrigger>
+      <main className="px-6">
+        <Tabs defaultValue="book" className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="book">책</TabsTrigger>
+            <TabsTrigger value="bookcase">책장</TabsTrigger>
           </TabsList>
 
-          <TabsContent value='book'>
+          <TabsContent value="book">
             {interestBooks?.map((book) => (
               <BookContainer
                 key={book.bookId}
@@ -77,7 +77,7 @@ const MyFavoritePage = () => {
             ))}
           </TabsContent>
 
-          <TabsContent value='bookcase'>
+          <TabsContent value="bookcase">
             {bookcases?.map((bookcase) => (
               <BookcaseContainer
                 key={bookcase.userId}

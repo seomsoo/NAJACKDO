@@ -1,6 +1,7 @@
 import { IoHeart, IoHeartOutline } from 'react-icons/io5';
 import { useState } from 'react';
 import { postInterestbook, deleteInterestbook } from 'api/bookApi'; // API 호출 함수
+import { useNavigate } from 'react-router-dom';
 
 interface BookContainerProps {
   bookId: number;
@@ -19,6 +20,7 @@ const BookContainer = ({
   cover,
   isInterested,
 }: BookContainerProps) => {
+  const navigate = useNavigate();
   const [heart, setHeart] = useState(isInterested);
 
   const handleHeart = async () => {
@@ -34,23 +36,32 @@ const BookContainer = ({
     }
   };
 
+  const handleBookClick = () => {
+    navigate(`/book/${bookId}`); // 책 클릭 시 해당 책 상세 페이지로 이동
+  };
+
   return (
-    <div className='flex py-3 '>
-      <img className='row-span-2 w-24' src={cover} alt='BookContainer' />
-      <div className='overflow-hidden ml-2 flex flex-col gap-1'>
-        <div className='flex justify-between items-center'>
-          <p className='font-semibold'>{title}</p>
+    <div className="flex py-3  ">
+      <img
+        onClick={handleBookClick}
+        className="row-span-2 w-24 cursor-pointer"
+        src={cover}
+        alt="BookContainer"
+      />
+      <div className="overflow-hidden ml-2 flex flex-col gap-1">
+        <div className="flex justify-between items-center">
+          <p className="font-semibold">{title}</p>
           {/* 하트 버튼 */}
-          <div className='ml-2' onClick={handleHeart}>
+          <div className="ml-2 cursor-pointer" onClick={handleHeart}>
             {heart ? (
-              <IoHeart size={15} color='#D96363' />
+              <IoHeart size={15} color="#D96363" />
             ) : (
-              <IoHeartOutline size={15} color='#D96363' />
+              <IoHeartOutline size={15} color="#D96363" />
             )}
           </div>
         </div>
-        <p className='text-sm font-medium'>{author}</p>
-        <p className='text-xs leading-normal mt-2 pr-4 line-clamp-3'>
+        <p className="text-sm font-medium">{author}</p>
+        <p className="text-xs leading-normal mt-2 pr-4 line-clamp-3">
           {description}
         </p>
       </div>
