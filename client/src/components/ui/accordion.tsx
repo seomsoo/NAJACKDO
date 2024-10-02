@@ -9,11 +9,7 @@ const AccordionItem = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
 >(({ className, ...props }, ref) => (
-  <AccordionPrimitive.Item
-    ref={ref}
-    className={cn( className)}
-    {...props}
-  />
+  <AccordionPrimitive.Item ref={ref} className={cn(className)} {...props} />
 ));
 AccordionItem.displayName = "AccordionItem";
 
@@ -21,7 +17,6 @@ const AccordionTrigger = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
 >(({ className, children, ...props }, ref) => {
-  
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (
@@ -36,9 +31,7 @@ const AccordionTrigger = React.forwardRef<
         {...props}
       >
         {children}
-        <span className="text-[#888888] text-[12px]">
-          {isOpen ? "전체보기 닫기" : "전체보기"}
-        </span>
+        <span className="text-[#888888] text-[12px]">{isOpen ? "전체닫기" : "전체보기"}</span>
       </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>
   );
