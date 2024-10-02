@@ -2,6 +2,7 @@ import NotFoundPage from "components/common/NotFoundPage";
 import AlarmPage from "page/alarm/page/AlarmPage";
 import AICheckPage from "page/bookapply/page/AICheckPage";
 import AICheckResultPage from "page/bookapply/page/AICheckResultPage";
+import AICheckUploadPage from 'page/bookapply/page/AICheckUploadPage';
 import ApplyPage from "page/bookapply/page/ApplyPage";
 import BookApplyPage from "page/bookapply/page/BookApplyPage";
 import BookcaseApplyPage from "page/bookapply/page/BookcaseApplyPage";
@@ -55,6 +56,7 @@ const MainRoute = () => {
       <Route path="/apply/book" element={<BookApplyPage />} />
       <Route path="/apply/bookcase" element={<BookcaseApplyPage />} />
       <Route path="/ai-check" element={<AICheckPage />} />
+      <Route path="/ai-check/upload" element={<AICheckUploadPage />} />
       <Route path="/ai-check/result" element={<AICheckResultPage />} />
       <Route path="/survey" element={<SurveyPage />} />
       <Route path="/cart" element={<CartPage />} />
