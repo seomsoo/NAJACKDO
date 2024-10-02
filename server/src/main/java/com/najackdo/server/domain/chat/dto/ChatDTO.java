@@ -20,5 +20,6 @@ public class ChatDTO {
 	private Long senderId; // 채팅을 보낸 사람
 	private String senderNickname; // 채팅을 보낸 사람 닉네임
 	private String message; // 메시지
+	private TalkType talkType; // 메시지 타입
 	private LocalDateTime time; // 채팅 발송 시간
 }

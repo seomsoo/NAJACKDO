@@ -61,6 +61,7 @@ public class ChatController {
 		newMessage.setSenderId(chatDTO.getSenderId());
 		newMessage.setSenderNickname(chatDTO.getSenderNickname());
 		newMessage.setMessage(chatDTO.getMessage());
+		newMessage.setTalkType(chatDTO.getTalkType());
 		newMessage.setTime(chatDTO.getTime());
 
 		Chat existingChat = chatRepository.findByRoomId(chatDTO.getRoomId());
