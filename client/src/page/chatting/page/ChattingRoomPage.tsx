@@ -76,7 +76,7 @@ const ChattingRoomPage = () => {
         ownerName={ownerName}
         setIsPay={setIsPay}
         setIsReturn={setIsReturn}
-        totalLeaf={totalLeaf}
+        totalLeaf={totalLeaf} 
         setTotalLeaf={setTotalLeaf}
       />
       <ChattingBox
