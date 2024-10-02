@@ -65,82 +65,82 @@ const LibraryPage = () => {
 
   return (
     <div>
-      <header className='flex items-center justify-between p-4 px-6 mb-3 '>
-        <span className='font-extrabold text-2xl'>
-          <span className='hakgyo text-3xl text-[#5F6F52]'>
+      <header className="flex items-center justify-between p-4 px-6 mb-3 ">
+        <span className="font-extrabold text-2xl">
+          <span className="hakgyo text-3xl text-[#5F6F52]">
             {userInfo?.nickname || '사용자'}
           </span>
           님의 서재
         </span>
-        <div className='flex justify-between text-3xl gap-3 text-[#545454]'>
-          <Link to='/search'>
+        <div className="flex justify-between text-3xl gap-3 text-[#545454]">
+          <Link to="/search">
             <IoIosSearch />
           </Link>
-          <Link to='/cart'>
+          <Link to="/cart">
             <IoCartOutline />
           </Link>
-          <Link to='/alarm'>
+          <Link to="/alarm">
             <IoNotificationsOutline />
           </Link>
         </div>
       </header>
-      <main className=' px-6'>
-        <section className='flex flex-col gap-10'>
+      <main className=" px-6">
+        <section className="flex flex-col gap-10">
           <nav>
             <button onClick={goToMyBookCase}>
-              <article className='flex items-center mb-7'>
-                <span className='font-bold text-2xl'>나의 책장</span>
-                <SlArrowRight className='ml-2 text-[#807B7B] text-xl' />
+              <article className="flex items-center mb-7">
+                <span className="font-bold text-2xl">나의 책장</span>
+                <SlArrowRight className="ml-2 text-[#807B7B] text-xl" />
               </article>
               <article>
-                <div className='flex justify-center gap-8'>
+                <div className="flex justify-center gap-8">
                   {myBookCaseImages.length > 0 ? (
                     myBookCaseImages.map((src, index) => (
                       <img
                         key={index}
                         src={src}
                         alt={`bookcase-${index}`}
-                        className='w-20 h-28 object-cover shadow-book-shadow rounded-r-lg rounded-br-lg'
+                        className="w-20 h-28 object-cover shadow-book-shadow rounded-r-lg rounded-br-lg"
                       />
                     ))
                   ) : (
-                    <span className='hakgyo text-2xl mt-10 mb-12'>
+                    <span className="hakgyo text-2xl mt-10 mb-12">
                       나의 책장이 비었어요.
                     </span>
                   )}
                 </div>
 
-                <img src='/images/library/bar.png' alt='bar' />
+                <img src="/images/library/bar.png" alt="bar" />
               </article>
             </button>
           </nav>
 
           <nav>
             <button onClick={goToMyHistory}>
-              <article className='flex items-center mb-7'>
-                <span className='font-bold text-2xl'>책 히스토리</span>
-                <SlArrowRight className='ml-2 text-[#807B7B] text-xl' />
+              <article className="flex items-center mb-7">
+                <span className="font-bold text-2xl">책 히스토리</span>
+                <SlArrowRight className="ml-2 text-[#807B7B] text-xl" />
               </article>
               <article>
-                <div className='flex justify-center gap-8'>
+                <div className="flex justify-center gap-8">
                   {/* dummy 이미지 */}
                   <img
-                    src='ssafy.png'
-                    className='w-20 h-28 object-cover'
-                    alt='dummy'
+                    src="ssafy.png"
+                    className="w-20 h-28 object-cover"
+                    alt="dummy"
                   />
                   <img
-                    src='ssafy.png'
-                    className='w-20 h-28 object-cover'
-                    alt='dummy'
+                    src="ssafy.png"
+                    className="w-20 h-28 object-cover"
+                    alt="dummy"
                   />
                   <img
-                    src='ssafy.png'
-                    className='w-20 h-28 object-cover'
-                    alt='dummy'
+                    src="ssafy.png"
+                    className="w-20 h-28 object-cover"
+                    alt="dummy"
                   />
                 </div>
-                <img src='/images/library/bar.png' alt='bar' />
+                <img src="/images/library/bar.png" alt="bar" />
               </article>
             </button>
           </nav>
@@ -148,28 +148,28 @@ const LibraryPage = () => {
           {/* My Favorite 섹션 */}
           <nav>
             <button onClick={goToMyFavorite}>
-              <article className='flex items-center mb-7'>
-                <span className='font-bold text-2xl'>내가 좋아하는 책들</span>
-                <SlArrowRight className='ml-2 text-[#807B7B] text-xl' />
+              <article className="flex items-center mb-7">
+                <span className="font-bold text-2xl">내가 좋아하는 책들</span>
+                <SlArrowRight className="ml-2 text-[#807B7B] text-xl" />
               </article>
               <article>
-                <div className='flex justify-center gap-8'>
+                <div className="flex justify-center gap-8">
                   {favoriteImages.length > 0 ? (
                     favoriteImages.map((src, index) => (
                       <img
                         key={index}
                         src={src}
                         alt={`favorite-${index}`}
-                        className='w-20 h-28 object-cover shadow-book-shadow rounded-r-lg rounded-br-lg'
+                        className="w-20 h-28 object-cover shadow-book-shadow rounded-r-lg rounded-br-lg"
                       />
                     ))
                   ) : (
-                    <span className='hakgyo text-2xl mt-10 mb-12'>
+                    <span className="hakgyo text-2xl mt-10 mb-12">
                       관심 도서가 없습니다.
                     </span>
                   )}
                 </div>
-                <img src='/images/library/bar.png' alt='bar' />
+                <img src="/images/library/bar.png" alt="bar" />
               </article>
             </button>
           </nav>

@@ -1,3 +1,5 @@
+import { useMutation } from '@tanstack/react-query';
+import { postAddCartItem } from 'api/cartApi';
 import { FaCheck } from 'react-icons/fa';
 import { IBookCase } from 'atoms/BookCase.type';
 import { useNavigate } from 'react-router-dom';
@@ -6,12 +8,18 @@ type OtherBookGridProps = {
   books: IBookCase['displayBooks'];
   checked?: boolean[];
   onCheck?: (index: number) => void;
+  setChecked: (checked: boolean[]) => void;
 };
 
-const OtherBookGrid = ({ books, checked, onCheck }: OtherBookGridProps) => {
+const OtherBookGrid = ({
+  books,
+  checked,
+  onCheck,
+  setChecked,
+}: OtherBookGridProps) => {
   const navigate = useNavigate();
-  
-  // 이미지를 3개씩 묶는 함수 (기존 함수 유지)
+
+  // 이미지를 3개씩 묶는 함수
   const chunkArray = (
     arr: IBookCase['displayBooks'],
     size: number
@@ -33,7 +41,11 @@ const OtherBookGrid = ({ books, checked, onCheck }: OtherBookGridProps) => {
           대여 가능
         </span>
       );
-    } else if (bookStatus === 'UNAVAILABLE' || bookStatus === 'RENTED' || bookStatus === 'NOT_INSPECTED') {
+    } else if (
+      bookStatus === 'UNAVAILABLE' ||
+      bookStatus === 'RENTED' ||
+      bookStatus === 'NOT_INSPECTED'
+    ) {
       return (
         <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-[#D96363] p-2 px-3 rounded-2xl text-white font-light text-xs text-nowrap mb-1">
           대여 불가
@@ -52,6 +64,46 @@ const OtherBookGrid = ({ books, checked, onCheck }: OtherBookGridProps) => {
     }
   };
 
+  // 선택된 책이 있는지 확인하는 변수
+  const isAnyChecked = checked?.some((isChecked) => isChecked);
+
+  // 담기 기능을 위한 useMutation
+  const mutation = useMutation({
+    mutationFn: (ownerBookIds: number[]) => {
+      return Promise.all(ownerBookIds.map((id) => postAddCartItem(id)));
+    },
+    onSuccess: () => {
+      if (
+        confirm('장바구니에 추가되었습니다.\n 장바구니로 이동하시겠습니까?')
+      ) {
+        navigate('/cart');
+      } else {
+        navigate(0);
+      }
+    },
+    onError: (error) => {
+      console.error('장바구니 추가 실패:', error);
+    },
+  });
+
+  // 담기 버튼 클릭 시 장바구니에 추가하는 함수
+  const handleAddToCart = () => {
+    const selectedBooks = books
+      .filter((_, index) => checked?.[index])
+      .map((book) => book.userBookId);
+
+    if (selectedBooks.length > 0) {
+      mutation.mutate(selectedBooks);
+    }
+  };
+
+  // 취소 버튼 클릭 시 체크박스 상태 초기화 및 모달 닫기
+  const handleCancel = () => {
+    // 체크박스를 모두 해제하는 로직
+    const resetChecked = new Array(checked.length).fill(false);
+    setChecked(resetChecked); // 체크 상태 초기화
+  };
+
   return (
     <>
       {bookChunks.map((chunk, chunkIndex) => (
@@ -59,7 +111,6 @@ const OtherBookGrid = ({ books, checked, onCheck }: OtherBookGridProps) => {
           <div className="grid grid-cols-3 gap-4">
             {chunk.map((book, index) => (
               <div key={book.bookId} onClick={() => handleBookClick(book)}>
-                
                 {/* 항상 공간을 차지하되, bookStatus가 AVAILABLE일 때만 체크박스를 표시 */}
                 <div className="mb-1 ml-2">
                   <input
@@ -102,6 +153,19 @@ const OtherBookGrid = ({ books, checked, onCheck }: OtherBookGridProps) => {
           </div>
         </div>
       ))}
+
+      {/* 선택된 책이 있을 때만 모달 표시 */}
+      {isAnyChecked && (
+        <aside className="fixed bottom-20 w-full max-w-[430px] text-white flex text-lg justify-around rounded-t-xl items-center bg-[#776B5D]">
+          <button className="px-12 p-8" onClick={handleAddToCart}>
+            담기
+          </button>
+          <span className="mr-2">|</span>
+          <button className="p-8 mr-4" onClick={handleCancel}>
+            취소
+          </button>
+        </aside>
+      )}
     </>
   );
 };
