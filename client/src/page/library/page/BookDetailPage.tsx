@@ -43,27 +43,22 @@ const BookDetailPage = () => {
         console.log("체류 시간 저장 실패", error);
       },
     });
-/*
-  const handleUpdateRentalCost = () => {
-    mutation.mutate({
-      userBookId: userBookId,
-      updateRentalCost: updatePrice,
-    });
-  };
-*/
+
 
   // 페이지 체류 시간 계산
   useEffect(() => {
     const startTime = new Date();
+    console.log("시작 시간:", startTime);
 
     const handleTimeSpent = () => {
+      console.log("페이지 이탈");
       const endTime = new Date();
-      const timeSpent = endTime.getTime() - startTime.getTime();
+      const timeSpent =  Math.floor((endTime.getTime() - startTime.getTime())/1000); // sec
       if (bookData?.genre) {
         mutation.mutate({
           bookId: bookId,
           genre: bookData.genre,
-          timeSpent: timeSpent,
+          timeSpent: timeSpent
         });
       }
 
