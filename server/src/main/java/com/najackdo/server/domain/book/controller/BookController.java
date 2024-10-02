@@ -128,7 +128,7 @@ public class BookController {
 	 * @return {@link BookData.BookCase}
 	 */
 	@GetMapping("/bookcase/{findUserId}")
-	@Operation(summary = "책장 목록 조회", description = "유저 닉네임으로 책장 목록 조회")
+	@Operation(summary = "책장 목록 조회", description = "유저 아이디로 책장 목록 조회")
 	public SuccessResponse<BookData.BookCase> getUserBookCaseByNickName(
 		@CurrentUser User user,
 		@PathVariable Long findUserId) {
@@ -165,5 +165,15 @@ public class BookController {
 	@Operation(summary = "도서 상세 조회", description = "도서 상세 조회")
 	public SuccessResponse<BookData.Search> getBookDetail(@PathVariable Long bookId) {
 		return SuccessResponse.of(bookService.getBook(bookId));
+	}
+
+	/**
+	 * 책에 대해서 주변에 대여할 수 있는 책이 있는지 확인하는 API
+	 */
+	@GetMapping("/near-available/{bookId}")
+	@Operation(summary = "특정 책에 대해 주변 책 대여 가능 여부 확인", description = "주변 책 대여 가능 여부 확인")
+	public SuccessResponse<Boolean> isNearRental(@CurrentUser User user, @PathVariable Long bookId) {
+
+		return SuccessResponse.of(bookService.isNearRental(user, bookId));
 	}
 }
