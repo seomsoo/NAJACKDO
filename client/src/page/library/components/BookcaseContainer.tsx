@@ -1,9 +1,10 @@
 import { deleteInterestBookCase, postInterestBookCase } from 'api/bookcaseApi';
 import { useState, useEffect } from 'react';
 import { IoHeart, IoHeartOutline } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
 
 interface BookcaseContainerProps {
-  userId?: number;
+  userId: number;
   name: string;
   imageArray: string[];
   isFollowed?: boolean;
@@ -16,6 +17,8 @@ const BookcaseContainer = ({
   isFollowed = false, // 기본값을 false로 설정
 }: BookcaseContainerProps) => {
   const [heart, setHeart] = useState(isFollowed);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     setHeart(isFollowed); // API로부터 받은 값을 상태에 반영
@@ -37,7 +40,7 @@ const BookcaseContainer = ({
   return (
     <div className='my-5 bg-white/30 shadow rounded-lg p-4'>
       <div className='flex flex-row justify-between'>
-        <p className='font-medium mb-2'>{name}님의 책장</p>
+        <p className='font-medium mb-2' onClick={() => navigate(`/library/bookcase/${userId}`)}>{name}님의 책장</p>
         <div onClick={handleHeart}>
           {heart ? (
             <IoHeart size={15} color='#D96363' />
@@ -48,6 +51,7 @@ const BookcaseContainer = ({
       </div>
       <div
         className='flex overflow-x-auto whitespace-nowrap space-x-5'
+        onClick={() => navigate(`/library/bookcase/${userId}`)}
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
