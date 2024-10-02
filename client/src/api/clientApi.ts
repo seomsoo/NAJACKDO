@@ -14,7 +14,7 @@ export const pythoninstance = axios.create({
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
-  }
+  },
 });
 
 const instance = axios.create({

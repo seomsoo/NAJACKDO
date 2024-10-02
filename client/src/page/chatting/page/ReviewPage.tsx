@@ -3,12 +3,15 @@ import EmojiSelector from "../components/EmojiSelector";
 import CheckboxGroup from "../components/CheckboxGroup";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { host } from "api/clientApi";
 
 function ReviewPage() {
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);
   };
+
+  const IMG_BASE_URL = host;
 
   const initialState = {
     clean: false,
@@ -72,7 +75,11 @@ function ReviewPage() {
 
       <section className="pb-4 border-b">
         <div className="flex ml-7 items-center">
-          <img src="/화학.png" alt="화학" className="object-cover rounded-xl w-16 h-16" />
+          <img
+            src={`${IMG_BASE_URL}/화학.png`}
+            alt="화학"
+            className="object-cover rounded-xl w-16 h-16"
+          />
           <div className="flex flex-col gap-2 ml-4 font-medium">
             <span>90일 완성 돈버는 습관</span>
             <span className="text-xs">

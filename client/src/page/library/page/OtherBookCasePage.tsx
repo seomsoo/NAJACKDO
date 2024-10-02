@@ -1,20 +1,15 @@
-import { useQuery } from '@tanstack/react-query';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { IoIosArrowBack } from 'react-icons/io';
-import {
-  IoHeart,
-  IoHeartOutline,
-  IoNotificationsOutline,
-} from 'react-icons/io5'; // 하트 아이콘 유지
-import {
-  getOtherBookCase,
-  postInterestBookCase,
-  deleteInterestBookCase,
-} from 'api/bookcaseApi'; // API 호출 함수
-import { useState, useEffect } from 'react';
-import OtherBookGrid from '../components/OtherBookGrid';
+import { useQuery } from "@tanstack/react-query";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { IoIosArrowBack } from "react-icons/io";
+import { IoHeart, IoHeartOutline, IoNotificationsOutline } from "react-icons/io5"; // 하트 아이콘 유지
+import { getOtherBookCase, postInterestBookCase, deleteInterestBookCase } from "api/bookcaseApi"; // API 호출 함수
+import { useState, useEffect } from "react";
+import OtherBookGrid from "../components/OtherBookGrid";
+import { host } from "api/clientApi";
 
 const OtherBookCasePage = () => {
+  const IMG_BASE_URL = host;
+
   const navigate = useNavigate();
   const { userId } = useParams(); // URL에서 userId 가져옴
   const userIdAsNumber = parseInt(userId, 10);
@@ -25,7 +20,7 @@ const OtherBookCasePage = () => {
     isLoading: isBookcaseLoading,
     isError: isBookcaseError,
   } = useQuery({
-    queryKey: ['otherBookCase', userIdAsNumber],
+    queryKey: ["otherBookCase", userIdAsNumber],
     queryFn: () => getOtherBookCase(userIdAsNumber),
   });
 
@@ -67,7 +62,7 @@ const OtherBookCasePage = () => {
       }
       setIsFollowed(!isFollowed); // 상태 변경
     } catch (error) {
-      console.error('관심 책장 등록/해제 중 오류 발생:', error);
+      console.error("관심 책장 등록/해제 중 오류 발생:", error);
     }
   };
 
@@ -112,15 +107,13 @@ const OtherBookCasePage = () => {
         <article className="flex items-center w-full justify-between font-extrabold text-2xl mb-5">
           <div className="flex items-center">
             <span>
-              <span className="hakgyo text-3xl text-[#5F6F52]">
-                {bookcase.nickname}
-              </span>
+              <span className="hakgyo text-3xl text-[#5F6F52]">{bookcase.nickname}</span>
               님의 책장
             </span>
           </div>
           <button onClick={handleProfileClick}>
             <img
-              src={bookcase?.profileImage || '/basic_profile.png'} // 기본 이미지 처리
+              src={bookcase?.profileImage || "/basic_profile.png"} // 기본 이미지 처리
               alt="profile"
               className="rounded-full w-16 h-16  "
             />
@@ -137,7 +130,7 @@ const OtherBookCasePage = () => {
             />
           ) : (
             <div className="flex flex-col items-center mt-16">
-              <img src="/book_icon.png" alt="book" className="w-40 h-40 mb-6" />
+              <img src={`${IMG_BASE_URL}/book_icon.png`} alt="book" className="w-40 h-40 mb-6" />
               <p className="text-lg font-semibold">책장이 텅 비었어요.</p>
             </div>
           )}
