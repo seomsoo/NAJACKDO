@@ -21,6 +21,7 @@ import com.najackdo.server.domain.book.dto.BookData;
 import com.najackdo.server.domain.book.entity.Book;
 import com.najackdo.server.domain.book.entity.UserBook;
 import com.najackdo.server.domain.book.repository.BookRepository;
+import com.najackdo.server.domain.location.repository.LocationCacheRepository;
 import com.najackdo.server.domain.user.entity.User;
 import com.najackdo.server.domain.user.repository.InterestUserRepository;
 import com.najackdo.server.domain.user.repository.UserRepository;
@@ -34,13 +35,12 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional(readOnly = true)
 public class BookService {
 
-	private final RedisTemplate<String, Object> redisTemplate;
-
 	private final BookRepository bookRepository;
 	private final UserRepository userRepository;
 	private final InterestUserRepository interestUserRepository;
 
 	private static final String Location_KEY = "location:";
+	private final LocationCacheRepository locationCacheRepository;
 
 	private static String apply(Object value) {
 		return ((Map<String, String>)value).get("value");
@@ -141,23 +141,24 @@ public class BookService {
 	}
 
 	public Page<BookData.BookCase> getNearBookCase(User user, Pageable pageable) {
-		String userLocationKey = Location_KEY + user.getId();
-		Set<Object> myLocationCodes = redisTemplate.opsForSet().members(userLocationKey);
+
+		Set<Object> myLocationCodes = locationCacheRepository.getUserNearLocation(user.getId());
+
 
 		if (myLocationCodes == null || myLocationCodes.isEmpty()) {
 			log.info("myLocationCodes is empty");
 			return Page.empty();
 		}
 
-		Set<String> allUserKeys = redisTemplate.keys(Location_KEY + "*");
+		Set<String> allUserKeys = locationCacheRepository.getAllUserLocations();
 		Set<String> allUserKeysWithOutMe = Objects.requireNonNull(allUserKeys).stream()
-			.filter(key -> !key.equals(userLocationKey))
+			.filter(key -> !key.equals(Location_KEY + user.getId()))
 			.collect(Collectors.toSet());
 
 		Set<Long> nearUserIds = new HashSet<>();
 
 		for (String otherKey : allUserKeysWithOutMe) {
-			Set<Object> otherUserLocations = redisTemplate.opsForSet().members(otherKey);
+			Set<Object> otherUserLocations = locationCacheRepository.getOtherUserLocations(otherKey);
 
 			if (otherUserLocations != null) {
 				for (Object location : myLocationCodes) {
@@ -207,5 +208,11 @@ public class BookService {
 		}
 
 		return new PageImpl<>(bookCases, pageable, totalElements);
+	}
+
+	public Boolean isNearRental(User user, Long bookId) {
+
+
+		return null;
 	}
 }

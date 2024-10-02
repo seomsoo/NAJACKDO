@@ -10,7 +10,6 @@ import org.locationtech.jts.geom.PrecisionModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +19,7 @@ import com.najackdo.server.domain.location.dto.LocationData;
 import com.najackdo.server.domain.location.entity.ActivityAreaSetting;
 import com.najackdo.server.domain.location.entity.Location;
 import com.najackdo.server.domain.location.repository.ActivityAreaSettingRepository;
+import com.najackdo.server.domain.location.repository.LocationCacheRepository;
 import com.najackdo.server.domain.location.repository.LocationRepository;
 import com.najackdo.server.domain.user.entity.User;
 import com.najackdo.server.domain.user.repository.UserRepository;
@@ -33,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional(readOnly = true)
 public class LocationService {
 
-	private final RedisTemplate<String, String> redisTemplate;
+	private final LocationCacheRepository locationCacheRepository;
 
 	private final LocationRepository locationRepository;
 	private final ActivityAreaSettingRepository activityAreaSettingRepository;
@@ -131,7 +131,8 @@ public class LocationService {
 		activityAreaSettingRepository.save(existingSetting);
 		userRepository.save(user);
 
-		redisTemplate.delete(Location_KEY + user.getId());
+
+		locationCacheRepository.deleteUserLocation(user.getId());
 
 		List<LocationData.SearchWithGeom> result = locationRepository.findLocationsWithPoligonByDistance(
 				location.getLocationPoint(),
@@ -139,11 +140,10 @@ public class LocationService {
 			.map(LocationData.SearchWithGeom::onlyLocationCode)
 			.toList();
 
-		redisTemplate.opsForSet().add(Location_KEY + user.getId(), result.stream()
+		locationCacheRepository.saveUserLocation(user.getId(), result.stream()
 			.map(LocationData.SearchWithGeom::getLocationCode)
 			.map(String::valueOf)
 			.toArray(String[]::new));
-
 	}
 
 	private Point getPoint(double latitude, double longitude) {
