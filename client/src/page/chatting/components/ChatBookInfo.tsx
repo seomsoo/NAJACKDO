@@ -3,16 +3,26 @@ import { getCartItem } from "api/cartApi";
 import { postRental, postReturn } from "api/rentalApi";
 import { ICartItem, ICartList } from "atoms/Cart.type";
 import CartModal from "page/chatting/components/CartModal";
+import { Message } from "page/chatting/components/ChattingBox";
+import PayComplete from "page/chatting/components/PayComplete";
 import RentalModal from "page/chatting/components/RentalModal";
+import ReturnComplete from "page/chatting/components/ReturnComplete";
 import ReviewButton from "page/chatting/components/ReviewButton";
 import BookRentalApply from "page/library/components/BookRentalApply";
 import { useEffect, useState } from "react";
+import ReactDOMServer from "react-dom/server";
 import { IoIosLeaf } from "react-icons/io";
 import { useUserStore } from "store/useUserStore";
 
 interface ChatBookInfoProps {
+  client: any;
   cartId: number;
+  roomId: number;
   ownerName: string;
+  setIsPay: (isPay: boolean) => void;
+  setIsReturn: (isReturn: boolean) => void;
+  totalLeaf: number;
+  setTotalLeaf: (totalLeaf: number) => void;
 }
 
 export enum ChatRentalStep {
@@ -23,7 +33,16 @@ export enum ChatRentalStep {
   RETURNED = "후기 보내기",
 }
 
-const ChatBookInfo = ({ cartId, ownerName }: ChatBookInfoProps) => {
+const ChatBookInfo = ({
+  client,
+  cartId,
+  roomId,
+  ownerName,
+  setIsPay,
+  setIsReturn,
+  totalLeaf,
+  setTotalLeaf,
+}: ChatBookInfoProps) => {
   const [step, setStep] = useState<ChatRentalStep>(ChatRentalStep.READY);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [cartOpen, setCartOpen] = useState<boolean>(false);
@@ -36,8 +55,9 @@ const ChatBookInfo = ({ cartId, ownerName }: ChatBookInfoProps) => {
     author: "",
     price: 1,
   });
-  const [totalLeaf, setTotalLeaf] = useState<number>(0);
+
   const userId = useUserStore.getState().userId;
+  const senderNickname = useUserStore.getState().nickname;
 
   const { data: bookData } = useSuspenseQuery<ICartList>({
     queryKey: ["cart", "book"],
@@ -71,6 +91,8 @@ const ChatBookInfo = ({ cartId, ownerName }: ChatBookInfoProps) => {
 
     onSuccess: () => {
       setStep(ChatRentalStep.RENTED);
+      setIsPay(true);
+      complete("PAY");
     },
 
     onError: (error) => {
@@ -86,8 +108,33 @@ const ChatBookInfo = ({ cartId, ownerName }: ChatBookInfoProps) => {
     onSuccess: () => {
       setModalOpen(false);
       setStep(ChatRentalStep.RETURNED);
+      setIsReturn(true);
+      complete("RETURN");
     },
   });
+
+  const complete = (messageType) => {
+    const completeMessage = ReactDOMServer.renderToString(
+      messageType === "PAY" ? (
+        <PayComplete totalLeaf={totalLeaf} />
+      ) : (
+        <ReturnComplete />
+      )
+    );
+
+    const messageData: Message = {
+      roomId: roomId,
+      senderId: userId,
+      senderNickname: senderNickname,
+      messageType: messageType,
+      message: completeMessage,
+    };
+
+    client.publish({
+      destination: `/pub/chat.message.${roomId}`,
+      body: JSON.stringify(messageData),
+    });
+  };
 
   const handleClick = () => {
     if (step === ChatRentalStep.READY) {
@@ -165,6 +212,7 @@ const ChatBookInfo = ({ cartId, ownerName }: ChatBookInfoProps) => {
           setModalOpen={setModalOpen}
           setStep={setStep}
           handleClick={handleClick}
+          ownerName={ownerName}
         />
       )}
       {step === ChatRentalStep.RETURNED && isOwner && <ReviewButton />}

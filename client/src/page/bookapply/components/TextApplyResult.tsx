@@ -7,7 +7,6 @@ interface TextApplyResultProps {
 }
 
 const TextApplyResult = ({ book }: TextApplyResultProps) => {
-  const categoryList = book.genre.split(">");
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -25,8 +24,7 @@ const TextApplyResult = ({ book }: TextApplyResultProps) => {
           {book.author.split(",").join(" | ")}
         </span>
         <div className="flex flex-row mt-1 flex-wrap">
-          <CategoryTag category={categoryList[1]} />
-          <CategoryTag category={categoryList[2]} />
+          <CategoryTag category={book.genre} />
         </div>
       </div>
     </div>

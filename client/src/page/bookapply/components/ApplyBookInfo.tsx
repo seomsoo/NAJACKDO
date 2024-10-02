@@ -14,7 +14,6 @@ const ApplyBookInfo = ({
   bookcase = false,
   setSelectedCount,
 }: ApplyBookInfoProps) => {
-  const categoryList = book.genre.split(">");
   const [isChecked, setIsChecked] = useState<boolean>(true);
 
   const handleClick = () => {
@@ -47,8 +46,7 @@ const ApplyBookInfo = ({
         </div>
         <span className="pb-2">ISBN: {book.isbn}</span>
         <div className="flex flex-wrap text-xs">
-          <CategoryTag category={categoryList[1]} />
-          <CategoryTag category={categoryList[2]} />
+          <CategoryTag category={book.genre} />
         </div>
       </div>
     </div>

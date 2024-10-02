@@ -18,6 +18,7 @@ interface RentalModalProps {
   setModalOpen: (modalOpen: boolean) => void;
   setStep: (step: ChatRentalStep) => void;
   handleClick: () => void;
+  ownerName: string;
 }
 
 const RentalModal = ({
@@ -27,6 +28,7 @@ const RentalModal = ({
   modalOpen,
   setModalOpen,
   handleClick,
+  ownerName,
 }: RentalModalProps) => {
   const navigate = useNavigate();
   return (
@@ -55,7 +57,7 @@ const RentalModal = ({
             <Fragment>
               <IoLibrary size={35} color="#5F6F52" />
               <span className="text-lg">
-                정하림님에게 {totalLeaf.toLocaleString()} 책잎을 <br />
+                {ownerName}님에게 {totalLeaf.toLocaleString()} 책잎을 <br />
                 송금하시겠습니까?
               </span>
               <div className="space-x-6">
