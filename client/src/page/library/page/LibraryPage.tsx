@@ -19,8 +19,6 @@ const LibraryPage = () => {
     navigate("/library/my-history");
   };
 
-  const IMG_BASE_URL = process.env.PUBLIC_URL;
-
   // 유저 정보 가져오기 (닉네임)
   const {
     data: userInfo,
@@ -104,7 +102,7 @@ const LibraryPage = () => {
                     <span className="hakgyo text-2xl mt-10 mb-12">나의 책장이 비었어요.</span>
                   )}
                 </div>
-                <img src={`${IMG_BASE_URL}/images/library/bar.png`} alt="bar" />
+                <img src="/images/Library/bar.png" alt="bar" />
               </article>
             </button>
           </nav>
@@ -122,7 +120,7 @@ const LibraryPage = () => {
                   <img src="ssafy.png" className="w-20 h-28 object-cover" alt="dummy" />
                   <img src="ssafy.png" className="w-20 h-28 object-cover" alt="dummy" />
                 </div>
-                <img src={`${IMG_BASE_URL}/images/library/bar.png`} alt="bar" />
+                <img src="/images/Library/bar.png" alt="bar" />
               </article>
             </button>
           </nav>
@@ -149,7 +147,7 @@ const LibraryPage = () => {
                     <span className="hakgyo text-2xl mt-10 mb-12">관심 도서가 없습니다.</span>
                   )}
                 </div>
-                <img src={`${IMG_BASE_URL}/images/library/bar.png`} alt="bar" />
+                <img src="/images/Library/bar.png" alt="bar" />
               </article>
             </button>
           </nav>

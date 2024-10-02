@@ -6,8 +6,6 @@ import { useNavigate } from "react-router-dom";
 const BookcaseApplyPage = () => {
   const navigate = useNavigate();
 
-  const IMG_BASE_URL = process.env.PUBLIC_URL;
-
   const books = [
     {
       title: "Why? 화학",
@@ -43,7 +41,7 @@ const BookcaseApplyPage = () => {
       <div className="px-[25px]">
         <div className="flex flex-col items-center">
           <span className="font-bold text-base mb-4">촬영한 사진</span>
-          <img src={`${IMG_BASE_URL}/whybookcase.png`} alt="책 촬영" width={200} height={270} />
+          <img src="/whybookcase.png" alt="책 촬영" width={200} height={270} />
         </div>
         <div>
           <p className="font-bold text-base text-center my-4">

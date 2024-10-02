@@ -11,8 +11,6 @@ type OtherBookGridProps = {
 const OtherBookGrid = ({ books, checked, onCheck }: OtherBookGridProps) => {
   const navigate = useNavigate();
 
-  const IMG_BASE_URL = process.env.PUBLIC_URL;
-
   // 이미지를 3개씩 묶는 함수 (기존 함수 유지)
   const chunkArray = (
     arr: IBookCase["displayBooks"],
@@ -101,7 +99,7 @@ const OtherBookGrid = ({ books, checked, onCheck }: OtherBookGridProps) => {
             ))}
           </div>
           <div>
-            <img src={`${IMG_BASE_URL}/images/library/bar.png`} alt="bar" className="w-full" />
+            <img src="/images/Library/bar.png" alt="bar" className="w-full" />
           </div>
         </div>
       ))}

@@ -11,8 +11,6 @@ function ReviewPage() {
     navigate(-1);
   };
 
-  const IMG_BASE_URL = process.env.PUBLIC_URL;
-
   const initialState = {
     clean: false,
     punctual: false,
@@ -75,11 +73,7 @@ function ReviewPage() {
 
       <section className="pb-4 border-b">
         <div className="flex ml-7 items-center">
-          <img
-            src={`${IMG_BASE_URL}/화학.png`}
-            alt="화학"
-            className="object-cover rounded-xl w-16 h-16"
-          />
+          <img src="/화학.png" alt="화학" className="object-cover rounded-xl w-16 h-16" />
           <div className="flex flex-col gap-2 ml-4 font-medium">
             <span>90일 완성 돈버는 습관</span>
             <span className="text-xs">
