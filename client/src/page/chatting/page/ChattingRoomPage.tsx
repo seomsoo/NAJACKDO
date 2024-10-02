@@ -1,23 +1,21 @@
 import { Client } from "@stomp/stompjs";
 import Loading from "components/common/Loading";
-import ChatBookInfo from "page/chatting/components/ChatBookInfo";
+import ChatBookInfo, {
+  ChatRentalStep,
+} from "page/chatting/components/ChatBookInfo";
 import ChattingBox, { Message } from "page/chatting/components/ChattingBox";
 import ChattingRoomHeader from "page/chatting/components/ChattingRoomHeader";
 import { Suspense, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import SockJS from "sockjs-client";
-import { useUserStore } from "store/useUserStore";
 
 const ChattingRoomPage = () => {
   const { roomId } = useParams();
   const {
-    state: { cartId, ownerName },
+    state: { cartId, ownerId, ownerName, customerId, customerName },
   } = useLocation();
-  const [isPay, setIsPay] = useState<boolean>(null);
-  const [isReturn, setIsReturn] = useState<boolean>(null);
   const [totalLeaf, setTotalLeaf] = useState<number>(0);
-  const senderNickname = useUserStore.getState().nickname;
-  const senderId = useUserStore.getState().userId;
+  const [step, setStep] = useState<ChatRentalStep>(ChatRentalStep.READY);
 
   // 웹소켓
   const [client, setClient] = useState<Client | null>(null);
@@ -42,6 +40,7 @@ const ChattingRoomPage = () => {
         (message) => {
           // 메시지를 리스트에 추가
           const newMessage = JSON.parse(message.body);
+          console.log("fefef", message.body);
           setMessages((prevMessages) => [...prevMessages, newMessage]);
         }
       );
@@ -73,17 +72,18 @@ const ChattingRoomPage = () => {
         client={client}
         cartId={cartId}
         roomId={Number(roomId)}
+        ownerId={ownerId}
         ownerName={ownerName}
-        setIsPay={setIsPay}
-        setIsReturn={setIsReturn}
+        customerId={customerId}
+        customerName={customerName}
         totalLeaf={totalLeaf}
         setTotalLeaf={setTotalLeaf}
+        step={step}
+        setStep={setStep}
       />
       <ChattingBox
         client={client}
         roomId={Number(roomId)}
-        isPay={isPay}
-        isReturn={isReturn}
         totalLeaf={totalLeaf}
         messages={messages}
       />

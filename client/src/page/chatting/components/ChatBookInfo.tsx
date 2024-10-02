@@ -18,11 +18,14 @@ interface ChatBookInfoProps {
   client: any;
   cartId: number;
   roomId: number;
+  ownerId: number;
   ownerName: string;
-  setIsPay: (isPay: boolean) => void;
-  setIsReturn: (isReturn: boolean) => void;
+  customerId: number;
+  customerName: string;
   totalLeaf: number;
   setTotalLeaf: (totalLeaf: number) => void;
+  step: ChatRentalStep;
+  setStep: (step: ChatRentalStep) => void;
 }
 
 export enum ChatRentalStep {
@@ -37,13 +40,15 @@ const ChatBookInfo = ({
   client,
   cartId,
   roomId,
+  ownerId,
   ownerName,
-  setIsPay,
-  setIsReturn,
+  customerId,
+  customerName,
   totalLeaf,
   setTotalLeaf,
+  step,
+  setStep,
 }: ChatBookInfoProps) => {
-  const [step, setStep] = useState<ChatRentalStep>(ChatRentalStep.READY);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [cartOpen, setCartOpen] = useState<boolean>(false);
   const [rentalPeriod, setRentalPeriod] = useState<number[]>([14]);
@@ -57,7 +62,6 @@ const ChatBookInfo = ({
   });
 
   const userId = useUserStore.getState().userId;
-  const senderNickname = useUserStore.getState().nickname;
 
   const { data: bookData } = useSuspenseQuery<ICartList>({
     queryKey: ["cart", "book"],
@@ -91,7 +95,6 @@ const ChatBookInfo = ({
 
     onSuccess: () => {
       setStep(ChatRentalStep.RENTED);
-      setIsPay(true);
       complete("PAY");
     },
 
@@ -108,25 +111,27 @@ const ChatBookInfo = ({
     onSuccess: () => {
       setModalOpen(false);
       setStep(ChatRentalStep.RETURNED);
-      setIsReturn(true);
       complete("RETURN");
     },
   });
 
-  const complete = (messageType) => {
+  const complete = (talkType) => {
+    console.log("talkType", talkType);
     const completeMessage = ReactDOMServer.renderToString(
-      messageType === "PAY" ? (
+      talkType === "PAY" ? (
         <PayComplete totalLeaf={totalLeaf} />
       ) : (
         <ReturnComplete />
       )
     );
 
+    // 송금 완료는 빌리는 사람이
+    // 반납 완료는 빌려주는 사람이
     const messageData: Message = {
       roomId: roomId,
-      senderId: userId,
-      senderNickname: senderNickname,
-      messageType: messageType,
+      senderId: talkType === "PAY" ? customerId : ownerId,
+      senderNickname: talkType === "PAY" ? customerName : ownerName,
+      talkType: talkType,
       message: completeMessage,
     };
 
@@ -169,7 +174,7 @@ const ChatBookInfo = ({
   return (
     <div className="bg-[#DBD6D3] w-full h-24 px-4 flex flex-row items-center justify-between">
       <div
-        className="flex flex-row items-center w-4/5"
+        className="flex flex-row items-center w-7/12"
         onClick={() => setCartOpen(true)}
       >
         <img
@@ -215,7 +220,7 @@ const ChatBookInfo = ({
           ownerName={ownerName}
         />
       )}
-      {step === ChatRentalStep.RETURNED && isOwner && <ReviewButton />}
+      {step === ChatRentalStep.RETURNED && <ReviewButton />}
     </div>
   );
 };

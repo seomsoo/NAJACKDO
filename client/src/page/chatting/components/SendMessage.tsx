@@ -1,18 +1,19 @@
 interface SendMessageProps {
   message: string;
-  messageType: "MESSAGE" | "PAY" | "RETURN";
+  talkType: "MESSAGE" | "PAY" | "RETURN";
 }
 
-const SendMessage = ({ message, messageType }: SendMessageProps) => {
+const SendMessage = ({ message, talkType }: SendMessageProps) => {
+  console.log(talkType);
   return (
     <div className="flex flex-row justify-end w-full">
-      {messageType === "MESSAGE" ? (
-        <p className="bg-[#5F6F52] p-3 rounded-xl rounded-tr-none text-white text-right ml-auto">
+      {talkType === "MESSAGE" ? (
+        <p className="bg-[#5F6F52] p-3 rounded-xl text-white rounded-tr-none text-right ml-auto">
           {message}
         </p>
       ) : (
         <p
-          className="bg-[#5F6F52] p-3 rounded-xl rounded-tr-none text-white text-right ml-auto"
+          className="p-3 rounded-xl rounded-tr-none text-right ml-auto"
           dangerouslySetInnerHTML={{ __html: message }}
         ></p>
       )}

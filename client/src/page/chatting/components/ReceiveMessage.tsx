@@ -1,12 +1,12 @@
 interface ReceiveMessageProps {
   message: string;
-  messageType: "MESSAGE" | "PAY" | "RETURN";
+  talkType: "MESSAGE" | "PAY" | "RETURN";
 }
 
-const ReceiveMessage = ({ message, messageType }: ReceiveMessageProps) => {
+const ReceiveMessage = ({ message, talkType }: ReceiveMessageProps) => {
   return (
     <div className="flex">
-      {messageType === "MESSAGE" ? (
+      {talkType === "MESSAGE" ? (
         <span className="p-3 bg-white rounded-xl rounded-tl-none text-left">
           {message}
         </span>
