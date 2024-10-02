@@ -36,7 +36,7 @@ public class JWTFilter extends OncePerRequestFilter {
 		log.info("filterChain: {}", filterChain);
 
 		String requestURI = request.getRequestURI();
-		if (!requestURI.startsWith("/api/v1")) {
+		if (!requestURI.startsWith("/api/v1") || requestURI.startsWith("/api/v1/kapay/approve")) {
 			filterChain.doFilter(request, response);
 			return;
 		}
