@@ -16,6 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -55,6 +56,9 @@ public class UserBook {
 	@Column(name = "is_deleted", nullable = false)
 	@ColumnDefault("false")
 	private Boolean isDeleted = false;
+
+	@OneToOne(mappedBy = "userBook", fetch = FetchType.LAZY)
+	private UserBookDetail userBookDetail;
 
 	public static UserBook createUserBook(User user, Book book, Location location) {
 		UserBook userBook = new UserBook();

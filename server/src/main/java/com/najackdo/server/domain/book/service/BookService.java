@@ -210,9 +210,4 @@ public class BookService {
 		return new PageImpl<>(bookCases, pageable, totalElements);
 	}
 
-	public Boolean isNearRental(User user, Long bookId) {
-
-
-		return null;
-	}
 }
