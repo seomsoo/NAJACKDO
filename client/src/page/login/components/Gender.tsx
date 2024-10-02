@@ -1,7 +1,6 @@
-import { host } from "api/clientApi";
 import useSurveyStore from "store/useSurveyStore";
 
-const IMG_BASE_URL = host;
+const IMG_BASE_URL = process.env.PUBLIC_URL;
 
 const Gender = () => {
   const { gender, setGender } = useSurveyStore();

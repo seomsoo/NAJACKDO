@@ -1,7 +1,6 @@
 import { FaCheck } from "react-icons/fa";
 import { IBookCase } from "atoms/BookCase.type";
 import { useNavigate } from "react-router-dom";
-import { host } from "api/clientApi";
 
 type OtherBookGridProps = {
   books: IBookCase["displayBooks"];
@@ -12,7 +11,7 @@ type OtherBookGridProps = {
 const OtherBookGrid = ({ books, checked, onCheck }: OtherBookGridProps) => {
   const navigate = useNavigate();
 
-  const IMG_BASE_URL = host;
+  const IMG_BASE_URL = process.env.PUBLIC_URL;
 
   // 이미지를 3개씩 묶는 함수 (기존 함수 유지)
   const chunkArray = (

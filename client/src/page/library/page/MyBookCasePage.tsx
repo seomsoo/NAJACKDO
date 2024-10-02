@@ -5,12 +5,11 @@ import { IoIosArrowBack } from "react-icons/io";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { getMyBookCase } from "api/bookcaseApi"; // API 호출 함수
 import MyBookGrid from "../components/MyBookGrid";
-import { host } from "api/clientApi";
 
 const MyBookCasePage = () => {
   const navigate = useNavigate();
 
-  const IMG_BASE_URL = host;
+  const IMG_BASE_URL = process.env.PUBLIC_URL;
 
   // 나의 책장 데이터 조회 (단일 객체로 처리)
   const {

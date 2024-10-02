@@ -6,7 +6,6 @@ import { useQuery } from "@tanstack/react-query";
 import { getUserInfo } from "api/profileApi";
 import { getInterestbook } from "api/bookApi";
 import { getMyBookCase } from "api/bookcaseApi";
-import { host } from "api/clientApi";
 
 const LibraryPage = () => {
   const navigate = useNavigate();
@@ -20,7 +19,7 @@ const LibraryPage = () => {
     navigate("/library/my-history");
   };
 
-  const IMG_BASE_URL = host;
+  const IMG_BASE_URL = process.env.PUBLIC_URL;
 
   // 유저 정보 가져오기 (닉네임)
   const {

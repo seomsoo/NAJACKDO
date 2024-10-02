@@ -11,7 +11,7 @@ function ReviewPage() {
     navigate(-1);
   };
 
-  const IMG_BASE_URL = host;
+  const IMG_BASE_URL = process.env.PUBLIC_URL;
 
   const initialState = {
     clean: false,

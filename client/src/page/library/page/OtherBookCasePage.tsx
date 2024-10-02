@@ -5,10 +5,9 @@ import { IoHeart, IoHeartOutline, IoNotificationsOutline } from "react-icons/io5
 import { getOtherBookCase, postInterestBookCase, deleteInterestBookCase } from "api/bookcaseApi"; // API 호출 함수
 import { useState, useEffect } from "react";
 import OtherBookGrid from "../components/OtherBookGrid";
-import { host } from "api/clientApi";
 
 const OtherBookCasePage = () => {
-  const IMG_BASE_URL = host;
+  const IMG_BASE_URL = process.env.PUBLIC_URL;
 
   const navigate = useNavigate();
   const { userId } = useParams(); // URL에서 userId 가져옴

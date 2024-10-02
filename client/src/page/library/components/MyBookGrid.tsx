@@ -1,4 +1,3 @@
-import { host } from "api/clientApi";
 import { IBookCase } from "atoms/BookCase.type";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +9,7 @@ type MyBookGridProps = {
 const MyBookGrid = ({ books, userId }: MyBookGridProps) => {
   const navigate = useNavigate();
 
-  const IMG_BASE_URL = host;
+  const IMG_BASE_URL = process.env.PUBLIC_URL;
 
   // 이미지를 3개씩 묶는 함수 (기존 함수 유지)
   const chunkArray = (

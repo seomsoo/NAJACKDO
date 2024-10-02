@@ -1,7 +1,5 @@
-import { host } from "api/clientApi";
-
 const ApplyBook = () => {
-  const IMG_BASE_URL = host;
+  const IMG_BASE_URL = process.env.PUBLIC_URL;
   return (
     <div className="flex flex-col items-center justify-center font-bold">
       <p className="text-center text-[#79AC78] font-bold">도서 한 권만 등록하고 싶으신가요?</p>

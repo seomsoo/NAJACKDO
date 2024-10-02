@@ -1,4 +1,3 @@
-import { host } from "api/clientApi";
 import { useState } from "react";
 import { HiOutlineCamera } from "react-icons/hi2";
 import { IoChevronBack } from "react-icons/io5";
@@ -7,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const BookcaseApplyPage = () => {
   const navigate = useNavigate();
 
-  const IMG_BASE_URL = host;
+  const IMG_BASE_URL = process.env.PUBLIC_URL;
 
   const books = [
     {
