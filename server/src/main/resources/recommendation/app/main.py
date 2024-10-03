@@ -74,27 +74,25 @@ async def quality_inspection(user_id: int = Form(...),
 
     uploaded_files_info = []
     images = []
-    file_data_streams = []  # 원본 파일 스트림 저장
 
     for file in files:
         image_data = await file.read()
         image = Image.open(io.BytesIO(image_data)).convert("RGB")
         images.append(image)
-        file_data_streams.append(io.BytesIO(image_data))  # 파일 데이터 저장
 
-    # YOLO 모델로 예측 수행
-    results = model(images)
-
-    # 원본 파일 S3에 업로드
-    for i, file in enumerate(files):
+        # S3에 업로드
         file_extension = file.filename.split('.')[-1]  # 확장자 추출
         filename = f"{str(uuid.uuid4())}.{file_extension}"  # UUID와 확장자를 결합
-
+        
         # ContentType 설정
         content_type = file.content_type
-        
+
+        # 새로운 BytesIO 객체를 사용하여 파일 데이터 스트림을 생성
+        file_data_stream = io.BytesIO(image_data)
+        file_data_stream.seek(0)  # 스트림의 시작으로 이동
+
         # S3에 업로드
-        s3.upload_fileobj(file_data_streams[i], "najackdo", filename, ExtraArgs={"ContentType": content_type})
+        s3.upload_fileobj(file_data_stream, "najackdo", filename, ExtraArgs={"ContentType": content_type})
 
         # 업로드한 파일의 정보 추가
         uploaded_files_info.append({
@@ -105,17 +103,19 @@ async def quality_inspection(user_id: int = Form(...),
     count_ripped = 0
     count_wornout = 0
     
+    # YOLO 모델로 예측 수행
+    results = model(images)
+
     # 주석이 달린 이미지 S3에 업로드
     for i, result in enumerate(results):
         boxes = result.boxes.data
         outputs = np.array(boxes)
-        last_index = outputs.shape[1]-1
+        last_index = outputs.shape[1] - 1
         for output in outputs:
-            if(output[last_index]==1.0):
-                count_ripped+=1
+            if output[last_index] == 1.0:
+                count_ripped += 1
             else:
-                count_wornout+=1
-        
+                count_wornout += 1
         
         # 박스가 그려진 이미지를 가져옵니다.
         annotated_image = result.plot()  # 감지된 객체가 표시된 이미지 (numpy.ndarray 형식)
@@ -129,31 +129,32 @@ async def quality_inspection(user_id: int = Form(...),
         img_byte_array.seek(0)
 
         # S3에 업로드
-        filename = f"{str(uuid.uuid4())}.jpeg"
+        annotated_filename = f"{str(uuid.uuid4())}.jpeg"
         
-        s3.upload_fileobj(img_byte_array, "najackdo", filename, ExtraArgs={"ContentType": "image/jpeg"})
+        s3.upload_fileobj(img_byte_array, "najackdo", annotated_filename, ExtraArgs={"ContentType": "image/jpeg"})
 
         # 업로드한 파일의 정보 추가
         uploaded_files_info.append({
-            "filename": filename,
+            "filename": annotated_filename,
             "content_type": "image/jpeg"
         })
-
 
     book = dao.get_book(user_id, user_book_id)
     
     dao.insert_user_book_detail(user_book_id, count_ripped, count_wornout, 
-                                uploaded_files_info[0]["filename"],
-                                uploaded_files_info[1]["filename"],
-                                uploaded_files_info[2]["filename"],
-                                uploaded_files_info[3]["filename"],
-                                book["price_standard"]* (2 - log10(10 + 2 * min((count_ripped + count_wornout), 30)  )) / 100)
+                                "https://d16os79fbmszq4.cloudfront.net/" + uploaded_files_info[0]["filename"],
+                                "https://d16os79fbmszq4.cloudfront.net/" + uploaded_files_info[1]["filename"],
+                                "https://d16os79fbmszq4.cloudfront.net/" + uploaded_files_info[2]["filename"],
+                                "https://d16os79fbmszq4.cloudfront.net/" + uploaded_files_info[3]["filename"],
+                                book["price_standard"])
 
-    return {"uploaded_files": uploaded_files_info,
-            "book": book,
-            "one_day_price": book["price_standard"]* (2 - log10(10 + 2 * min((count_ripped + count_wornout), 30)  )) / 100,
-            "count_ripped" :count_ripped,
-            "count_wornout": count_wornout}
+    return {
+        "uploaded_files": uploaded_files_info,
+        "book": book,
+        "one_day_price": book["price_standard"] * (2 - log10(10 + 2 * min((count_ripped + count_wornout), 30))) / 100,
+        "count_ripped": count_ripped,
+        "count_wornout": count_wornout
+    }
 
 @app.post("/item/bookSpineDetection")
 async def quality_inspection(imageFile: UploadFile = File(...)):
