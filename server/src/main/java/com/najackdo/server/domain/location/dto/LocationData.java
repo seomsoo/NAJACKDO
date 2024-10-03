@@ -45,10 +45,8 @@ public class LocationData {
 			return search;
 		}
 
-		public static SearchWithGeom onlyLocationCode(Location location) {
-			SearchWithGeom search = new SearchWithGeom();
-			search.setLocationCode(location.getId());
-			return search;
+		public static Integer onlyLocationCode(Location location) {
+			return location.getId();
 		}
 	}
 

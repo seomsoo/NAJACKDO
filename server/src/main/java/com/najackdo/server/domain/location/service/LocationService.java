@@ -81,19 +81,19 @@ public class LocationService {
 
 			locationRepository.findLocationsWithPoligonByDistance(
 					userLocation.getLocationPoint(),
-					0.025).stream()
+					0.028).stream()
 				.map(LocationData.SearchWithGeom::fromEntity)
 				.collect(Collectors.toList()),
 
 			locationRepository.findLocationsWithPoligonByDistance(
 					userLocation.getLocationPoint(),
-					0.03).stream()
+					0.036).stream()
 				.map(LocationData.SearchWithGeom::fromEntity)
 				.collect(Collectors.toList()),
 
 			locationRepository.findLocationsWithPoligonByDistance(
 					userLocation.getLocationPoint(),
-					0.035).stream()
+					0.044).stream()
 				.map(LocationData.SearchWithGeom::fromEntity)
 				.collect(Collectors.toList())
 		);
@@ -131,19 +131,15 @@ public class LocationService {
 		activityAreaSettingRepository.save(existingSetting);
 		userRepository.save(user);
 
-
 		locationCacheRepository.deleteUserLocation(user.getId());
 
-		List<LocationData.SearchWithGeom> result = locationRepository.findLocationsWithPoligonByDistance(
+		List<Integer> nearLocations = locationRepository.findLocationsWithPoligonByDistance(
 				location.getLocationPoint(),
 				request.getDistanceMeters()).stream()
 			.map(LocationData.SearchWithGeom::onlyLocationCode)
 			.toList();
 
-		locationCacheRepository.saveUserLocation(user.getId(), result.stream()
-			.map(LocationData.SearchWithGeom::getLocationCode)
-			.map(String::valueOf)
-			.toArray(String[]::new));
+		locationCacheRepository.saveUserLocation(user.getId(), nearLocations);
 	}
 
 	private Point getPoint(double latitude, double longitude) {
