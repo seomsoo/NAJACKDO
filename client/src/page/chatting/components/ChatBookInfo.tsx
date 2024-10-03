@@ -116,7 +116,6 @@ const ChatBookInfo = ({
   });
 
   const complete = (talkType) => {
-    console.log("talkType", talkType);
     const completeMessage = ReactDOMServer.renderToString(
       talkType === "PAY" ? (
         <PayComplete totalLeaf={totalLeaf} />
@@ -220,7 +219,9 @@ const ChatBookInfo = ({
           ownerName={ownerName}
         />
       )}
-      {step === ChatRentalStep.RETURNED && <ReviewButton />}
+      {step === ChatRentalStep.RETURNED && (
+        <ReviewButton rentalId={bookData.rentalId} ownerName={ownerName} />
+      )}
     </div>
   );
 };

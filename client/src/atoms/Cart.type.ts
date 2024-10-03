@@ -3,6 +3,7 @@ export interface ICartList {
   ownerId: number;
   ownerUsername: string;
   status?: string;
+  rentalId: number | null;
   cartItems: ICartItem[];
 }
 
