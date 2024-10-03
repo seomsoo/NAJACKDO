@@ -2,6 +2,7 @@ package com.najackdo.server.domain.chat.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -56,6 +57,11 @@ public class ChatService {
 				);
 			}
 		});
+
+		result.sort(Comparator.comparing(
+			ChatRoomData.Search.SearchElement::getLastChatTime,
+			Comparator.nullsFirst(Comparator.reverseOrder()))  // null 값을 우선 배치하고, 최근 시간이 먼저 오도록 내림차순 정렬
+		);
 
 		return ChatRoomData.Search.create(user.getId(), result);
 	}
