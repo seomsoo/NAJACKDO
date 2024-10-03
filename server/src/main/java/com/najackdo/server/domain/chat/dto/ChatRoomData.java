@@ -9,12 +9,12 @@ import lombok.Data;
 
 public class ChatRoomData {
 	@Data
-	public static class Create{
+	public static class Create {
 		private Long roomId;
 		private Long ownerId;
 		private Long cartId;
 
-		public static Create of(Long roomId, Long ownerId, Long cartId){
+		public static Create of(Long roomId, Long ownerId, Long cartId) {
 			Create create = new Create();
 			create.setRoomId(roomId);
 			create.setOwnerId(ownerId);
@@ -23,18 +23,18 @@ public class ChatRoomData {
 		}
 	}
 
-
 	@Data
 	public static class Search {
 		private Long userId;
 		private List<SearchElement> chatRoomList;
 
-		public static Search create(Long userId, List<SearchElement> chatRoomList){
+		public static Search create(Long userId, List<SearchElement> chatRoomList) {
 			Search chatRoomWithUserDTO = new Search();
 			chatRoomWithUserDTO.setUserId(userId);
 			chatRoomWithUserDTO.setChatRoomList(chatRoomList);
 			return chatRoomWithUserDTO;
 		}
+
 		@Data
 		public static class SearchElement {
 
@@ -51,12 +51,13 @@ public class ChatRoomData {
 			private String ownerProfile;
 			private String ownerLocation;
 
+			private TalkType lastChatType;
 			private LocalDateTime lastChatTime;
 			private String lastChatMessage;
 			private String displayImagePath;
 
-
-			public static SearchElement search(ChatRoom chatRoom, LocalDateTime lastChatTime, String lastChatMessage) {
+			public static SearchElement search(ChatRoom chatRoom, LocalDateTime lastChatTime, String lastChatMessage,
+				TalkType talkType) {
 				SearchElement chatRoomDTO = new SearchElement();
 				chatRoomDTO.setRoomId(chatRoom.getRoomId());
 				chatRoomDTO.setCartId(chatRoom.getCart().getId());
@@ -64,16 +65,20 @@ public class ChatRoomData {
 				chatRoomDTO.setCustomerId(chatRoom.getCustomer().getId());
 				chatRoomDTO.setCustomerNickname(chatRoom.getCustomer().getNickName());
 				chatRoomDTO.setCustomerProfile(chatRoom.getCustomer().getProfileImage());
-				chatRoomDTO.setCustomerLocation(chatRoom.getCustomer().getActivityAreaSetting().getLocation().getLocationName());
+				chatRoomDTO.setCustomerLocation(
+					chatRoom.getCustomer().getActivityAreaSetting().getLocation().getLocationName());
 
 				chatRoomDTO.setOwnerId(chatRoom.getOwner().getId());
 				chatRoomDTO.setOwnerNickname(chatRoom.getOwner().getNickName());
 				chatRoomDTO.setOwnerProfile(chatRoom.getOwner().getProfileImage());
-				chatRoomDTO.setOwnerLocation(chatRoom.getOwner().getActivityAreaSetting().getLocation().getLocationName());
+				chatRoomDTO.setOwnerLocation(
+					chatRoom.getOwner().getActivityAreaSetting().getLocation().getLocationName());
 
+				chatRoomDTO.setLastChatType(talkType);
 				chatRoomDTO.setLastChatTime(lastChatTime);
 				chatRoomDTO.setLastChatMessage(lastChatMessage);
-				chatRoomDTO.setDisplayImagePath(chatRoom.getCart().getCartItems().get(0).getUserBookDetail().getFrontImagePath());
+				chatRoomDTO.setDisplayImagePath(
+					chatRoom.getCart().getCartItems().get(0).getUserBookDetail().getFrontImagePath());
 
 				return chatRoomDTO;
 			}
