@@ -37,11 +37,31 @@ const ChatList = ({ chat, userId }: ChatListProps) => {
       onClick={goChattingRoom}
     >
       <div className="flex flex-row items-center">
-        <img
+        {isOwner ? (
+          chat.customerProfile ? (
+            <img
+              src={chat.customerProfile}
+              alt={chat.customerNickname}
+              className="rounded-full w-12 h-12 mr-4"
+            />
+          ) : (
+            <div className="rounded-full w-12 h-12 mr-4">나작도</div>
+          )
+        ) : chat.ownerProfile ? (
+          <img
+            src={chat.ownerProfile}
+            alt={chat.ownerNickname}
+            className="rounded-full w-12 h-12 mr-4"
+          />
+        ) : (
+          <div className="rounded-full w-12 h-12 mr-4">나작도</div>
+        )}
+
+        {/* <img
           src={isOwner ? chat.customerProfile : chat.ownerProfile}
           alt={isOwner ? chat.customerNickname : chat.ownerNickname}
           className="rounded-full w-12 h-12 mr-4"
-        />
+        /> */}
         <div className="flex flex-col justify-start">
           <div className="flex flex-row font-bold items-center">
             <span className="mr-2">
@@ -51,7 +71,15 @@ const ChatList = ({ chat, userId }: ChatListProps) => {
               {location} · {receivedTime}
             </span>
           </div>
-          <span className="mt-1">{chat.lastChatMessage}</span>
+          <span className="mt-1">
+            {chat.lastChatType === "MESSAGE"
+              ? chat.lastChatMessage
+              : chat.lastChatType === "PAY"
+                ? "송금이 완료되었습니다"
+                : chat.lastChatType === "RETURN"
+                  ? "반납 완료"
+                  : null}
+          </span>
         </div>
       </div>
       <img

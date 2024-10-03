@@ -33,6 +33,7 @@ const ChattingBox = ({ client, roomId, messages }: ChattingBoxProps) => {
     queryKey: ["chatList"],
     queryFn: () => getChatList(roomId),
     refetchOnWindowFocus: false,
+    refetchInterval: 1000 * 60 * 15,
   });
 
   // 사용자가 입력한 메시지

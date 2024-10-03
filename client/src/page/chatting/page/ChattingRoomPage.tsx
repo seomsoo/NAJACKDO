@@ -40,8 +40,18 @@ const ChattingRoomPage = () => {
         (message) => {
           // 메시지를 리스트에 추가
           const newMessage = JSON.parse(message.body);
-          console.log("fefef", message.body);
           setMessages((prevMessages) => [...prevMessages, newMessage]);
+
+          // 메시지 타입에 따른 버튼 활성화
+          if (newMessage.talkType === "PAY") {
+            setStep(ChatRentalStep.RENTED);
+            return;
+          }
+
+          if (newMessage.talkType === "RETURN") {
+            setStep(ChatRentalStep.RETURNED);
+            return;
+          }
         }
       );
     };
