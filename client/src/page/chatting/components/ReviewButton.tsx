@@ -1,10 +1,15 @@
 import { useNavigate } from "react-router-dom";
 
-const ReviewButton = () => {
+interface ReviewButtonProps {
+  rentalId: number | null;
+  ownerName: string;
+}
+
+const ReviewButton = ({ rentalId, ownerName }: ReviewButtonProps) => {
   const navigate = useNavigate();
 
   const handleReview = () => {
-    navigate("/chat/review");
+    navigate("/chat/review", { state: { rentalId, ownerName } });
   };
 
   return (

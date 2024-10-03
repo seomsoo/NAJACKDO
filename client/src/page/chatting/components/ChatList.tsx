@@ -56,12 +56,6 @@ const ChatList = ({ chat, userId }: ChatListProps) => {
         ) : (
           <div className="rounded-full w-12 h-12 mr-4">나작도</div>
         )}
-
-        {/* <img
-          src={isOwner ? chat.customerProfile : chat.ownerProfile}
-          alt={isOwner ? chat.customerNickname : chat.ownerNickname}
-          className="rounded-full w-12 h-12 mr-4"
-        /> */}
         <div className="flex flex-col justify-start">
           <div className="flex flex-row font-bold items-center">
             <span className="mr-2">

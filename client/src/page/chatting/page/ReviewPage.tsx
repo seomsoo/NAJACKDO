@@ -1,21 +1,13 @@
-import { IoIosArrowBack } from "react-icons/io";
-import EmojiSelector from "../components/EmojiSelector";
-import CheckboxGroup from "../components/CheckboxGroup";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { host } from "api/clientApi";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { getUserInfo } from "api/profileApi";
-import { postReview } from "api/rentalApi";
+import { IoIosArrowBack } from "react-icons/io";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useUserStore } from "store/useUserStore";
+import CheckboxGroup from "../components/CheckboxGroup";
+import EmojiSelector from "../components/EmojiSelector";
 
-
-interface ReviewPageProps {
-  ownerName: string;
-  rentalId: number;
-}
-
-
-const ReviewPage = ({ ownerName, rentalId }: ReviewPageProps) => {
+const ReviewPage = () => {
+  const { rentalId, ownerName } = useLocation().state;
+  const userNickname = useUserStore().nickname;
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);
@@ -30,8 +22,9 @@ const ReviewPage = ({ ownerName, rentalId }: ReviewPageProps) => {
 
   const [checkedItems, setCheckedItems] = useState(initialState);
 
-  const [selectedEmoji, setSelectedEmoji] = useState<"like" | "dislike" | null>(null);
-
+  const [selectedEmoji, setSelectedEmoji] = useState<"like" | "dislike" | null>(
+    null
+  );
 
   const checkboxOptions: {
     like: {
@@ -57,15 +50,15 @@ const ReviewPage = ({ ownerName, rentalId }: ReviewPageProps) => {
     ],
   };
 
-  const handleCheckboxChange = (item: "clean" | "punctual" | "polite" | "responsive") => {
+  const handleCheckboxChange = (
+    item: "clean" | "punctual" | "polite" | "responsive"
+  ) => {
     setCheckedItems((prevItems) => ({
       ...prevItems,
       [item]: !prevItems[item],
     }));
-    console.log("checkedItems", checkedItems)
-
+    console.log("checkedItems", checkedItems);
   };
-
 
   // 이모지 선택 시 상태 초기화 및 업데이트
   const handleEmojiSelect = (emoji: "like" | "dislike") => {
@@ -75,25 +68,6 @@ const ReviewPage = ({ ownerName, rentalId }: ReviewPageProps) => {
 
   // 현재 선택된 이모지에 따라 체크된 항목이 있는지 확인
   const isAnyChecked = Object.values(checkedItems).some(Boolean);
-
-
-  // 유저 정보 가져오기 (닉네임)
-  const {
-    data: userInfo,
-    isLoading: isUserLoading,
-    isError: isUserError,
-  } = useQuery({
-    queryKey: ['userInfo'],
-    queryFn: getUserInfo,
-  });
-
-
-  if (isUserLoading)
-    return <div>로딩 중...</div>;
-
-  if (isUserError)
-    return <div>오류가 발생했습니다.</div>;
-
 
   return (
     <div>
@@ -106,7 +80,11 @@ const ReviewPage = ({ ownerName, rentalId }: ReviewPageProps) => {
 
       <section className="pb-4 border-b">
         <div className="flex ml-7 items-center">
-          <img src="/화학.png" alt="화학" className="object-cover rounded-xl w-16 h-16" />
+          <img
+            src="/화학.png"
+            alt="화학"
+            className="object-cover rounded-xl w-16 h-16"
+          />
           <div className="flex flex-col gap-2 ml-4 font-medium">
             <span>90일 완성 돈버는 습관</span>
             <span className="text-xs">
@@ -117,14 +95,17 @@ const ReviewPage = ({ ownerName, rentalId }: ReviewPageProps) => {
         </div>
       </section>
       <main className="px-6">
-        <div className="flex flex-col gap-2 py-11 text-2xl font-semibold">
+        <div className="flex flex-col gap-2 py-8 text-2xl font-semibold">
           <span>
-            <span className="text-[#5F6F52]">{userInfo.nickname}</span>님,
+            <span className="text-[#5F6F52]">{userNickname}</span>님,
           </span>
           <span className="text-base">{ownerName}님과 거래 어떠셨나요?</span>
         </div>
 
-        <EmojiSelector selectedEmoji={selectedEmoji} onEmojiSelect={handleEmojiSelect} />
+        <EmojiSelector
+          selectedEmoji={selectedEmoji}
+          onEmojiSelect={handleEmojiSelect}
+        />
 
         {selectedEmoji && (
           <CheckboxGroup
@@ -139,6 +120,6 @@ const ReviewPage = ({ ownerName, rentalId }: ReviewPageProps) => {
       </main>
     </div>
   );
-}
+};
 
 export default ReviewPage;
