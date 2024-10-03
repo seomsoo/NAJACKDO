@@ -3,17 +3,18 @@ import EmojiSelector from "../components/EmojiSelector";
 import CheckboxGroup from "../components/CheckboxGroup";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getUserInfo } from "api/profileApi";
+import { postReview } from "api/rentalApi";
 
 
 interface ReviewPageProps {
   ownerName: string;
-  cartId: number;
+  rentalId: number;
 }
 
 
-const ReviewPage = ({ ownerName, cartId }: ReviewPageProps) => {
+const ReviewPage = ({ ownerName, rentalId }: ReviewPageProps) => {
 
   const navigate = useNavigate();
   const goBack = () => {
@@ -28,7 +29,6 @@ const ReviewPage = ({ ownerName, cartId }: ReviewPageProps) => {
   };
 
   const [checkedItems, setCheckedItems] = useState(initialState);
-  const[ submitList, setSubmitList] = useState(new Set);
 
   const [selectedEmoji, setSelectedEmoji] = useState<"like" | "dislike" | null>(null);
 
@@ -62,24 +62,10 @@ const ReviewPage = ({ ownerName, cartId }: ReviewPageProps) => {
       ...prevItems,
       [item]: !prevItems[item],
     }));
-    // if (prevItems)
-    // if (submitList.includes(item)) submitList?.item
-    // const id = { "clean":}
-    // console.log("checkedItems", checkedItems[item])
-    // console.log("ID", checkedItems.get)
-    
-    // if (checkedItems[item]) {
-    //   submitList.delete(item)
-    // }
+    console.log("checkedItems", checkedItems)
 
   };
 
-  // checkItems.add(id) 
-  //   setCheckItems(checkItems)
-  //   console.log(checkItems)
-  // } else if (!isChecked) {
-  //   checkItems.delete(id)
-  //   setCheckItems(checkItems)
 
   // 이모지 선택 시 상태 초기화 및 업데이트
   const handleEmojiSelect = (emoji: "like" | "dislike") => {
@@ -100,6 +86,7 @@ const ReviewPage = ({ ownerName, cartId }: ReviewPageProps) => {
     queryKey: ['userInfo'],
     queryFn: getUserInfo,
   });
+
 
   if (isUserLoading)
     return <div>로딩 중...</div>;
@@ -146,6 +133,7 @@ const ReviewPage = ({ ownerName, cartId }: ReviewPageProps) => {
             checkboxOptions={checkboxOptions[selectedEmoji]}
             onCheckboxChange={handleCheckboxChange}
             isAnyChecked={isAnyChecked}
+            rentalId={rentalId}
           />
         )}
       </main>

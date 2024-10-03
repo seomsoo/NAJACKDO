@@ -10,6 +10,6 @@ export interface IReturn {
 }
 
 export interface IReview {
-  rentalId: number;
+  rentalId: number; // 카트아이디
   reviewItemIds: number[];
 }
