@@ -1,6 +1,7 @@
 package com.najackdo.server.domain.location.repository;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.redis.core.RedisTemplate;
@@ -19,13 +20,10 @@ public class LocationCacheRepository {
 		redisTemplate.delete(Location_KEY + userId);
 	}
 
-	public void saveUserLocation(Long userId, String[] locations) {
-		// redisTemplate.opsForSet().add(Location_KEY + userId, locations);
-
-		String[] cleanedLocations = Arrays.stream(locations)
-			.map(location -> location.replace("\"", ""))
-			.toArray(String[]::new);
-		redisTemplate.opsForSet().add(Location_KEY + userId, cleanedLocations);
+	public void saveUserLocation(Long userId, List<Integer> locations) {
+		for (Integer location : locations) {
+			redisTemplate.opsForSet().add(Location_KEY + userId, location);
+		}
 
 	}
 
