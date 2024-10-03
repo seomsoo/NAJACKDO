@@ -58,13 +58,18 @@ public class UserBookController {
 		return SuccessResponse.empty();
 	}
 
-
 	/**
 	 * 책에 대해서 주변에 대여할 수 있는 책이 있는지 확인하는 API
+	 * @param user
+	 * @param bookId
+	 * @return
 	 */
 	@GetMapping("/near-available/{bookId}")
 	@Operation(summary = "특정 책에 대해 주변 책 대여 가능 여부 확인", description = "주변 책 대여 가능 여부 확인")
 	public SuccessResponse<List<UserBookData.AvailableNearBook>> isNearRental(@CurrentUser User user, @PathVariable Long bookId) {
 		return SuccessResponse.of(userBooksService.isNearAvailableBook(user, bookId));
 	}
+
+
+
 }

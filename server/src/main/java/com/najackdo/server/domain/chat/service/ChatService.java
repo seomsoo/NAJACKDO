@@ -1,6 +1,7 @@
 package com.najackdo.server.domain.chat.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,42 +36,27 @@ public class ChatService {
 
 	public ChatRoomData.Search chatRoomList(User user) {
 
-		List<ChatRoomData.Search.SearchElement> result = new LinkedList<>();
+		List<ChatRoomData.Search.SearchElement> result = new ArrayList<>();
 
-		chatRoomRepository.findChatRoomsByUser(user)
-			.forEach(chatRoom -> {
+		chatRoomRepository.findChatRoomsByUser(user).forEach(chatRoom -> {
 
-//				log.info("{}",
-//					chatRoom.getCart().getCartItems().get(0).getUserBookDetail().getFrontImagePath()
-//				);
+			List<Chat.Message> messages = chatMongoRepository.findByRoomId(chatRoom.getRoomId()).getMessages();
 
-
-				List<Chat.Message> messages = chatMongoRepository.findByRoomId(chatRoom.getRoomId()).getMessages();
-
-				
-				// 메시지 내역이 없으면 그냥  null로 채워서 리턴
-				if (messages.isEmpty()) {
-					result.add(
-						ChatRoomData.Search.SearchElement.search(chatRoom,
-							null,
-							""
-						)
-					);
-					return;
-				}
-
-				Chat.Message message = new Chat.Message();
-
+			if (messages.isEmpty()) {
+				result.add(ChatRoomData.Search.SearchElement.search(chatRoom, null, ""));
+			} else {
+				// 가장 최근 메시지 가져오기
+				Chat.Message lastMessage = messages.get(messages.size() - 1);
 				result.add(
 					ChatRoomData.Search.SearchElement.search(chatRoom,
-						message.getTime(),
-						message.getMessage()
+						lastMessage.getTime(),
+						lastMessage.getMessage()
 					)
 				);
-			});
+			}
+		});
+
 		return ChatRoomData.Search.create(user.getId(), result);
-
-
 	}
 
 	@Transactional

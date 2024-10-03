@@ -165,5 +165,4 @@ public class BookController {
 		return SuccessResponse.of(bookService.getBook(bookId));
 	}
 
-
 }
