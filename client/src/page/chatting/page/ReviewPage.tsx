@@ -4,8 +4,18 @@ import CheckboxGroup from "../components/CheckboxGroup";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { host } from "api/clientApi";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getUserInfo } from "api/profileApi";
+import { postReview } from "api/rentalApi";
 
-function ReviewPage() {
+
+interface ReviewPageProps {
+  ownerName: string;
+  rentalId: number;
+}
+
+
+const ReviewPage = ({ ownerName, rentalId }: ReviewPageProps) => {
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);
@@ -21,6 +31,7 @@ function ReviewPage() {
   const [checkedItems, setCheckedItems] = useState(initialState);
 
   const [selectedEmoji, setSelectedEmoji] = useState<"like" | "dislike" | null>(null);
+
 
   const checkboxOptions: {
     like: {
@@ -51,7 +62,10 @@ function ReviewPage() {
       ...prevItems,
       [item]: !prevItems[item],
     }));
+    console.log("checkedItems", checkedItems)
+
   };
+
 
   // 이모지 선택 시 상태 초기화 및 업데이트
   const handleEmojiSelect = (emoji: "like" | "dislike") => {
@@ -61,6 +75,25 @@ function ReviewPage() {
 
   // 현재 선택된 이모지에 따라 체크된 항목이 있는지 확인
   const isAnyChecked = Object.values(checkedItems).some(Boolean);
+
+
+  // 유저 정보 가져오기 (닉네임)
+  const {
+    data: userInfo,
+    isLoading: isUserLoading,
+    isError: isUserError,
+  } = useQuery({
+    queryKey: ['userInfo'],
+    queryFn: getUserInfo,
+  });
+
+
+  if (isUserLoading)
+    return <div>로딩 중...</div>;
+
+  if (isUserError)
+    return <div>오류가 발생했습니다.</div>;
+
 
   return (
     <div>
@@ -78,7 +111,7 @@ function ReviewPage() {
             <span>90일 완성 돈버는 습관</span>
             <span className="text-xs">
               <span className="text-gray-500">거래한 이웃 </span>
-              정하림
+              {ownerName}
             </span>
           </div>
         </div>
@@ -86,9 +119,9 @@ function ReviewPage() {
       <main className="px-6">
         <div className="flex flex-col gap-2 py-11 text-2xl font-semibold">
           <span>
-            <span className="text-[#5F6F52]">김도영</span>님,
+            <span className="text-[#5F6F52]">{userInfo.nickname}</span>님,
           </span>
-          <span className="text-base">정하림님과 거래 어떠셨나요?</span>
+          <span className="text-base">{ownerName}님과 거래 어떠셨나요?</span>
         </div>
 
         <EmojiSelector selectedEmoji={selectedEmoji} onEmojiSelect={handleEmojiSelect} />
@@ -100,6 +133,7 @@ function ReviewPage() {
             checkboxOptions={checkboxOptions[selectedEmoji]}
             onCheckboxChange={handleCheckboxChange}
             isAnyChecked={isAnyChecked}
+            rentalId={rentalId}
           />
         )}
       </main>

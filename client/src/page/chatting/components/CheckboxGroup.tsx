@@ -1,4 +1,7 @@
+import { useMutation } from '@tanstack/react-query';
+import { postReview } from 'api/rentalApi';
 import { FaCheck } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 type CheckboxGroupProps = {
   selectedEmoji: 'like' | 'dislike';
@@ -13,6 +16,7 @@ type CheckboxGroupProps = {
     item: 'clean' | 'punctual' | 'polite' | 'responsive'
   ) => void;
   isAnyChecked: boolean;
+  rentalId: number;
 };
 
 function CheckboxGroup({
@@ -21,7 +25,39 @@ function CheckboxGroup({
   checkboxOptions,
   onCheckboxChange,
   isAnyChecked,
+  rentalId,
 }: CheckboxGroupProps) {
+  const navigate = useNavigate();
+
+
+
+  const mutation = useMutation({
+    mutationKey: ['review'],
+    mutationFn: postReview,
+    
+    onSuccess: () => {
+      navigate('/'); // 일단 메인페이지
+    },
+  });
+  
+  const handelPostReview = () => {
+    const submitList = new Array();
+    const key = selectedEmoji === "like" ? 1 : 5;
+
+    Object.values(checkedItems).map((item, index) => {
+      if (item) {
+        submitList.push(index + key);
+      }
+    })
+    console.log("cartId", rentalId)
+    console.log("checkedItems", checkedItems)
+    console.log("submitList", submitList)
+    mutation.mutate({
+      rentalId: rentalId, // 카트아이디
+      reviewItemIds: submitList,
+    });
+  };
+
   return (
     <div className='gap-2 flex flex-col'>
       <div className='font-semibold text-lg pt-7 pb-4'>
@@ -62,6 +98,7 @@ function CheckboxGroup({
           isAnyChecked ? 'opacity-100' : 'opacity-50 cursor-not-allowed'
         }`}
         disabled={!isAnyChecked}
+        onClick={handelPostReview}
       >
         후기 보내기
       </button>
