@@ -82,7 +82,8 @@ public class CartQueryRepositoryImpl implements CartQueryRepository {
 						);
 					})
 					.collect(Collectors.toList()),
-				c.getRental() != null ? c.getRental().getStatus() : RentalStatus.READY
+				c.getRental() != null ? c.getRental().getStatus() : RentalStatus.READY,
+				c.getRental() != null ? c.getRental().getId() : null
 			))
 			.collect(Collectors.toList());
 	}

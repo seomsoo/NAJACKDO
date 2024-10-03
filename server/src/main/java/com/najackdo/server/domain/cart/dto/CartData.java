@@ -15,14 +15,16 @@ public class CartData {
 		private Long ownerId; // cart
 		private String ownerUsername; // cart -> user
 		private RentalStatus status; // cart
+		private Long rentalId;
 		private List<CartItemInfo> cartItems; // cart -> cartItems
 
-		public static CartInfo of(Long cartId, Long ownerId, String ownerUsername, List<CartItemInfo> cartItems, RentalStatus status) {
+		public static CartInfo of(Long cartId, Long ownerId, String ownerUsername, List<CartItemInfo> cartItems, RentalStatus status, Long rentalId) {
 			CartInfo cartInfo = new CartInfo();
 			cartInfo.cartId = cartId;
 			cartInfo.ownerId = ownerId;
 			cartInfo.ownerUsername = ownerUsername;
 			cartInfo.status = status;
+			cartInfo.rentalId = rentalId;
 			cartInfo.cartItems = cartItems;
 			return cartInfo;
 		}

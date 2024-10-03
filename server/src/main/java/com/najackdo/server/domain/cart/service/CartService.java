@@ -70,7 +70,9 @@ public class CartService {
 
 		RentalStatus rentalStatus = (cart.getRental() != null ? cart.getRental().getStatus() : RentalStatus.READY);
 
-		return CartData.CartInfo.of(cart.getId(), cart.getOwner().getId(), cart.getOwner().getUsername(), cartItemInfoList, rentalStatus);
+		return CartData.CartInfo.of(cart.getId(), cart.getOwner().getId(), cart.getOwner().getUsername(),
+			cartItemInfoList, rentalStatus,
+			cart.getRental() != null ? cart.getRental().getId() : null);
 	}
 
 }
