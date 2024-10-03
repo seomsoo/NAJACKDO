@@ -16,6 +16,7 @@ export interface IChatRoom {
   ownerLocation: string;
   lastChatTime: string;
   lastChatMessage: string;
+  lastChatType: "MESSAGE" | "PAY" | "RETURN";
   displayImagePath: string;
 }
 

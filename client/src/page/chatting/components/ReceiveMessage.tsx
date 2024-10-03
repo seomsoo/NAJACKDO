@@ -12,7 +12,7 @@ const ReceiveMessage = ({ message, talkType }: ReceiveMessageProps) => {
         </span>
       ) : (
         <span
-          className="p-3 bg-white rounded-xl rounded-tl-none text-left"
+          className="p-3 rounded-xl rounded-tl-none text-left"
           dangerouslySetInnerHTML={{ __html: message }}
         ></span>
       )}
