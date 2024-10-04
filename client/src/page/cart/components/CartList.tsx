@@ -11,7 +11,7 @@ const CartList = () => {
     queryFn: () => getCartList(),
   });
 
-  const filteredCart = cartList.filter((item) => !item.rentalId);
+  const filteredCart = cartList.filter((item) => item.rentalId === null);
 
   return (
     <div>
