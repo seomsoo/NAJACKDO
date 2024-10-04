@@ -63,7 +63,7 @@ services:
       - TZ=Asia/Seoul
 
   fastapi:
-    image: ssafysm/fast-api-server:1.2
+    image: ssafysm/fast-api-server:1.5
     container_name: fastapi_app
     ports:
       - "8000:8000"

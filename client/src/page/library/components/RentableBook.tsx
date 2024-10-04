@@ -6,20 +6,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "components/ui/accordion";
-import BookCover from "page/library/components/BookCover";
+import RentalBookCover from "./RentalBookCover";
 
 interface RentableBookProps {
   bookId: number;
 }
 
 const RentableBook = ({ bookId } : RentableBookProps) => {
-  // const rentalBook = [
-  //   {
-  //     imgUrl: "/pubao.png",
-  //     detection: "상",
-  //     price: 450,
-  //   },
-  // ];
 
   const {
     data: nearAvailableBookData,
@@ -32,7 +25,7 @@ const RentableBook = ({ bookId } : RentableBookProps) => {
   console.log("nearAvailableBookData", nearAvailableBookData);
 
 
-  if (isLoading ) {
+    if (isLoading ) {
     return (
       <div>
         <p className="mt-5 font-bold mb-3">대여 가능 도서</p>
@@ -58,13 +51,13 @@ const RentableBook = ({ bookId } : RentableBookProps) => {
         </AccordionTrigger>
         <div className="grid grid-cols-4 gap-x-2 gap-y-5">
           {nearAvailableBookData.slice(0, 4).map((book, index) => {
-            return <BookCover key={index} book={book} />;
+            return <RentalBookCover key={index} book={book} />;
           })}
         </div>
         <AccordionContent className="mt-5">
           <div className="grid grid-cols-4 gap-x-2 gap-y-5">
             {nearAvailableBookData.slice(4).map((book, index) => {
-              return <BookCover key={index} book={book} />;
+              return <RentalBookCover key={index} book={book} />;
             })}
           </div>
         </AccordionContent>

@@ -87,7 +87,6 @@ public class ChatController {
 				displayMessage,
 				NotificationType.CHAT));
 
-
 		} else {
 			// 새로운 대화방 생성
 			Chat newChat = new Chat();

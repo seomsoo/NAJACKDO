@@ -6,11 +6,10 @@ import { IoNotificationsOutline } from 'react-icons/io5';
 import { Link, useNavigate } from 'react-router-dom';
 import MyBookGrid from '../components/MyBookGrid';
 import Loading from 'components/common/Loading';
+import BaseProfile from 'components/common/BaseProfile';
 
 const MyBookCasePage = () => {
   const navigate = useNavigate();
-
-  const IMG_BASE_URL = process.env.PUBLIC_URL;
 
   // 나의 책장 데이터 조회 (단일 객체로 처리)
   const {
@@ -61,11 +60,7 @@ const MyBookCasePage = () => {
             <span>나의 책장</span>
           </div>
           <button>
-            <img
-              src={bookcase?.profileImage || '/basic_profile.png'} // 기본 이미지 처리
-              alt="profile"
-              className="rounded-full w-16 h-16  "
-            />
+            <BaseProfile userImage={bookcase?.profileImage} width='16' height='16'  />
           </button>
         </article>
 
@@ -80,7 +75,7 @@ const MyBookCasePage = () => {
             // 책 데이터가 없을 때
             <div className="flex flex-col items-center mt-16">
               <img
-                src={`${IMG_BASE_URL}/book_icon.png`}
+                src="/book_icon.png"
                 alt="book"
                 className="w-40 h-40 mb-6"
               />

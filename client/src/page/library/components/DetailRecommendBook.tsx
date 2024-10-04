@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getRecommendbook } from "api/bookApi";
 import Loading from 'components/common/Loading';
+import { useNavigate } from "react-router-dom";
 
 
 interface DetailRecommendBookProps {
@@ -9,6 +10,7 @@ interface DetailRecommendBookProps {
 
 
 const DetailRecommendBook = ({ bookId }: DetailRecommendBookProps) => {
+  const navigate = useNavigate();
 
   // 비슷한 책 추천 조회
   const {
@@ -35,6 +37,11 @@ const DetailRecommendBook = ({ bookId }: DetailRecommendBookProps) => {
     );
   }
 
+  const handleBookClick = ( userBookId: number ) => {
+    navigate(`/book/${userBookId}`);
+  };
+
+
   return (
     <div className="mt-10 mb-6">
         <p className="mt-5 font-bold mb-3">추천 도서</p>
@@ -42,11 +49,12 @@ const DetailRecommendBook = ({ bookId }: DetailRecommendBookProps) => {
         {recommendData ? 
         (recommendData.map((book, index) => {
           return (
-            <img
+            <img 
               src={book.cover}
               alt={book.title}
               width={80}
               className="rounded-e-md"
+              onClick={() => handleBookClick(book.bookId)}
             />
         );
         })) : <div>추천 도서가 없습니다.</div>}

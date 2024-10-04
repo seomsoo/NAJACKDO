@@ -10,18 +10,20 @@ import { FaRankingStar } from "react-icons/fa6";
 const MainPage = () => {
   return (
     <Suspense fallback={<Loading />}>
-      <div className="mx-[25px]">
+      <div>
         {/* 유저 정보 저장 */}
         <GetUserInfo />
         {/* 메인 캐로셀 */}
         <div>
-          <div className="flex flex-row items-center">
-            <FaRankingStar color="#5F6F52" size={25} className="my-1 mx-2" />
-            <span className="font-bold">오늘의 베스트 셀러</span>
+          <div className="flex  gap-3items-center mt-3 mx-6 ">
+            <FaRankingStar className="text-2xl mr-2 text-main" />
+            <span className="font-extrabold text-xl mb-4">
+              오늘의 베스트 셀러
+            </span>
           </div>
           <MainCarousel />
         </div>
-        <main className="flex flex-col gap-8">
+        <main className="flex flex-col mx-6 gap-8">
           {/* 카테고리 별 추천 */}
           <CategoryRecommend />
           {/* 지역에서 인기있userNickname는 도서 추천 */}

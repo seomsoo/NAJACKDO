@@ -65,7 +65,8 @@ public class NotificationService {
     }
 
 
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    @EventListener
+    // @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void sendNotificationEvent(NotificationEvent notificationEvent) {
         log.info("알람 송신");
         Optional<User> user = usersRepository.findById(notificationEvent.getTargetUserId());

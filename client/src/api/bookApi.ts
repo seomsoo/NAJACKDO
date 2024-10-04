@@ -1,6 +1,24 @@
 import { BaseResponse } from "atoms/Base.type";
-import { IBookDetail, INearAvailableBook, IRentalCost, ITimeSpent, IUserBookDetail } from "atoms/Book.type";
+import { IBookDetail, INearAvailableBook, IRentalCost, ITimeSpent, IUserBookDetail, IBestSeller} from "atoms/Book.type";
 import instance, { pythoninstance } from "./clientApi";
+
+
+// 베스트셀러 조회
+export const getBestSeller = async () : Promise<IBestSeller[]> => {
+  try {
+    const {
+      data: { success, data },
+    } = await instance.get<BaseResponse<IBestSeller[]>>("rental/best-seller");
+
+    if (!success) {
+      throw new Error("베스트셀러 조회 실패")
+    }
+    console.log(getBestSeller)
+    return data;
+  } catch (error) {
+    throw new Error("베스트셀러 실패", error)
+  }
+}
 
 // 관심 도서 조회
 export const getInterestbook = async (): Promise<IBookDetail[]> => {

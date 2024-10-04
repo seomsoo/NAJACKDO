@@ -14,9 +14,9 @@ import {
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import OtherBookGrid from '../components/OtherBookGrid';
 import Loading from 'components/common/Loading';
+import BaseProfile from 'components/common/BaseProfile';
 
 const OtherBookCasePage = () => {
-  const IMG_BASE_URL = process.env.PUBLIC_URL;
 
   const navigate = useNavigate();
   const { userId } = useParams();
@@ -120,11 +120,7 @@ const OtherBookCasePage = () => {
             </span>
           </div>
           <button onClick={handleProfileClick}>
-            <img
-              src={bookcase?.profileImage || '/basic_profile.png'} // 기본 이미지 처리
-              alt="profile"
-              className="rounded-full w-16 h-16  "
-            />
+            <BaseProfile userImage={bookcase?.profileImage} width="16" height="16" />
           </button>
         </article>
 
@@ -140,7 +136,7 @@ const OtherBookCasePage = () => {
           ) : (
             <div className="flex flex-col items-center mt-16">
               <img
-                src={`${IMG_BASE_URL}/book_icon.png`}
+                src="/book_icon.png"
                 alt="book"
                 className="w-40 h-40 mb-6"
               />

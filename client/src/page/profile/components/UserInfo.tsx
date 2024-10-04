@@ -1,3 +1,5 @@
+import BaseProfile from "components/common/BaseProfile";
+
 interface UserInfoProps {
   userName: string;
   userLocation: string;
@@ -26,11 +28,7 @@ const UserInfo = ({
 
   return (
     <div className='flex flex-row items-center'>
-      <img
-        src={userImage || '/basic_profile.png'}
-        alt='profile'
-        className='h-20 w-20 rounded-full '
-      />
+      <BaseProfile userImage={userImage} width='20' height='20' />
       <div className='ml-3'>
         <div className='flex  justify-start items-center'>
           <div className='text-lg font-semibold'>{userName}</div>
