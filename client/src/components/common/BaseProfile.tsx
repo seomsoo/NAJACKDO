@@ -1,8 +1,16 @@
-const BaseProfile = () => {
+interface BaseProfileProps { 
+  userImage?: string;
+  width?: string;
+  height?: string;
+ }
+
+const BaseProfile = ({userImage, width, height }: BaseProfileProps) => {
   return (
-    <div className="bg-sub8/50 rounded-full w-12 h-12 mr-4 maplestory text-main p-1 text-sm flex items-center justify-center">
-      나작도
-    </div>
+    <img
+      src={userImage || '/basic_profile.png'}
+      alt='profile'
+      className={`h-${height} w-${width} rounded-full`}
+      />
   );
 };
 
