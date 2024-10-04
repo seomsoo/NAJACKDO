@@ -105,13 +105,13 @@ const RangeSetting = ({ selectedLocation }) => {
   const handleLocationClick = () => {
     mutation.mutate({
       locationCode: locationCode,
-      distanceMeters: range * 0.005 + 0.02,
+      distanceMeters: range * 0.008 + 0.02,
     });
     console.log(
       'locationCode',
       locationCode,
       'distanceMeters',
-      range * 0.005 + 0.02
+      range * 0.008 + 0.02
     );
   };
 

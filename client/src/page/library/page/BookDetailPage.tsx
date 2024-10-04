@@ -103,8 +103,7 @@ const BookDetailPage = () => {
       </div>
       <div className="m-4">
         <BookInfo book={bookData} />
-        <RentableBook />
-        <p className="mt-5 font-bold mb-3">추천 도서</p>
+        <RentableBook bookId={bookIdAsNumber} />
         <DetailRecommendBook bookId={bookIdAsNumber} />
       </div>
     </div>
