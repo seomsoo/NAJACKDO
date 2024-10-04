@@ -95,12 +95,5 @@ public class ChatController {
 			newChat.setMessages(List.of(newMessage));
 			chatRepository.save(newChat);
 		}
-
-
-
-
-
-
-
 	}
 }

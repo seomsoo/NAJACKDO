@@ -36,7 +36,6 @@ public class ChatService {
 	private final ChatMongoRepository chatMongoRepository;
 
 	public ChatRoomData.Search chatRoomList(User user) {
-
 		List<ChatRoomData.Search.SearchElement> result = new ArrayList<>();
 
 		chatRoomRepository.findChatRoomsByUser(user).forEach(chatRoom -> {
@@ -44,7 +43,7 @@ public class ChatService {
 			List<Chat.Message> messages = chatMongoRepository.findByRoomId(chatRoom.getRoomId()).getMessages();
 
 			if (messages == null || messages.isEmpty()) {
-				result.add(ChatRoomData.Search.SearchElement.search(chatRoom, LocalDateTime.now(), "", null));
+				result.add(ChatRoomData.Search.SearchElement.search(chatRoom, null, "", null));
 			} else {
 				// 가장 최근 메시지 가져오기
 				Chat.Message lastMessage = messages.get(messages.size() - 1);
