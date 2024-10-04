@@ -15,7 +15,6 @@ public class RentalData {
 		private int rentalCost;
 		private int rentalPeriod;
 		private int totalPrice;
-
 	}
 
 	@Data

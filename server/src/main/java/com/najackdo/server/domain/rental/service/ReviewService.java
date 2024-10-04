@@ -13,6 +13,7 @@ import com.najackdo.server.domain.rental.dto.ReviewData;
 import com.najackdo.server.domain.rental.entity.Rental;
 import com.najackdo.server.domain.rental.entity.RentalReview;
 import com.najackdo.server.domain.rental.entity.ReviewItems;
+import com.najackdo.server.domain.rental.repository.RentalCacheRepository;
 import com.najackdo.server.domain.rental.repository.RentalRepository;
 import com.najackdo.server.domain.rental.repository.RentalReviewRepository;
 import com.najackdo.server.domain.rental.repository.ReviewItemsRepository;
@@ -31,6 +32,7 @@ public class ReviewService {
 	private final RentalRepository rentalRepository;
 	private final ReviewItemsRepository reviewItemsRepository;
 	private final ChatRoomRepository chatRoomRepository;
+	private final RentalCacheRepository rentalCacheRepository;
 
 	// FIXME : 리뷰 종류에 따라서 사용자 매너 점수 업데이트 로직 필요
 	@Transactional
@@ -42,7 +44,6 @@ public class ReviewService {
 		Rental rental = rentalRepository.findRentalById(rentalId).orElseThrow(
 			() -> new BaseException(ErrorCode.NOT_FOUND_RENTAL)
 		);
-
 
 
 		User reviewee = rental.getCart().getCustomer().getId() == user.getId()
@@ -59,6 +60,7 @@ public class ReviewService {
 			})
 			.forEach(rentalReviewRepository::save);
 
+		rentalCacheRepository.saveRentalReview(rentalId, user.getId(), reviewee.getId());
 
 		List<RentalReview> byRentalId = rentalReviewRepository.findByRentalId(rental.getId());
 

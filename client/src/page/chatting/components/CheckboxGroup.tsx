@@ -32,7 +32,6 @@ function CheckboxGroup({
   const mutation = useMutation({
     mutationKey: ["review"],
     mutationFn: postReview,
-
     onSuccess: () => {
       navigate("/"); // 일단 메인페이지
     },
