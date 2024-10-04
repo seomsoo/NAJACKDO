@@ -28,11 +28,11 @@ const ConfirmModal = ({
         !open && setOpen(false);
       }}
     >
-      <DialogContent>
+      <DialogContent className="bg-najackdo-background rounded-2xl">
         <DialogHeader>
           <DialogTitle />
-          <DialogDescription className="w-[200px]">
-            <span className="text-lg">{content}</span>
+          <DialogDescription className="h-[200px] flex flex-col items-center justify-center text-black">
+            <span className="text-lg my-12">{content}</span>
             <div className="space-x-6">
               <button
                 className="border-2 border-sub7 px-10 py-2 rounded-xl hover:bg-[#EBE9E7]"
@@ -43,7 +43,7 @@ const ConfirmModal = ({
                 닫기
               </button>
               <button
-                className="border-2 border-sub7 px-5 py-2 rounded-xl bg-sub7 hover:bg-[#4F473D] text-white"
+                className="border-2 border-sub7 px-10 py-2 rounded-xl bg-sub7 hover:bg-[#4F473D] text-white"
                 onClick={() => navigate(urlPath)}
               >
                 확인

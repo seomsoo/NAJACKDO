@@ -1,3 +1,4 @@
+import { DialogTitle } from "@radix-ui/react-dialog";
 import {
   Dialog,
   DialogContent,
@@ -24,22 +25,22 @@ const CartModal = ({ cartOpen, setCartOpen, ownerUsername, cartItems }) => {
       ></DialogTrigger>
       <DialogContent className="bg-[#F1ECE3] rounded-2xl">
         <DialogHeader>
-          <DialogDescription className="space-y-8 text-black">
-            <div className="flex flex-row item-center justify-between mt-3">
-              <p className="font-semibold text-lg">대여 도서 목록</p>
-              <p>기간</p>
+          <DialogTitle>
+            <div className="flex flex-row item-center justify-between my-3">
+              <p className="font-semibold text-xl">대여 도서 목록</p>
             </div>
-            <div>
+          </DialogTitle>
+          <DialogDescription className="space-y-8 text-black">
+            <div
+              className="w-[95%] h-[300px] flex flex-col overflow-y-auto"
+              style={{
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
+              }}
+            >
               {cartItems.map((item, index) => {
                 return (
-                  <div
-                    className="w-[95%] h-[100px] flex flex-col overflow-y-auto"
-                    style={{
-                      scrollbarWidth: "none",
-                      msOverflowStyle: "none",
-                    }}
-                    key={index}
-                  >
+                  <div key={index}>
                     <BookRentalInfo
                       key={item.cartItemId}
                       cartItemId={item.cartItemId}

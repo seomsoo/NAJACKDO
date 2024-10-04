@@ -1,17 +1,17 @@
+import { IHistory } from "atoms/History.type";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "components/ui/accordion";
-import { IHistory } from "atoms/History.type";
 
 interface IHistoryListProps {
   historyData: IHistory[];
   title: string;
 }
 
-const formatDate = (dateString: string) => {
+export const formatDate = (dateString: string) => {
   const date = new Date(dateString);
   return date.toLocaleDateString("ko-KR", {
     year: "numeric",
@@ -30,7 +30,10 @@ const HistoryList: React.FC<IHistoryListProps> = ({ historyData, title }) => {
       <Accordion type="multiple">
         {" "}
         {historyData.map((history) => (
-          <AccordionItem key={history.rentalId.toString()} value={history.rentalId.toString()}>
+          <AccordionItem
+            key={history.rentalId.toString()}
+            value={history.rentalId.toString()}
+          >
             <AccordionTrigger className="flex items-center">
               <img
                 src={history.otherUseProfileImg}
@@ -40,7 +43,8 @@ const HistoryList: React.FC<IHistoryListProps> = ({ historyData, title }) => {
               <div className="flex flex-col">
                 <div className="font-semibold">{history.otherUseNickName}</div>
                 <div className="text-sm">
-                  {formatDate(history.rentalStartDate)} ~ {formatDate(history.rentalEndDate)}
+                  {formatDate(history.rentalStartDate)} ~{" "}
+                  {formatDate(history.rentalEndDate)}
                 </div>
               </div>
             </AccordionTrigger>
