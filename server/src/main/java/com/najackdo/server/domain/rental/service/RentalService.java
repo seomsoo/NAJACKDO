@@ -168,4 +168,11 @@ public class RentalService {
 	public List<BookData.Search> getBestSeller() {
 		return rentalRepository.findBestSeller().stream().map(BookData.Search::from).toList();
 	}
+
+	public List<BookData.Search> getLocalBestSeller(User user) {
+		List<Book> localBestSeller = rentalRepository.findLocalBestSeller(
+			user.getActivityAreaSetting().getLocation().getId());
+
+		return localBestSeller.stream().map(BookData.Search::from).toList();
+	}
 }

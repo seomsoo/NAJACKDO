@@ -77,7 +77,6 @@ public class RentalController {
 		return SuccessResponse.of(rentalService.lendList(user));
 	}
 
-
 	/**
 	 * 빌린 내역 조회 api
 	 */
@@ -87,10 +86,21 @@ public class RentalController {
 		return SuccessResponse.of(rentalService.borrowList(user));
 	}
 
+	/**
+	 * 오늘의 베스트셀러 조회
+	 *
+	 * @return
+	 */
 	@GetMapping("/best-seller")
 	@Operation(summary = "오늘의 베스트셀러 조회", description = "오늘의 베스트셀러 조회")
 	public SuccessResponse<List<BookData.Search>> getBestSeller() {
 		return SuccessResponse.of(rentalService.getBestSeller());
+	}
+
+	@GetMapping("/local-best-seller")
+	@Operation(summary = "지역 베스트셀러 조회", description = "지역 베스트셀러 조회")
+	public SuccessResponse<List<BookData.Search>> getLocalBestSeller(@CurrentUser User user) {
+		return SuccessResponse.of(rentalService.getLocalBestSeller(user));
 	}
 }
 

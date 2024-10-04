@@ -45,6 +45,23 @@ public interface RentalRepository extends JpaRepository<Rental, Long> {
 	List<Rental> findBorrowListByUserId(Long id);
 
 	@Query("""
+    SELECT b
+    FROM Rental r
+    JOIN r.cart c
+    JOIN c.cartItems ci
+    JOIN ci.userBookDetail ubd
+    JOIN ubd.userBook ub
+    JOIN ub.book b
+  	WHERE r.rentalStartDate BETWEEN current_timestamp AND current_timestamp + 1 Day
+    GROUP BY b
+    ORDER BY COUNT(r) DESC
+    LIMIT 5
+""")
+	List<Book> findBestSeller();
+
+
+
+	@Query("""
     SELECT ci.userBookDetail.userBook.book
     FROM Rental r
     JOIN r.cart c
@@ -52,11 +69,14 @@ public interface RentalRepository extends JpaRepository<Rental, Long> {
     JOIN ci.userBookDetail ubd
     JOIN ubd.userBook ub
     JOIN ub.book b
+    JOIN ub.locationCode lc
+  	WHERE r.rentalStartDate BETWEEN current_timestamp AND current_timestamp + 1 Day
+  	AND lc.id = :locationCode
     GROUP BY b
     ORDER BY COUNT(r) DESC
-    LIMIT 5
-    """)
-	List<Book> findBestSeller();
+    LIMIT 10
+""")
+	List<Book> findLocalBestSeller( Integer locationCode);
 
 	@Query("""
 		SELECT r FROM Rental r 
@@ -68,4 +88,5 @@ public interface RentalRepository extends JpaRepository<Rental, Long> {
 		WHERE r.id = :rentalId
 """)
 	Optional<Rental> findRentalById(Long rentalId);
+
 }
