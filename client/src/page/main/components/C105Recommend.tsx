@@ -8,11 +8,7 @@ const C105Recommend = () => {
         <span className="font-bold ">C105가 추천하는 오늘의 도서!</span>
       </div>
       <div
-        className="flex overflow-x-auto whitespace-nowrap"
-        style={{
-          scrollbarWidth: "none",
-          msOverflowStyle: "none",
-        }}
+        className="flex overflow-x-auto whitespace-nowrap scrollbar-hide"
       >
         {Array(10)
           .fill(null)

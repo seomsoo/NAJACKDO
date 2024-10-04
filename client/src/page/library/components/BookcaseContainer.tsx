@@ -45,23 +45,23 @@ const BookcaseContainer = ({
 
   return (
     <div className="my-5 bg-white/30 shadow rounded-lg p-4">
-      <div className="flex flex-row justify-between">
-        <p className="font-medium mb-2">{name}님의 책장</p>
+      <div className="flex flex-row justify-between items-center mb-2">
+        <p className="text-base font-semibold">{name}님의 책장</p>
         <div onClick={handleHeart}>
           {heart ? (
             <Fragment>
-              <IoHeart size={15} color="#D96363" />
+              <IoHeart size={25} color="#D96363" />
               {open && (
                 <AlertModal
                   open={open}
                   setOpen={setOpen}
-                  content={`${name}님 책장 좋아요가 완료되었습니다.`}
+                  content={`${name}님 책장 좋아요가<br /> 완료되었습니다.`}
                 />
               )}
             </Fragment>
           ) : (
             <Fragment>
-              <IoHeartOutline size={15} color="#D96363" />
+              <IoHeartOutline size={25} color="#D96363" />
               {open && (
                 <AlertModal
                   open={open}
@@ -75,11 +75,7 @@ const BookcaseContainer = ({
       </div>
       <div
         onClick={handleBookcaseClick}
-        className="flex overflow-x-auto cursor-pointer whitespace-nowrap space-x-5"
-        style={{
-          scrollbarWidth: "none",
-          msOverflowStyle: "none",
-        }}
+        className="flex overflow-x-auto cursor-pointer whitespace-nowrap space-x-5 scrollbar-hide"
       >
         {imageArray.map((item, index) => (
           <img
