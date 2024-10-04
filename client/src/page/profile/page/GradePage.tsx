@@ -119,15 +119,6 @@ const GradePage = () => {
     gradeLevel = 'Lv.1 나작씨앗';
   }
 
-  const reviewArray = [
-    { count: 1, comment: '시간 약속을 안 지켜요.' },
-    { count: 22, comment: '시간 약속을 안 지켜요.' },
-    { count: 3, comment: '시간 약속을 안 지켜요.' },
-  ];
-
-
-
-
 
   return (
     <div className="p-6 ">
