@@ -1,4 +1,5 @@
 import { IChatRoom } from "atoms/Chat.type";
+import BaseProfile from "components/common/BaseProfile";
 import useTime from "hooks/useTime";
 import { useNavigate } from "react-router-dom";
 
@@ -45,7 +46,7 @@ const ChatList = ({ chat, userId }: ChatListProps) => {
               className="rounded-full w-12 h-12 mr-4"
             />
           ) : (
-            <div className="rounded-full w-12 h-12 mr-4">나작도</div>
+            <BaseProfile />
           )
         ) : chat.ownerProfile ? (
           <img
@@ -54,7 +55,7 @@ const ChatList = ({ chat, userId }: ChatListProps) => {
             className="rounded-full w-12 h-12 mr-4"
           />
         ) : (
-          <div className="rounded-full w-12 h-12 mr-4">나작도</div>
+          <BaseProfile />
         )}
         <div className="flex flex-col justify-start">
           <div className="flex flex-row font-bold items-center">
