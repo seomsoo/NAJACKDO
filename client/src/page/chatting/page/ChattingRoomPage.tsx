@@ -96,6 +96,10 @@ const ChattingRoomPage = () => {
         roomId={Number(roomId)}
         totalLeaf={totalLeaf}
         messages={messages}
+        ownerId={ownerId}
+        ownerName={ownerName}
+        customerId={customerId}
+        customerName={customerName}
       />
     </Suspense>
   );

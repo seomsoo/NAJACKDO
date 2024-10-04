@@ -12,6 +12,8 @@ export interface Message {
   roomId: number;
   senderId: number;
   senderNickname: string;
+  receiverId: number;
+  receiverNickname: string;
   talkType: "MESSAGE" | "PAY" | "RETURN";
   message: string;
 }
@@ -21,12 +23,27 @@ interface ChattingBoxProps {
   roomId: number;
   totalLeaf: number;
   messages: Message[];
+  ownerId: number;
+  ownerName: string;
+  customerId: number;
+  customerName: string;
 }
 
-const ChattingBox = ({ client, roomId, messages }: ChattingBoxProps) => {
-  const senderNickname = useUserStore.getState().nickname;
+const ChattingBox = ({
+  client,
+  roomId,
+  messages,
+  ownerId,
+  ownerName,
+  customerId,
+  customerName,
+}: ChattingBoxProps) => {
   const senderId = useUserStore.getState().userId;
-  console.log("userId", senderId);
+  const senderNickname = useUserStore.getState().nickname;
+
+  const receiverId = senderId === ownerId ? customerId : ownerId;
+  const receiverNickname =
+    senderNickname === ownerName ? customerName : ownerName;
 
   // 채팅 내역 불러오기
   const { data: chattingList } = useSuspenseQuery<IChatList>({
@@ -46,6 +63,8 @@ const ChattingBox = ({ client, roomId, messages }: ChattingBoxProps) => {
       roomId: roomId,
       senderId: senderId,
       senderNickname: senderNickname,
+      receiverId: receiverId,
+      receiverNickname: receiverNickname,
       talkType: "MESSAGE",
       message: message,
     };
