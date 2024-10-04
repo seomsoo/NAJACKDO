@@ -3,6 +3,7 @@ package com.najackdo.server.domain.chat.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.najackdo.server.domain.cart.entity.CartItem;
 import com.najackdo.server.domain.chat.entity.ChatRoom;
 
 import lombok.Data;
@@ -77,9 +78,14 @@ public class ChatRoomData {
 				chatRoomDTO.setLastChatType(talkType);
 				chatRoomDTO.setLastChatTime(lastChatTime);
 				chatRoomDTO.setLastChatMessage(lastChatMessage);
-				chatRoomDTO.setDisplayImagePath(
-					chatRoom.getCart().getCartItems().get(0).getUserBookDetail().getFrontImagePath());
 
+
+				List<CartItem> cartItems = chatRoom.getCart().getCartItems();
+
+				if (!cartItems.isEmpty()) {
+					chatRoomDTO.setDisplayImagePath(cartItems.get(0).getUserBookDetail().getFrontImagePath());
+				}
+				
 				return chatRoomDTO;
 			}
 		}
