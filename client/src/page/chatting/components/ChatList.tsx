@@ -15,7 +15,9 @@ const ChatList = ({ chat, userId }: ChatListProps) => {
   // 그럼 true일 때는 profile -> customerProfile
   // false일 때는 profile -> ownerProfile
 
-  const receivedTime = useTime(chat.lastChatTime);
+  const receivedTime = chat.lastChatTime
+    ? `· ${useTime(chat.lastChatTime)}`
+    : null;
   const location = (isOwner ? chat.customerLocation : chat.ownerLocation).split(
     " "
   )[2];
@@ -63,7 +65,7 @@ const ChatList = ({ chat, userId }: ChatListProps) => {
               {isOwner ? chat.customerNickname : chat.ownerNickname}
             </span>
             <span className="text-black/60 text-sm">
-              {location} · {receivedTime}
+              {location} {receivedTime}
             </span>
           </div>
           <span className="mt-1">

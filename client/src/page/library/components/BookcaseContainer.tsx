@@ -1,7 +1,8 @@
-import { deleteInterestBookCase, postInterestBookCase } from 'api/bookcaseApi';
-import { useState, useEffect } from 'react';
-import { IoHeart, IoHeartOutline } from 'react-icons/io5';
-import { useNavigate } from 'react-router-dom';
+import { deleteInterestBookCase, postInterestBookCase } from "api/bookcaseApi";
+import AlertModal from "components/common/AlertModal";
+import { Fragment, useEffect, useState } from "react";
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 interface BookcaseContainerProps {
   userId: number;
@@ -16,7 +17,8 @@ const BookcaseContainer = ({
   imageArray,
   isFollowed = false, // 기본값을 false로 설정
 }: BookcaseContainerProps) => {
-  const [heart, setHeart] = useState(isFollowed);
+  const [heart, setHeart] = useState<boolean>(isFollowed);
+  const [open, setOpen] = useState<boolean>(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,12 +29,14 @@ const BookcaseContainer = ({
     try {
       if (heart) {
         await deleteInterestBookCase(userId); // 관심 해제
+        setOpen(true);
       } else {
         await postInterestBookCase(userId); // 관심 등록
+        setOpen(true);
       }
       setHeart(!heart); // 상태 변경
     } catch (error) {
-      console.error('관심 도서 등록/해제 중 오류 발생:', error);
+      console.error("관심 도서 등록/해제 중 오류 발생:", error);
     }
   };
   const handleBookcaseClick = () => {
@@ -45,9 +49,27 @@ const BookcaseContainer = ({
         <p className="font-medium mb-2">{name}님의 책장</p>
         <div onClick={handleHeart}>
           {heart ? (
-            <IoHeart size={15} color="#D96363" />
+            <Fragment>
+              <IoHeart size={15} color="#D96363" />
+              {open && (
+                <AlertModal
+                  open={open}
+                  setOpen={setOpen}
+                  content={`${name}님 책장 좋아요가 완료되었습니다.`}
+                />
+              )}
+            </Fragment>
           ) : (
-            <IoHeartOutline size={15} color="#D96363" />
+            <Fragment>
+              <IoHeartOutline size={15} color="#D96363" />
+              {open && (
+                <AlertModal
+                  open={open}
+                  setOpen={setOpen}
+                  content={`${name}님 책장 좋아요<br /> 취소가 완료되었습니다.`}
+                />
+              )}
+            </Fragment>
           )}
         </div>
       </div>
@@ -55,8 +77,8 @@ const BookcaseContainer = ({
         onClick={handleBookcaseClick}
         className="flex overflow-x-auto cursor-pointer whitespace-nowrap space-x-5"
         style={{
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
         }}
       >
         {imageArray.map((item, index) => (
