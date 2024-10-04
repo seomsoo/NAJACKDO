@@ -10,6 +10,9 @@ import csv
 import easyocr
 import numpy as np
 import book_spine_detection
+import struct
+from shapely import wkb
+from sentence_transformers import SentenceTransformer
 from rapidfuzz import fuzz
 from ultralytics import YOLO
 from pymongo import MongoClient
@@ -19,7 +22,7 @@ from dotenv import load_dotenv
 from PIL import Image 
 from math import log10
 from fastapi.middleware.cors import CORSMiddleware
-
+from datetime import datetime, timedelta 
 
 
 load_dotenv() 
@@ -47,9 +50,10 @@ s3 = boto3.client(
     aws_secret_access_key=aws_secret_access_key
 )
 
+model = SentenceTransformer('all-MiniLM-L6-v2')
 
 client = MongoClient("mongodb://najackdo:najackdo@mongodb:27017/najackdo?authSource=admin", maxPoolSize=30, minPoolSize=5)
-
+# client = MongoClient("mongodb://najackdo:najackdo@www.najackdo.kro.kr:27017/najackdo?authSource=admin", maxPoolSize=30, minPoolSize=5)
 
 db = client.najackdo
 
@@ -207,3 +211,55 @@ async def quality_inspection(imageFile: UploadFile = File(...)):
 
         title_list.append(save_title)
     return {"titles": title_list}
+
+@app.get("/item/userrecommand/{userId}")
+async def recomm_books(userId : int):
+    data = dao.get_user_books_data()
+    
+    items = [
+    [
+        row['user_book_id'],
+        reco_sys.wkb_to_lac(row['location_point']),
+        row['pub_date'],
+        row['genre'],
+        row['used_price'],
+        row['wornout'],
+        np.array(model.encode(row['description']))
+    ]
+        for row in data
+    ]
+    
+    today = datetime.now()
+    one_week_ago = today - timedelta(days=7)
+
+    book_marks = list(db["book_mark"].find({"userId": userId},{"bookId":1,"_id":0}))
+
+    rental_list = list(db["rental"].find({"userId":userId,
+        "createdAt": {
+            "$gte": one_week_ago,  # 일주일 전
+            "$lte": today          # 오늘
+        }},{"bookId":1,"_id":0}))
+
+    merged_list = {item['bookId']: item for item in book_marks + rental_list}
+
+    # 리스트로 변환
+    book_ids = [book["bookId"] for book in list(merged_list.values())]
+    
+    user_like_books = dao.fetch_books(book_ids)
+
+    user_like_books_list = [
+        [
+            np.array(model.encode(row['description']))
+        ]
+        for row in user_like_books
+    ]
+    
+    combined_array = np.array([arr[0] for arr in user_like_books_list])
+
+    user_preferences = np.mean(combined_array, axis=0)
+    
+    recommended_items_with_scores = reco_sys.genetic_algorithm_recommendation(user_preferences, items, book_ids, num_recommendations=5)
+    print("추천 아이템과 유사도 점수:")
+    # for item, score in recommended_items_with_scores:
+    #     print(f"아이템 인덱스: {items[item][:-1]}, 적합도 점수: {score:.2f}")
+    return {"recommended_items_with_scores": recommended_items_with_scores}  

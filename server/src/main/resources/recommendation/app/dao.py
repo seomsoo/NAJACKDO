@@ -131,3 +131,46 @@ def get_book_data():
         print(f"오류 발생: {e}")
 
     return list
+
+def get_user_books_data():
+    try:
+        with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+            query = f"""
+            SELECT ub.user_book_id, ubd.used_price, l.location_point,b.description,b.genre, ubd.wornout, b.pub_date
+            FROM user_book as ub
+            JOIN books as b on ub.book_id = b.book_id
+            JOIN location as l on ub.location_code = l.location_code
+            JOIN user_book_details as ubd on ub.user_book_id = ubd.user_books_id
+            WHERE ub.book_damage_checked = false
+            """
+            cursor.execute(query)
+            row = cursor.fetchall()
+
+            if row:
+                pass
+                # print(row)
+            else:
+                print("No user books data found")
+            return row  # 데이터를 반환
+
+    except Exception as e:
+        print(f"오류 발생: {e}")
+        return None  # 예외 발생 시 None을 반환
+    
+def fetch_books(book_ids):
+    try:
+        with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+            query = f"SELECT b.description FROM books as b WHERE book_id IN ({','.join(map(str, book_ids))});"
+            cursor.execute(query)
+            row = cursor.fetchall()
+
+            if row:
+                pass
+                # print(row)
+            else:
+                print("No user books data found")
+            return row  # 데이터를 반환
+
+    except Exception as e:
+        print(f"오류 발생: {e}")
+        return None  # 예외 발생 시 None을 반환
