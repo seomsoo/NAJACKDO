@@ -42,17 +42,12 @@ public class BookData {
 			return search;
 		}
 
-		public static Search of(Book book, List<Book> userInterestingBooks){
+		public static Search of(Book book, List<Book> userInterestingBooks) {
 			Search search = from(book);
 			search.isInterest = userInterestingBooks.contains(book);
 			return search;
 		}
 
-	}
-
-	@Data
-	public static class Interest {
-		Long bookId;
 	}
 
 	@Data
