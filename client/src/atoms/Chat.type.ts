@@ -34,3 +34,8 @@ export interface IChatContent {
   talkType: "MESSAGE" | "PAY" | "RETURN";
   time: string;
 }
+
+export interface IChatReview{
+  rentalId: number;
+  revieweeId: number;
+}
