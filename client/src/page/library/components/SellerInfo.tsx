@@ -1,3 +1,4 @@
+import BaseProfile from "components/common/BaseProfile";
 import { IoIosLeaf } from "react-icons/io";
 
 interface SellerInfoProps {
@@ -16,11 +17,7 @@ const SellerInfo = ({ seller }: SellerInfoProps) => {
   return (
     <div className="flex flex-row justify-between items-center my-5">
       <div className="flex flex-row">
-        <img
-        src={seller.profileImage || '/basic_profile.png'}
-        alt='profile'
-        className='h-16 w-16 rounded-full '
-      />
+       <BaseProfile userImage={seller.profileImage} width="12" height="12" />
         <div className="ml-3 flex flex-col">
           <span className="font-bold text-xl mb-1">{seller.nickname}</span>
 

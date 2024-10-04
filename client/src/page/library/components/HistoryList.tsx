@@ -1,4 +1,5 @@
 import { IHistory } from "atoms/History.type";
+import BaseProfile from "components/common/BaseProfile";
 import {
   Accordion,
   AccordionContent,
@@ -36,11 +37,7 @@ const HistoryList: React.FC<IHistoryListProps> = ({ historyData, title }) => {
               value={history.rentalId.toString()}
             >
               <AccordionTrigger className="flex items-center">
-                <img
-                  src={history.otherUseProfileImg}
-                  alt="Profile"
-                  className="w-10 h-10 rounded-full mr-4"
-                />
+                <BaseProfile userImage={history.otherUseProfileImg} width="12" height="12" />
                 <div className="flex flex-col">
                   <div className="font-semibold">
                     {history.otherUseNickName}
