@@ -1,10 +1,11 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { getLocationRange, postMyLocation } from "api/locationApi";
-import { ILocationRange } from "atoms/Location.type";
-import { RangeSlider } from "components/ui/rangeslider";
-import { useEffect, useState } from "react";
-import { IoIosArrowBack } from "react-icons/io";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { getLocationRange, postMyLocation } from 'api/locationApi';
+import { ILocationRange } from 'atoms/Location.type';
+import Loading from 'components/common/Loading';
+import { RangeSlider } from 'components/ui/rangeslider';
+import { useEffect, useState } from 'react';
+import { IoIosArrowBack } from 'react-icons/io';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 declare global {
   interface Window {
@@ -25,25 +26,25 @@ const RangeSetting = ({ selectedLocation }) => {
     isLoading,
     isError,
   } = useQuery<ILocationRange[]>({
-    queryKey: ["locationRange"],
+    queryKey: ['locationRange'],
     queryFn: () => getLocationRange(latitude, longitude),
   });
-  console.log("locationRange", locationRange);
-  console.log("제발", locationRange?.[range]);
+  console.log('locationRange', locationRange);
+  console.log('제발', locationRange?.[range]);
 
   useEffect(() => {
     if (!locationRange || !map) {
-      console.log("불러오는 중");
+      console.log('불러오는 중');
       return;
     }
-    console.log("불러옴");
+    console.log('불러옴');
 
     // 폴리곤을 그리기 위한 함수 호출
     displayPolygons(locationRange?.[range]);
 
     function displayPolygons(locationRanges: any) {
       locationRanges.forEach((location) => {
-        console.log("으아악 포이치", location);
+        console.log('으아악 포이치', location);
         const polygonCoordinates = parsePolygon(location.polygon);
         if (polygonCoordinates.length > 0) {
           const polygonPath = polygonCoordinates.map(
@@ -53,10 +54,10 @@ const RangeSetting = ({ selectedLocation }) => {
           const polygon = new window.kakao.maps.Polygon({
             path: polygonPath,
             strokeWeight: 2.5,
-            strokeColor: "#E8B900",
+            strokeColor: '#E8B900',
             strokeOpacity: 1,
-            strokeStyle: "solid",
-            fillColor: "#E8B900",
+            strokeStyle: 'solid',
+            fillColor: '#E8B900',
             fillOpacity: 0.4,
           });
 
@@ -68,18 +69,18 @@ const RangeSetting = ({ selectedLocation }) => {
     function parsePolygon(polygon: string) {
       if (!polygon) return [];
       const polygonArray = polygon
-        .replace("MULTIPOLYGON (((", "")
-        .replace(")))", "")
-        .split(", ")
-        .map((latlng) => latlng.split(" ").map(Number));
+        .replace('MULTIPOLYGON (((', '')
+        .replace(')))', '')
+        .split(', ')
+        .map((latlng) => latlng.split(' ').map(Number));
 
-      console.log("polygonArray", polygonArray);
+      console.log('polygonArray', polygonArray);
       return polygonArray;
     }
   }, [locationRange, map]);
 
   useEffect(() => {
-    const mapContainer = document.getElementById("kakaomap");
+    const mapContainer = document.getElementById('kakaomap');
     if (!mapContainer) {
       setTimeout(() => setMapLoaded((mapLoaded) => !mapLoaded), 1000);
       return;
@@ -93,12 +94,12 @@ const RangeSetting = ({ selectedLocation }) => {
   }, [latitude, longitude, mapLoaded, range]);
 
   const mutation = useMutation({
-    mutationKey: ["location"],
+    mutationKey: ['location'],
     mutationFn: postMyLocation,
 
     onSuccess: () => {
-      alert("오예 성공");
-      navigate("/");
+      alert('오예 성공');
+      navigate('/');
     },
   });
 
@@ -108,15 +109,15 @@ const RangeSetting = ({ selectedLocation }) => {
       distanceMeters: range * 0.005 + 0.02,
     });
     console.log(
-      "locationCode",
+      'locationCode',
       locationCode,
-      "distanceMeters",
+      'distanceMeters',
       range * 0.005 + 0.02
     );
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (isError) {
@@ -150,7 +151,7 @@ const RangeSetting = ({ selectedLocation }) => {
           onClick={handleLocationClick}
         >
           <span className="font-bold">
-            {locationName.split(" ").slice(-1)[0]}
+            {locationName.split(' ').slice(-1)[0]}
           </span>
           으로 지역 설정
         </button>

@@ -1,52 +1,53 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { getBookInfo, postRegisterBook } from "api/bookApi";
-import ApplyBookInfo from "page/bookapply/components/ApplyBookInfo";
-import { HiOutlineCamera } from "react-icons/hi2";
-import { IoChevronBack } from "react-icons/io5";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { getBookInfo, postRegisterBook } from 'api/bookApi';
+import Loading from 'components/common/Loading';
+import ApplyBookInfo from 'page/bookapply/components/ApplyBookInfo';
+import { HiOutlineCamera } from 'react-icons/hi2';
+import { IoChevronBack } from 'react-icons/io5';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const BookApplyPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { kind, keyword } = location.state;
-  console.log("kind", kind);
-  console.log("keyword", keyword);
+  console.log('kind', kind);
+  console.log('keyword', keyword);
 
   const {
     data: bookInfo,
     isLoading: bookInfoLoading,
     isError,
   } = useQuery({
-    queryKey: ["book", "apply"],
+    queryKey: ['book', 'apply'],
     queryFn: () => getBookInfo({ kind, keyword }),
   });
 
   const mutation = useMutation({
-    mutationKey: ["book", "isbn"],
+    mutationKey: ['book', 'isbn'],
     mutationFn: postRegisterBook,
 
     onSuccess: () => {
-      navigate("/library/my-bookcase");
+      navigate('/library/my-bookcase');
     },
 
     onError: (error) => {
-      console.log("apply error", error);
+      console.log('apply error', error);
     },
   });
 
   const handleApply = () => {
-    console.log("isbn", bookInfo.isbn);
+    console.log('isbn', bookInfo.isbn);
     if (bookInfo.isbn) {
       mutation.mutate(bookInfo.isbn);
     }
   };
 
   if (bookInfoLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (bookInfo) {
-    console.log("bookInfo", bookInfo);
+    console.log('bookInfo', bookInfo);
   }
 
   return (
@@ -77,7 +78,7 @@ const BookApplyPage = () => {
         <div className="flex flex-row justify-center space-x-4 my-8">
           <div
             className="flex flex-row justify-center items-center bg-sub1 px-5 py-2 rounded-lg cursor-pointer"
-            onClick={() => navigate("/apply/isbn")}
+            onClick={() => navigate('/apply/isbn')}
           >
             <span className="text-white font-bold text-sm">
               도서 다시 촬영하기

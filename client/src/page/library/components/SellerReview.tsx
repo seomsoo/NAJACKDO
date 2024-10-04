@@ -1,6 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import { getOtherProfile } from "api/profileApi";
-import { TbMessage } from "react-icons/tb";
+import { useQuery } from '@tanstack/react-query';
+import { getOtherProfile } from 'api/profileApi';
+import Loading from 'components/common/Loading';
+import { TbMessage } from 'react-icons/tb';
 
 interface SellerReviewProps {
   nickname: string;
@@ -12,12 +13,12 @@ const SellerReview = ({ nickname }: SellerReviewProps) => {
     isLoading: isOtherProfileLoading,
     isError: isOtherProfileError,
   } = useQuery({
-    queryKey: ["profile", nickname],
+    queryKey: ['profile', nickname],
     queryFn: () => getOtherProfile(nickname),
   });
 
   if (isOtherProfileLoading) {
-    return <div>로딩 중...</div>;
+    return <Loading />;
   }
 
   if (isOtherProfileError) {

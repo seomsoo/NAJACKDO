@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
 import BookcaseContainer from '../components/BookcaseContainer';
 import BookContainer from '../components/BookContainer';
 import { getInterestBookCase } from 'api/bookcaseApi';
+import Loading from 'components/common/Loading';
 
 const MyFavoritePage = () => {
   const navigate = useNavigate();
@@ -34,8 +35,7 @@ const MyFavoritePage = () => {
     queryFn: getInterestbook,
   });
 
-  if (isInterestBooksLoading || isBookcasesLoading)
-    return <div>로딩 중...</div>;
+  if (isInterestBooksLoading || isBookcasesLoading) return <Loading />;
 
   if (isInterestBooksError || isBookcasesError)
     return <div>오류가 발생했습니다.</div>;

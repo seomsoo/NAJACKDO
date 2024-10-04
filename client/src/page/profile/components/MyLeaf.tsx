@@ -1,8 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
-import { getUserInfo } from "api/profileApi";
-import LeafBarGraph from "page/profile/components/LeafBarGraph";
-import { IoIosArrowForward, IoIosLeaf } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
+import { useQuery } from '@tanstack/react-query';
+import { getUserInfo } from 'api/profileApi';
+import Loading from 'components/common/Loading';
+import LeafBarGraph from 'page/profile/components/LeafBarGraph';
+import { IoIosArrowForward, IoIosLeaf } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
 
 const MyLeaf = () => {
   const navigate = useNavigate();
@@ -12,19 +13,19 @@ const MyLeaf = () => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["profile"],
+    queryKey: ['profile'],
     queryFn: getUserInfo,
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   const leaf = profileInfo?.cash;
   const userName = profileInfo?.nickname;
 
   const goToLeaf = () => {
-    navigate("/profile/my-leaf", { state: { leaf, userName } });
+    navigate('/profile/my-leaf', { state: { leaf, userName } });
   };
 
   if (isError) {
@@ -56,12 +57,12 @@ const MyLeaf = () => {
       <LeafBarGraph
         ratio={totalCash ? saveCash / totalCash : 0}
         value={saveCash}
-        label={"절약 책잎"}
+        label={'절약 책잎'}
       />
       <LeafBarGraph
         ratio={totalCash ? earnCash / totalCash : 0}
         value={earnCash}
-        label={"모은 책잎"}
+        label={'모은 책잎'}
       />
     </div>
   );
