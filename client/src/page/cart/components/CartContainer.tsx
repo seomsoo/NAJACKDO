@@ -40,14 +40,11 @@ const CartContainer = ({
     <div className="mx-3 my-5 bg-white/30 shadow rounded-lg p-4">
       <div className="flex flex-row item-center justify-between">
         <span className="flex font-semibold">
-          <p className="text-[#79AC78]">{ownerUsername}</p>
+          <p className="text-sub8">{ownerUsername}</p>
           님의 책장
         </span>
       </div>
-      <div
-        className="border-y-[1px] border-[#776B5D]/50"
-        id={cartId.toString()}
-      >
+      <div className="border-y-[1px] border-sub7/50" id={cartId.toString()}>
         {cartItems.map((item, index) => {
           return (
             <div className="w-[95%] mx-auto" key={index}>
@@ -60,7 +57,7 @@ const CartContainer = ({
                 bookImage={item.bookImage}
               />
               <div
-                className={`${index !== cartItems.length - 1 ? "border-b opacity-50 border-[#776B5D]/30" : ""}`}
+                className={`${index !== cartItems.length - 1 ? "border-b opacity-50 border-sub7/30" : ""}`}
               />
             </div>
           );
@@ -78,7 +75,7 @@ const CartContainer = ({
       </div>
       <div className="flex justify-center mt-4">
         <button
-          className="w-4/5 bg-[#776B5D] text-[12px] text-white rounded-[12px] p-2 text-center"
+          className="w-4/5 bg-sub7 text-[12px] text-white rounded-[12px] p-2 text-center"
           onClick={handleCreateChatRoom}
         >
           도서 대출 신청

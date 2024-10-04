@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const KaPayCancelPage = () => {
   const navigate = useNavigate();
   const canCloseWindow = window.opener !== null && !window.opener.closed;
-  const bottonStyle = "bg-[#B0A695] hover:bg-[#776B5D]";
+  const bottonStyle = "bg-sub6 hover:bg-sub7";
 
   const handleRedirect = () => {
     navigate("/profile");
@@ -20,7 +20,7 @@ const KaPayCancelPage = () => {
       <div className="flex flex-row items-center my-10">
         <IoIosLeaf color="#79AC78" size={29} className="mx-1" />
         <p className="font-bold">
-          <span className="text-[#A6B37D] text-xl maplestory mr-1">책잎</span>
+          <span className="text-sub2 text-xl maplestory mr-1">책잎</span>
           결제 취소가 완료되었습니다.
         </p>
       </div>

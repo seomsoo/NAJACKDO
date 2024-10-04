@@ -220,7 +220,11 @@ const ChatBookInfo = ({
         />
       )}
       {step === ChatRentalStep.RETURNED && (
-        <ReviewButton rentalId={bookData.rentalId} ownerName={ownerName} />
+        <ReviewButton
+          rentalId={bookData.rentalId}
+          ownerName={ownerName}
+          customerName={customerName}
+        />
       )}
     </div>
   );

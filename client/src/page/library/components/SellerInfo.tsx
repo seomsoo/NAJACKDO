@@ -1,13 +1,13 @@
 import { IoIosLeaf } from "react-icons/io";
 
 interface SellerInfoProps {
-  seller : {
+  seller: {
     nickname: string;
     mannerScore: number;
     locationName: string;
     ondayPrice: number;
     bookStatus: string;
-  }
+  };
 }
 
 const SellerInfo = ({ seller }: SellerInfoProps) => {
@@ -21,8 +21,8 @@ const SellerInfo = ({ seller }: SellerInfoProps) => {
             <p className="text-[#B97070] bg-[#B97070]/30 rounded-xl px-2 py-0.5 text-sm mr-2">
               {seller.mannerScore} 점
             </p>
-            <p className="text-[#5F6F52] bg-[#C0C78C] rounded-xl px-2 py-0.5 text-sm">
-              {seller.locationName.split(' ').slice(-1)[0]}
+            <p className="text-main bg-sub1 rounded-xl px-2 py-0.5 text-sm">
+              {seller.locationName.split(" ").slice(-1)[0]}
             </p>
           </div>
         </div>
@@ -34,7 +34,7 @@ const SellerInfo = ({ seller }: SellerInfoProps) => {
           <p className="font-bold mx-1">{seller.ondayPrice}</p>
           <p className="text-sm text-[#A7A7A7]">/ 일</p>
         </div>
-        <p className="text-white bg-[#C0C78C] rounded-xl px-2 py-0.5 my-1 text-sm text-center">
+        <p className="text-white bg-sub1 rounded-xl px-2 py-0.5 my-1 text-sm text-center">
           {seller.bookStatus === "AVAILABLE" ? "대여 가능" : "대여 불가능"}
         </p>
       </div>

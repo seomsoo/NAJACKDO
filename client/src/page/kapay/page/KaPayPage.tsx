@@ -1,10 +1,10 @@
+import { useMutation } from "@tanstack/react-query"; // useMutation 사용
+import { chargeKapay } from "api/kapayApi"; // API 함수 가져오기
 import { Button } from "components/ui/button";
 import { useEffect, useState } from "react";
 import { IoIosLeaf } from "react-icons/io";
 import { IoChevronBack } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import { chargeKapay } from "api/kapayApi"; // API 함수 가져오기
-import { useMutation } from "@tanstack/react-query"; // useMutation 사용
 
 const KapayPage = () => {
   const navigate = useNavigate();
@@ -27,7 +27,9 @@ const KapayPage = () => {
       /windows phone/i,
     ];
 
-    const detectedDeviceType = mobileDevices.some((device) => userAgent.match(device))
+    const detectedDeviceType = mobileDevices.some((device) =>
+      userAgent.match(device)
+    )
       ? "mobile"
       : "pc";
 
@@ -41,7 +43,13 @@ const KapayPage = () => {
 
   const mutation = useMutation({
     mutationKey: ["kapay", "charge"],
-    mutationFn: () => chargeKapay(deviceType as string, openType as string, itemName, totalAmount),
+    mutationFn: () =>
+      chargeKapay(
+        deviceType as string,
+        openType as string,
+        itemName,
+        totalAmount
+      ),
     onSuccess: (redirectUrl) => {
       if (deviceType === "pc") {
         const width = 426;
@@ -81,17 +89,20 @@ const KapayPage = () => {
 
   return (
     <div className="mx-[25px]">
-      <div onClick={() => navigate(-1)} className="cursor-pointer py-4 flex flex-row items-center">
+      <div
+        onClick={() => navigate(-1)}
+        className="cursor-pointer py-4 flex flex-row items-center"
+      >
         <IoChevronBack size={25} color="#545454" />
       </div>
       <p className="font-bold text-xl my-4">
-        <span className="text-[22px] text-[#79AC78]">책잎</span> 충전하기
+        <span className="text-[22px] text-sub8">책잎</span> 충전하기
       </p>
       <div className="flex flex-col">
         <div className="flex flex-row items-center mt-10">
           <IoIosLeaf color="#79AC78" size={29} className="mx-2" />
           <p className="font-bold text-xl text-end">
-            <span className="text-[#776B5D] text-2xl">책잎</span> 으로
+            <span className="text-sub7 text-2xl">책잎</span> 으로
           </p>
         </div>
         <p className="mx-2 my-6 pl-4 bg-white/50 font-bold h-10 flex items-center rounded-xl">
@@ -101,7 +112,7 @@ const KapayPage = () => {
           {[5000, 10000, 15000].map((amount) => (
             <Button
               key={amount}
-              className="bg-[#B0A695] hover:bg-[#776B5D]"
+              className="bg-sub6 hover:bg-sub7"
               onClick={() => setAmount(amount)}
             >
               {amount.toLocaleString()}원
@@ -109,12 +120,14 @@ const KapayPage = () => {
           ))}
         </div>
         <Button
-          className="bg-[#776B5D] hover:bg-[#776B5D] rounded-xl text-white h-10 flex items-center justify-center mt-16"
+          className="bg-sub7 hover:bg-sub7 rounded-xl text-white h-10 flex items-center justify-center mt-16"
           onClick={handleChargeClick}
         >
           충전하기
         </Button>
-        {mutation.isError && <p className="text-red-500 mt-2">결제 준비 중 오류가 발생했습니다.</p>}
+        {mutation.isError && (
+          <p className="text-red-500 mt-2">결제 준비 중 오류가 발생했습니다.</p>
+        )}
       </div>
     </div>
   );

@@ -27,13 +27,13 @@ const MyBookGrid = ({ books, userId }: MyBookGridProps) => {
   const renderBadge = (bookStatus: string) => {
     if (bookStatus === "RENTED") {
       return (
-        <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-[#5f6f52] p-2 px-3 rounded-2xl text-white font-light text-xs text-nowrap mb-1">
+        <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-main p-2 px-3 rounded-2xl text-white font-light text-xs text-nowrap mb-1">
           대여 중
         </span>
       );
     } else if (bookStatus === "UNAVAILABLE") {
       return (
-        <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-[#D96363] p-2 px-3 rounded-2xl text-white font-light text-xs text-nowrap mb-1">
+        <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-sub9 p-2 px-3 rounded-2xl text-white font-light text-xs text-nowrap mb-1">
           대여 불가
         </span>
       );

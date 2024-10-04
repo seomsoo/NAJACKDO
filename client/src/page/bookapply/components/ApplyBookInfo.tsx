@@ -32,7 +32,7 @@ const ApplyBookInfo = ({
     <div className="relative flex flex-row items-center bg-[#CED59D]/50 rounded-2xl shadow-lg px-6 py-5">
       {bookcase && (
         <div
-          className={`flex items-center justify-center w-5 h-5 border-2 rounded-lg cursor-pointer border-[#5F6F52] absolute top-5 right-6 ${isChecked ? "bg-[#5F6F52]" : "bg-transparent"}`}
+          className={`flex items-center justify-center w-5 h-5 border-2 rounded-lg cursor-pointer border-main absolute top-5 right-6 ${isChecked ? "bg-main" : "bg-transparent"}`}
           onClick={handleClick}
         >
           {isChecked && <FaCheck size={11} color="white" />}

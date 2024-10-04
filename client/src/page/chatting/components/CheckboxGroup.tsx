@@ -1,19 +1,19 @@
-import { useMutation } from '@tanstack/react-query';
-import { postReview } from 'api/rentalApi';
-import { FaCheck } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { useMutation } from "@tanstack/react-query";
+import { postReview } from "api/rentalApi";
+import { FaCheck } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 type CheckboxGroupProps = {
-  selectedEmoji: 'like' | 'dislike';
+  selectedEmoji: "like" | "dislike";
   checkedItems: {
-    [key in 'clean' | 'punctual' | 'polite' | 'responsive']: boolean;
+    [key in "clean" | "punctual" | "polite" | "responsive"]: boolean;
   };
   checkboxOptions: {
-    id: 'clean' | 'punctual' | 'polite' | 'responsive';
+    id: "clean" | "punctual" | "polite" | "responsive";
     label: string;
   }[];
   onCheckboxChange: (
-    item: 'clean' | 'punctual' | 'polite' | 'responsive'
+    item: "clean" | "punctual" | "polite" | "responsive"
   ) => void;
   isAnyChecked: boolean;
   rentalId: number;
@@ -29,17 +29,15 @@ function CheckboxGroup({
 }: CheckboxGroupProps) {
   const navigate = useNavigate();
 
-
-
   const mutation = useMutation({
-    mutationKey: ['review'],
+    mutationKey: ["review"],
     mutationFn: postReview,
-    
+
     onSuccess: () => {
-      navigate('/'); // 일단 메인페이지
+      navigate("/"); // 일단 메인페이지
     },
   });
-  
+
   const handelPostReview = () => {
     const submitList = new Array();
     const key = selectedEmoji === "like" ? 1 : 5;
@@ -48,10 +46,10 @@ function CheckboxGroup({
       if (item) {
         submitList.push(index + key);
       }
-    })
-    console.log("cartId", rentalId)
-    console.log("checkedItems", checkedItems)
-    console.log("submitList", submitList)
+    });
+    console.log("cartId", rentalId);
+    console.log("checkedItems", checkedItems);
+    console.log("submitList", submitList);
     mutation.mutate({
       rentalId: rentalId, // 카트아이디
       reviewItemIds: submitList,
@@ -59,21 +57,21 @@ function CheckboxGroup({
   };
 
   return (
-    <div className='gap-2 flex flex-col'>
-      <div className='font-semibold text-lg pt-7 pb-4'>
+    <div className="gap-2 flex flex-col">
+      <div className="font-semibold text-lg pt-7 pb-4">
         <span>
-          {selectedEmoji === 'like'
-            ? '어떤 점이 좋았나요?'
-            : '어떤 점이 별로였나요?'}
+          {selectedEmoji === "like"
+            ? "어떤 점이 좋았나요?"
+            : "어떤 점이 별로였나요?"}
         </span>
       </div>
 
       {checkboxOptions.map((option) => (
-        <div key={option.id} className='flex items-center gap-2'>
+        <div key={option.id} className="flex items-center gap-2">
           <input
-            type='checkbox'
+            type="checkbox"
             id={option.id}
-            className='hidden peer'
+            className="hidden peer"
             checked={checkedItems[option.id]}
             onChange={() => onCheckboxChange(option.id)}
           />
@@ -81,21 +79,21 @@ function CheckboxGroup({
             htmlFor={option.id}
             className={`flex items-center justify-center w-6 h-6 border-2 rounded-lg cursor-pointer ${
               checkedItems[option.id]
-                ? 'border-[#5F6F52] bg-[#5F6F52]'
-                : 'border-gray-400'
+                ? "border-main bg-main"
+                : "border-gray-400"
             }`}
           >
             {checkedItems[option.id] && (
-              <FaCheck className='text-white w-4 h-4' />
+              <FaCheck className="text-white w-4 h-4" />
             )}
           </label>
-          <span className='text-sm font-medium'>{option.label}</span>
+          <span className="text-sm font-medium">{option.label}</span>
         </div>
       ))}
 
       <button
-        className={`font-bold bg-[#776B5D] text-white w-full text-lg mt-8 py-3 rounded-lg ${
-          isAnyChecked ? 'opacity-100' : 'opacity-50 cursor-not-allowed'
+        className={`font-bold bg-sub7 text-white w-full text-lg mt-8 py-3 rounded-lg ${
+          isAnyChecked ? "opacity-100" : "opacity-50 cursor-not-allowed"
         }`}
         disabled={!isAnyChecked}
         onClick={handelPostReview}

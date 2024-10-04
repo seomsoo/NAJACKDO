@@ -6,12 +6,14 @@ import CheckboxGroup from "../components/CheckboxGroup";
 import EmojiSelector from "../components/EmojiSelector";
 
 const ReviewPage = () => {
-  const { rentalId, ownerName } = useLocation().state;
-  const userNickname = useUserStore().nickname;
+  const { rentalId, ownerName, customerName } = useLocation().state;
+  const { nickname } = useUserStore();
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);
   };
+
+  const isOwner = nickname === ownerName;
 
   const initialState = {
     clean: false,
@@ -89,7 +91,7 @@ const ReviewPage = () => {
             <span>90일 완성 돈버는 습관</span>
             <span className="text-xs">
               <span className="text-gray-500">거래한 이웃 </span>
-              {ownerName}
+              {isOwner ? customerName : ownerName}
             </span>
           </div>
         </div>
@@ -97,9 +99,11 @@ const ReviewPage = () => {
       <main className="px-6">
         <div className="flex flex-col gap-2 py-8 text-2xl font-semibold">
           <span>
-            <span className="text-[#5F6F52]">{userNickname}</span>님,
+            <span className="text-main">{nickname}</span>님,
           </span>
-          <span className="text-base">{ownerName}님과 거래 어떠셨나요?</span>
+          <span className="text-base">
+            {isOwner ? customerName : ownerName}님과 거래 어떠셨나요?
+          </span>
         </div>
 
         <EmojiSelector

@@ -50,7 +50,7 @@ const Interest = () => {
             onClick={() => toggleInterest(interest.id)}
             className={`inline-flex items-center gap-2 py-2 px-4 border rounded-full ${
               selectedInterests.includes(interest.id)
-                ? "bg-[#5F6F52] text-white"
+                ? "bg-main text-white"
                 : "text-gray-700 border-gray-300"
             }`}
           >

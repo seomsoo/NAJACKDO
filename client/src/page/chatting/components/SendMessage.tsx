@@ -8,7 +8,7 @@ const SendMessage = ({ message, talkType }: SendMessageProps) => {
   return (
     <div className="flex flex-row justify-end w-full">
       {talkType === "MESSAGE" ? (
-        <p className="bg-[#5F6F52] p-3 rounded-xl text-white rounded-tr-none text-right ml-auto">
+        <p className="bg-main p-3 rounded-xl text-white rounded-tr-none text-right ml-auto">
           {message}
         </p>
       ) : (

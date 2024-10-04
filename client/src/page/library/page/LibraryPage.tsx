@@ -1,11 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { getInterestbook } from "api/bookApi";
+import { getMyBookCase } from "api/bookcaseApi";
+import { getUserInfo } from "api/profileApi";
 import { IoIosSearch } from "react-icons/io";
 import { IoCartOutline, IoNotificationsOutline } from "react-icons/io5";
 import { SlArrowRight } from "react-icons/sl";
-import { useQuery } from "@tanstack/react-query";
-import { getUserInfo } from "api/profileApi";
-import { getInterestbook } from "api/bookApi";
-import { getMyBookCase } from "api/bookcaseApi";
+import { Link, useNavigate } from "react-router-dom";
 
 const LibraryPage = () => {
   const navigate = useNavigate();
@@ -50,22 +50,25 @@ const LibraryPage = () => {
   });
 
   // 로딩 상태 처리
-  if (isUserLoading || isInterestBooksLoading || isMyBookCaseLoading) return <div>로딩 중...</div>;
+  if (isUserLoading || isInterestBooksLoading || isMyBookCaseLoading)
+    return <div>로딩 중...</div>;
 
   // 에러 상태 처리
   if (isUserError || isInterestBooksError || isMyBookCaseError)
     return <div>오류가 발생했습니다.</div>;
 
-  const myBookCaseImages = myBookCase?.displayBooks.slice(0, 3).map((book) => book.cover) || [];
+  const myBookCaseImages =
+    myBookCase?.displayBooks.slice(0, 3).map((book) => book.cover) || [];
 
-  const favoriteImages = interestBooks?.slice(0, 3).map((book) => book.cover) || [];
+  const favoriteImages =
+    interestBooks?.slice(0, 3).map((book) => book.cover) || [];
 
   return (
     <div>
       <header className="flex items-center justify-between p-4 px-6 mb-3 ">
         <span className="font-extrabold text-2xl">
-          <span className="hakgyo text-3xl text-[#5F6F52]">
-            {userInfo?.nickname || '사용자'}
+          <span className="hakgyo text-3xl text-main">
+            {userInfo?.nickname || "사용자"}
           </span>
           님의 서재
         </span>
@@ -101,7 +104,9 @@ const LibraryPage = () => {
                       />
                     ))
                   ) : (
-                    <span className="hakgyo text-2xl mt-10 mb-12">나의 책장이 비었어요.</span>
+                    <span className="hakgyo text-2xl mt-10 mb-12">
+                      나의 책장이 비었어요.
+                    </span>
                   )}
                 </div>
                 <img src="/images/Library/bar.png" alt="bar" />
@@ -118,9 +123,21 @@ const LibraryPage = () => {
               <article>
                 <div className="flex justify-center gap-8">
                   {/* dummy 이미지 */}
-                  <img src="ssafy.png" className="w-20 h-28 object-cover" alt="dummy" />
-                  <img src="ssafy.png" className="w-20 h-28 object-cover" alt="dummy" />
-                  <img src="ssafy.png" className="w-20 h-28 object-cover" alt="dummy" />
+                  <img
+                    src="ssafy.png"
+                    className="w-20 h-28 object-cover"
+                    alt="dummy"
+                  />
+                  <img
+                    src="ssafy.png"
+                    className="w-20 h-28 object-cover"
+                    alt="dummy"
+                  />
+                  <img
+                    src="ssafy.png"
+                    className="w-20 h-28 object-cover"
+                    alt="dummy"
+                  />
                 </div>
                 <img src="/images/Library/bar.png" alt="bar" />
               </article>
@@ -146,7 +163,9 @@ const LibraryPage = () => {
                       />
                     ))
                   ) : (
-                    <span className="hakgyo text-2xl mt-10 mb-12">관심 도서가 없습니다.</span>
+                    <span className="hakgyo text-2xl mt-10 mb-12">
+                      관심 도서가 없습니다.
+                    </span>
                   )}
                 </div>
                 <img src="/images/Library/bar.png" alt="bar" />

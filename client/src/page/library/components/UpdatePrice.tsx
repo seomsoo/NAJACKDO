@@ -15,14 +15,13 @@ import { IoIosLeaf } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
 interface UpdatePriceProps {
-  userBookId: number
+  userBookId: number;
   price: number;
 }
 
 const UpdatePrice = ({ userBookId, price }: UpdatePriceProps) => {
   const [updatePrice, setUpdatePrice] = useState(price);
   const navigate = useNavigate();
-
 
   const mutation = useMutation({
     mutationKey: ["RentalCostData"],
@@ -50,7 +49,7 @@ const UpdatePrice = ({ userBookId, price }: UpdatePriceProps) => {
   return (
     <Drawer>
       <DrawerTrigger>
-        <p className="bg-[#776B5D] text-white font-bold px-32 py-2 rounded-lg">
+        <p className="bg-sub7 text-white font-bold px-32 py-2 rounded-lg">
           대여 가격 수정
         </p>
       </DrawerTrigger>
@@ -71,8 +70,11 @@ const UpdatePrice = ({ userBookId, price }: UpdatePriceProps) => {
           </DrawerDescription>
         </DrawerHeader>
         <DrawerFooter className="flex flex-row items-center justify-center space-x-11">
-          <DrawerClose className="bg-[#776B5D] text-white font-bold px-8 py-2 rounded-lg mx-5">
-            <p onClick={handleUpdateRentalCost} className="bg-[#776B5D] text-white font-bold rounded-lg px-20">
+          <DrawerClose className="bg-sub7 text-white font-bold px-8 py-2 rounded-lg mx-5">
+            <p
+              onClick={handleUpdateRentalCost}
+              className="bg-sub7 text-white font-bold rounded-lg px-20"
+            >
               대여 가격 수정
             </p>
           </DrawerClose>

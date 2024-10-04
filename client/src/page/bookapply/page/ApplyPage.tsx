@@ -19,13 +19,13 @@ const ApplyPage = () => {
       <ApplyGuide />
       <div className="flex flex-row justify-center mt-6">
         <Popover>
-          <PopoverTrigger className="bg-[#B0A695] text-white font-bold w-[153px] h-[54px] rounded-xl mx-2">
+          <PopoverTrigger className="bg-sub6 text-white font-bold w-[153px] h-[54px] rounded-xl mx-2">
             도서 단일 등록
           </PopoverTrigger>
           <PopoverContent
             align="start"
             side="top"
-            className="font-bold border-2 border-[#B0A695]"
+            className="font-bold border-2 border-sub6"
           >
             <div
               className="flex flex-row items-center cursor-pointer"
@@ -34,12 +34,12 @@ const ApplyPage = () => {
               <LuCamera size={20} className="mr-3" />
               <span>단일 도서 촬영</span>
             </div>
-            <div className="border-[0.5px] border-[#B0A695] my-1.5" />
+            <div className="border-[0.5px] border-sub6 my-1.5" />
             <TextApply />
           </PopoverContent>
         </Popover>
         <button
-          className="bg-[#B0A695] text-white font-bold w-[153px] h-[54px] rounded-xl mx-2"
+          className="bg-sub6 text-white font-bold w-[153px] h-[54px] rounded-xl mx-2"
           onClick={() => navigate("/apply/bookcase")}
         >
           책장 등록

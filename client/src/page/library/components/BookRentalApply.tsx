@@ -52,7 +52,7 @@ const BookRentalApply = ({
   return (
     <Drawer>
       <DrawerTrigger>
-        <span className="bg-[#776B5D] text-white rounded-lg py-3 px-2 w-1/5">
+        <span className="bg-sub7 text-white rounded-lg py-3 px-2 w-1/5">
           송금하기
         </span>
       </DrawerTrigger>
@@ -94,12 +94,10 @@ const BookRentalApply = ({
         <DrawerFooter className="flex flex-row items-center justify-center space-x-11">
           <div className="flex flex-row items-center">
             <IoIosLeaf color="#A6B37D" size={25} className="mr-2" />
-            <span className="font-bold text-[#5F6F52] text-lg">
-              {totalLeaf}
-            </span>
+            <span className="font-bold text-main text-lg">{totalLeaf}</span>
           </div>
           <DrawerClose
-            className="bg-[#776B5D] text-white font-bold px-8 py-2 rounded-lg mx-5"
+            className="bg-sub7 text-white font-bold px-8 py-2 rounded-lg mx-5"
             onClick={handleClick}
           >
             송금하기

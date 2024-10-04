@@ -50,7 +50,7 @@ const CartModal = ({ cartOpen, setCartOpen, ownerUsername, cartItems }) => {
                       chatting
                     />
                     <div
-                      className={`${index !== cartItems.length - 1 ? "border-b opacity-50 border-[#776B5D]/30" : ""}`}
+                      className={`${index !== cartItems.length - 1 ? "border-b opacity-50 border-sub7/30" : ""}`}
                     />
                   </div>
                 );

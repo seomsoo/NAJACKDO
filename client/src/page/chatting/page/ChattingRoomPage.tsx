@@ -77,7 +77,7 @@ const ChattingRoomPage = () => {
 
   return (
     <Suspense fallback={<Loading />}>
-      <ChattingRoomHeader ownerName={ownerName} />
+      <ChattingRoomHeader ownerName={ownerName} customerName={customerName} />
       <ChatBookInfo
         client={client}
         cartId={cartId}

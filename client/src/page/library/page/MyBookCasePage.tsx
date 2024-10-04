@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { Link, useNavigate } from "react-router-dom";
+import { getMyBookCase } from "api/bookcaseApi"; // API 호출 함수
 import { BiBookAdd } from "react-icons/bi";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoNotificationsOutline } from "react-icons/io5";
-import { getMyBookCase } from "api/bookcaseApi"; // API 호출 함수
+import { Link, useNavigate } from "react-router-dom";
 import MyBookGrid from "../components/MyBookGrid";
 
 const MyBookCasePage = () => {
@@ -78,11 +78,17 @@ const MyBookCasePage = () => {
           ) : (
             // 책 데이터가 없을 때
             <div className="flex flex-col items-center mt-16">
-              <img src={`${IMG_BASE_URL}/book_icon.png`} alt="book" className="w-40 h-40 mb-6" />
-              <p className="text-lg font-semibold">책장이 텅 비었네요! 첫 책을 추가해보세요.</p>
+              <img
+                src={`${IMG_BASE_URL}/book_icon.png`}
+                alt="book"
+                className="w-40 h-40 mb-6"
+              />
+              <p className="text-lg font-semibold">
+                책장이 텅 비었네요! 첫 책을 추가해보세요.
+              </p>
               <Link
                 to="/apply"
-                className="mt-14 p py-4 w-full bg-[#5f6f52] text-white rounded-lg hover:bg-[#4e5e42]"
+                className="mt-14 p py-4 w-full bg-main text-white rounded-lg hover:bg-[#4e5e42]"
               >
                 책 추가하기
               </Link>

@@ -54,7 +54,7 @@ const BookRentalInfo = ({
         </div>
         <p className="text-xs w-[90%] line-clamp-1 h-[1.2rem]">{author}</p>
         <div className="flex justify-end items-center mt-auto ">
-          <IoIosLeaf className="text-[#79AC78]" />
+          <IoIosLeaf className="text-sub8" />
           <p className="text-xs">{price.toLocaleString()}</p>
         </div>
       </div>
