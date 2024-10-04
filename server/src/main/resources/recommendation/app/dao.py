@@ -59,7 +59,7 @@ def insert_user_book_detail(
             query = """
             INSERT INTO user_book_details (
                 book_detail_id,
-                user_book_id,
+                user_books_id,
                 ripped, 
                 wornout, 
                 back_image_path, 

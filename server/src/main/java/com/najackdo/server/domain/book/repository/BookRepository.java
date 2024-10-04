@@ -13,7 +13,14 @@ import javax.swing.text.html.Option;
 
 public interface BookRepository extends JpaRepository<Book, Long>, BookQueryRepository {
 
-    @Query("SELECT b FROM Book b WHERE b.title LIKE concat('%', :title, '%')")
+    @Query("""
+       SELECT b 
+       FROM Book b 
+       WHERE b.title 
+       LIKE concat('%', :title, '%')
+       ORDER BY b.id DESC
+       LIMIT 1
+       """)
     Optional<Book> findFirstByTitle(@Param("title") String title);
 
     @Query("SELECT b FROM Book b WHERE b.isbn = :isbn")
