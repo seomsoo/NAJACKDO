@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -98,10 +97,12 @@ public class BookService {
 		);
 	}
 
-	public BookData.Search getBook(Long bookId) {
+	public BookData.Search getBook(User user, Long bookId) {
+		List<Book> userInterestingBooks = bookRepository.findInterestingBooks(user.getId()); // 사용자 관심 도서 목록 조회
+
 		return bookRepository.findById(bookId)
-			.map(BookData.Search::from)
-			.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_BOOK));
+			.map(book -> BookData.Search.of(book, userInterestingBooks)) // 관심 도서 여부를 포함한 결과 반환
+			.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_BOOK)); // 도서가 존재하지 않을 경우 예외 발생
 	}
 
 	public BookData.BookCase getMyBookCaseByuserId(Long id) {
@@ -126,7 +127,6 @@ public class BookService {
 		);
 	}
 
-
 	public BookData.Search getBookByIsbn(Long isbn) {
 		Book book = bookRepository.findByIsbn(isbn).orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_BOOK));
 
@@ -143,7 +143,6 @@ public class BookService {
 	public Page<BookData.BookCase> getNearBookCase(User user, Pageable pageable) {
 
 		Set<Object> myLocationCodes = locationCacheRepository.getUserNearLocation(user.getId());
-
 
 		if (myLocationCodes == null || myLocationCodes.isEmpty()) {
 			log.info("myLocationCodes is empty");
