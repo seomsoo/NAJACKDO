@@ -1,29 +1,17 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { getSearch } from "api/searchApi";
 import { ISearch } from "atoms/Search.type";
 import SearchResultBook from "page/search/components/SearchResultBook";
-import { useQuery } from "@tanstack/react-query";
 
 interface SearchResultProps {
   keyword: string;
 }
 
 const SearchResult = ({ keyword }: SearchResultProps) => {
-  const {
-    data: searchData,
-    isLoading: searchLoading,
-    isError: searchError,
-  } = useQuery<ISearch[]>({
+  const { data: searchData } = useSuspenseQuery<ISearch[]>({
     queryKey: ["search", "result"],
     queryFn: () => getSearch(keyword),
   });
-
-  if (searchLoading) {
-    return <div>검색 중...</div>;
-  }
-
-  if (searchData) {
-    console.log("searchData", searchData);
-  }
 
   return (
     <div>

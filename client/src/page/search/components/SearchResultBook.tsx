@@ -4,13 +4,16 @@ import { ISearch } from "atoms/Search.type";
 import CategoryTag from "components/common/CategoryTag";
 import { useState } from "react";
 import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 interface SearchResultBookProps {
   search: ISearch;
 }
 
 const SearchResultBook = ({ search }: SearchResultBookProps) => {
-  const [interestBook, setInterestBook] = useState(false);
+  const navigate = useNavigate();
+  const [interestBook, setInterestBook] = useState(search.interest);
+
   const applyInterest = useMutation({
     mutationKey: ["book", "interest", "apply"],
     mutationFn: () => postInterestbook(search.bookId),
@@ -40,8 +43,16 @@ const SearchResultBook = ({ search }: SearchResultBookProps) => {
     }
   };
 
+  const handleClick = (e) => {
+    e.preventDefault();
+    navigate(`book/${search.bookId}`);
+  };
+
   return (
-    <div className="flex flex-row relative py-4 border-b-[1px]">
+    <div
+      className="flex flex-row relative py-4 border-b-[1px]"
+      onClick={handleClick}
+    >
       <img src={search.cover} alt={search.title} width={108} height={168} />
       <div className="px-3 py-1">
         <p className="font-bold">{search.title}</p>

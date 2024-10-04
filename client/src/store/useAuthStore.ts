@@ -15,6 +15,9 @@ export const useAuthStore = create(
         set({ accessToken });
       },
     }),
-    { name: "auth-store", storage: createJSONStorage(() => sessionStorage) }
+    {
+      name: "auth-store",
+      storage: createJSONStorage(() => sessionStorage),
+    }
   )
 );

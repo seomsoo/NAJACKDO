@@ -2,9 +2,9 @@ import { useMutation } from "@tanstack/react-query";
 import { postSignOut } from "api/profileApi";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "store/useAuthStore";
+import { useUserStore } from "store/useUserStore";
 
 const LogoutButton = () => {
-  const clearTokens = useAuthStore.getState().clearTokens;
   const navigation = useNavigate();
 
   const mutation = useMutation({
@@ -12,7 +12,9 @@ const LogoutButton = () => {
     mutationFn: postSignOut,
 
     onSuccess: () => {
-      clearTokens();
+      useUserStore.persist.clearStorage();
+      useAuthStore.persist.clearStorage();
+      // sessionStorage.clear();
       navigation("/sign-in");
     },
 

@@ -1,10 +1,13 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { getPopularSearch } from "api/searchApi";
 import PopularSearchText from "page/search/components/PopularSearchText";
 
-interface IPopularSearchTextProps {
-  popularData: string[];
-}
+const PopularSearch = () => {
+  const { data: popularSearchData } = useSuspenseQuery<string[]>({
+    queryKey: ["search", "popular"],
+    queryFn: getPopularSearch,
+  });
 
-const PopularSearch = ({ popularData }: IPopularSearchTextProps) => {
   return (
     <div className="my-4">
       <span className="font-bold">인기 검색</span>
@@ -15,10 +18,10 @@ const PopularSearch = ({ popularData }: IPopularSearchTextProps) => {
           msOverflowStyle: "none",
         }}
       >
-        {popularData.length === 0 ? (
+        {popularSearchData.length === 0 ? (
           <p className="w-full text-center">인기 검색어가 없습니다.</p>
         ) : (
-          popularData.map((text, index) => (
+          popularSearchData.map((text, index) => (
             <PopularSearchText key={index} text={text} />
           ))
         )}

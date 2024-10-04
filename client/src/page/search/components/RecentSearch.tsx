@@ -1,19 +1,21 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { getRecentSearch } from "api/searchApi";
 import RecentSearchText from "page/search/components/RecentSearchText";
 
-interface IRecentSearchTextProps {
-  recentData: string[];
-}
+const RecentSearch = () => {
+  const { data: recentSearchData } = useSuspenseQuery<string[]>({
+    queryKey: ["search", "recent"],
+    queryFn: getRecentSearch,
+  });
 
-const RecentSearch = ({ recentData }: IRecentSearchTextProps) => {
-  console.log("recentData", recentData);
   return (
     <div className="my-6 flex flex-col">
       <span className="font-bold">최근 검색</span>
       <div>
-        {recentData.length === 0 ? (
+        {recentSearchData.length === 0 ? (
           <p className="my-[100px] text-center">최근 검색어가 없습니다.</p>
         ) : (
-          recentData.map((text, index) => (
+          recentSearchData.map((text, index) => (
             <RecentSearchText key={index} text={text} />
           ))
         )}
