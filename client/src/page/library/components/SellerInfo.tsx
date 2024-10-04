@@ -11,6 +11,7 @@ interface SellerInfoProps {
 }
 
 const SellerInfo = ({ seller }: SellerInfoProps) => {
+  console.log("locationName", seller.locationName);
   return (
     <div className="flex flex-row justify-between items-center my-5">
       <div className="flex flex-row">
