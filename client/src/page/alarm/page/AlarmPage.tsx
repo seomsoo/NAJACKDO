@@ -1,5 +1,6 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { getAlarm, getAlarmReadSucess } from "api/alarmApi";
+import Loading from "components/common/Loading";
 import Alarm from "page/alarm/components/Alarm";
 import { useCallback, useEffect, useRef } from "react";
 import { IoIosArrowBack } from "react-icons/io";
@@ -72,7 +73,7 @@ const AlarmPage = () => {
   }, [handleObserver]);
 
   if (isAlarmLoading) {
-    return <div>Loading...</div>;
+    return <Loading/>;
   }
 
   if (isAlarmError) {

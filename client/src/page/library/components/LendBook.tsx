@@ -16,7 +16,11 @@ const LendBook = () => {
 
   if (isLendLoading) return <Loading />;
 
-  return <HistoryList historyData={lendHistory} title="내가 빌려준 책" />;
+    if (isLendError) {
+      return <div>대출 기록을 가져오는 데 오류가 발생했습니다.</div>;
+    }
+
+  return <HistoryList historyData={lendHistory} />;
 };
 
 export default LendBook;
