@@ -4,13 +4,16 @@ import { ISearch } from "atoms/Search.type";
 import CategoryTag from "components/common/CategoryTag";
 import { useState } from "react";
 import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 interface SearchResultBookProps {
   search: ISearch;
 }
 
 const SearchResultBook = ({ search }: SearchResultBookProps) => {
-  const [interestBook, setInterestBook] = useState(false);
+  const navigate = useNavigate();
+  const [interestBook, setInterestBook] = useState(search.interest);
+
   const applyInterest = useMutation({
     mutationKey: ["book", "interest", "apply"],
     mutationFn: () => postInterestbook(search.bookId),
@@ -40,10 +43,16 @@ const SearchResultBook = ({ search }: SearchResultBookProps) => {
     }
   };
 
+  const handleClick = () => {
+    navigate(`/book/${search.bookId}`);
+  };
+
   return (
-    <div className="flex flex-row relative py-4 border-b-[1px]">
-      <img src={search.cover} alt={search.title} width={108} height={168} />
-      <div className="px-3 py-1">
+    <div
+      className="flex flex-row relative py-4 border-b-[1px]"
+    >
+      <img src={search.cover} alt={search.title} width={108} height={168} onClick={handleClick} />
+      <div className="px-3 py-1" onClick={handleClick}>
         <p className="font-bold">{search.title}</p>
         <p className="my-2 text-sm">{search.author}</p>
         <p>중고가 : {search.priceStandard}원</p>

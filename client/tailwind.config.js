@@ -64,6 +64,7 @@ module.exports = {
         sub7: "#776B5D",
         sub8: "#79AC78",
         sub9: "#D96363",
+        "najackdo-background" : "#F8F6F3"
       },
       borderRadius: {
         lg: "var(--radius)",

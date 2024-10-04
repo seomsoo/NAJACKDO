@@ -1,3 +1,4 @@
+import KapayPage from "page/kapay/page/KaPayPage";
 import GradePage from "page/profile/page/GradePage";
 import LeafChargePage from "page/profile/page/LeafChargePage";
 import LeafPage from "page/profile/page/LeafPage";
@@ -12,7 +13,7 @@ const ProfileRoute = () => {
       <Route path="/:nickname" element={<OtherProfilePage />} />
       <Route path="/:nickname/my-grade" element={<GradePage />} />
       <Route path="/my-leaf" element={<LeafPage />} />
-      <Route path="/my-leaf/charge" element={<LeafChargePage />} />
+      <Route path="/my-leaf/charge" element={<KapayPage />} />
       <Route path="*" element={<Navigate to="/404" />} />
     </Routes>
   );

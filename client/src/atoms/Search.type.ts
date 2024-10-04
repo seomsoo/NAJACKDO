@@ -11,6 +11,7 @@ export interface ISearch {
   starPoint: number;
   pubDate: string;
   isbn: number;
+  interest: boolean;
 }
 
 export interface IAutoArray {

@@ -1,6 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { postCreateChatRoom } from "api/chatApi";
 import { ICartItem } from "atoms/Cart.type";
+import ConfirmModal from "components/common/ConfirmModal";
+import { useState } from "react";
 import { IoIosLeaf } from "react-icons/io";
 import BookRentalInfo from "./BookRentalInfo";
 
@@ -17,14 +19,16 @@ const CartContainer = ({
   ownerUsername,
   cartItems,
 }: CartContainerProps) => {
+  const [open, setOpen] = useState(false);
   const sumPrice = cartItems.reduce((sum, cartItem) => sum + cartItem.price, 0);
 
   const mutation = useMutation({
     mutationKey: ["chat", "create"],
     mutationFn: () => postCreateChatRoom({ ownerId, cartId }),
 
-    onSuccess: (data) => {
-      console.log("채팅방 생성 성공, mongoDB roomId : ", data);
+    onSuccess: () => {
+      setOpen(true);
+      console.log("EFefefef");
     },
 
     onError: (error) => {
@@ -81,6 +85,12 @@ const CartContainer = ({
           도서 대출 신청
         </button>
       </div>
+      <ConfirmModal
+        content="도서 대출 신청이 완료되었습니다."
+        open={open}
+        setOpen={setOpen}
+        urlPath="/chat"
+      />
     </div>
   );
 };

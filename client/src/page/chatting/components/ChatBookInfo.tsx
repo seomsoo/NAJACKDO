@@ -1,7 +1,7 @@
 import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import { getCartItem } from "api/cartApi";
 import { postRental, postReturn } from "api/rentalApi";
-import { ICartItem, ICartList } from "atoms/Cart.type";
+import { ICartList } from "atoms/Cart.type";
 import CartModal from "page/chatting/components/CartModal";
 import { Message } from "page/chatting/components/ChattingBox";
 import PayComplete from "page/chatting/components/PayComplete";
@@ -53,15 +53,9 @@ const ChatBookInfo = ({
   const [cartOpen, setCartOpen] = useState<boolean>(false);
   const [rentalPeriod, setRentalPeriod] = useState<number[]>([14]);
   const [isOwner, setIsOwner] = useState<boolean>(false);
-  const [book, setBook] = useState<ICartItem>({
-    cartItemId: 1,
-    bookImage: "",
-    bookTitle: "",
-    author: "",
-    price: 1,
-  });
+  const [dayPrice, setDayPrice] = useState<number>(0);
 
-  const userId = useUserStore.getState().userId;
+  const { userId, cash, setCash } = useUserStore.getState();
 
   const { data: bookData } = useSuspenseQuery<ICartList>({
     queryKey: ["cart", "book"],
@@ -71,7 +65,9 @@ const ChatBookInfo = ({
   useEffect(() => {
     if (bookData) {
       setIsOwner(bookData.ownerId === userId);
-      setBook(bookData.cartItems[0]);
+      setDayPrice(
+        bookData.cartItems.reduce((sum, cartItem) => sum + cartItem.price, 0)
+      );
       if (bookData.status === "READY") {
         setStep(ChatRentalStep.READY);
         return;
@@ -96,6 +92,7 @@ const ChatBookInfo = ({
     onSuccess: () => {
       setStep(ChatRentalStep.RENTED);
       complete("PAY");
+      setCash(cash - totalLeaf);
     },
 
     onError: (error) => {
@@ -118,7 +115,11 @@ const ChatBookInfo = ({
   const complete = (talkType) => {
     const completeMessage = ReactDOMServer.renderToString(
       talkType === "PAY" ? (
-        <PayComplete totalLeaf={totalLeaf} />
+        <PayComplete
+          totalLeaf={totalLeaf}
+          rentalPeriod={rentalPeriod[0]}
+          dayPrice={dayPrice}
+        />
       ) : (
         <ReturnComplete />
       )
@@ -130,6 +131,8 @@ const ChatBookInfo = ({
       roomId: roomId,
       senderId: talkType === "PAY" ? customerId : ownerId,
       senderNickname: talkType === "PAY" ? customerName : ownerName,
+      receiverId: talkType === "PAY" ? ownerId : customerId,
+      receiverNickname: talkType === "PAY" ? ownerName : customerName,
       talkType: talkType,
       message: completeMessage,
     };
@@ -150,7 +153,7 @@ const ChatBookInfo = ({
     if (step === ChatRentalStep.PAY) {
       payMutation.mutate({
         cartId: cartId,
-        rentalCost: book.price,
+        rentalCost: dayPrice,
         rentalPeriod: rentalPeriod[0],
         totalPrice: totalLeaf,
       });
@@ -173,19 +176,24 @@ const ChatBookInfo = ({
   return (
     <div className="bg-[#DBD6D3] w-full h-24 px-4 flex flex-row items-center justify-between">
       <div
-        className="flex flex-row items-center w-7/12"
+        className="flex flex-row items-center w-9/12"
         onClick={() => setCartOpen(true)}
       >
         <img
-          src={book.bookImage}
+          src={bookData.cartItems[0].bookImage}
           alt="사진"
           className="rounded-2xl w-16 h-16"
         />
         <div className="ml-2">
-          <span>{book.bookTitle}</span>
+          <p className="text-gray-500">
+            <span className="text-black">
+              {bookData.cartItems[0].bookTitle}
+            </span>{" "}
+            외 {bookData.cartItems.length - 1}권
+          </p>
           <div className="flex flex-row items-center">
             <span className="text-black/50 text-sm">일일</span>
-            <span className="ml-2 mr-1 font-bold">{book.price}</span>
+            <span className="ml-2 mr-1 font-bold">{dayPrice}</span>
             <IoIosLeaf color="#79AC78" size={20} />
           </div>
         </div>
@@ -200,7 +208,7 @@ const ChatBookInfo = ({
       )}
       {step === ChatRentalStep.READY && !isOwner && (
         <BookRentalApply
-          dayprice={book.price}
+          dayprice={bookData.cartItems[0].price}
           handleClick={handleClick}
           totalLeaf={totalLeaf}
           setTotalLeaf={setTotalLeaf}

@@ -1,5 +1,5 @@
 import { BaseResponse } from "atoms/Base.type";
-import { IBestSeller, IBookDetail, IRentalCost, ITimeSpent, IUserBookDetail } from "atoms/Book.type";
+import { IBookDetail, INearAvailableBook, IRentalCost, ITimeSpent, IUserBookDetail, IBestSeller} from "atoms/Book.type";
 import instance, { pythoninstance } from "./clientApi";
 
 
@@ -157,7 +157,7 @@ export const getRecommendbook = async (bookId: number): Promise<IBookDetail[]> =
   try {
     const {
       data: { success, data },
-    } = await instance.get<BaseResponse<IBookDetail[]>>(`/recommend//${bookId}`);
+    } = await instance.get<BaseResponse<IBookDetail[]>>(`/recommend/${bookId}`);
 
     if (!success) {
       throw new Error("비슷한 책 추천 실패");
@@ -177,7 +177,7 @@ export const getUserBookDetail = async (userBookId: number): Promise<IUserBookDe
     data: { success, data },
   } = await instance.get<BaseResponse<IUserBookDetail>>(`/user-book/${userBookId}`);
 
-  console.log("getUserBookDetail", data);
+  console.log("getUserBookDetail 대여도사 상세", data);
 
   if (!success) {
     throw new Error("대여 도서 상세 조회 실패");
@@ -217,4 +217,20 @@ export const postTimeSpent = async (TimeData): Promise<void> => {
   } catch (error) {
     throw new Error("체류 시간 저장 실패", error);
   }
+};
+
+
+// 대여 가능한 주변 도서 조회
+export const getNearAvailableBook = async (bookId: number): Promise<INearAvailableBook[]> => {
+  const {
+    data: { success, data },
+  } = await instance.get<BaseResponse<INearAvailableBook[]>>(`user-book/near-available/${bookId}`);
+
+  console.log("getNearAvailableBook", data);
+
+  if (!success) {
+    throw new Error("대여 가능한 주변 도서 조회 실패");
+  }
+
+  return data;
 };

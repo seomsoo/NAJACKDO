@@ -6,6 +6,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { getUserInfo } from 'api/profileApi';
 import { useQuery } from '@tanstack/react-query';
+import Loading from './Loading';
 
 const Footer = () => {
   const location = useLocation();
@@ -27,7 +28,7 @@ const Footer = () => {
   });
 
   if (isLoading) {
-    return <div>로딩 중...</div>;
+    return <Loading />;
   }
 
   if (isError || !userInfo) {

@@ -52,7 +52,6 @@ public class NotificationService {
     @Transactional
     public void readSuccess(){
         notificationRepository.updateNotificationIsRead();
-
         return;
     }
 

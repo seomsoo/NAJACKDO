@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { getUserBookDetail, postTimeSpent } from 'api/bookApi';
+import { getBookDetail, getUserBookDetail, postTimeSpent } from 'api/bookApi';
 import { postAddCartItem } from 'api/cartApi';
 import AddCart from 'page/library/components/AddCart';
 import RentalBookDetail from 'page/library/components/RentalBookDetail';
@@ -12,21 +12,38 @@ import { getUserInfo } from 'api/profileApi';
 import UpdatePrice from '../components/UpdatePrice';
 import { useEffect } from 'react';
 import Loading from 'components/common/Loading';
+import BookInfo from '../components/BookInfo';
+import CategoryTag from 'components/common/CategoryTag';
 
 const RentalBookDetailPage = () => {
   const { bookId } = useParams();
   const navigate = useNavigate();
   const bookIdAsNumber = parseInt(bookId, 10);
+  
+  console.log('bookIdAsNumber', bookIdAsNumber);
+
+  // // 일반 책 정보 조회
+  // const {
+  //   data: bookData,
+  //   isLoading,
+  //   isError,
+  // } = useQuery({
+  //   queryKey: ['bookdetail', bookIdAsNumber],
+  //   queryFn: () => getBookDetail(bookIdAsNumber),
+  // });
 
   // 대여 도서 상세 정보 조회
   const {
-    data: bookData,
+    data: userBookData,
     isLoading: isDetailLoading,
     isError: isDetailError,
   } = useQuery({
     queryKey: ['bookdetail', bookIdAsNumber],
     queryFn: () => getUserBookDetail(bookIdAsNumber),
   });
+
+  console.log('userBookData야야야야ㅑ', userBookData);
+
 
   // 로그인된 사용자 정보 가져오기
   const {
@@ -53,7 +70,7 @@ const RentalBookDetailPage = () => {
 
   // 페이지 체류 시간 계산
   useEffect(() => {
-    if (bookData?.ownerId === loggedInUser?.userId) return;
+    if (userBookData?.ownerId === loggedInUser?.userId) return;
 
     const startTime = new Date();
     console.log('시작 시간:', startTime);
@@ -64,10 +81,10 @@ const RentalBookDetailPage = () => {
       const timeSpent = Math.floor(
         (endTime.getTime() - startTime.getTime()) / 1000
       ); // sec
-      if (bookData?.genre) {
+      if (userBookData?.genre) {
         mutation.mutate({
           bookId: bookId,
-          genre: bookData.genre,
+          genre: userBookData.genre,
           timeSpent: timeSpent,
         });
       }
@@ -91,32 +108,45 @@ const RentalBookDetailPage = () => {
     return <div>오류가 발생했습니다.</div>;
   }
 
-  if (!bookData || !loggedInUser) {
+  if (!userBookData || !loggedInUser) {
     return <div>책 정보를 찾을 수 없습니다.</div>;
   }
-  const isMyBook = bookData.ownerId === loggedInUser.userId;
+  const isMyBook = userBookData.ownerId === loggedInUser.userId;
 
-  console.log('내 책인가?', bookData.ownerId === loggedInUser.userId);
+  console.log('내 책인가?', userBookData.ownerId === loggedInUser.userId);
 
   const seller = {
-    nickname: bookData?.nickname,
-    mannerScore: bookData?.mannerScore,
-    locationName: bookData?.locationName,
-    ondayPrice: bookData?.ondayPrice,
-    bookStatus: bookData?.bookStatus,
+    nickname: userBookData?.nickname,
+    profileImage: userBookData?.profileImage,
+    mannerScore: userBookData?.mannerScore,
+    locationName: userBookData?.locationName,
+    ondayPrice: userBookData?.ondayPrice,
+    bookStatus: userBookData?.bookStatus,
   };
+  console
+
+
 
   return (
     <div>
       <div className="border-2">
         <RentalBookDetail
-          imageUrl={`https://d16os79fbmszq4.cloudfront.net/${bookData.frontImagePath}`}
+          imageUrl={userBookData.frontImagePath}
         />
         <div className="m-4">
           <SellerInfo seller={seller} />
-          {/* <BookInfo book={book} rental /> */}
-          <DetectionInfo ripped={bookData.ripped} wornout={bookData.wornout} />
-          <SellerReview nickname={bookData?.nickname} />
+          <div>
+            <p className="text-xl font-bold">{userBookData.bookTitle}</p>
+          
+            <p>{userBookData.bookAuthor} 지음</p>
+            <CategoryTag category={userBookData.genre} />
+            <p
+              dangerouslySetInnerHTML={{ __html: userBookData.bookDescription }}
+              className="my-8"
+            ></p>
+         </div>
+          <DetectionInfo ripped={userBookData.ripped} wornout={userBookData.wornout} />
+          <SellerReview nickname={userBookData?.nickname} />
           <p className="mt-5 font-bold mb-3">추천 도서</p>
           <DetailRecommendBook bookId={bookIdAsNumber} />
         </div>
@@ -127,7 +157,7 @@ const RentalBookDetailPage = () => {
         ) : (
           <UpdatePrice
             userBookId={bookIdAsNumber}
-            price={bookData.ondayPrice / 100}
+            price={userBookData.ondayPrice / 100}
           />
         )}
       </div>

@@ -63,4 +63,9 @@ export interface ITimeSpent {
   timeSpent: number;
 }
 
-
+export interface INearAvailableBook {
+  userBookId: number;
+  imagePath: string;
+  bookStatus: string;
+  oneDayPrice: number;
+}
