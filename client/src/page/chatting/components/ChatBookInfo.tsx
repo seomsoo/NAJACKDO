@@ -55,7 +55,7 @@ const ChatBookInfo = ({
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [dayPrice, setDayPrice] = useState<number>(0);
 
-  const { userId, cash, setCash } = useUserStore.getState();
+  const { userId } = useUserStore.getState();
 
   const { data: bookData } = useSuspenseQuery<ICartList>({
     queryKey: ["cart", "book"],
@@ -92,7 +92,6 @@ const ChatBookInfo = ({
     onSuccess: () => {
       setStep(ChatRentalStep.RENTED);
       complete("PAY");
-      setCash(cash - totalLeaf);
     },
 
     onError: (error) => {
@@ -188,8 +187,9 @@ const ChatBookInfo = ({
           <p className="text-gray-500">
             <span className="text-black">
               {bookData.cartItems[0].bookTitle}
-            </span>{" "}
-            외 {bookData.cartItems.length - 1}권
+            </span>
+            {bookData.cartItems.length > 1 &&
+              `외 ${bookData.cartItems.length - 1}권`}
           </p>
           <div className="flex flex-row items-center">
             <span className="text-black/50 text-sm">일일</span>

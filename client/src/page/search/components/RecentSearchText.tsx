@@ -33,12 +33,17 @@ const RecentSearchText = ({ text }: IRecentSearchTextProps) => {
   };
 
   return (
-    <div className="mx-2 my-4 flex flex-row justify-between">
-      <div className="flex flex-row cursor-pointer">
-        <IoMdTime size={25} color="#545454" />
-        <span className="ml-3" onClick={() => navigate(`/search/result?keyword=${text}`)}>
+    <div className="mx-2 my-4 flex flex-row justify-between items-center">
+      <div className="flex flex-row cursor-pointer items-center">
+        <div>
+          <IoMdTime size={25} color="#545454" />
+        </div>
+        <p
+          className="ml-3 w-4/5"
+          onClick={() => navigate(`/search/result?keyword=${text}`)}
+        >
           {text}
-        </span>
+        </p>
       </div>
       <div onClick={handleClick}>
         <PiXBold color="#545454" className="cursor-pointer" />

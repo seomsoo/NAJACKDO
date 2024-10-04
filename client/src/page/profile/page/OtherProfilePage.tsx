@@ -1,13 +1,13 @@
-import { useQuery } from '@tanstack/react-query';
-import { getOtherProfile, getUserInfo } from 'api/profileApi';
-import { getOtherBookCase } from 'api/bookcaseApi';
-import { IProfile } from 'atoms/Profile.type';
-import BookcaseContainer from 'page/library/components/BookcaseContainer';
-import MannerTree from 'page/profile/components/MannerTree';
-import UserInfo from 'page/profile/components/UserInfo';
-import { useNavigate, useParams } from 'react-router-dom';
-import { IBookCase } from 'atoms/BookCase.type';
-import Loading from 'components/common/Loading';
+import { useQuery } from "@tanstack/react-query";
+import { getOtherBookCase } from "api/bookcaseApi";
+import { getOtherProfile, getUserInfo } from "api/profileApi";
+import { IBookCase } from "atoms/BookCase.type";
+import { IProfile } from "atoms/Profile.type";
+import Loading from "components/common/Loading";
+import BookcaseContainer from "page/library/components/BookcaseContainer";
+import MannerTree from "page/profile/components/MannerTree";
+import UserInfo from "page/profile/components/UserInfo";
+import { useNavigate, useParams } from "react-router-dom";
 
 const OtherProfilePage = () => {
   const { nickname } = useParams();
@@ -18,8 +18,8 @@ const OtherProfilePage = () => {
     data: loggedInUser,
     isLoading: isUserInfoLoading,
     isError: isUserInfoError,
-  } = useQuery({
-    queryKey: ['userInfo'],
+  } = useQuery<IProfile>({
+    queryKey: ["userInfo"],
     queryFn: getUserInfo,
   });
 
@@ -29,7 +29,7 @@ const OtherProfilePage = () => {
     isLoading: isOtherProfileLoading,
     isError: isOtherProfileError,
   } = useQuery<IProfile>({
-    queryKey: ['profile', nickname],
+    queryKey: ["profile", nickname],
     queryFn: () => getOtherProfile(nickname!),
   });
 
@@ -39,7 +39,7 @@ const OtherProfilePage = () => {
     isLoading: isBookcaseLoading,
     isError: isBookcaseError,
   } = useQuery<IBookCase>({
-    queryKey: ['otherBookCase', profileInfo?.userId],
+    queryKey: ["otherBookCase", profileInfo?.userId],
     queryFn: () => getOtherBookCase(profileInfo?.userId!),
     enabled: !!profileInfo?.userId, // profileInfo.userId가 있을 때만 요청 실행
   });
@@ -54,7 +54,7 @@ const OtherProfilePage = () => {
 
   // 로그인된 유저와 프로필의 유저가 동일하면 나의 프로필로 리다이렉트
   if (loggedInUser?.nickname === profileInfo?.nickname) {
-    navigate('/profile');
+    navigate("/profile");
     return null;
   }
 
@@ -72,8 +72,8 @@ const OtherProfilePage = () => {
       <MannerTree
         nickname={profileInfo.nickname}
         mannerScore={profileInfo.mannerScore}
-        goodReviewCount={profileInfo.goodReviewCount}
-        badReviewCount={profileInfo.badReviewCount}
+        goodReviewCount={profileInfo.goodReviewInfo.length}
+        badReviewCount={profileInfo.badReviewInfo.length}
       />
       {/* 타인 책장 정보 */}
       <BookcaseContainer

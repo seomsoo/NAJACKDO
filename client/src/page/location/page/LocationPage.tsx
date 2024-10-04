@@ -1,11 +1,11 @@
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { getNearBookCase } from "api/locationApi";
-import { getUserInfo } from "api/profileApi";
 import Loading from "components/common/Loading";
 import BookcaseContainer from "page/library/components/BookcaseContainer";
 import { useCallback, useEffect, useRef } from "react";
 import { IoSettingsOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { useUserStore } from "store/useUserStore";
 
 const LocationPage = () => {
   const navigate = useNavigate();
@@ -15,14 +15,8 @@ const LocationPage = () => {
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
   // 유저 위치 정보 가져오기
-  const {
-    data: userInfo,
-    isLoading: isUserLoading,
-    isError: isUserError,
-  } = useQuery({
-    queryKey: ["userInfo"],
-    queryFn: getUserInfo,
-  });
+  const location = useUserStore.getState().location;
+
   // 주변 책장 목록 조회
   const {
     data: bookcaseData,
@@ -71,8 +65,8 @@ const LocationPage = () => {
     };
   }, [handleObserver]);
 
-  if (isUserLoading || isBookCaseLoading) return <Loading />;
-  if (isUserError || isBookCaseError) return <div>오류가 발생했습니다.</div>;
+  if (isBookCaseLoading) return <Loading />;
+  if (isBookCaseError) return <div>오류가 발생했습니다.</div>;
 
   // const hasNeighbor = bookcaseData && bookcaseData.displayBooks?.length > 0;
 
@@ -83,7 +77,7 @@ const LocationPage = () => {
         <div className="text-2xl font-bold">
           <span className="text-sub8">
             {" "}
-            {userInfo?.locationName.split(" ").slice(-1)[0] || " "}
+            {location.split(" ").slice(-1)[0] || " "}
           </span>
           <span className="font-extrabold">&nbsp;주변 책장</span>
         </div>

@@ -69,7 +69,7 @@ const CartContainer = ({
       </div>
       <div className="flex flex-row justify-between mt-3 px-3">
         <p>금액</p>
-        <div className="flex flex-row justify-end items-center mt-auto ">
+        <div className="flex flex-row justify-end items-center mt-auto">
           <IoIosLeaf size={16} color="#79AC78" />
           <p>
             {sumPrice.toLocaleString()}{" "}
