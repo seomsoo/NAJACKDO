@@ -22,11 +22,7 @@ const CategoryRecommend = () => {
   return (
     <div>
       <div
-        className="flex overflow-x-auto whitespace-nowrap mt-3"
-        style={{
-          scrollbarWidth: "none",
-          msOverflowStyle: "none",
-        }}
+        className="flex overflow-x-auto whitespace-nowrap mt-3 scrollbar-hide"
       >
         {categories.map((category, index) => {
           return (
@@ -48,11 +44,7 @@ const CategoryRecommend = () => {
         추천도서는?
       </p>
       <div
-        className="flex overflow-x-auto whitespace-nowrap"
-        style={{
-          scrollbarWidth: "none",
-          msOverflowStyle: "none",
-        }}
+        className="flex overflow-x-auto whitespace-nowrap scrollbar-hide"
       >
         {Array(10)
           .fill(null)

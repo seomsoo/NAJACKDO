@@ -31,7 +31,9 @@ const AccordionTrigger = React.forwardRef<
         {...props}
       >
         {children}
-        <span className="text-[#888888] text-[12px]">{isOpen ? "전체닫기" : "전체보기"}</span>
+        <span className="text-[#888888] text-[12px]">
+          {isOpen ? "전체닫기" : "전체보기"}
+        </span>
       </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>
   );
