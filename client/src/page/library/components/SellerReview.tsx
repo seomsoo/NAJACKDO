@@ -26,18 +26,23 @@ const SellerReview = ({ nickname }: SellerReviewProps) => {
   }
 
   const hasReview =
-    profileInfo?.goodReviewInfo.length > 0 ||
-    profileInfo?.badReviewInfo.length > 0;
+  profileInfo?.goodReviewInfo.length > 0 ||
+  profileInfo?.badReviewInfo.length > 0;
+  const hasGoodReview = profileInfo?.goodReviewInfo.length > 0;
+  const hasBadReview = profileInfo?.badReviewInfo.length > 0;
+
+
 
   return (
     <div>
       <p className="font-bold mt-10 mb-3">받은 판매자 리뷰</p>
+      {hasReview ? null : <p>리뷰가 없습니다.</p>}
       <div>
-        {hasReview ? (
+        {hasGoodReview ? (
           profileInfo?.goodReviewInfo.map((review, index) => {
             return (
               <div
-                className="bg-sub5 flex flex-row items-center rounded-lg mx-1 my-3 p-2"
+                className="bg-[green]/10 flex flex-row items-center rounded-lg mx-1 my-3 p-2"
                 key={index}
               >
                 <TbMessage size={20} className="mr-2" />
@@ -45,9 +50,22 @@ const SellerReview = ({ nickname }: SellerReviewProps) => {
               </div>
             );
           })
-        ) : (
-          <div>아직 작성된 리뷰가 없습니다.</div>
-        )}
+        ) : null}
+      </div>
+      <div>
+        {hasBadReview ? (
+          profileInfo?.badReviewInfo.map((review, index) => {
+            return (
+              <div
+                className="bg-[red]/5 flex flex-row items-center rounded-lg mx-1 my-3 p-2"
+                key={index}
+              >
+                <TbMessage size={20} className="mr-2" />
+                {review.content}
+              </div>
+            );
+          })
+        ) : null}
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { availableNickname, getUserNickname } from "api/profileApi";
+import Loading from "components/common/Loading";
 import { Button } from "components/ui/button";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -56,7 +57,7 @@ const Nickname = () => {
   };
 
   if (userNicknameLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (

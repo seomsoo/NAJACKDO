@@ -7,8 +7,7 @@ import {
 } from "components/ui/accordion";
 
 interface IHistoryListProps {
-  historyData: IHistory[];
-  title: string;
+  historyData?: IHistory[];
 }
 
 export const formatDate = (dateString: string) => {
@@ -20,13 +19,13 @@ export const formatDate = (dateString: string) => {
   });
 };
 
-const HistoryList: React.FC<IHistoryListProps> = ({ historyData, title }) => {
+const HistoryList: React.FC<IHistoryListProps> = ({ historyData }) => {
   return (
     <div className="flex flex-col">
-      <div className="flex justify-between items-center mb-4">
-        <span className="text-lg font-semibold">{title}</span>
-      </div>
 
+      {(!historyData || historyData.length === 0) ? (
+        <div className="text-center text-gray-500 mt-[70%]">데이터가 없습니다.</div>
+      ) : (
       <Accordion type="multiple">
         {" "}
         {historyData.map((history) => (
@@ -68,7 +67,8 @@ const HistoryList: React.FC<IHistoryListProps> = ({ historyData, title }) => {
             </AccordionContent>
           </AccordionItem>
         ))}
-      </Accordion>
+        </Accordion>
+      )}
     </div>
   );
 };

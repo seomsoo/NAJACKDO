@@ -1,6 +1,7 @@
 package com.najackdo.server.domain.rental.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.najackdo.server.domain.cart.entity.Cart;
 
@@ -8,10 +9,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -32,6 +35,9 @@ public class Rental {
 	@OneToOne
 	@JoinColumn(name = "cart_id")
 	private Cart cart;
+
+	@OneToMany(mappedBy = "rental", fetch = FetchType.LAZY)
+	private List<RentalReview> rentalReview;
 
 	@Column(name = "rental_start_date")
 	private LocalDateTime rentalStartDate;
@@ -68,5 +74,4 @@ public class Rental {
 	public void updateStatus(RentalStatus status) {
 		this.status = status;
 	}
-
 }

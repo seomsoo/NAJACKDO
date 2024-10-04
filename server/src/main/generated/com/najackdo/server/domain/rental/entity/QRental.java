@@ -32,6 +32,8 @@ public class QRental extends EntityPathBase<Rental> {
 
     public final NumberPath<Integer> rentalPeriod = createNumber("rentalPeriod", Integer.class);
 
+    public final ListPath<RentalReview, QRentalReview> rentalReview = this.<RentalReview, QRentalReview>createList("rentalReview", RentalReview.class, QRentalReview.class, PathInits.DIRECT2);
+
     public final DateTimePath<java.time.LocalDateTime> rentalStartDate = createDateTime("rentalStartDate", java.time.LocalDateTime.class);
 
     public final EnumPath<RentalStatus> status = createEnum("status", RentalStatus.class);

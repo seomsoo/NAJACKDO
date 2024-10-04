@@ -110,7 +110,7 @@ const RentalBookDetailPage = () => {
     <div>
       <div className="border-2">
         <RentalBookDetail
-          imageUrl={`https://d16os79fbmszq4.cloudfront.net/${bookData.frontImagePath}`}
+          imageUrl={bookData.frontImagePath}
         />
         <div className="m-4">
           <SellerInfo seller={seller} />

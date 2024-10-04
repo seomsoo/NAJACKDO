@@ -71,6 +71,8 @@ public class ChatService {
 
 		User owner = userRepository.findById(ownerId).orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_USER));
 		Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_CART));
+		cart.deleteCart();
+		cartRepository.save(cart);
 
 		ChatRoom chatRoom = chatRoomRepository.save(
 			ChatRoom.create(customer, owner, cart)

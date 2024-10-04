@@ -24,6 +24,8 @@ public class QCart extends EntityPathBase<Cart> {
 
     public final ListPath<CartItem, QCartItem> cartItems = this.<CartItem, QCartItem>createList("cartItems", CartItem.class, QCartItem.class, PathInits.DIRECT2);
 
+    public final com.najackdo.server.domain.chat.entity.QChatRoom chatRoom;
+
     public final com.najackdo.server.domain.user.entity.QUser customer;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
@@ -54,6 +56,7 @@ public class QCart extends EntityPathBase<Cart> {
 
     public QCart(Class<? extends Cart> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.chatRoom = inits.isInitialized("chatRoom") ? new com.najackdo.server.domain.chat.entity.QChatRoom(forProperty("chatRoom"), inits.get("chatRoom")) : null;
         this.customer = inits.isInitialized("customer") ? new com.najackdo.server.domain.user.entity.QUser(forProperty("customer"), inits.get("customer")) : null;
         this.owner = inits.isInitialized("owner") ? new com.najackdo.server.domain.user.entity.QUser(forProperty("owner"), inits.get("owner")) : null;
         this.rental = inits.isInitialized("rental") ? new com.najackdo.server.domain.rental.entity.QRental(forProperty("rental"), inits.get("rental")) : null;
