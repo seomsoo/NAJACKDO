@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getRecommendbook } from "api/bookApi";
+import Loading from 'components/common/Loading';
+
 
 interface DetailRecommendBookProps {
   bookId: number;
@@ -21,18 +23,24 @@ const DetailRecommendBook = ({ bookId }: DetailRecommendBookProps) => {
 
 
   if (isLoading ) {
-    return <div>추천 도서 조회 중...</div>;
+    return <Loading />;
   }
 
   if (isError) {
-    return <div>추천 도서가 없습니다.</div>;
+    return (
+      <div>
+        <p className="mt-5 font-bold mb-3">추천 도서</p>
+        <p>추천 도서가 없습니다.</p>
+      </div>
+    );
   }
 
   return (
     <div className="mt-10 mb-6">
-      
+        <p className="mt-5 font-bold mb-3">추천 도서</p>
       <div className="grid grid-cols-4 gap-3">
-        {recommendData.map((book, index) => {
+        {recommendData ? 
+        (recommendData.map((book, index) => {
           return (
             <img
               src={book.cover}
@@ -41,9 +49,10 @@ const DetailRecommendBook = ({ bookId }: DetailRecommendBookProps) => {
               className="rounded-e-md"
             />
         );
-        })}
+        })) : <div>추천 도서가 없습니다.</div>}
       </div>
     </div>
+
   );
 };
 

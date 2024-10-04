@@ -10,6 +10,14 @@ interface SearchInputProps {
 const SearchInput = ({ handleSearchText, searchText }: SearchInputProps) => {
   const navigate = useNavigate();
 
+  const handleMoveBack = () => {
+    if (window.location.pathname === "/search/result") {
+      navigate("/search");
+    } else if (window.location.pathname.startsWith("/search")) {
+      navigate(-1);
+    }
+  };
+
   const goSearchResult = () => {
     if (searchText === "") {
       return alert("검색어를 입력해주세요.");
@@ -20,7 +28,7 @@ const SearchInput = ({ handleSearchText, searchText }: SearchInputProps) => {
 
   return (
     <div className="flex flex-row items-center relative">
-      <div onClick={() => navigate(-1)}>
+      <div onClick={handleMoveBack}>
         <IoIosArrowBack
           size={25}
           color="#545454"

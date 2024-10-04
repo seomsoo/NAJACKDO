@@ -1,8 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
-import { getOtherProfile } from "api/profileApi";
-import { IoIosArrowBack } from "react-icons/io";
-import { useNavigate, useParams } from "react-router-dom";
-import Review from "../components/Review";
+import { useQuery } from '@tanstack/react-query';
+import { getOtherProfile } from 'api/profileApi';
+import { IoIosArrowBack } from 'react-icons/io';
+import { useNavigate, useParams } from 'react-router-dom';
+import Review from '../components/Review';
+import Loading from 'components/common/Loading';
 
 const GradePage = () => {
   const { nickname } = useParams();
@@ -16,39 +17,39 @@ const GradePage = () => {
     isLoading: isOtherProfileLoading,
     isError: isOtherProfileError,
   } = useQuery({
-    queryKey: ["profile", nickname],
-    queryFn: () => getOtherProfile(nickname || ""),
+    queryKey: ['profile', nickname],
+    queryFn: () => getOtherProfile(nickname || ''),
     enabled: !!nickname,
   });
 
   if (isOtherProfileLoading) {
-    return <div>로딩 중...</div>;
+    return <Loading />;
   }
 
   if (isOtherProfileError) {
     return <div>오류가 발생했습니다.</div>;
   }
 
-  let gradeImage = "/images/mannertree/씨앗.png";
-  let gradeLevel = "Lv.1 나작씨앗";
+  let gradeImage = '/images/mannertree/씨앗.png';
+  let gradeLevel = 'Lv.1 나작씨앗';
   if (profileInfo.mannerScore >= 80) {
-    gradeImage = "/images/mannertree/숲.png";
-    gradeLevel = "Lv.5 나작숲";
+    gradeImage = '/images/mannertree/숲.png';
+    gradeLevel = 'Lv.5 나작숲';
   } else if (profileInfo.mannerScore >= 60) {
-    gradeImage = "/images/mannertree/나무.png";
-    gradeLevel = "Lv.4 나작나무";
+    gradeImage = '/images/mannertree/나무.png';
+    gradeLevel = 'Lv.4 나작나무';
   } else if (profileInfo.mannerScore >= 40) {
-    gradeImage = "/images/mannertree/가지.png";
-    gradeLevel = "Lv.3 나작가지";
+    gradeImage = '/images/mannertree/가지.png';
+    gradeLevel = 'Lv.3 나작가지';
   } else if (profileInfo.mannerScore >= 20) {
-    gradeImage = "/images/mannertree/새싹.png";
-    gradeLevel = "Lv.1 나작씨앗";
+    gradeImage = '/images/mannertree/새싹.png';
+    gradeLevel = 'Lv.1 나작씨앗';
   }
 
   const reviewArray = [
-    { count: 1, comment: "시간 약속을 안 지켜요." },
-    { count: 22, comment: "시간 약속을 안 지켜요." },
-    { count: 3, comment: "시간 약속을 안 지켜요." },
+    { count: 1, comment: '시간 약속을 안 지켜요.' },
+    { count: 22, comment: '시간 약속을 안 지켜요.' },
+    { count: 3, comment: '시간 약속을 안 지켜요.' },
   ];
 
   return (

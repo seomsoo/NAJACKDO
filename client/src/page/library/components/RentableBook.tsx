@@ -1,3 +1,5 @@
+import { useQuery } from "@tanstack/react-query";
+import { getNearAvailableBook } from "api/bookApi";
 import {
   Accordion,
   AccordionContent,
@@ -6,64 +8,47 @@ import {
 } from "components/ui/accordion";
 import BookCover from "page/library/components/BookCover";
 
-const RentableBook = () => {
-  const rentalBook = [
-    {
-      imgUrl: "/pubao.png",
-      detection: "상",
-      price: 450,
-    },
-    {
-      imgUrl: "/pubao.png",
-      detection: "중",
-      price: 450,
-    },
-    {
-      imgUrl: "/pubao.png",
-      detection: "하",
-      price: 450,
-    },
-    {
-      imgUrl: "/pubao.png",
-      detection: "중",
-      price: 450,
-    },
-    {
-      imgUrl: "/pubao.png",
-      detection: "중",
-      price: 450,
-    },
-    {
-      imgUrl: "/pubao.png",
-      detection: "중",
-      price: 450,
-    },
-    {
-      imgUrl: "/pubao.png",
-      detection: "중",
-      price: 450,
-    },
-    {
-      imgUrl: "/pubao.png",
-      detection: "중",
-      price: 450,
-    },
-    {
-      imgUrl: "/pubao.png",
-      detection: "중",
-      price: 450,
-    },
-    {
-      imgUrl: "/pubao.png",
-      detection: "중",
-      price: 450,
-    },
-    {
-      imgUrl: "/pubao.png",
-      detection: "중",
-      price: 450,
-    },
-  ];
+interface RentableBookProps {
+  bookId: number;
+}
+
+const RentableBook = ({ bookId } : RentableBookProps) => {
+  // const rentalBook = [
+  //   {
+  //     imgUrl: "/pubao.png",
+  //     detection: "상",
+  //     price: 450,
+  //   },
+  // ];
+
+  const {
+    data: nearAvailableBookData,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['nearAvailableBook', bookId],
+    queryFn: () => getNearAvailableBook(bookId),
+  });
+  console.log("nearAvailableBookData", nearAvailableBookData);
+
+
+  if (isLoading ) {
+    return (
+      <div>
+        <p className="mt-5 font-bold mb-3">대여 가능 도서</p>
+        <p>주변 대여 가능 도서 조회 중...</p>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div>
+        <p className="mt-5 font-bold mb-3">대여 가능 도서</p>
+        <p>주변 대여 가능 도서가 없습니다.</p>
+      </div>
+    );
+  }
 
   return (
     <Accordion type="single" collapsible className="mt-4">
@@ -72,13 +57,13 @@ const RentableBook = () => {
           <p>대여 가능 도서</p>
         </AccordionTrigger>
         <div className="grid grid-cols-4 gap-x-2 gap-y-5">
-          {rentalBook.slice(0, 4).map((book, index) => {
+          {nearAvailableBookData.slice(0, 4).map((book, index) => {
             return <BookCover key={index} book={book} />;
           })}
         </div>
         <AccordionContent className="mt-5">
           <div className="grid grid-cols-4 gap-x-2 gap-y-5">
-            {rentalBook.slice(4).map((book, index) => {
+            {nearAvailableBookData.slice(4).map((book, index) => {
               return <BookCover key={index} book={book} />;
             })}
           </div>

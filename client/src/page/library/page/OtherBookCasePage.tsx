@@ -1,18 +1,19 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
 import {
   deleteInterestBookCase,
   getOtherBookCase,
   postInterestBookCase,
-} from "api/bookcaseApi";
-import { useEffect, useState } from "react";
-import { IoIosArrowBack } from "react-icons/io";
+} from 'api/bookcaseApi';
+import { useEffect, useState } from 'react';
+import { IoIosArrowBack } from 'react-icons/io';
 import {
   IoHeart,
   IoHeartOutline,
   IoNotificationsOutline,
-} from "react-icons/io5";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import OtherBookGrid from "../components/OtherBookGrid";
+} from 'react-icons/io5';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import OtherBookGrid from '../components/OtherBookGrid';
+import Loading from 'components/common/Loading';
 
 const OtherBookCasePage = () => {
   const IMG_BASE_URL = process.env.PUBLIC_URL;
@@ -27,7 +28,7 @@ const OtherBookCasePage = () => {
     isLoading: isBookcaseLoading,
     isError: isBookcaseError,
   } = useQuery({
-    queryKey: ["otherBookCase", userIdAsNumber],
+    queryKey: ['otherBookCase', userIdAsNumber],
     queryFn: () => getOtherBookCase(userIdAsNumber),
   });
 
@@ -67,12 +68,12 @@ const OtherBookCasePage = () => {
       }
       setIsFollowed(!isFollowed); // 상태 변경
     } catch (error) {
-      console.error("관심 책장 등록/해제 중 오류 발생:", error);
+      console.error('관심 책장 등록/해제 중 오류 발생:', error);
     }
   };
 
   if (isBookcaseLoading) {
-    return <div>로딩 중...</div>;
+    return <Loading />;
   }
 
   if (isBookcaseError) {
@@ -120,7 +121,7 @@ const OtherBookCasePage = () => {
           </div>
           <button onClick={handleProfileClick}>
             <img
-              src={bookcase?.profileImage || "/basic_profile.png"} // 기본 이미지 처리
+              src={bookcase?.profileImage || '/basic_profile.png'} // 기본 이미지 처리
               alt="profile"
               className="rounded-full w-16 h-16  "
             />

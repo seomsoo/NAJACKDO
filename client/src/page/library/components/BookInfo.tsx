@@ -1,12 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
 import {
   deleteInterestbook,
   getInterestbook,
   postInterestbook,
-} from "api/bookApi";
-import CategoryTag from "components/common/CategoryTag";
-import { useEffect, useState } from "react";
-import { IoHeart, IoHeartOutline } from "react-icons/io5";
+} from 'api/bookApi';
+import CategoryTag from 'components/common/CategoryTag';
+import Loading from 'components/common/Loading';
+import { useEffect, useState } from 'react';
+import { IoHeart, IoHeartOutline } from 'react-icons/io5';
 
 interface BookInfoProps {
   book: {
@@ -27,10 +28,10 @@ interface BookInfoProps {
 }
 const BookInfo = ({ book, rental }: BookInfoProps) => {
   const [interestBook, setInterestBook] = useState(false);
-  const authorList = book.author.replace(" (지은이)", "").split(", ");
+  const authorList = book.author.replace(' (지은이)', '').split(', ');
   const author =
     authorList.length > 1
-      ? authorList[0] + " 외 " + (authorList.length - 1) + "명"
+      ? authorList[0] + ' 외 ' + (authorList.length - 1) + '명'
       : authorList[0];
   const [heart, setHeart] = useState(false);
 
@@ -39,10 +40,10 @@ const BookInfo = ({ book, rental }: BookInfoProps) => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["interestBooks"],
+    queryKey: ['interestBooks'],
     queryFn: getInterestbook,
   });
-  console.log("interestBooks", interestBooks);
+  console.log('interestBooks', interestBooks);
 
   useEffect(() => {
     if (interestBooks) {
@@ -55,7 +56,7 @@ const BookInfo = ({ book, rental }: BookInfoProps) => {
   }, [interestBooks, book.bookId]);
 
   if (isLoading) {
-    return <div>로딩 중...</div>;
+    return <Loading />;
   }
 
   if (isError) {
