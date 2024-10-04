@@ -4,7 +4,7 @@ const C105Recommend = () => {
   return (
     <div>
       <div className="flex flex-row items-center text-xl">
-        <FaBookOpenReader className="mr-2 text-[#5F6F52]" />
+        <FaBookOpenReader className="mr-2 text-main" />
         <span className="font-bold ">C105가 추천하는 오늘의 도서!</span>
       </div>
       <div

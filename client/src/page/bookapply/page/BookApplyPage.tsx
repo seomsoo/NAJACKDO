@@ -76,7 +76,7 @@ const BookApplyPage = () => {
         </div>
         <div className="flex flex-row justify-center space-x-4 my-8">
           <div
-            className="flex flex-row justify-center items-center bg-[#C0C78C] px-5 py-2 rounded-lg cursor-pointer"
+            className="flex flex-row justify-center items-center bg-sub1 px-5 py-2 rounded-lg cursor-pointer"
             onClick={() => navigate("/apply/isbn")}
           >
             <span className="text-white font-bold text-sm">
@@ -85,13 +85,13 @@ const BookApplyPage = () => {
             <HiOutlineCamera color="white" className="ml-1" />
           </div>
           {/* <button
-            className="bg-[#D96363] text-white text-sm font-bold rounded-lg px-8 py-3"
+            className="bg-sub9 text-white text-sm font-bold rounded-lg px-8 py-3"
             onClick={() => navigate("/library")}
           >
             등록 취소
           </button> */}
           <button
-            className="bg-[#776B5D] text-white text-sm font-bold rounded-lg px-8 py-3"
+            className="bg-sub7 text-white text-sm font-bold rounded-lg px-8 py-3"
             onClick={handleApply}
           >
             등록하기(총 1권)

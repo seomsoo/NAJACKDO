@@ -7,8 +7,8 @@ const ReturnComplete = () => {
         <span className="font-bold mt-2">반납 완료</span>
         <IoIosLeaf color="#79AC78" size={50} />
       </div>
-      <div className="border-[0.5px] border-[#5F6F52] w-5/6" />
-      <p className="text-[#5F6F52]">
+      <div className="border-[0.5px] border-main w-5/6" />
+      <p className="text-main">
         <span className="text-lg mr-2 font-bold">반납일</span> 2024.10.01
       </p>
     </div>

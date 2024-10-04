@@ -105,7 +105,7 @@ const SurveyPage = () => {
       <div className="o w-full pt-12">
         <button
           onClick={handleNextStep}
-          className={`bg-[#776B5D] font-bold w-full text-lg text-white py-3 rounded-lg ${
+          className={`bg-sub7 font-bold w-full text-lg text-white py-3 rounded-lg ${
             checkStepCompletion()
               ? "opacity-100"
               : "opacity-50 cursor-not-allowed"

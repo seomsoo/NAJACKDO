@@ -76,7 +76,7 @@ const ISBNScanPage = () => {
         <span className="font-bold text-xl ml-2">도서 등록 - ISBN</span>
       </div>
       <p className="text-center font-bold text-xl my-10">BARCODE SCANNER</p>
-      <div className="relative border-2 border-[#776B5D] h-[300px] rounded-2xl flex items-center justify-center">
+      <div className="relative border-2 border-sub7 h-[300px] rounded-2xl flex items-center justify-center">
         <Scanner onDetected={onDetected} scan={scan} setScan={setScan} />
         {fail && (
           <p className="absolute text-white text-center">
@@ -93,7 +93,7 @@ const ISBNScanPage = () => {
         <FaRedoAlt />
       </div>
       <p
-        className={`${!fail ? "bg-[#C0C78C] text-[#FEFAE0]" : "bg-[#D96363] text-white"} font-bold m-auto mt-10 rounded-xl w-[275px] h-12 flex items-center justify-center`}
+        className={`${!fail ? "bg-sub1 text-sub3" : "bg-sub9 text-white"} font-bold m-auto mt-10 rounded-xl w-[275px] h-12 flex items-center justify-center`}
       >
         {!fail
           ? `인식된 ISBN : ${isbn !== undefined ? isbn : ""}`
@@ -101,7 +101,7 @@ const ISBNScanPage = () => {
       </p>
       <div className="mt-16 flex flex-row justify-around">
         <p
-          className={`${!fail ? "bg-[#B0A695] hover:bg-[#776B5D]" : "bg-[#D0D0D0]"} text-white font-bold w-[153px] h-[54px] rounded-xl mx-2 flex items-center justify-center cursor-pointer`}
+          className={`${!fail ? "bg-sub6 hover:bg-sub7" : "bg-[#D0D0D0]"} text-white font-bold w-[153px] h-[54px] rounded-xl mx-2 flex items-center justify-center cursor-pointer`}
           onClick={handleClick}
         >
           ISBN으로 등록

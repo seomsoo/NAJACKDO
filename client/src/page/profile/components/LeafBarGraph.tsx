@@ -1,5 +1,4 @@
-import React from 'react';
-import { IoLeaf } from 'react-icons/io5';
+import { IoLeaf } from "react-icons/io5";
 
 interface LeafBarGraphProps {
   ratio: number;
@@ -10,20 +9,20 @@ interface LeafBarGraphProps {
 const LeafBarGraph = ({ ratio, value, label }: LeafBarGraphProps) => {
   return (
     <div>
-      <div className='grid grid-cols-12 gap-2 items-center mt-4 w-full '>
-        <p className='col-span-2 text-xs text-nowrap font-medium '>{label}</p>
+      <div className="grid grid-cols-12 gap-2 items-center mt-4 w-full ">
+        <p className="col-span-2 text-xs text-nowrap font-medium ">{label}</p>
         <div
-          className='col-span-8 h-[6px] ml-1 rounded-xl bg-[#B99470]'
+          className="col-span-8 h-[6px] ml-1 rounded-xl bg-sub4"
           style={{ width: `${180 * ratio}px` }}
         />
-        <div className='col-span-2 flex justify-end item-center'>
-          <p className='col-span-2 text-xs  font-medium  mr-1'>
+        <div className="col-span-2 flex justify-end item-center">
+          <p className="col-span-2 text-xs  font-medium  mr-1">
             {value.toLocaleString()}
           </p>
           <IoLeaf
-            className='flex-shrink-0' // flex 레이아웃에서 크기 고정
-            style={{ width: '15px', height: '15px' }} // 아이콘 크기를 직접 설정
-            color='#A6B37D'
+            className="flex-shrink-0" // flex 레이아웃에서 크기 고정
+            style={{ width: "15px", height: "15px" }} // 아이콘 크기를 직접 설정
+            color="#A6B37D"
           />
         </div>
       </div>

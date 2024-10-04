@@ -1,35 +1,35 @@
-import { IoIosSearch } from 'react-icons/io';
+import { IoIosSearch } from "react-icons/io";
 import {
   IoCartOutline,
   IoLibrary,
   IoNotificationsOutline,
-} from 'react-icons/io5';
-import { Link, useNavigate } from 'react-router-dom';
+} from "react-icons/io5";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const nav = useNavigate();
 
   return (
-    <header className='flex flex-row justify-between items-center py-4 px-4'>
-      <div className='flex flex-row items-center'>
-        <IoLibrary size={35} color='#C0C78C' />
+    <header className="flex flex-row justify-between items-center py-4 px-4">
+      <div className="flex flex-row items-center">
+        <IoLibrary size={35} color="#C0C78C" />
         <span
-          className='maplestory text-[#5F6F52] text-2xl ml-2'
+          className="maplestory text-main text-2xl ml-2"
           onClick={() => {
-            nav('/');
+            nav("/");
           }}
         >
           나의 작은 도서관
         </span>
       </div>
-      <div className='flex justify-between text-3xl gap-3 text-[#545454]'>
-        <Link to='/search'>
+      <div className="flex justify-between text-3xl gap-3 text-[#545454]">
+        <Link to="/search">
           <IoIosSearch />
         </Link>
-        <Link to='/cart'>
+        <Link to="/cart">
           <IoCartOutline />
         </Link>
-        <Link to='/alarm'>
+        <Link to="/alarm">
           <IoNotificationsOutline />
         </Link>
       </div>

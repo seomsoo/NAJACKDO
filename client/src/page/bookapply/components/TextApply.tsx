@@ -101,7 +101,7 @@ const TextApply = () => {
     <Dialog>
       <DialogTrigger className="flex flex-row items-center cursor-pointer">
         {location === "isbn" ? (
-          <p className="bg-[#B0A695] hover:bg-[#776B5D] text-white font-bold w-[153px] h-[54px] rounded-xl mx-2 flex items-center justify-center">
+          <p className="bg-sub6 hover:bg-sub7 text-white font-bold w-[153px] h-[54px] rounded-xl mx-2 flex items-center justify-center">
             텍스트로 등록
           </p>
         ) : (

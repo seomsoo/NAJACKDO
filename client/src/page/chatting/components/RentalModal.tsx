@@ -44,7 +44,7 @@ const RentalModal = ({
             setModalOpen(true);
           }}
         >
-          <span className="bg-[#776B5D] text-white rounded-lg py-3 px-4">
+          <span className="bg-sub7 text-white rounded-lg py-3 px-4">
             {step}
           </span>
         </DialogTrigger>
@@ -62,7 +62,7 @@ const RentalModal = ({
               </span>
               <div className="space-x-6">
                 <button
-                  className="border-2 border-[#776B5D] px-10 py-2 rounded-xl hover:bg-[#EBE9E7]"
+                  className="border-2 border-sub7 px-10 py-2 rounded-xl hover:bg-[#EBE9E7]"
                   onClick={() => {
                     setModalOpen(false);
                     setStep(ChatRentalStep.READY);
@@ -71,7 +71,7 @@ const RentalModal = ({
                   취소
                 </button>
                 <button
-                  className="border-2 border-[#776B5D] px-10 py-2 rounded-xl bg-[#776B5D] hover:bg-[#6F473D] text-white"
+                  className="border-2 border-sub7 px-10 py-2 rounded-xl bg-sub7 hover:bg-[#6F473D] text-white"
                   onClick={handleClick}
                 >
                   확인
@@ -85,7 +85,7 @@ const RentalModal = ({
               <span className="text-lg">반납을 확인하시겠습니까?</span>
               <div className="space-x-6">
                 <button
-                  className="border-2 border-[#776B5D] px-10 py-2 rounded-xl hover:bg-[#EBE9E7]"
+                  className="border-2 border-sub7 px-10 py-2 rounded-xl hover:bg-[#EBE9E7]"
                   onClick={() => {
                     setModalOpen(false);
                   }}
@@ -93,7 +93,7 @@ const RentalModal = ({
                   취소
                 </button>
                 <button
-                  className="border-2 border-[#776B5D] px-10 py-2 rounded-xl bg-[#776B5D] hover:bg-[#4F473D] text-white"
+                  className="border-2 border-sub7 px-10 py-2 rounded-xl bg-sub7 hover:bg-[#4F473D] text-white"
                   onClick={handleClick}
                 >
                   확인
@@ -106,7 +106,7 @@ const RentalModal = ({
               <span className="text-lg">책잎이 부족합니다!</span>
               <div className="space-x-6">
                 <button
-                  className="border-2 border-[#776B5D] px-10 py-2 rounded-xl hover:bg-[#EBE9E7]"
+                  className="border-2 border-sub7 px-10 py-2 rounded-xl hover:bg-[#EBE9E7]"
                   onClick={() => {
                     setModalOpen(false);
                     setStep(ChatRentalStep.READY);
@@ -115,7 +115,7 @@ const RentalModal = ({
                   닫기
                 </button>
                 <button
-                  className="border-2 border-[#776B5D] px-5 py-2 rounded-xl bg-[#776B5D] hover:bg-[#4F473D] text-white"
+                  className="border-2 border-sub7 px-5 py-2 rounded-xl bg-sub7 hover:bg-[#4F473D] text-white"
                   // TODO : 책잎 충전하기 페이지로 이동
                   onClick={() => navigate("/profile")}
                 >

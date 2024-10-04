@@ -15,7 +15,7 @@ const BookCover = ({ book }: BookCoverProps) => {
       <div className="flex flex-row items-center justify-center">
         <IoIosLeaf color="#A6B37D" />
         <p className="mx-1">{book.price}</p>
-        <p className="bg-[#5F6F52] text-white rounded-full px-1.5">
+        <p className="bg-main text-white rounded-full px-1.5">
           {book.detection}
         </p>
       </div>

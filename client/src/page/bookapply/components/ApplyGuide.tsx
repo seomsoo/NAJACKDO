@@ -12,7 +12,7 @@ const ApplyGuide = () => {
   return (
     <div>
       <p className="font-bold text-xl text-center mt-3 mb-5">GUIDE</p>
-      <div className="border-2 border-[#776B5D] w-[300px] h-[430px] rounded-3xl mx-auto flex flex-row justify-center items-center">
+      <div className="border-2 border-sub7 w-[300px] h-[430px] rounded-3xl mx-auto flex flex-row justify-center items-center">
         <Carousel>
           <CarouselContent>
             <CarouselItem>

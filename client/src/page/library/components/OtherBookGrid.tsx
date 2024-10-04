@@ -1,8 +1,8 @@
-import { useMutation } from '@tanstack/react-query';
-import { postAddCartItem } from 'api/cartApi';
-import { FaCheck } from 'react-icons/fa';
-import { IBookCase } from 'atoms/BookCase.type';
-import { useNavigate } from 'react-router-dom';
+import { useMutation } from "@tanstack/react-query";
+import { postAddCartItem } from "api/cartApi";
+import { IBookCase } from "atoms/BookCase.type";
+import { FaCheck } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 type OtherBookGridProps = {
   books: IBookCase["displayBooks"];
@@ -37,17 +37,17 @@ const OtherBookGrid = ({
   const renderBadge = (bookStatus: string) => {
     if (bookStatus === "AVAILABLE") {
       return (
-        <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-[#5f6f52] p-2 px-3 rounded-2xl text-white font-light text-xs text-nowrap mb-1">
+        <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-main p-2 px-3 rounded-2xl text-white font-light text-xs text-nowrap mb-1">
           대여 가능
         </span>
       );
     } else if (
-      bookStatus === 'UNAVAILABLE' ||
-      bookStatus === 'RENTED' ||
-      bookStatus === 'NOT_INSPECTED'
+      bookStatus === "UNAVAILABLE" ||
+      bookStatus === "RENTED" ||
+      bookStatus === "NOT_INSPECTED"
     ) {
       return (
-        <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-[#D96363] p-2 px-3 rounded-2xl text-white font-light text-xs text-nowrap mb-1">
+        <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-sub9 p-2 px-3 rounded-2xl text-white font-light text-xs text-nowrap mb-1">
           대여 불가
         </span>
       );
@@ -74,15 +74,15 @@ const OtherBookGrid = ({
     },
     onSuccess: () => {
       if (
-        confirm('장바구니에 추가되었습니다.\n 장바구니로 이동하시겠습니까?')
+        confirm("장바구니에 추가되었습니다.\n 장바구니로 이동하시겠습니까?")
       ) {
-        navigate('/cart');
+        navigate("/cart");
       } else {
         navigate(0);
       }
     },
     onError: (error) => {
-      console.error('장바구니 추가 실패:', error);
+      console.error("장바구니 추가 실패:", error);
     },
   });
 
@@ -125,7 +125,7 @@ const OtherBookGrid = ({
                     htmlFor={`check-${chunkIndex * 3 + index}`}
                     className={`flex items-center justify-center w-7 h-7 border-2 rounded-lg cursor-pointer ${
                       checked?.[chunkIndex * 3 + index]
-                        ? "border-[#5F6F52] bg-[#5F6F52]"
+                        ? "border-main bg-main"
                         : "border-gray-400"
                     } ${book.bookStatus !== "AVAILABLE" ? "invisible" : ""}`} // bookStatus가 AVAILABLE이 아니면 체크박스를 숨김
                     onClick={(e) => e.stopPropagation()} // 이벤트 버블링 방지
@@ -154,7 +154,7 @@ const OtherBookGrid = ({
 
       {/* 선택된 책이 있을 때만 모달 표시 */}
       {isAnyChecked && (
-        <aside className="fixed bottom-20 w-full max-w-[430px] text-white flex text-lg justify-around rounded-t-xl items-center bg-[#776B5D]">
+        <aside className="fixed bottom-20 w-full max-w-[430px] text-white flex text-lg justify-around rounded-t-xl items-center bg-sub7">
           <button className="px-12 p-8" onClick={handleAddToCart}>
             담기
           </button>

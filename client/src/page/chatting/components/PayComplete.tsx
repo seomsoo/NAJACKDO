@@ -13,10 +13,10 @@ const PayComplete = ({ totalLeaf }: PayCompleteProps) => {
         <IoIosLeaf color="#79AC78" size={24} />
       </div>
       <p>
-        <span className="text-[#5F6F52]">500</span> X
-        <span className="text-[#5F6F52]"> 14</span> 일
+        <span className="text-main">500</span> X
+        <span className="text-main"> 14</span> 일
       </p>
-      <p className="text-[#5F6F52]">
+      <p className="text-main">
         <span className="text-lg mr-2 font-bold">반납일</span> 2024.10.01
       </p>
     </div>

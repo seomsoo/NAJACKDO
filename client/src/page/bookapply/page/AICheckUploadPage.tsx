@@ -1,7 +1,4 @@
-import { postAiCheckBook } from 'api/bookApi';
-import { useState, useEffect } from 'react';
-import { IoChevronBack } from 'react-icons/io5';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { postAiCheckBook } from "api/bookApi";
 import {
   Carousel,
   CarouselApi,
@@ -9,8 +6,11 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from 'components/ui/carousel';
-import { FaCircle } from 'react-icons/fa';
+} from "components/ui/carousel";
+import { useEffect, useState } from "react";
+import { FaCircle } from "react-icons/fa";
+import { IoChevronBack } from "react-icons/io5";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const AICheckUploadPage = () => {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const AICheckUploadPage = () => {
 
   useEffect(() => {
     if (api) {
-      api.on('select', () => {
+      api.on("select", () => {
         setCarouselIndex(api.selectedScrollSnap());
       });
     }
@@ -41,7 +41,7 @@ const AICheckUploadPage = () => {
     if (file) {
       setFrontImage(file);
       setFrontImagePreview(URL.createObjectURL(file));
-      console.log('Front Image File:', file);
+      console.log("Front Image File:", file);
     }
   };
 
@@ -52,17 +52,17 @@ const AICheckUploadPage = () => {
     if (file) {
       setBackImage(file);
       setBackImagePreview(URL.createObjectURL(file));
-      console.log('Back Image File:', file);
+      console.log("Back Image File:", file);
     }
   };
 
   const handleSubmit = async () => {
     if (frontImage && backImage) {
       const formData = new FormData();
-      formData.append('files', frontImage);
-      formData.append('files', backImage);
-      formData.append('user_id', userId);
-      formData.append('user_book_id', userBookId);
+      formData.append("files", frontImage);
+      formData.append("files", backImage);
+      formData.append("user_id", userId);
+      formData.append("user_book_id", userBookId);
 
       // FormData 확인용
       // formData.forEach((value, key) => {
@@ -72,15 +72,15 @@ const AICheckUploadPage = () => {
       try {
         const response = await postAiCheckBook(formData);
 
-        navigate('/ai-check/result', {
+        navigate("/ai-check/result", {
           state: { resultData: response },
         });
       } catch (error) {
-        console.error('AI 인증 실패:', error);
-        alert('AI 인증에 실패했습니다. 다시 시도해주세요.');
+        console.error("AI 인증 실패:", error);
+        alert("AI 인증에 실패했습니다. 다시 시도해주세요.");
       }
     } else {
-      alert('이미지를 모두 업로드해주세요.');
+      alert("이미지를 모두 업로드해주세요.");
     }
   };
 
@@ -164,18 +164,18 @@ const AICheckUploadPage = () => {
         <FaCircle
           size={10}
           className="mr-3"
-          color={carouselIndex === 0 ? '#000000' : '#888888'}
+          color={carouselIndex === 0 ? "#000000" : "#888888"}
         />
         <FaCircle
           size={10}
-          color={carouselIndex === 1 ? '#000000' : '#888888'}
+          color={carouselIndex === 1 ? "#000000" : "#888888"}
         />
       </div>
 
       <div className="px-6">
         <button
           onClick={handleSubmit}
-          className="text-center bg-[#776B5D] w-full mt-10 rounded-xl text-white font-bold py-3 cursor-pointer"
+          className="text-center bg-sub7 w-full mt-10 rounded-xl text-white font-bold py-3 cursor-pointer"
         >
           AI 인증 요청
         </button>

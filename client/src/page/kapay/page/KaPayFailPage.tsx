@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const KaPayFailPage = () => {
   const navigate = useNavigate();
   const canCloseWindow = window.opener !== null && !window.opener.closed;
-  const bottonStyle = "bg-[#B0A695] hover:bg-[#776B5D]";
+  const bottonStyle = "bg-sub6 hover:bg-sub7";
 
   const handleRedirect = () => {
     navigate("/profile");
@@ -16,11 +16,11 @@ const KaPayFailPage = () => {
       className="flex flex-col items-center justify-center"
       style={{ height: "calc(100vh - 86px)" }}
     >
-      <span className="maplestory text-4xl text-[#D96363]">책잎 결제 실패</span>
+      <span className="maplestory text-4xl text-sub9">책잎 결제 실패</span>
       <div className="flex flex-row items-center my-10">
         <IoIosLeaf color="#79AC78" size={29} className="mx-1" />
         <p className="font-bold">
-          <span className="text-[#A6B37D] text-xl maplestory mr-1">책잎</span>
+          <span className="text-sub2 text-xl maplestory mr-1">책잎</span>
           결제 처리 중 오류가 발생하였습니다.
         </p>
       </div>

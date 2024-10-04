@@ -1,18 +1,18 @@
-import { useQuery } from '@tanstack/react-query';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { IoIosArrowBack } from 'react-icons/io';
+import { useQuery } from "@tanstack/react-query";
+import {
+  deleteInterestBookCase,
+  getOtherBookCase,
+  postInterestBookCase,
+} from "api/bookcaseApi";
+import { useEffect, useState } from "react";
+import { IoIosArrowBack } from "react-icons/io";
 import {
   IoHeart,
   IoHeartOutline,
   IoNotificationsOutline,
-} from 'react-icons/io5';
-import {
-  getOtherBookCase,
-  postInterestBookCase,
-  deleteInterestBookCase,
-} from 'api/bookcaseApi';
-import { useState, useEffect } from 'react';
-import OtherBookGrid from '../components/OtherBookGrid';
+} from "react-icons/io5";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import OtherBookGrid from "../components/OtherBookGrid";
 
 const OtherBookCasePage = () => {
   const IMG_BASE_URL = process.env.PUBLIC_URL;
@@ -112,7 +112,9 @@ const OtherBookCasePage = () => {
         <article className="flex items-center w-full justify-between font-extrabold text-2xl mb-5">
           <div className="flex items-center">
             <span>
-              <span className="hakgyo text-3xl text-[#5F6F52]">{bookcase.nickname}</span>
+              <span className="hakgyo text-3xl text-main">
+                {bookcase.nickname}
+              </span>
               님의 책장
             </span>
           </div>
@@ -136,7 +138,11 @@ const OtherBookCasePage = () => {
             />
           ) : (
             <div className="flex flex-col items-center mt-16">
-              <img src={`${IMG_BASE_URL}/book_icon.png`} alt="book" className="w-40 h-40 mb-6" />
+              <img
+                src={`${IMG_BASE_URL}/book_icon.png`}
+                alt="book"
+                className="w-40 h-40 mb-6"
+              />
               <p className="text-lg font-semibold">책장이 텅 비었어요.</p>
             </div>
           )}
