@@ -24,7 +24,7 @@ const RentalBookDetail = ({ imageUrl }: BookInfoProps) => {
           onClick={() => navigate(-1)}
           className="cursor-pointer absolute left-0 top-0 z-10 p-4"
         >
-          <IoChevronBack size={25} color="#FFFFFF" />
+          <IoChevronBack size={25} color="#A6B37D" />
         </div>
         <div className="absolute inset-0 flex items-center justify-center">
           <img src={imageUrl} alt="도서 이미지" width={180} className="z-20" />
