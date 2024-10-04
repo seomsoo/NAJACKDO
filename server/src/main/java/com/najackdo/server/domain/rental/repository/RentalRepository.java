@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.najackdo.server.domain.book.entity.Book;
 import com.najackdo.server.domain.rental.entity.Rental;
 
 public interface RentalRepository extends JpaRepository<Rental, Long> {
@@ -42,4 +43,22 @@ public interface RentalRepository extends JpaRepository<Rental, Long> {
 		ORDER BY r.id DESC
 """)
 	List<Rental> findBorrowListByUserId(Long id);
+
+	@Query("""
+    SELECT ci.userBookDetail.userBook.book
+    FROM Rental r
+    JOIN r.cart c
+    JOIN c.cartItems ci
+    JOIN ci.userBookDetail ubd
+    JOIN ubd.userBook ub
+    JOIN ub.book b
+    GROUP BY b
+    ORDER BY COUNT(r) DESC
+    LIMIT 5
+    """)
+	List<Book> findBestSeller();
+
+
+
+	
 }

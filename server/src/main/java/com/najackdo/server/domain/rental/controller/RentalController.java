@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.najackdo.server.core.annotation.CurrentUser;
 import com.najackdo.server.core.response.SuccessResponse;
+import com.najackdo.server.domain.book.dto.BookData;
 import com.najackdo.server.domain.rental.dto.RentalData;
 import com.najackdo.server.domain.rental.entity.Rental;
 import com.najackdo.server.domain.rental.service.RentalService;
@@ -86,6 +87,11 @@ public class RentalController {
 		return SuccessResponse.of(rentalService.borrowList(user));
 	}
 
+	@GetMapping("/best-seller")
+	@Operation(summary = "오늘의 베스트셀러 조회", description = "오늘의 베스트셀러 조회")
+	public SuccessResponse<List<BookData.Search>> getBestSeller() {
+		return SuccessResponse.of(rentalService.getBestSeller());
+	}
 }
 
 

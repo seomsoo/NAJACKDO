@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.najackdo.server.core.exception.BaseException;
 import com.najackdo.server.core.exception.ErrorCode;
 import com.najackdo.server.core.response.SuccessResponse;
+import com.najackdo.server.domain.book.dto.BookData;
+import com.najackdo.server.domain.book.entity.Book;
 import com.najackdo.server.domain.cart.entity.Cart;
 import com.najackdo.server.domain.cart.repository.CartRepository;
 import com.najackdo.server.domain.chat.repository.ChatRoomRepository;
@@ -163,4 +165,7 @@ public class RentalService {
 		).toList();
 	}
 
+	public List<BookData.Search> getBestSeller() {
+		return rentalRepository.findBestSeller().stream().map(BookData.Search::from).toList();
+	}
 }
