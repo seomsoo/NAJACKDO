@@ -43,18 +43,16 @@ const SearchResultBook = ({ search }: SearchResultBookProps) => {
     }
   };
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    navigate(`book/${search.bookId}`);
+  const handleClick = () => {
+    navigate(`/book/${search.bookId}`);
   };
 
   return (
     <div
       className="flex flex-row relative py-4 border-b-[1px]"
-      onClick={handleClick}
     >
-      <img src={search.cover} alt={search.title} width={108} height={168} />
-      <div className="px-3 py-1">
+      <img src={search.cover} alt={search.title} width={108} height={168} onClick={handleClick} />
+      <div className="px-3 py-1" onClick={handleClick}>
         <p className="font-bold">{search.title}</p>
         <p className="my-2 text-sm">{search.author}</p>
         <p>중고가 : {search.priceStandard}원</p>

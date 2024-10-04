@@ -159,7 +159,7 @@ export const getUserBookDetail = async (userBookId: number): Promise<IUserBookDe
     data: { success, data },
   } = await instance.get<BaseResponse<IUserBookDetail>>(`/user-book/${userBookId}`);
 
-  console.log("getUserBookDetail", data);
+  console.log("getUserBookDetail 대여도사 상세", data);
 
   if (!success) {
     throw new Error("대여 도서 상세 조회 실패");
