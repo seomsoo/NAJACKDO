@@ -5,11 +5,11 @@ interface UserInfoState {
   userId?: number;
   nickname?: string;
   profileImage?: string;
-  cash?: number;
+  location?: string;
   setUserId: (userId: number) => void;
   setNickname: (nickname: string) => void;
   setProfileImage: (profileImage: string) => void;
-  setCash: (cash: number) => void;
+  setLocation: (location: string) => void;
 }
 
 export const useUserStore = create(
@@ -18,11 +18,11 @@ export const useUserStore = create(
       userId: null,
       nickname: null,
       profileImage: null,
-      cash: 0,
+      location: null,
       setUserId: (userId) => set({ userId }),
       setNickname: (nickname) => set({ nickname }),
       setProfileImage: (profileImage) => set({ profileImage }),
-      setCash: (cash) => set({ cash }),
+      setLocation: (location) => set({ location }),
     }),
     {
       name: "userInfo-store",

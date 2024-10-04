@@ -1,16 +1,15 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { getUserBookDetail } from 'api/bookApi';
-import { postAddCartItem } from 'api/cartApi';
-import Loading from 'components/common/Loading';
-import RentalBookDetail from 'page/library/components/RentalBookDetail';
-import UpdatePrice from 'page/library/components/UpdatePrice';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useQuery } from "@tanstack/react-query";
+import { getUserBookDetail } from "api/bookApi";
+import Loading from "components/common/Loading";
+import RentalBookDetail from "page/library/components/RentalBookDetail";
+import UpdatePrice from "page/library/components/UpdatePrice";
+import { useNavigate, useParams } from "react-router-dom";
 
 const MyRentalBookDetailPage = () => {
   const { bookId } = useParams();
   const navigate = useNavigate();
   const bookIdAsNumber = parseInt(bookId, 10);
-  console.log('bookIdAsNumber', bookIdAsNumber);
+  console.log("bookIdAsNumber", bookIdAsNumber);
 
   // 대여 도서 상세 정보 조회
   const {
@@ -18,11 +17,11 @@ const MyRentalBookDetailPage = () => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ['bookdetail', bookIdAsNumber],
+    queryKey: ["bookdetail", bookIdAsNumber],
     queryFn: () => getUserBookDetail(bookIdAsNumber),
   });
-  console.log('bookData', bookData);
-  console.log('지은이');
+  console.log("bookData", bookData);
+  console.log("지은이");
 
   if (isLoading) {
     return <Loading />;

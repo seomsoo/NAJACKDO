@@ -1,6 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { postAddCartItem } from "api/cartApi";
 import { IBookCase } from "atoms/BookCase.type";
+import ConfirmModal from "components/common/ConfirmModal";
+import { useState } from "react";
 import { FaCheck } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
@@ -18,6 +20,7 @@ const OtherBookGrid = ({
   setChecked,
 }: OtherBookGridProps) => {
   const navigate = useNavigate();
+  const [open, setOpen] = useState<boolean>(false);
 
   // 이미지를 3개씩 묶는 함수
   const chunkArray = (
@@ -73,13 +76,7 @@ const OtherBookGrid = ({
       return Promise.all(ownerBookIds.map((id) => postAddCartItem(id)));
     },
     onSuccess: () => {
-      if (
-        confirm("장바구니에 추가되었습니다.\n 장바구니로 이동하시겠습니까?")
-      ) {
-        navigate("/cart");
-      } else {
-        navigate(0);
-      }
+      setOpen(true);
     },
     onError: (error) => {
       console.error("장바구니 추가 실패:", error);
@@ -163,6 +160,14 @@ const OtherBookGrid = ({
             취소
           </button>
         </aside>
+      )}
+      {open && (
+        <ConfirmModal
+          open={open}
+          setOpen={setOpen}
+          content="장바구니 추가가 완료되었습니다. <br /> 장바구니로 이동하시겠습니까?"
+          urlPath="/cart"
+        />
       )}
     </>
   );

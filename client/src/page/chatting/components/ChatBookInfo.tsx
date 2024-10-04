@@ -62,7 +62,7 @@ const ChatBookInfo = ({
   const [isReview, setIsReview] = useState<boolean>(false);
   const [dayPrice, setDayPrice] = useState<number>(0);
 
-  const { userId, cash, setCash } = useUserStore.getState();
+  const { userId } = useUserStore.getState();
 
   // Cart 정보 가져오기
   const { data: bookData, refetch: refetchRentalId } = useSuspenseQuery<ICartList>({
@@ -101,7 +101,6 @@ const ChatBookInfo = ({
     onSuccess: () => {
       setStep(ChatRentalStep.RENTED);
       complete("PAY");
-      setCash(cash - totalLeaf); // 결제 후 잔액 처리
     },
 
     onError: (error) => {
@@ -222,8 +221,9 @@ const ChatBookInfo = ({
           <p className="text-gray-500">
             <span className="text-black">
               {bookData.cartItems[0].bookTitle}
-            </span>{" "}
-            외 {bookData.cartItems.length - 1}권
+            </span>
+            {bookData.cartItems.length > 1 &&
+              `외 ${bookData.cartItems.length - 1}권`}
           </p>
           <div className="flex flex-row items-center">
             <span className="text-black/50 text-sm">일일</span>

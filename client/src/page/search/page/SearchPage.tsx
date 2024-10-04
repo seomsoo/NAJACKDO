@@ -6,7 +6,7 @@ import PopularSearch from "page/search/components/PopularSearch";
 import RecentSearch from "page/search/components/RecentSearch";
 import RecommendBook from "page/search/components/RecommendBook";
 import SearchInput from "page/search/components/SearchInput";
-import { Fragment, Suspense, useState } from "react";
+import { Suspense, useState } from "react";
 
 const SearchPage = () => {
   const [searchText, setSearchText] = useState("");
@@ -30,7 +30,7 @@ const SearchPage = () => {
     setAutoSearchText({ list: [] });
 
     const koreanCombiningRegex = /[ㄱ-ㅎㅏ-ㅣ]/;
-    
+
     if (!value || koreanCombiningRegex.test(value)) {
       return;
     }
@@ -52,10 +52,10 @@ const SearchPage = () => {
         >
           {/* 검색어가 없을 때 */}
           {!searchText ? (
-            <Fragment>
+            <div>
               <PopularSearch />
               <RecentSearch />
-            </Fragment>
+            </div>
           ) : (
             autoSearchText?.list && (
               <AutoSearch autoSearch={autoSearchText.list} />
