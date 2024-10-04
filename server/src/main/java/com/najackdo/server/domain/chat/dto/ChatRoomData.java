@@ -85,7 +85,7 @@ public class ChatRoomData {
 				if (!cartItems.isEmpty()) {
 					chatRoomDTO.setDisplayImagePath(cartItems.get(0).getUserBookDetail().getFrontImagePath());
 				}
-				
+
 				return chatRoomDTO;
 			}
 		}

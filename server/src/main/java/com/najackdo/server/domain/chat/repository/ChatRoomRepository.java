@@ -25,7 +25,7 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
 		left join fetch cr.cart
 		left join fetch cr.cart.cartItems ci
 		left join fetch ci.userBookDetail
-		where cr.customer = :user or cr.owner = :user
+		where cr.customer = :user or cr.owner = :user AND cr.cart.isDelete = false
 	""")
 	List<ChatRoom> findChatRoomsByUser(User user);
 }

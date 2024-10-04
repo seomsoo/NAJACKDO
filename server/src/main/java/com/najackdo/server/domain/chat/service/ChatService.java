@@ -44,7 +44,7 @@ public class ChatService {
 			List<Chat.Message> messages = chatMongoRepository.findByRoomId(chatRoom.getRoomId()).getMessages();
 
 			if (messages == null || messages.isEmpty()) {
-				result.add(ChatRoomData.Search.SearchElement.search(chatRoom, null, "", null));
+				result.add(ChatRoomData.Search.SearchElement.search(chatRoom, LocalDateTime.now(), "", null));
 			} else {
 				// 가장 최근 메시지 가져오기
 				Chat.Message lastMessage = messages.get(messages.size() - 1);
