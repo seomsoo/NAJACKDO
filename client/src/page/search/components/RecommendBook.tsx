@@ -1,12 +1,10 @@
-import { noScrollbarsClassName } from "react-remove-scroll-bar";
-
 const RecommendBook = () => {
   const book = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   return (
     <div className="my-6">
       <span className="font-bold">추천 도서</span>
       <div className="relative">
-        <div className="flex overflow-x-auto whitespace-nowrap">
+        <div className="flex overflow-x-auto whitespace-nowrap scrollbar-hide">
           {book.map((i) => (
             <img
               key={i}
@@ -18,7 +16,6 @@ const RecommendBook = () => {
             />
           ))}
         </div>
-        <div className={noScrollbarsClassName} />
       </div>
     </div>
   );

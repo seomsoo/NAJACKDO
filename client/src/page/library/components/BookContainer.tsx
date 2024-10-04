@@ -1,7 +1,8 @@
-import { IoHeart, IoHeartOutline } from 'react-icons/io5';
-import { useState } from 'react';
-import { postInterestbook, deleteInterestbook } from 'api/bookApi'; // API 호출 함수
-import { useNavigate } from 'react-router-dom';
+import { deleteInterestbook, postInterestbook } from "api/bookApi"; // API 호출 함수
+import AlertModal from "components/common/AlertModal";
+import { Fragment, useState } from "react";
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 interface BookContainerProps {
   bookId: number;
@@ -22,13 +23,16 @@ const BookContainer = ({
 }: BookContainerProps) => {
   const navigate = useNavigate();
   const [heart, setHeart] = useState(isInterested);
+  const [open, setOpen] = useState<boolean>(false);
 
   const handleHeart = async () => {
     try {
       if (heart) {
         await deleteInterestbook(bookId);
+        setOpen(true);
       } else {
         await postInterestbook(bookId);
+        setOpen(true);
       }
       setHeart(!heart);
     } catch (error) {
@@ -41,7 +45,7 @@ const BookContainer = ({
   };
 
   return (
-    <div className="flex py-3  ">
+    <div className="flex py-3">
       <img
         onClick={handleBookClick}
         className="row-span-2 w-24 cursor-pointer"
@@ -54,16 +58,35 @@ const BookContainer = ({
           {/* 하트 버튼 */}
           <div className="ml-2 cursor-pointer" onClick={handleHeart}>
             {heart ? (
-              <IoHeart size={15} color="#D96363" />
+              <Fragment>
+                <IoHeart size={25} color="#D96363" />
+                {open && (
+                  <AlertModal
+                    open={open}
+                    setOpen={setOpen}
+                    content="관심 도서로 등록되었습니다."
+                  />
+                )}
+              </Fragment>
             ) : (
-              <IoHeartOutline size={15} color="#D96363" />
+              <Fragment>
+                <IoHeartOutline size={25} color="#D96363" />
+                {open && (
+                  <AlertModal
+                    open={open}
+                    setOpen={setOpen}
+                    content="관심 도서가 해제되었습니다."
+                  />
+                )}
+              </Fragment>
             )}
           </div>
         </div>
         <p className="text-sm font-medium">{author}</p>
-        <p className="text-xs leading-normal mt-2 pr-4 line-clamp-3">
-          {description}
-        </p>
+        <p
+          className="text-xs leading-normal mt-2 pr-4 line-clamp-3"
+          dangerouslySetInnerHTML={{ __html: description }}
+        ></p>
       </div>
     </div>
   );

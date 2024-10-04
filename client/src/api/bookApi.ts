@@ -1,24 +1,29 @@
 import { BaseResponse } from "atoms/Base.type";
-import { IBookDetail, INearAvailableBook, IRentalCost, ITimeSpent, IUserBookDetail, IBestSeller} from "atoms/Book.type";
+import {
+  IBookDetail,
+  INearAvailableBook,
+  IRentalCost,
+  ITimeSpent,
+  IUserBookDetail,
+} from "atoms/Book.type";
 import instance, { pythoninstance } from "./clientApi";
 
-
 // 베스트셀러 조회
-export const getBestSeller = async () : Promise<IBestSeller[]> => {
+export const getBestSeller = async (): Promise<IBookDetail[]> => {
   try {
     const {
       data: { success, data },
-    } = await instance.get<BaseResponse<IBestSeller[]>>("rental/best-seller");
+    } = await instance.get<BaseResponse<IBookDetail[]>>("rental/best-seller");
 
     if (!success) {
-      throw new Error("베스트셀러 조회 실패")
+      throw new Error("베스트셀러 조회 실패");
     }
-    console.log(getBestSeller)
+    console.log(getBestSeller);
     return data;
   } catch (error) {
-    throw new Error("베스트셀러 실패", error)
+    throw new Error("베스트셀러 실패", error);
   }
-}
+};
 
 // 관심 도서 조회
 export const getInterestbook = async (): Promise<IBookDetail[]> => {
@@ -77,19 +82,19 @@ export const deleteInterestbook = async (bookId: number): Promise<void> => {
 export const postAiCheckBook = async (formData: FormData): Promise<any> => {
   try {
     const { data } = await pythoninstance.post<any>(
-      '/item/quality-inspection', 
+      "/item/quality-inspection",
       formData,
       {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       }
     );
-    console.log(data); 
+    console.log(data);
 
     return data;
   } catch (error) {
-    console.error('AI 도서 인증 실패:', error);
+    console.error("AI 도서 인증 실패:", error);
     throw error;
   }
 };
@@ -153,7 +158,9 @@ export const getBookDetail = async (bookId: number): Promise<IBookDetail> => {
 };
 
 // 비슷한 책 추천
-export const getRecommendbook = async (bookId: number): Promise<IBookDetail[]> => {
+export const getRecommendbook = async (
+  bookId: number
+): Promise<IBookDetail[]> => {
   try {
     const {
       data: { success, data },
@@ -172,10 +179,14 @@ export const getRecommendbook = async (bookId: number): Promise<IBookDetail[]> =
 };
 
 // 대여 도서 상세 조회
-export const getUserBookDetail = async (userBookId: number): Promise<IUserBookDetail> => {
+export const getUserBookDetail = async (
+  userBookId: number
+): Promise<IUserBookDetail> => {
   const {
     data: { success, data },
-  } = await instance.get<BaseResponse<IUserBookDetail>>(`/user-book/${userBookId}`);
+  } = await instance.get<BaseResponse<IUserBookDetail>>(
+    `/user-book/${userBookId}`
+  );
 
   console.log("getUserBookDetail 대여도사 상세", data);
 
@@ -191,40 +202,46 @@ export const postUpdateRentalCost = async (RentalCostData): Promise<void> => {
   try {
     const {
       data: { success, data },
-    } = await instance.post<BaseResponse<IRentalCost>>("/user-book/update/rental-cost", RentalCostData);
+    } = await instance.post<BaseResponse<IRentalCost>>(
+      "/user-book/update/rental-cost",
+      RentalCostData
+    );
 
     if (!success) {
       throw new Error("대여료 수정 실패");
     }
-
   } catch (error) {
     throw new Error("대여료 수정 실패", error);
   }
 };
-
 
 // 체류시간 저장
 export const postTimeSpent = async (TimeData): Promise<void> => {
   try {
     const {
       data: { success, data },
-    } = await instance.post<BaseResponse<ITimeSpent>>("/recommend/visits", TimeData);
+    } = await instance.post<BaseResponse<ITimeSpent>>(
+      "/recommend/visits",
+      TimeData
+    );
 
     if (!success) {
       throw new Error("체류 시간 저장 실패");
     }
-
   } catch (error) {
     throw new Error("체류 시간 저장 실패", error);
   }
 };
 
-
 // 대여 가능한 주변 도서 조회
-export const getNearAvailableBook = async (bookId: number): Promise<INearAvailableBook[]> => {
+export const getNearAvailableBook = async (
+  bookId: number
+): Promise<INearAvailableBook[]> => {
   const {
     data: { success, data },
-  } = await instance.get<BaseResponse<INearAvailableBook[]>>(`user-book/near-available/${bookId}`);
+  } = await instance.get<BaseResponse<INearAvailableBook[]>>(
+    `user-book/near-available/${bookId}`
+  );
 
   console.log("getNearAvailableBook", data);
 

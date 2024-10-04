@@ -1,20 +1,15 @@
-import { getBookDetail, postTimeSpent } from 'api/bookApi';
-import BookInfo from 'page/library/components/BookInfo';
-import CenterCropImage from 'page/library/components/CenterCropImage';
-import DetailRecommendBook from 'page/library/components/DetailRecommendBook';
-import RentableBook from 'page/library/components/RentableBook';
-import { IoChevronBack } from 'react-icons/io5';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import useTimeSpent from 'hooks/useTimeSpent';
-import { useEffect } from 'react';
-import Loading from 'components/common/Loading';
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getBookDetail, postTimeSpent } from "api/bookApi";
+import Loading from "components/common/Loading";
+import BookInfo from "page/library/components/BookInfo";
+import DetailRecommendBook from "page/library/components/DetailRecommendBook";
+import RentableBook from "page/library/components/RentableBook";
+import { Suspense, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 const BookDetailPage = () => {
   const { bookId } = useParams();
   const navigate = useNavigate();
-  const bookIdAsNumber = parseInt(bookId, 10);
-  console.log('bookIdAsNumber', bookIdAsNumber);
 
   // 도서 상세 정보 조회
   const {
@@ -22,32 +17,29 @@ const BookDetailPage = () => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ['bookdetail', bookIdAsNumber],
-    queryFn: () => getBookDetail(bookIdAsNumber),
+    queryKey: ["bookdetail"],
+    queryFn: () => getBookDetail(Number(bookId)),
   });
-  console.log('bookData', bookData);
-  console.log('지은이');
 
   const mutation = useMutation({
-    mutationKey: ['RentalCostData'],
+    mutationKey: ["RentalCostData"],
     mutationFn: postTimeSpent,
 
     onSuccess: () => {
-      console.log('체류 시간 저장 성공');
+      console.log("체류 시간 저장 성공");
     },
 
     onError: (error) => {
-      console.log('체류 시간 저장 실패', error);
+      console.log("체류 시간 저장 실패", error);
     },
   });
 
   // 페이지 체류 시간 계산
   useEffect(() => {
     const startTime = new Date();
-    console.log('시작 시간:', startTime);
 
     const handleTimeSpent = () => {
-      console.log('페이지 이탈');
+      console.log("페이지 이탈");
       const endTime = new Date();
       const timeSpent = Math.floor(
         (endTime.getTime() - startTime.getTime()) / 1000
@@ -59,53 +51,24 @@ const BookDetailPage = () => {
           timeSpent: timeSpent,
         });
       }
-
-      console.log('페이지 체류 시간(ms):', timeSpent);
     };
 
-    window.addEventListener('beforeunload', handleTimeSpent);
+    window.addEventListener("beforeunload", handleTimeSpent);
 
     return () => {
       handleTimeSpent();
-      window.removeEventListener('beforeunload', handleTimeSpent);
+      window.removeEventListener("beforeunload", handleTimeSpent);
     };
   }, [navigate]);
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  if (isError) {
-    return <div>에러가 발생했습니다.</div>;
-  }
-
-  // useTimeSpent(bookIdAsNumber, bookData.genre);
-
   return (
-    <div>
-      <div className="relative w-full h-72 object-cover">
-        <CenterCropImage imageUrl={bookData.cover} />
-        <div
-          onClick={() => navigate(-1)}
-          className="cursor-pointer absolute left-0 top-0 z-10 p-4"
-        >
-          <IoChevronBack size={25} color="#FFFFFF" />
-        </div>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <img
-            src={bookData.cover}
-            alt="사진 커버"
-            width={180}
-            className="z-20"
-          />
-        </div>
+    <Suspense fallback={<Loading />}>
+      <BookInfo bookId={Number(bookId)} />
+      <div className="mx-[25px]">
+        <RentableBook bookId={Number(bookId)} />
+        <DetailRecommendBook bookId={Number(bookId)} />
       </div>
-      <div className="m-4">
-        <BookInfo book={bookData} />
-        <RentableBook bookId={bookIdAsNumber} />
-        <DetailRecommendBook bookId={bookIdAsNumber} />
-      </div>
-    </div>
+    </Suspense>
   );
 };
 

@@ -1,34 +1,26 @@
-import { useQuery } from '@tanstack/react-query';
-import { getInterestbook } from 'api/bookApi';
-import { getMyBookCase } from 'api/bookcaseApi';
-import { getUserInfo } from 'api/profileApi';
-import Loading from 'components/common/Loading';
-import { IoIosSearch } from 'react-icons/io';
-import { IoCartOutline, IoNotificationsOutline } from 'react-icons/io5';
-import { SlArrowRight } from 'react-icons/sl';
-import { Link, useNavigate } from 'react-router-dom';
+import { useQuery } from "@tanstack/react-query";
+import { getInterestbook } from "api/bookApi";
+import { getMyBookCase } from "api/bookcaseApi";
+import Loading from "components/common/Loading";
+import { IoIosSearch } from "react-icons/io";
+import { IoCartOutline, IoNotificationsOutline } from "react-icons/io5";
+import { SlArrowRight } from "react-icons/sl";
+import { Link, useNavigate } from "react-router-dom";
+import { useUserStore } from "store/useUserStore";
 
 const LibraryPage = () => {
   const navigate = useNavigate();
   const goToMyFavorite = () => {
-    navigate('/library/my-favorite');
+    navigate("/library/my-favorite");
   };
   const goToMyBookCase = () => {
-    navigate('/library/my-bookcase');
+    navigate("/library/my-bookcase");
   };
   const goToMyHistory = () => {
-    navigate('/library/my-history');
+    navigate("/library/my-history");
   };
 
-  // 유저 정보 가져오기 (닉네임)
-  const {
-    data: userInfo,
-    isLoading: isUserLoading,
-    isError: isUserError,
-  } = useQuery({
-    queryKey: ['userInfo'],
-    queryFn: getUserInfo,
-  });
+  const nickname = useUserStore.getState().nickname;
 
   // 나의 책장 이미지 목록 가져오기
   const {
@@ -36,7 +28,7 @@ const LibraryPage = () => {
     isLoading: isMyBookCaseLoading,
     isError: isMyBookCaseError,
   } = useQuery({
-    queryKey: ['myBookCase'],
+    queryKey: ["myBookCase"],
     queryFn: getMyBookCase,
   });
 
@@ -46,16 +38,15 @@ const LibraryPage = () => {
     isLoading: isInterestBooksLoading,
     isError: isInterestBooksError,
   } = useQuery({
-    queryKey: ['interestBooks'],
+    queryKey: ["interestBooks"],
     queryFn: getInterestbook,
   });
 
   // 로딩 상태 처리
-  if (isUserLoading || isInterestBooksLoading || isMyBookCaseLoading)
-    return <Loading />;
+  if (isInterestBooksLoading || isMyBookCaseLoading) return <Loading />;
 
   // 에러 상태 처리
-  if (isUserError || isInterestBooksError || isMyBookCaseError)
+  if (isInterestBooksError || isMyBookCaseError)
     return <div>오류가 발생했습니다.</div>;
 
   const myBookCaseImages =
@@ -69,7 +60,7 @@ const LibraryPage = () => {
       <header className="flex items-center justify-between p-4 px-6 mb-3 ">
         <span className="font-extrabold text-2xl">
           <span className="hakgyo text-3xl text-main">
-            {userInfo?.nickname || '사용자'}
+            {nickname || "사용자"}
           </span>
           님의 서재
         </span>
@@ -85,7 +76,7 @@ const LibraryPage = () => {
           </Link>
         </div>
       </header>
-      <main className=" px-6">
+      <main className="px-6">
         <section className="flex flex-col gap-10">
           <nav>
             <button onClick={goToMyBookCase}>

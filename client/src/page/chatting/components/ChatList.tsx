@@ -41,11 +41,15 @@ const ChatList = ({ chat, userId }: ChatListProps) => {
     >
       <div className="flex flex-row items-center">
         {isOwner ? (
-            <BaseProfile userImage={chat.customerProfile} width="12" height="12" />
-        ) :  (
-            <BaseProfile userImage={chat.ownerProfile} width="12" height="12" />
+          <BaseProfile
+            userImage={chat.customerProfile}
+            width="12"
+            height="12"
+          />
+        ) : (
+          <BaseProfile userImage={chat.ownerProfile} width="12" height="12" />
         )}
-        <div className="flex flex-col justify-start">
+        <div className="flex flex-col justify-start ml-3">
           <div className="flex flex-row font-bold items-center">
             <span className="mr-2">
               {isOwner ? chat.customerNickname : chat.ownerNickname}
