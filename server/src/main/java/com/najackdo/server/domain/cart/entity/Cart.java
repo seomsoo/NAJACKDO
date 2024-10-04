@@ -3,6 +3,7 @@ package com.najackdo.server.domain.cart.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.najackdo.server.domain.chat.entity.ChatRoom;
 import com.najackdo.server.domain.rental.entity.Rental;
 import com.najackdo.server.domain.user.entity.User;
 
@@ -53,6 +54,9 @@ public class Cart {
 
 	@OneToOne(mappedBy = "cart", fetch = FetchType.LAZY)
 	private Rental rental;
+
+	@OneToOne(mappedBy = "cart", fetch = FetchType.LAZY)
+	ChatRoom chatRoom;
 
 	public static Cart createCart(User customer, User owner) {
 		Cart cart = new Cart();

@@ -58,7 +58,14 @@ public interface RentalRepository extends JpaRepository<Rental, Long> {
     """)
 	List<Book> findBestSeller();
 
-
-
-	
+	@Query("""
+		SELECT r FROM Rental r 
+		JOIN FETCH r.rentalReview
+		JOIN FETCH r.cart
+		JOIN FETCH r.cart.customer
+		JOIN FETCH r.cart.owner
+		JOIN FETCH r.cart.chatRoom
+		WHERE r.id = :rentalId
+""")
+	Optional<Rental> findRentalById(Long rentalId);
 }

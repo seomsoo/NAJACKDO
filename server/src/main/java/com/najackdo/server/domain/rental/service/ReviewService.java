@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.najackdo.server.core.exception.BaseException;
 import com.najackdo.server.core.exception.ErrorCode;
 import com.najackdo.server.core.response.SuccessResponse;
+import com.najackdo.server.domain.chat.repository.ChatRoomRepository;
 import com.najackdo.server.domain.rental.dto.ReviewData;
 import com.najackdo.server.domain.rental.entity.Rental;
 import com.najackdo.server.domain.rental.entity.RentalReview;
@@ -29,6 +30,7 @@ public class ReviewService {
 	private final RentalReviewRepository rentalReviewRepository;
 	private final RentalRepository rentalRepository;
 	private final ReviewItemsRepository reviewItemsRepository;
+	private final ChatRoomRepository chatRoomRepository;
 
 	// FIXME : 리뷰 종류에 따라서 사용자 매너 점수 업데이트 로직 필요
 	@Transactional
@@ -37,18 +39,16 @@ public class ReviewService {
 		Long rentalId = reviewRequest.getRentalId();
 		List<Long> reviewItemIds = reviewRequest.getReviewItemIds();
 
-		log.info("rentalId : {}", rentalId);
-		log.info("reviewItemIds : {}", reviewItemIds);
-
-		Rental rental = rentalRepository.findById(rentalId).orElseThrow(
+		Rental rental = rentalRepository.findRentalById(rentalId).orElseThrow(
 			() -> new BaseException(ErrorCode.NOT_FOUND_RENTAL)
 		);
 
-		//FIXME
-		User reviewee =
-			rental.getCart().getCustomer().getId().equals(user.getId())
+
+
+		User reviewee = rental.getCart().getCustomer().getId() == user.getId()
 				? rental.getCart().getOwner()
 				: rental.getCart().getCustomer();
+
 
 		reviewItemIds.stream()
 			.map(itemId -> {
@@ -58,6 +58,25 @@ public class ReviewService {
 				return RentalReview.createRentalReview(rental, reviewee, reviewItems);
 			})
 			.forEach(rentalReviewRepository::save);
+
+
+		List<RentalReview> byRentalId = rentalReviewRepository.findByRentalId(rental.getId());
+
+		boolean isSend = false;
+		boolean isReceive = false;
+
+		for (RentalReview rentalReview : byRentalId) {
+			if (rentalReview.getUser().getId() == user.getId()) {
+				isReceive = true;
+			}
+			if (rentalReview.getUser().getId() == reviewee.getId()) {
+				isSend = true;
+			}
+		}
+
+		if (isSend && isReceive) {
+			chatRoomRepository.deleteById(rental.getCart().getChatRoom().getRoomId());
+		}
 
 		return SuccessResponse.empty();
 	}
