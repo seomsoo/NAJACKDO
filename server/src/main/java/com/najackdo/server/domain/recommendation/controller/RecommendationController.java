@@ -48,8 +48,4 @@ public class RecommendationController {
 
 		return SuccessResponse.empty();
 	}
-
-
-
-
 }
