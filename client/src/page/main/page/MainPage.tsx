@@ -1,11 +1,11 @@
-import Loading from 'components/common/Loading';
-import C105Recommend from 'page/main/components/C105Recommend';
-import CategoryRecommend from 'page/main/components/CategoryRecommend';
-import MainCarousel from 'page/main/components/MainCarousel';
-import { Suspense } from 'react';
-import { FaRankingStar } from 'react-icons/fa6';
-import LoactionRecommend from 'page/main/components/LoactionRecommend';
-import { GetUserInfo } from 'page/main/components/GetUserInfo';
+import Loading from "components/common/Loading";
+import C105Recommend from "page/main/components/C105Recommend";
+import CategoryRecommend from "page/main/components/CategoryRecommend";
+import { GetUserInfo } from "page/main/components/GetUserInfo";
+import LoactionRecommend from "page/main/components/LoactionRecommend";
+import MainCarousel from "page/main/components/MainCarousel";
+import { Suspense } from "react";
+import { FaRankingStar } from "react-icons/fa6";
 
 const MainPage = () => {
   return (
@@ -26,7 +26,7 @@ const MainPage = () => {
         <main className="flex flex-col mx-6 gap-8">
           {/* 카테고리 별 추천 */}
           <CategoryRecommend />
-          {/* 지역에서 인기있는 도서 추천 */}
+          {/* 지역에서 인기있userNickname는 도서 추천 */}
           <LoactionRecommend />
           {/* C105 추천 */}
           <C105Recommend />

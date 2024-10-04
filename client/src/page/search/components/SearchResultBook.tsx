@@ -1,8 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { deleteInterestbook, postInterestbook } from "api/bookApi";
 import { ISearch } from "atoms/Search.type";
+import AlertModal from "components/common/AlertModal";
 import CategoryTag from "components/common/CategoryTag";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
@@ -13,6 +14,7 @@ interface SearchResultBookProps {
 const SearchResultBook = ({ search }: SearchResultBookProps) => {
   const navigate = useNavigate();
   const [interestBook, setInterestBook] = useState(search.interest);
+  const [open, setOpen] = useState<boolean>(false);
 
   const applyInterest = useMutation({
     mutationKey: ["book", "interest", "apply"],
@@ -20,7 +22,7 @@ const SearchResultBook = ({ search }: SearchResultBookProps) => {
 
     onSuccess: () => {
       setInterestBook(true);
-      alert("관심 도서로 등록되었습니다.");
+      setOpen(true);
     },
   });
 
@@ -30,8 +32,7 @@ const SearchResultBook = ({ search }: SearchResultBookProps) => {
 
     onSuccess: () => {
       setInterestBook(false);
-      // TODO: 알람창 바꾸기
-      alert("관심 도서에서 삭제되었습니다.");
+      setOpen(true);
     },
   });
 
@@ -48,10 +49,14 @@ const SearchResultBook = ({ search }: SearchResultBookProps) => {
   };
 
   return (
-    <div
-      className="flex flex-row relative py-4 border-b-[1px]"
-    >
-      <img src={search.cover} alt={search.title} width={108} height={168} onClick={handleClick} />
+    <div className="flex flex-row relative py-4 border-b-[1px]">
+      <img
+        src={search.cover}
+        alt={search.title}
+        width={108}
+        height={168}
+        onClick={handleClick}
+      />
       <div className="px-3 py-1" onClick={handleClick}>
         <p className="font-bold">{search.title}</p>
         <p className="my-2 text-sm">{search.author}</p>
@@ -62,16 +67,34 @@ const SearchResultBook = ({ search }: SearchResultBookProps) => {
       </div>
       <div onClick={handleInterest}>
         {interestBook ? (
-          <IoHeartSharp
-            size={25}
-            color="#D96363"
-            className="absolute right-0 bottom-4 cursor-pointer"
-          />
+          <Fragment>
+            <IoHeartSharp
+              size={25}
+              color="#D96363"
+              className="absolute right-0 bottom-4 cursor-pointer"
+            />
+            {open && (
+              <AlertModal
+                open={open}
+                setOpen={setOpen}
+                content="관심 도서로 등록되었습니다."
+              />
+            )}
+          </Fragment>
         ) : (
-          <IoHeartOutline
-            size={25}
-            className="absolute right-0 bottom-4 cursor-pointer"
-          />
+          <Fragment>
+            <IoHeartOutline
+              size={25}
+              className="absolute right-0 bottom-4 cursor-pointer"
+            />
+            {open && (
+              <AlertModal
+                open={open}
+                setOpen={setOpen}
+                content="관심 도서가 해제되었습니다."
+              />
+            )}
+          </Fragment>
         )}
       </div>
     </div>

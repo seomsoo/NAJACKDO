@@ -17,7 +17,7 @@ const AlertModal = ({ content, open, setOpen }: AlertModalProps) => {
   useEffect(() => {
     setTimeout(() => {
       setOpen(false);
-    }, 2000);
+    }, 1500);
   }, []);
 
   return (
@@ -30,8 +30,11 @@ const AlertModal = ({ content, open, setOpen }: AlertModalProps) => {
       <DialogContent className="bg-najackdo-background rounded-2xl">
         <DialogHeader>
           <DialogTitle />
-          <DialogDescription className="h-[200px] flex items-center justify-center text-black">
-            <span className="text-lg">{content}</span>
+          <DialogDescription className="h-[200px] flex items-center justify-center text-stone-950 font-bold">
+            <span
+              className="text-lg"
+              dangerouslySetInnerHTML={{ __html: content }}
+            ></span>
           </DialogDescription>
         </DialogHeader>
       </DialogContent>
