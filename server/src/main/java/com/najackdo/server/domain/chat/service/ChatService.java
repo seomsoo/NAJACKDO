@@ -43,7 +43,7 @@ public class ChatService {
 
 			List<Chat.Message> messages = chatMongoRepository.findByRoomId(chatRoom.getRoomId()).getMessages();
 
-			if (messages.isEmpty()) {
+			if (messages == null || messages.isEmpty()) {
 				result.add(ChatRoomData.Search.SearchElement.search(chatRoom, null, "", null));
 			} else {
 				// 가장 최근 메시지 가져오기
