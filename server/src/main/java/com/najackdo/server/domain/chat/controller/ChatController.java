@@ -5,14 +5,18 @@ import java.util.List;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.najackdo.server.domain.chat.dto.ChatDTO;
+import com.najackdo.server.domain.chat.dto.TalkType;
 import com.najackdo.server.domain.chat.entity.Chat;
 import com.najackdo.server.domain.chat.repository.ChatMongoRepository;
+import com.najackdo.server.domain.notification.entity.NotificationType;
+import com.najackdo.server.domain.notification.event.NotificationEvent;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,14 +27,10 @@ import lombok.extern.slf4j.Slf4j;
 public class ChatController {
 	private final static String CHAT_EXCHANGE_NAME = "chat.exchange";
 	private final static String CHAT_QUEUE_NAME = "chat.queue";
-
 	private final RabbitTemplate rabbitTemplate;
-
-	// private final ChatService chatService;
-
 	private final ChatMongoRepository chatRepository;
 
-	// private final RootConfig rootConfig;
+	private final ApplicationEventPublisher publisher;
 
 	// /pub/chat.message.{roomId} 로 요청하면 브로커를 통해 처리
 	// /exchange/chat.exchange/room.{roomId} 를 구독한 클라이언트에 메시지가 전송된다.
@@ -70,6 +70,24 @@ public class ChatController {
 			// 기존 대화방이 있을 경우 messages 배열에 메시지 추가
 			existingChat.getMessages().add(newMessage);
 			chatRepository.save(existingChat);
+
+			String displayMessage = "";
+
+			if (newMessage.getTalkType() == TalkType.PAY) {
+				displayMessage = "도서를 대여하였습니다..";
+			} else if (newMessage.getTalkType() == TalkType.RETURN) {
+				displayMessage = "도서를 반납하였습니다.";
+			} else {
+				displayMessage = newMessage.getMessage();
+			}
+
+			publisher.publishEvent(new NotificationEvent(
+				chatDTO.getReceiverId(),
+				chatDTO.getSenderNickname(),
+				displayMessage,
+				NotificationType.CHAT));
+
+
 		} else {
 			// 새로운 대화방 생성
 			Chat newChat = new Chat();
@@ -77,5 +95,12 @@ public class ChatController {
 			newChat.setMessages(List.of(newMessage));
 			chatRepository.save(newChat);
 		}
+
+
+
+
+
+
+
 	}
 }

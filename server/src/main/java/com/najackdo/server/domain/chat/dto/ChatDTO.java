@@ -22,4 +22,5 @@ public class ChatDTO {
 	private String message; // 메시지
 	private TalkType talkType; // 메시지 타입
 	private LocalDateTime time; // 채팅 발송 시간
+	private Long receiverId; // 채팅을 받는 사람
 }
