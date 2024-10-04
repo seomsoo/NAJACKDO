@@ -1,15 +1,16 @@
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { getNearBookCase } from "api/locationApi";
-import { getUserInfo } from "api/profileApi";
-import BookcaseContainer from "page/library/components/BookcaseContainer";
-import { useCallback, useEffect, useRef } from "react";
-import { IoSettingsOutline } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { getNearBookCase } from 'api/locationApi';
+import { getUserInfo } from 'api/profileApi';
+import Loading from 'components/common/Loading';
+import BookcaseContainer from 'page/library/components/BookcaseContainer';
+import { useCallback, useEffect, useRef } from 'react';
+import { IoSettingsOutline } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
 
 const LocationPage = () => {
   const navigate = useNavigate();
   const goToLocationSetting = () => {
-    navigate("/setting/location");
+    navigate('/setting/location');
   };
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
@@ -19,7 +20,7 @@ const LocationPage = () => {
     isLoading: isUserLoading,
     isError: isUserError,
   } = useQuery({
-    queryKey: ["userInfo"],
+    queryKey: ['userInfo'],
     queryFn: getUserInfo,
   });
   // 주변 책장 목록 조회
@@ -31,7 +32,7 @@ const LocationPage = () => {
     hasNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: ["nearBookCaseData"],
+    queryKey: ['nearBookCaseData'],
     queryFn: ({ pageParam = 0 }) => getNearBookCase(pageParam as number),
     getNextPageParam: (lastPage, pages) => {
       if (!lastPage.last) {
@@ -44,7 +45,7 @@ const LocationPage = () => {
   const bookcaseArray =
     bookcaseData?.pages?.flatMap((page) => page.content) || [];
   bookcaseArray.map((bookcase, index) => console.log(bookcase));
-  console.log("length", bookcaseArray[0]);
+  console.log('length', bookcaseArray[0]);
 
   const handleObserver = useCallback(
     (entries) => {
@@ -59,7 +60,7 @@ const LocationPage = () => {
   useEffect(() => {
     const option = {
       root: null, // viewport as root
-      rootMargin: "20px",
+      rootMargin: '20px',
       threshold: 1.0,
     };
     const observer = new IntersectionObserver(handleObserver, option);
@@ -70,19 +71,19 @@ const LocationPage = () => {
     };
   }, [handleObserver]);
 
-  if (isUserLoading || isBookCaseLoading) return <div>로딩 중...</div>;
+  if (isUserLoading || isBookCaseLoading) return <Loading />;
   if (isUserError || isBookCaseError) return <div>오류가 발생했습니다.</div>;
 
   // const hasNeighbor = bookcaseData && bookcaseData.displayBooks?.length > 0;
 
-  console.log("bookcaseArray.length", bookcaseArray.length);
+  console.log('bookcaseArray.length', bookcaseArray.length);
   return (
-    <div className="px-6">
-      <div className="flex flex-row justify-between mt-2 mb-6 items-center">
+    <div className="px-6 ">
+      <div className="flex flex-row justify-between mt-4 mb-6 items-center">
         <div className="text-2xl font-bold">
           <span className="text-sub8">
-            {" "}
-            {userInfo?.locationName.split(" ").slice(-1)[0] || " "}
+            {' '}
+            {userInfo?.locationName.split(' ').slice(-1)[0] || ' '}
           </span>
           <span className="font-extrabold">&nbsp;주변 책장</span>
         </div>
@@ -111,7 +112,7 @@ const LocationPage = () => {
             ))}
           </ul>
           <div ref={loadMoreRef} className="loading">
-            {isFetchingNextPage ? "Loading more..." : ""}
+            {isFetchingNextPage ? 'Loading more...' : ''}
           </div>
         </div>
       ) : (

@@ -1,7 +1,8 @@
-import { getSearch } from "api/searchApi";
-import { ISearch } from "atoms/Search.type";
-import SearchResultBook from "page/search/components/SearchResultBook";
-import { useQuery } from "@tanstack/react-query";
+import { getSearch } from 'api/searchApi';
+import { ISearch } from 'atoms/Search.type';
+import SearchResultBook from 'page/search/components/SearchResultBook';
+import { useQuery } from '@tanstack/react-query';
+import Loading from 'components/common/Loading';
 
 interface SearchResultProps {
   keyword: string;
@@ -13,16 +14,16 @@ const SearchResult = ({ keyword }: SearchResultProps) => {
     isLoading: searchLoading,
     isError: searchError,
   } = useQuery<ISearch[]>({
-    queryKey: ["search", "result"],
+    queryKey: ['search', 'result'],
     queryFn: () => getSearch(keyword),
   });
 
   if (searchLoading) {
-    return <div>검색 중...</div>;
+    return <Loading />;
   }
 
   if (searchData) {
-    console.log("searchData", searchData);
+    console.log('searchData', searchData);
   }
 
   return (
