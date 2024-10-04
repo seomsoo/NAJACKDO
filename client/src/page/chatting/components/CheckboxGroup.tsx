@@ -33,7 +33,7 @@ function CheckboxGroup({
     mutationKey: ["review"],
     mutationFn: postReview,
     onSuccess: () => {
-      navigate("/"); // 일단 메인페이지
+      navigate(-1); // -1하면 채팅방으로 가겠지 뭐
     },
   });
 
