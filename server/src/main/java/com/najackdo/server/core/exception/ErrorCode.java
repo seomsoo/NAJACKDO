@@ -73,6 +73,7 @@ public enum ErrorCode {
 	// CART_ITEM
 	NOT_FOUND_CART_ITEM(11000, HttpStatus.NOT_FOUND, "해당 장바구니 아이템이 존재하지 않습니다."),
 	NOT_YOUR_CART_ITEM(11001, HttpStatus.BAD_REQUEST, "내 장바구니 아이템이 아닙니다."),
+	ALREADY_EXIST_CART_ITEM(11002, HttpStatus.BAD_REQUEST, "이미 존재하는 장바구니 아이템입니다."),
 
 	// USER_BOOK
 	NOT_FOUND_USER_BOOK(12000, HttpStatus.NOT_FOUND, "해당 유저 책이 존재하지 않습니다."),
