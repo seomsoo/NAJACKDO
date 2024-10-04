@@ -58,7 +58,7 @@ const MyBookGrid = ({ books, userId }: MyBookGridProps) => {
     if (book.bookStatus === "NOT_INSPECTED") {
       navigate(`/ai-check`, { state: { userId, userBookId: book.userBookId } });
     } else {
-      navigate(`/book/${book.userBookId}/mybook`);
+      navigate(`/book/${book.userBookId}/rental`);
     }
   };
 

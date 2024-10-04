@@ -12,6 +12,70 @@ const GradePage = () => {
     navigate(-1);
   };
 
+
+  /*
+   const {
+    data: profileInfo,
+    isLoading: isOtherProfileLoading,
+    isError: isOtherProfileError,
+  } = useQuery({
+    queryKey: ['profile', nickname],
+    queryFn: () => getOtherProfile(nickname),
+  });
+
+  if (isOtherProfileLoading) {
+    return <Loading />;
+  }
+
+  if (isOtherProfileError) {
+    return <div>오류가 발생했습니다.</div>;
+  }
+
+  const hasReview =
+  profileInfo?.goodReviewInfo.length > 0 ||
+  profileInfo?.badReviewInfo.length > 0;
+  const hasGoodReview = profileInfo?.goodReviewInfo.length > 0;
+  const hasBadReview = profileInfo?.badReviewInfo.length > 0;
+
+
+
+  return (
+    <div>
+      <p className="font-bold mt-10 mb-3">받은 판매자 리뷰</p>
+      {hasReview ? null : <p>리뷰가 없습니다.</p>}
+      <div>
+        {hasGoodReview ? (
+          profileInfo?.goodReviewInfo.map((review, index) => {
+            return (
+              <div
+                className="bg-[green]/10 flex flex-row items-center rounded-lg mx-1 my-3 p-2"
+                key={index}
+              >
+                <TbMessage size={20} className="mr-2" />
+                {review.content}
+              </div>
+            );
+          })
+        ) : null}
+      </div>
+      <div>
+        {hasBadReview ? (
+          profileInfo?.badReviewInfo.map((review, index) => {
+            return (
+              <div
+                className="bg-[red]/5 flex flex-row items-center rounded-lg mx-1 my-3 p-2"
+                key={index}
+              >
+                <TbMessage size={20} className="mr-2" />
+                {review.content}
+              </div>
+            );
+          })
+        ) : null}
+      </div>
+    </div>
+  );
+  */
   const {
     data: profileInfo,
     isLoading: isOtherProfileLoading,
@@ -29,6 +93,15 @@ const GradePage = () => {
   if (isOtherProfileError) {
     return <div>오류가 발생했습니다.</div>;
   }
+
+
+  const hasReview =
+  profileInfo?.goodReviewInfo.length > 0 ||
+  profileInfo?.badReviewInfo.length > 0;
+
+  const hasGoodReview = profileInfo?.goodReviewInfo.length > 0;
+  const hasBadReview = profileInfo?.badReviewInfo.length > 0;
+
 
   let gradeImage = '/images/mannertree/씨앗.png';
   let gradeLevel = 'Lv.1 나작씨앗';
@@ -51,6 +124,10 @@ const GradePage = () => {
     { count: 22, comment: '시간 약속을 안 지켜요.' },
     { count: 3, comment: '시간 약속을 안 지켜요.' },
   ];
+
+
+
+
 
   return (
     <div className="p-6 ">
@@ -78,22 +155,26 @@ const GradePage = () => {
       <div className="mt-6 flex justify-center">
         <div className="w-full p-3 rounded-lg bg-sub8/20">
           <p className="text-[15px] font-medium ">받은 매너 칭찬</p>
-          {reviewArray.map((item, index) => {
-            return (
-              <Review key={index} count={item.count} comment={item.comment} />
-            );
-          })}
+          {hasGoodReview ? (
+            profileInfo?.goodReviewInfo.map((review, index) => {
+              return (
+              <Review key={index} count={review.count} comment={review.content} />
+              );
+            })
+          ) : (<p>받은 매너 칭찬이 없습니다.</p>)}
         </div>
       </div>
 
       <div className="mt-4 flex justify-center">
         <div className="w-full p-3 rounded-lg bg-sub4/20">
           <p className="text-[15px] font-medium ">받은 비매너</p>
-          {reviewArray.map((item, index) => {
-            return (
-              <Review key={index} count={item.count} comment={item.comment} />
-            );
-          })}
+          {hasBadReview ? (
+            profileInfo?.badReviewInfo.map((review, index) => {
+              return (
+              <Review key={index} count={review.count} comment={review.content} />
+              );
+            })
+          ) : (<p>받은 비매너 리뷰가 없습니다.</p>)}
         </div>
       </div>
     </div>
