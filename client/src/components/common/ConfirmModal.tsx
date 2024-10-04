@@ -32,7 +32,10 @@ const ConfirmModal = ({
         <DialogHeader>
           <DialogTitle />
           <DialogDescription className="h-[200px] flex flex-col items-center justify-center text-black">
-            <span className="text-lg my-12">{content}</span>
+            <span
+              className="text-lg my-12"
+              dangerouslySetInnerHTML={{ __html: content }}
+            ></span>
             <div className="space-x-6">
               <button
                 className="border-2 border-sub7 px-10 py-2 rounded-xl hover:bg-[#EBE9E7]"
