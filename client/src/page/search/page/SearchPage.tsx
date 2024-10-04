@@ -29,13 +29,13 @@ const SearchPage = () => {
     setSearchText(value);
     setAutoSearchText({ list: [] });
 
-    // 완성된 한글인지 확인
-    const isCompletedText = /^[가-힣]+$/.test(value);
-
-    // 조합 중이 아니고 한글이 완성된 상태일 때만 검색 쿼리 전송
-    if (isCompletedText) {
-      fetchAutoSearchText(value);
+    const koreanCombiningRegex = /[ㄱ-ㅎㅏ-ㅣ]/;
+    
+    if (!value || koreanCombiningRegex.test(value)) {
+      return;
     }
+
+    fetchAutoSearchText(value);
   };
 
   return (

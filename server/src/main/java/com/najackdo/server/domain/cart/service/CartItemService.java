@@ -54,6 +54,14 @@ public class CartItemService {
 		} else {
 			cart = existingCart.get();
 		}
+		
+		List<CartItem> cartItems = cartItemRepository.findCartItemsByCartId(cart.getId());
+		boolean exists = cartItems.stream()
+			.anyMatch(cartItem -> cartItem.getUserBookDetail().getId().equals(userBookDetail.getId()));
+
+		if (exists) {
+			throw new BaseException(ErrorCode.ALREADY_EXIST_CART_ITEM);
+		}
 
 		CartItem cartItem = CartItem.createCartItem(cart, userBookDetail);
 		cartItemRepository.save(cartItem);
