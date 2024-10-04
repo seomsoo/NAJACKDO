@@ -1,10 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
-import { getMyBookCase } from "api/bookcaseApi"; // API 호출 함수
-import { BiBookAdd } from "react-icons/bi";
-import { IoIosArrowBack } from "react-icons/io";
-import { IoNotificationsOutline } from "react-icons/io5";
-import { Link, useNavigate } from "react-router-dom";
-import MyBookGrid from "../components/MyBookGrid";
+import { useQuery } from '@tanstack/react-query';
+import { getMyBookCase } from 'api/bookcaseApi'; // API 호출 함수
+import { BiBookAdd } from 'react-icons/bi';
+import { IoIosArrowBack } from 'react-icons/io';
+import { IoNotificationsOutline } from 'react-icons/io5';
+import { Link, useNavigate } from 'react-router-dom';
+import MyBookGrid from '../components/MyBookGrid';
+import Loading from 'components/common/Loading';
 
 const MyBookCasePage = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const MyBookCasePage = () => {
     isLoading: isBookcaseLoading,
     isError: isBookcaseError,
   } = useQuery({
-    queryKey: ["myBookCase"],
+    queryKey: ['myBookCase'],
     queryFn: getMyBookCase,
   });
   console.log(bookcase);
@@ -26,7 +27,7 @@ const MyBookCasePage = () => {
   };
 
   if (isBookcaseLoading) {
-    return <div>로딩 중...</div>;
+    return <Loading />;
   }
 
   if (isBookcaseError) {
@@ -61,7 +62,7 @@ const MyBookCasePage = () => {
           </div>
           <button>
             <img
-              src={bookcase?.profileImage || "/basic_profile.png"} // 기본 이미지 처리
+              src={bookcase?.profileImage || '/basic_profile.png'} // 기본 이미지 처리
               alt="profile"
               className="rounded-full w-16 h-16  "
             />

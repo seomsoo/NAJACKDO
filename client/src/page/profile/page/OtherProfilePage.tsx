@@ -7,6 +7,7 @@ import MannerTree from 'page/profile/components/MannerTree';
 import UserInfo from 'page/profile/components/UserInfo';
 import { useNavigate, useParams } from 'react-router-dom';
 import { IBookCase } from 'atoms/BookCase.type';
+import Loading from 'components/common/Loading';
 
 const OtherProfilePage = () => {
   const { nickname } = useParams();
@@ -44,7 +45,7 @@ const OtherProfilePage = () => {
   });
 
   if (isUserInfoLoading || isOtherProfileLoading || isBookcaseLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (isUserInfoError || isOtherProfileError || isBookcaseError) {
@@ -58,8 +59,8 @@ const OtherProfilePage = () => {
   }
 
   return (
-    <div className='mx-6 my-4'>
-      <p className='text-[32px] font-extrabold tracking-wider mb-6'>프로필</p>
+    <div className="mx-6 my-4">
+      <p className="text-[32px] font-extrabold tracking-wider mb-6">프로필</p>
       {/* 유저 정보 */}
       <UserInfo
         userName={profileInfo.nickname}

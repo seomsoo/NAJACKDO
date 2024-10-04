@@ -1,10 +1,11 @@
-import { getUserInfo } from "api/profileApi";
-import { IProfile } from "atoms/Profile.type";
-import LogoutButton from "page/profile/components/LogoutButton";
-import MannerTree from "page/profile/components/MannerTree";
-import MyLeaf from "page/profile/components/MyLeaf";
-import { useQuery } from "@tanstack/react-query";
-import UserInfo from "../components/UserInfo";
+import { getUserInfo } from 'api/profileApi';
+import { IProfile } from 'atoms/Profile.type';
+import LogoutButton from 'page/profile/components/LogoutButton';
+import MannerTree from 'page/profile/components/MannerTree';
+import MyLeaf from 'page/profile/components/MyLeaf';
+import { useQuery } from '@tanstack/react-query';
+import UserInfo from '../components/UserInfo';
+import Loading from 'components/common/Loading';
 
 const ProfilePage = () => {
   const {
@@ -12,24 +13,27 @@ const ProfilePage = () => {
     isLoading,
     isError,
   } = useQuery<IProfile>({
-    queryKey: ["profile"],
+    queryKey: ['profile'],
     queryFn: async () => await getUserInfo(),
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
   if (isError) return <div>오류가 발생했습니다.</div>;
 
   if (profileInfo) {
-    console.log("유저 정보", profileInfo);
+    console.log('유저 정보', profileInfo);
   }
 
-
-  const goodReviewCount = profileInfo?.goodReviewInfo.reduce((sum, review) => sum + review.count, 0);
-  const badReviewCount = profileInfo?.goodReviewInfo.reduce((sum, review) => sum + review.count, 0);
-
-  
+  const goodReviewCount = profileInfo?.goodReviewInfo.reduce(
+    (sum, review) => sum + review.count,
+    0
+  );
+  const badReviewCount = profileInfo?.goodReviewInfo.reduce(
+    (sum, review) => sum + review.count,
+    0
+  );
 
   return (
     <div className="mx-6 my-4">

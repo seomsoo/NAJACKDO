@@ -1,22 +1,23 @@
-import { useQuery } from "@tanstack/react-query";
-import { getInterestbook } from "api/bookApi";
-import { getMyBookCase } from "api/bookcaseApi";
-import { getUserInfo } from "api/profileApi";
-import { IoIosSearch } from "react-icons/io";
-import { IoCartOutline, IoNotificationsOutline } from "react-icons/io5";
-import { SlArrowRight } from "react-icons/sl";
-import { Link, useNavigate } from "react-router-dom";
+import { useQuery } from '@tanstack/react-query';
+import { getInterestbook } from 'api/bookApi';
+import { getMyBookCase } from 'api/bookcaseApi';
+import { getUserInfo } from 'api/profileApi';
+import Loading from 'components/common/Loading';
+import { IoIosSearch } from 'react-icons/io';
+import { IoCartOutline, IoNotificationsOutline } from 'react-icons/io5';
+import { SlArrowRight } from 'react-icons/sl';
+import { Link, useNavigate } from 'react-router-dom';
 
 const LibraryPage = () => {
   const navigate = useNavigate();
   const goToMyFavorite = () => {
-    navigate("/library/my-favorite");
+    navigate('/library/my-favorite');
   };
   const goToMyBookCase = () => {
-    navigate("/library/my-bookcase");
+    navigate('/library/my-bookcase');
   };
   const goToMyHistory = () => {
-    navigate("/library/my-history");
+    navigate('/library/my-history');
   };
 
   // 유저 정보 가져오기 (닉네임)
@@ -25,7 +26,7 @@ const LibraryPage = () => {
     isLoading: isUserLoading,
     isError: isUserError,
   } = useQuery({
-    queryKey: ["userInfo"],
+    queryKey: ['userInfo'],
     queryFn: getUserInfo,
   });
 
@@ -35,7 +36,7 @@ const LibraryPage = () => {
     isLoading: isMyBookCaseLoading,
     isError: isMyBookCaseError,
   } = useQuery({
-    queryKey: ["myBookCase"],
+    queryKey: ['myBookCase'],
     queryFn: getMyBookCase,
   });
 
@@ -45,13 +46,13 @@ const LibraryPage = () => {
     isLoading: isInterestBooksLoading,
     isError: isInterestBooksError,
   } = useQuery({
-    queryKey: ["interestBooks"],
+    queryKey: ['interestBooks'],
     queryFn: getInterestbook,
   });
 
   // 로딩 상태 처리
   if (isUserLoading || isInterestBooksLoading || isMyBookCaseLoading)
-    return <div>로딩 중...</div>;
+    return <Loading />;
 
   // 에러 상태 처리
   if (isUserError || isInterestBooksError || isMyBookCaseError)
@@ -68,7 +69,7 @@ const LibraryPage = () => {
       <header className="flex items-center justify-between p-4 px-6 mb-3 ">
         <span className="font-extrabold text-2xl">
           <span className="hakgyo text-3xl text-main">
-            {userInfo?.nickname || "사용자"}
+            {userInfo?.nickname || '사용자'}
           </span>
           님의 서재
         </span>
