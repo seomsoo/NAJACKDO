@@ -5,7 +5,7 @@ import HistoryList from "page/library/components/HistoryList";
 
 const LendBook = () => {
   const { data: lendHistory } = useSuspenseQuery<IHistory[]>({
-    queryKey: ["myBookCase"],
+    queryKey: ["myBookCase", "lend"],
     queryFn: getLendHistory,
   });
 
