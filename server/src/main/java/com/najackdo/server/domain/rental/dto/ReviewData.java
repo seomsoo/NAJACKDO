@@ -10,10 +10,4 @@ public class ReviewData {
 		private Long rentalId;
 		private List<Long> reviewItemIds;
 	}
-
-	@Data
-	public static class ReviewPossible {
-		private Long rentalId;
-		private Long revieweeId;
-	}
 }

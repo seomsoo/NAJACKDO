@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.najackdo.server.core.annotation.CurrentUser;
@@ -42,7 +43,8 @@ public class RentalReviewController {
 
 	@GetMapping("/is-possible-rental")
 	@Operation(summary = "리뷰 가능 여부", description = "리뷰 가능 여부")
-	public SuccessResponse<Boolean> isPossibleRental(@CurrentUser User user, @RequestBody ReviewData.ReviewPossible reviewPossible) {
-		return SuccessResponse.of(!rentalCacheRepository.isExistRentalReview(reviewPossible.getRentalId(), user.getId(), reviewPossible.getRevieweeId()));
+	public SuccessResponse<Boolean> isPossibleRental(@CurrentUser User user,
+		@RequestParam Long rentalId, @RequestParam Long revieweeId) {
+		return SuccessResponse.of(!rentalCacheRepository.isExistRentalReview(rentalId, user.getId(), revieweeId));
 	}
 }
