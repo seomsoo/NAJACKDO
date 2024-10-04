@@ -217,8 +217,10 @@ public class UserBooksService {
 
 
 	public List<UserBookData.AvailableNearBook> isNearAvailableBook(User user, Long bookId) {
+		// Set<Integer>로 수집
 		Set<Integer> locations = locationCacheRepository.getUserNearLocation(user.getId()).stream()
-			.map(obj -> Integer.parseInt((String)obj))
+			.filter(obj -> obj instanceof Integer) // Integer인 경우만 필터링
+			.map(obj -> (Integer) obj) // 안전하게 캐스팅
 			.collect(Collectors.toSet());
 
 		return userBooksRepository.findUserBooksByLocations(bookId, locations).stream().map(

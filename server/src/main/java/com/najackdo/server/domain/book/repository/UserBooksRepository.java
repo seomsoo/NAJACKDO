@@ -22,7 +22,7 @@ public interface UserBooksRepository extends JpaRepository<UserBook, Long> {
 		SELECT ub
 		FROM UserBook ub
 		JOIN FETCH ub.userBookDetail
-		WHERE  ub.locationCode.id IN :locations AND ub.book.id = :bookId AND ub.bookStatus = 'AVAILABLE'
+		WHERE  (ub.locationCode.id IN :locations AND ub.book.id = :bookId) AND ub.bookStatus = 'AVAILABLE'
 		"""
 	)
 	List<UserBook> findUserBooksByLocations(Long bookId, Set<Integer> locations);
