@@ -60,7 +60,9 @@ const ChatList = ({ chat, userId }: ChatListProps) => {
           </div>
           <span className="mt-1">
             {chat.lastChatType === "MESSAGE"
-              ? chat.lastChatMessage
+              ? (
+                chat.lastChatMessage.length > 14 ? chat.lastChatMessage.slice(0, 14) + "..." : chat.lastChatMessage
+              )
               : chat.lastChatType === "PAY"
                 ? "송금이 완료되었습니다"
                 : chat.lastChatType === "RETURN"

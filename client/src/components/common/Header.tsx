@@ -11,13 +11,14 @@ const Header = () => {
 
   return (
     <header className="flex flex-row justify-between items-center py-4 px-4">
-      <div className="flex flex-row items-center">
+      <div className="flex flex-row items-center" 
+        onClick={() => {
+            nav("/");
+          }}>
         <IoLibrary size={35} color="#C0C78C" />
         <span
           className="maplestory text-main text-2xl ml-2"
-          onClick={() => {
-            nav("/");
-          }}
+
         >
           나의 작은 도서관
         </span>

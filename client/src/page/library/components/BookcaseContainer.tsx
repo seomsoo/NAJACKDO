@@ -46,7 +46,7 @@ const BookcaseContainer = ({
   return (
     <div className="my-5 bg-white/30 shadow rounded-lg p-4">
       <div className="flex flex-row justify-between items-center mb-2">
-        <p className="text-base font-semibold">{name}님의 책장</p>
+        <p className="text-base font-semibold" onClick={handleBookcaseClick} >{name}님의 책장</p>
         <div onClick={handleHeart}>
           {heart ? (
             <Fragment>
