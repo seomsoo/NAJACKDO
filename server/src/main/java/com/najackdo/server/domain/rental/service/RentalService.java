@@ -1,8 +1,10 @@
 package com.najackdo.server.domain.rental.service;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,17 +56,17 @@ public class RentalService {
 		);
 
 
-		log.info("카트 사이즈===============================================");
-		log.info("{}", cart.getCartItems().size());
-		log.info("카트 사이즈===============================================");
-
+		Set<Long> bookIds = new HashSet<>();
 
 		cart.getCartItems().forEach(cartItem -> {
 
 			Book book = cartItem.getUserBookDetail().getUserBook().getBook();
-			log.info("bookId, title===============================================");
-			log.info("{}, {}", book.getId(), book.getTitle());
-			log.info("bookId, title===============================================");
+
+			if (bookIds.contains(book.getId())) {
+				return;
+			}
+
+			bookIds.add(book.getId());
 
 			com.najackdo.server.domain.recommendation.entity.Rental rental = new com.najackdo.server.domain.recommendation.entity.Rental();
 			rental.setUserId(cart.getCustomer().getId());
