@@ -16,39 +16,28 @@ const DetailRecommendBook = ({ bookId }: DetailRecommendBookProps) => {
   });
   console.log("recommendData", recommendData);
 
-  // if (isError) {
-  //   return (
-  //     <div>
-  //       <p className="mt-5 font-bold mb-3">추천 도서</p>
-  //       <p>추천 도서가 없습니다.</p>
-  //     </div>
-  //   );
-  // }
-
   const handleBookClick = (userBookId: number) => {
     navigate(`/book/${userBookId}`);
   };
 
   return (
-    <div className="mt-10 mb-6">
-      <p className="mt-5 font-bold mb-3">추천 도서</p>
-      <div className="grid grid-cols-4 gap-3">
-        {recommendData ? (
-          recommendData.map((book, index) => {
-            return (
-              <img
-                src={book.cover}
-                alt={book.title}
-                width={80}
-                className="rounded-e-md"
-                onClick={() => handleBookClick(book.bookId)}
-              />
-            );
-          })
-        ) : (
-          <div>추천 도서가 없습니다.</div>
-        )}
-      </div>
+    <div className="grid grid-cols-4 gap-3">
+      {recommendData ? (
+        recommendData.map((book, index) => {
+          return (
+            <img
+              key={index}
+              src={book.cover}
+              alt={book.title}
+              width={80}
+              className="rounded-e-md"
+              onClick={() => handleBookClick(book.bookId)}
+            />
+          );
+        })
+      ) : (
+        <div>추천 도서가 없습니다.</div>
+      )}
     </div>
   );
 };

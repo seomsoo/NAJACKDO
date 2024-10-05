@@ -2,11 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { getInterestbook } from "api/bookApi";
 import { getMyBookCase } from "api/bookcaseApi";
 import Loading from "components/common/Loading";
-import { IoIosSearch } from "react-icons/io";
-import { IoCartOutline, IoNotificationsOutline } from "react-icons/io5";
+import LibraryHeader from "page/library/components/LibraryHeader";
 import { SlArrowRight } from "react-icons/sl";
-import { Link, useNavigate } from "react-router-dom";
-import { useUserStore } from "store/useUserStore";
+import { useNavigate } from "react-router-dom";
 
 const LibraryPage = () => {
   const navigate = useNavigate();
@@ -19,8 +17,6 @@ const LibraryPage = () => {
   const goToMyHistory = () => {
     navigate("/library/my-history");
   };
-
-  const nickname = useUserStore.getState().nickname;
 
   // 나의 책장 이미지 목록 가져오기
   const {
@@ -57,25 +53,7 @@ const LibraryPage = () => {
 
   return (
     <div>
-      <header className="flex items-center justify-between p-4 px-6 mb-3 ">
-        <span className="font-extrabold text-2xl">
-          <span className="hakgyo text-3xl text-main">
-            {nickname || "사용자"}
-          </span>
-          님의 서재
-        </span>
-        <div className="flex justify-between text-3xl gap-3 text-[#545454]">
-          <Link to="/search">
-            <IoIosSearch />
-          </Link>
-          <Link to="/cart">
-            <IoCartOutline />
-          </Link>
-          <Link to="/alarm">
-            <IoNotificationsOutline />
-          </Link>
-        </div>
-      </header>
+      <LibraryHeader />
       <main className="px-6">
         <section className="flex flex-col gap-10">
           <nav>
@@ -85,7 +63,7 @@ const LibraryPage = () => {
                 <SlArrowRight className="ml-2 text-[#807B7B] text-xl" />
               </article>
               <article>
-                <div className="flex justify-center gap-8">
+                <div className="flex justify-start gap-8 mx-5">
                   {myBookCaseImages.length > 0 ? (
                     myBookCaseImages.map((src, index) => (
                       <img
@@ -113,7 +91,7 @@ const LibraryPage = () => {
                 <SlArrowRight className="ml-2 text-[#807B7B] text-xl" />
               </article>
               <article>
-                <div className="flex justify-center gap-8">
+                <div className="flex justify-start gap-8 mx-5">
                   {/* dummy 이미지 */}
                   <img
                     src="ssafy.png"
@@ -144,7 +122,7 @@ const LibraryPage = () => {
                 <SlArrowRight className="ml-2 text-[#807B7B] text-xl" />
               </article>
               <article>
-                <div className="flex justify-center gap-8">
+                <div className="flex justify-start gap-8 mx-5">
                   {favoriteImages.length > 0 ? (
                     favoriteImages.map((src, index) => (
                       <img
