@@ -119,6 +119,7 @@ const AICheckUploadPage = () => {
                 id="front-image-upload"
                 type="file"
                 accept="image/*"
+                capture="environment"
                 onChange={handleFrontImageUpload}
                 className="hidden"
               />
@@ -149,6 +150,7 @@ const AICheckUploadPage = () => {
                 id="back-image-upload"
                 type="file"
                 accept="image/*"
+                capture="environment"
                 onChange={handleBackImageUpload}
                 className="hidden"
               />
