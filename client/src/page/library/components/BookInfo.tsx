@@ -21,7 +21,7 @@ const BookInfo = ({ bookId, rental }: BookInfoProps) => {
 
   // 도서 상세 정보 조회
   const { data: bookData } = useSuspenseQuery({
-    queryKey: ["bookdetail"],
+    queryKey: ["bookdetail", bookId],
     queryFn: () => getBookDetail(bookId),
   });
 
