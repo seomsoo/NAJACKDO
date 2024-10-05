@@ -3,6 +3,8 @@ import * as React from "react";
 
 import { cn } from "lib/utils";
 
+import { FaAngleRight } from "react-icons/fa6";
+
 const Accordion = AccordionPrimitive.Root;
 
 const AccordionItem = React.forwardRef<
@@ -15,8 +17,10 @@ AccordionItem.displayName = "AccordionItem";
 
 const AccordionTrigger = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
->(({ className, children, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> & {
+    component?: string;
+  }
+>(({ className, children, component, ...props }, ref) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (
@@ -24,16 +28,21 @@ const AccordionTrigger = React.forwardRef<
       <AccordionPrimitive.Trigger
         ref={ref}
         className={cn(
-          "flex flex-1 items-center justify-between py-4 text-sm font-medium transition-all",
+          "flex flex-1 items-center justify-between py-4 text-sm font-medium transition-all [&[data-state=open]>svg]:rotate-90",
           className
         )}
         onClick={() => setIsOpen(!isOpen)}
         {...props}
       >
         {children}
-        <span className="text-[#888888] text-[12px]">
-          {isOpen ? "전체닫기" : "전체보기"}
-        </span>
+        {component === "history" && (
+          <FaAngleRight className="transition-transform duration-200" />
+        )}
+        {component === "rental" && (
+          <span className="text-[#888888] text-[12px]">
+            {isOpen ? "전체닫기" : "전체보기"}
+          </span>
+        )}
       </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>
   );

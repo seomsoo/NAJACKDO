@@ -1,8 +1,7 @@
-import NotFoundPage from "components/common/NotFoundPage";
 import AlarmPage from "page/alarm/page/AlarmPage";
 import AICheckPage from "page/bookapply/page/AICheckPage";
 import AICheckResultPage from "page/bookapply/page/AICheckResultPage";
-import AICheckUploadPage from 'page/bookapply/page/AICheckUploadPage';
+import AICheckUploadPage from "page/bookapply/page/AICheckUploadPage";
 import ApplyPage from "page/bookapply/page/ApplyPage";
 import BookApplyPage from "page/bookapply/page/BookApplyPage";
 import BookcaseApplyPage from "page/bookapply/page/BookcaseApplyPage";
@@ -16,7 +15,6 @@ import KaPayCancelPage from "page/kapay/page/KaPayCancelPage";
 import KaPayFailPage from "page/kapay/page/KaPayFailPage";
 import KaPayPage from "page/kapay/page/KaPayPage";
 import BookDetailPage from "page/library/page/BookDetailPage";
-import MyRentalBookDetailPage from "page/library/page/MyRentalBookDetailPage";
 import RentalBookDetailPage from "page/library/page/RentalBookDetailPage";
 import LocationEditPage from "page/location/page/LocationEditPage";
 import LocationPage from "page/location/page/LocationPage";
@@ -50,7 +48,6 @@ const MainRoute = () => {
       <Route path="/kapay/fail" element={<KaPayFailPage />} />
       <Route path="/book/:bookId" element={<BookDetailPage />} />
       <Route path="/book/:bookId/rental" element={<RentalBookDetailPage />} />
-      <Route path="/book/:bookId/mybook" element={<MyRentalBookDetailPage />} />
       <Route path="/apply" element={<ApplyPage />} />
       <Route path="/apply/isbn" element={<ISBNScanPage />} />
       <Route path="/apply/book" element={<BookApplyPage />} />

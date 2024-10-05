@@ -40,7 +40,7 @@ const RentableBook = ({ bookId }: RentableBookProps) => {
       {nearAvailableBookData.length > 4 && (
         <Accordion type="single" collapsible className="mt-4">
           <AccordionItem value="item-1">
-            <AccordionTrigger className="font-bold text-md">
+            <AccordionTrigger className="font-bold text-md" component="rental">
               <p>대여 가능 도서</p>
             </AccordionTrigger>
             <div className="grid grid-cols-4 gap-x-2 gap-y-5">
