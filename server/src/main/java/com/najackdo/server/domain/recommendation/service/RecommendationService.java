@@ -31,8 +31,6 @@ public class RecommendationService {
 
 	private final BookRepository bookRepository;
 	private final VisitMongoRepository visitMongoRepository;
-	private final BookMarkMongoRepository bookMarkMongoRepository;
-	private final RentalMongoRepository rentalMongoRepository;
 
 	public List<BookData.Search> getBookBasedReccom(Long bookId) {
 
@@ -55,33 +53,4 @@ public class RecommendationService {
 
 		visitMongoRepository.save(visit);
 	}
-
-	// /**
-	//  * 몽고에 저장하는 책 좋아요 기록
-	//  * @param user
-	//  * @param bookMarkDto
-	//  */
-	// public void createMongoBookMark(User user, BookMarkDto bookMarkDto) {
-	// 	BookMark bookMark = new BookMark();
-	// 	bookMark.setUserId(user.getId());
-	// 	bookMark.setBookId(bookMarkDto.getBookId());
-	// 	bookMark.setGenre(bookMarkDto.getGenre());
-	//
-	// 	bookMarkMongoRepository.save(bookMark);
-	//
-	// }
-	//
-	//
-	// /**
-	//  * 몽고에 저장하는 대여 기록
-	//  * @param user
-	//  * @param rentalDto
-	//  */
-	// public void createMongoRental(User user, RentalDto rentalDto) {
-	// 	Rental rental = new Rental();
-	// 	rental.setUserId(user.getId());
-	// 	rental.setBookId(rentalDto.getBookId());
-	// 	rental.setGenre(rentalDto.getGenre());
-	// 	rentalMongoRepository.save(rental);
-	// }
 }

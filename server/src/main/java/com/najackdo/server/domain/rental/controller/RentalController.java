@@ -12,7 +12,6 @@ import com.najackdo.server.core.annotation.CurrentUser;
 import com.najackdo.server.core.response.SuccessResponse;
 import com.najackdo.server.domain.book.dto.BookData;
 import com.najackdo.server.domain.rental.dto.RentalData;
-import com.najackdo.server.domain.rental.entity.Rental;
 import com.najackdo.server.domain.rental.service.RentalService;
 import com.najackdo.server.domain.user.entity.User;
 

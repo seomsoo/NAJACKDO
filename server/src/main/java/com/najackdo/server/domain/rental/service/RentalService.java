@@ -36,7 +36,6 @@ public class RentalService {
 
 	private final CartRepository cartRepository;
 	private final RentalRepository rentalRepository;
-	private final ChatRoomRepository chatRoomRepository;
 	private final RentalMongoRepository rentalMongoRepository;
 
 	@Transactional
@@ -54,12 +53,20 @@ public class RentalService {
 			() -> new BaseException(ErrorCode.NOT_FOUND_CART)
 		);
 
+
+		log.info("카트 사이즈===============================================");
+		log.info("{}", cart.getCartItems().size());
+		log.info("카트 사이즈===============================================");
+
+
 		cart.getCartItems().forEach(cartItem -> {
 
 			Book book = cartItem.getUserBookDetail().getUserBook().getBook();
+			log.info("bookId, title===============================================");
+			log.info("{}, {}", book.getId(), book.getTitle());
+			log.info("bookId, title===============================================");
 
 			com.najackdo.server.domain.recommendation.entity.Rental rental = new com.najackdo.server.domain.recommendation.entity.Rental();
-
 			rental.setUserId(cart.getCustomer().getId());
 			rental.setBookId(book.getId());
 			rental.setGenre(book.getGenre());
