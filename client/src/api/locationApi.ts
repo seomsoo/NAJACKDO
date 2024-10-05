@@ -34,11 +34,11 @@ export const getNearLocation = async (
 export const getLocationRange = async (
   latitude: number,
   longitude: number,
-): Promise<ILocationRange[]> => {
+): Promise<ILocationRange[][]> => {
   
   const {
     data: { success, data },
-  } = await instance.get<BaseResponse<ILocationRange[]>>(
+  } = await instance.get<BaseResponse<ILocationRange[][]>>(
     `/location/near-neighborhood?latitude=${latitude}&longitude=${longitude}`
   );
 
