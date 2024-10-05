@@ -4,7 +4,6 @@ import { ILocationRange } from 'atoms/Location.type';
 import Loading from 'components/common/Loading';
 import { RangeSlider } from 'components/ui/rangeslider';
 import { useEffect, useState } from 'react';
-import { set } from 'react-hook-form';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -27,28 +26,47 @@ const RangeSetting = ({ selectedLocation }) => {
     data: locationRangeData,
     isLoading,
     isError,
-  } = useQuery<ILocationRange[][]>({
+  } = useQuery<ILocationRange[]>({
     queryKey: ['locationRangeData'],
     queryFn: () => getLocationRange(latitude, longitude),
   });
+  console.log('locationRangeData', locationRangeData);
+  console.log('제발', locationRangeData?.[range]);
 
+  
   useEffect(() => {
-    if (!locationRangeData ) return;
+    if (!locationRangeData || !map) {
+      console.log('불러오는 중');
+      return;
+    }
+    console.log('불러옴');
 
-    locationRangeData?.forEach((locationRanges) => {
-      console.log('locationRanges', locationRanges);
-      const tempPolygonPath = [];
+    // 폴리곤을 그리기 위한 함수 호출
+    displayPolygons(locationRangeData?.[range]);
+
+    function displayPolygons(locationRanges: any) {
       locationRanges.forEach((location) => {
+        console.log('으아악 포이치', location);
         const polygonCoordinates = parsePolygon(location.polygon);
         if (polygonCoordinates.length > 0) {
-          tempPolygonPath.push(polygonCoordinates.map(
-            (latlng) => new window.kakao.maps.LatLng(latlng[0], latlng[1])
-          ));
+          const polygonPath = polygonCoordinates.map(
+            (coord) => new window.kakao.maps.LatLng(coord[0], coord[1])
+          );
+
+          const polygon = new window.kakao.maps.Polygon({
+            path: polygonPath,
+            strokeWeight: 2.5,
+            strokeColor: '#E8B900',
+            strokeOpacity: 1,
+            strokeStyle: 'solid',
+            fillColor: '#E8B900',
+            fillOpacity: 0.4,
+          });
+
+          polygon.setMap(map);
         }
       });
-      polygonPath.push(tempPolygonPath);
-    });
-
+    }
 
     function parsePolygon(polygon: string) {
       if (!polygon) return [];
@@ -57,35 +75,11 @@ const RangeSetting = ({ selectedLocation }) => {
         .replace(')))', '')
         .split(', ')
         .map((latlng) => latlng.split(' ').map(Number));
+
+      console.log('polygonArray', polygonArray);
       return polygonArray;
     }
-
-    console.log('polygonPath', polygonPath);
-
-  }, [locationRangeData]);
-  
-  useEffect(() => {
-    if (!polygonPath || !map) {
-      return;
-    }
-
-    displayPolygons(range);
-
-    function displayPolygons(range: number) {
-      const polygon = new window.kakao.maps.Polygon({
-        path: polygonPath[range],
-        strokeWeight: 2.5,
-        strokeColor: '#E8B900',
-        strokeOpacity: 1,
-        strokeStyle: 'solid',
-        fillColor: '#E8B900',
-        fillOpacity: 0.4,
-      });
-
-      polygon.setMap(map);
-    }
-
-  }, [polygonPath, map]);
+  }, [locationRangeData, map]);
 
   useEffect(() => {
     const mapContainer = document.getElementById('kakaomap');
@@ -99,16 +93,15 @@ const RangeSetting = ({ selectedLocation }) => {
     };
     const mapInstance = new window.kakao.maps.Map(mapContainer, mapOption);
     setMap(mapInstance);
-    // setTimeout(() => setMap(mapInstance), 500);
-  }, [mapLoaded, range]);
+  }, [latitude, longitude, mapLoaded, range]);
 
   const mutation = useMutation({
     mutationKey: ['location'],
     mutationFn: postMyLocation,
 
     onSuccess: () => {
-      alert('모달로 만들기');
-      navigate('/location');
+      alert('오예 성공');
+      navigate('/');
     },
   });
 
@@ -154,7 +147,6 @@ const RangeSetting = ({ selectedLocation }) => {
           max={3} // locationRangeData?.length - 1 
           step={1}
           value={[range]}
-      // setTimeout(() => setMapLoaded((mapLoaded) => !mapLoaded), 1000);
           onValueChange={(value) => setRange(value[0])}
           className="w-[240px]"
         />
