@@ -43,26 +43,17 @@ const MyBookCasePage = () => {
           <button onClick={goBack} className="text-2xl">
             <IoIosArrowBack />
           </button>
+          <span className='font-extrabold text-2xl'>나의 책장</span>
         </div>
         <div className="flex justify-between text-3xl gap-5 text-[#545454]">
           <Link to="/apply">
             <BiBookAdd />
           </Link>
-          <Link to="/alarm">
-            <IoNotificationsOutline />
-          </Link>
+
         </div>
       </header>
 
       <main className="px-6">
-        <article className="flex items-center w-full justify-between font-extrabold text-2xl mb-5">
-          <div className="flex items-center">
-            <span>나의 책장</span>
-          </div>
-          <button>
-            <BaseProfile userImage={bookcase?.profileImage} width='16' height='16'  />
-          </button>
-        </article>
 
         <section className="flex flex-col items-center text-center mt-12 gap-6">
           {/* 책 데이터가 있을 때 */}

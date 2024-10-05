@@ -15,11 +15,6 @@ const FavoriteHeader = () => {
         </button>
         <span className="font-extrabold text-2xl">내가 좋아하는 책들</span>
       </div>
-      <div className=" text-3xl text-[#545454]">
-        <Link to="/alarm">
-          <IoNotificationsOutline />
-        </Link>
-      </div>
     </header>
   );
 };

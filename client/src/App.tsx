@@ -68,9 +68,9 @@ function App() {
 
   const popupPaths = ["/kapay/approve", "/kapay/cancel", "/kapay/fail"];
   const showHeaderPaths = ["/"];
-
+  const hideHeaderPaths = ["/sign-in", "/survey", "/setting/location", "/edit/location", "/library"];
+  const isDetailPage = useMatch("/book/:bookId");
   const isRentalPage = useMatch("/book/:bookId/rental");
-  const isMyBookPage = useMatch("/book/:bookId/mybook");
 
   const hideFooterPaths = ["/sign-in", "/survey", "/setting/location", "/404"];
 
@@ -149,9 +149,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="h-full pb-[86px] relative">
-        {!shouldHideHeaderFooter && showHeaderPaths.includes(currentPath) && (
-          <Header />
-        )}
+        {!isDetailPage && !isRentalPage && !hideHeaderPaths.includes(currentPath) && <Header />}
         <Routes>
           <Route path="/*" element={<MainRoute />} />
           <Route path="/profile/*" element={<ProfileRoute />} />
@@ -159,7 +157,6 @@ function App() {
           <Route path="/404" element={<NotFoundPage />} />
         </Routes>
         {!isRentalPage &&
-          !isMyBookPage &&
           !shouldHideHeaderFooter &&
           !hideFooterPaths.includes(currentPath) && <Footer />}
       </div>

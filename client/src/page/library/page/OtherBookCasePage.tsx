@@ -91,6 +91,14 @@ const OtherBookCasePage = () => {
           <button onClick={goBack} className="text-2xl">
             <IoIosArrowBack />
           </button>
+          <span className="hakgyo text-3xl text-main">
+                {bookcase.nickname}
+          </span>
+          <span className='font-extrabold text-2xl'>님의 책장</span>
+          <button onClick={handleProfileClick}>
+            <BaseProfile userImage={bookcase?.profileImage} width="16" height="16" />
+          </button>
+          
         </div>
         <div className="flex items-center gap-5">
           {/* 관심 등록/해제 하트 버튼 */}
@@ -101,31 +109,13 @@ const OtherBookCasePage = () => {
               <IoHeartOutline size={30} color="#D96363" />
             )}
           </div>
-          <div className=" text-3xl text-[#545454]">
-            <Link to="/alarm">
-              <IoNotificationsOutline />
-            </Link>
-          </div>
+
         </div>
       </header>
 
       <main className="px-6">
-        <article className="flex items-center w-full justify-between font-extrabold text-2xl mb-5">
-          <div className="flex items-center">
-            <span>
-              <span className="hakgyo text-3xl text-main">
-                {bookcase.nickname}
-              </span>
-              님의 책장
-            </span>
-          </div>
-          <button onClick={handleProfileClick}>
-            <BaseProfile userImage={bookcase?.profileImage} width="16" height="16" />
-          </button>
-        </article>
-
         {/* 다른 사용자의 책장을 보여주는 BookGrid */}
-        <section className="flex flex-col items-center text-center mt-12 gap-6">
+        <section className="flex flex-col items-center text-center mt-5 gap-6">
           {bookcase.displayBooks?.length > 0 ? (
             <OtherBookGrid
               books={bookcase.displayBooks}
