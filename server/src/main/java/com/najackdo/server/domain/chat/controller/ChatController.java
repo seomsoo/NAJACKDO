@@ -81,11 +81,16 @@ public class ChatController {
 				displayMessage = newMessage.getMessage();
 			}
 
-			publisher.publishEvent(new NotificationEvent(
-				chatDTO.getReceiverId(),
-				chatDTO.getSenderNickname(),
-				displayMessage,
-				NotificationType.CHAT));
+			try {
+				publisher.publishEvent(new NotificationEvent(
+					chatDTO.getReceiverId(),
+					chatDTO.getSenderNickname(),
+					displayMessage,
+					NotificationType.CHAT));
+			} catch (Exception e) {
+				log.error("알림 전송 실패 : {}", e.getMessage());
+			}
+
 
 		} else {
 			// 새로운 대화방 생성
