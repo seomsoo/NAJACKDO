@@ -1,9 +1,4 @@
-import BookInfo from "page/library/components/BookInfo";
 import CenterCropImage from "page/library/components/CenterCropImage";
-import DetailRecommendBook from "page/library/components/DetailRecommendBook";
-import DetectionInfo from "page/library/components/DetectionInfo";
-import SellerInfo from "page/library/components/SellerInfo";
-import SellerReview from "page/library/components/SellerReview";
 import { IoChevronBack } from "react-icons/io5";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -19,7 +14,7 @@ const RentalBookDetail = ({ imageUrl }: BookInfoProps) => {
   return (
     <div>
       <div className="relative w-full h-72 object-cover">
-        <CenterCropImage imageUrl={imageUrl}  />
+        <CenterCropImage imageUrl={imageUrl} />
         <div
           onClick={() => navigate(-1)}
           className="cursor-pointer absolute left-0 top-0 z-10 p-4"

@@ -1,6 +1,6 @@
 import instance from "api/clientApi";
 import { BaseResponse } from "atoms/Base.type";
-import { IChat, IChatList } from "atoms/Chat.type";
+import { IChat, IChatList, IChatReview } from "atoms/Chat.type";
 
 // 채팅방 조회
 export const getChatRoom = async (): Promise<IChat> => {
@@ -55,5 +55,26 @@ export const postCreateChatRoom = async (ChattingData): Promise<number> => {
     return data;
   } catch (error) {
     throw new Error("채팅방 생성 실패", error);
+  }
+};
+
+export const getIsReviewed = async (rentalId:number, revieweeId:number): Promise<boolean> => {
+  try {
+    const {
+      data: { success, data },
+    } = await instance.get<BaseResponse<boolean>>("/review/is-possible-rental", {
+      params: {
+        rentalId: rentalId,
+        revieweeId: revieweeId,
+      },
+    } );
+
+    if (!success) {
+      throw new Error("리뷰 작성 가능 여부 조회 실패");
+    }
+
+    return data;
+  } catch (error) {
+    throw new Error(`리뷰 작성 가능 여부 조회 실패: ${error.message}`);
   }
 };

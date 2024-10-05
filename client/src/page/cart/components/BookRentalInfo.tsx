@@ -1,5 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { postDeleteCartItem } from "api/cartApi";
+import AlertModal from "components/common/AlertModal";
+import { useState } from "react";
 import { IoIosLeaf } from "react-icons/io";
 import { PiXBold } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
@@ -21,14 +23,14 @@ const BookRentalInfo = ({
   chatting,
 }: BookRentalInfoProps) => {
   const navigate = useNavigate();
+  const [open, setOpen] = useState<boolean>(false);
 
   const mutation = useMutation({
     mutationKey: ["cartItemId"],
     mutationFn: postDeleteCartItem,
 
     onSuccess: () => {
-      alert("카트 삭제 성공");
-      navigate(0);
+      setOpen(true);
     },
   });
 
@@ -46,7 +48,7 @@ const BookRentalInfo = ({
           </p>
           {!chatting && (
             <PiXBold
-              size={13}
+              size={25}
               color="black"
               onClick={() => handleDeleteCartItem(cartItemId)}
             />
@@ -58,6 +60,13 @@ const BookRentalInfo = ({
           <p className="text-xs">{price.toLocaleString()}</p>
         </div>
       </div>
+      {open && (
+        <AlertModal
+          open={open}
+          setOpen={setOpen}
+          content={`${bookTitle} <br />삭제 성공`}
+        />
+      )}
     </div>
   );
 };

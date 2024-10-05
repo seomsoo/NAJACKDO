@@ -1,7 +1,9 @@
-import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { getCartItem } from "api/cartApi";
+import { getIsReviewed } from "api/chatApi";
 import { postRental, postReturn } from "api/rentalApi";
 import { ICartList } from "atoms/Cart.type";
+import { IChatReview } from "atoms/Chat.type";
 import CartModal from "page/chatting/components/CartModal";
 import { Message } from "page/chatting/components/ChattingBox";
 import PayComplete from "page/chatting/components/PayComplete";
@@ -23,10 +25,14 @@ interface ChatBookInfoProps {
   customerId: number;
   customerName: string;
   totalLeaf: number;
+  rentalId?: number;
   setTotalLeaf: (totalLeaf: number) => void;
   step: ChatRentalStep;
   setStep: (step: ChatRentalStep) => void;
 }
+
+// ! rentalId가 null이면 리뷰 작성 여부를 확인할 수 없음
+// ! 고쳐야함
 
 export enum ChatRentalStep {
   READY = "대여기간 체크",
@@ -53,38 +59,41 @@ const ChatBookInfo = ({
   const [cartOpen, setCartOpen] = useState<boolean>(false);
   const [rentalPeriod, setRentalPeriod] = useState<number[]>([14]);
   const [isOwner, setIsOwner] = useState<boolean>(false);
+  const [isReview, setIsReview] = useState<boolean>(false);
   const [dayPrice, setDayPrice] = useState<number>(0);
 
-  const { userId, cash, setCash } = useUserStore.getState();
+  const { userId } = useUserStore.getState();
 
-  const { data: bookData } = useSuspenseQuery<ICartList>({
+  // Cart 정보 가져오기
+  const { data: bookData, refetch: refetchRentalId } = useSuspenseQuery<ICartList>({
     queryKey: ["cart", "book"],
     queryFn: () => getCartItem(cartId),
   });
 
+
   useEffect(() => {
     if (bookData) {
-      setIsOwner(bookData.ownerId === userId);
+      setIsOwner(bookData.ownerId === userId); // 사용자 소유 여부 확인
       setDayPrice(
         bookData.cartItems.reduce((sum, cartItem) => sum + cartItem.price, 0)
       );
-      if (bookData.status === "READY") {
-        setStep(ChatRentalStep.READY);
-        return;
-      }
-
-      if (bookData.status === "RENTED") {
-        setStep(ChatRentalStep.RENTED);
-        return;
-      }
-
-      if (bookData.status === "RETURNED") {
-        setStep(ChatRentalStep.RETURNED);
-        return;
+      switch (bookData.status) {
+        case "READY":
+          setStep(ChatRentalStep.READY);
+          break;
+        case "RENTED":
+          setStep(ChatRentalStep.RENTED);
+          break;
+        case "RETURNED":
+          setStep(ChatRentalStep.RETURNED);
+          break;
+        default:
+          break;
       }
     }
   }, [bookData]);
 
+  // 결제 Mutation
   const payMutation = useMutation({
     mutationKey: ["rental", "pay"],
     mutationFn: postRental,
@@ -92,7 +101,6 @@ const ChatBookInfo = ({
     onSuccess: () => {
       setStep(ChatRentalStep.RENTED);
       complete("PAY");
-      setCash(cash - totalLeaf);
     },
 
     onError: (error) => {
@@ -101,6 +109,7 @@ const ChatBookInfo = ({
     },
   });
 
+  // 반납 Mutation
   const returnMutation = useMutation({
     mutationKey: ["rental", "return"],
     mutationFn: postReturn,
@@ -112,7 +121,28 @@ const ChatBookInfo = ({
     },
   });
 
-  const complete = (talkType) => {
+  const revieweeId = isOwner ? customerId : ownerId;
+  const rentalId = bookData?.rentalId;
+
+  // 리뷰 작성 여부 체크하는 Mutation
+  const { data: reviewData } = useQuery({
+    queryKey: ["review", { rentalId, revieweeId }],
+    queryFn: () => getIsReviewed(rentalId, revieweeId),
+    enabled: rentalId !== null,
+  });
+
+  // 리뷰 체크 함수
+  useEffect(() => {
+    if (reviewData) {
+      setIsReview(true); // 리뷰 상태를 true로 설정
+    }
+  }, [reviewData]);
+
+  // 완료 메시지 전송
+  const complete = async (talkType) => {
+    
+    await refetchRentalId();
+
     const completeMessage = ReactDOMServer.renderToString(
       talkType === "PAY" ? (
         <PayComplete
@@ -125,8 +155,7 @@ const ChatBookInfo = ({
       )
     );
 
-    // 송금 완료는 빌리는 사람이
-    // 반납 완료는 빌려주는 사람이
+    // 송금 완료는 빌리는 사람이, 반납 완료는 빌려주는 사람이
     const messageData: Message = {
       roomId: roomId,
       senderId: talkType === "PAY" ? customerId : ownerId,
@@ -143,6 +172,7 @@ const ChatBookInfo = ({
     });
   };
 
+  // 단계별 핸들러
   const handleClick = () => {
     if (step === ChatRentalStep.READY) {
       setStep(ChatRentalStep.PAY);
@@ -168,6 +198,9 @@ const ChatBookInfo = ({
     }
   };
 
+  console.log("isReview", isReview);
+
+  // Modal 및 기타 렌더링
   const showModal =
     (step === ChatRentalStep.PAY && !isOwner) ||
     (step === ChatRentalStep.NO_LEAF && !isOwner) ||
@@ -188,8 +221,9 @@ const ChatBookInfo = ({
           <p className="text-gray-500">
             <span className="text-black">
               {bookData.cartItems[0].bookTitle}
-            </span>{" "}
-            외 {bookData.cartItems.length - 1}권
+            </span>
+            {bookData.cartItems.length > 1 &&
+              `외 ${bookData.cartItems.length - 1}권`}
           </p>
           <div className="flex flex-row items-center">
             <span className="text-black/50 text-sm">일일</span>
@@ -227,7 +261,7 @@ const ChatBookInfo = ({
           ownerName={ownerName}
         />
       )}
-      {step === ChatRentalStep.RETURNED && (
+      {step === ChatRentalStep.RETURNED && isReview && (
         <ReviewButton
           rentalId={bookData.rentalId}
           ownerName={ownerName}

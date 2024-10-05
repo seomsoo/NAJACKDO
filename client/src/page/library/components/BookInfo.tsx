@@ -3,11 +3,12 @@ import {
   deleteInterestbook,
   getBookDetail,
   postInterestbook,
+  postTimeSpent,
 } from "api/bookApi";
 import AlertModal from "components/common/AlertModal";
 import CategoryTag from "components/common/CategoryTag";
 import CenterCropImage from "page/library/components/CenterCropImage";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { IoChevronBack, IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
@@ -16,11 +17,53 @@ interface BookInfoProps {
   rental?: boolean;
 }
 const BookInfo = ({ bookId, rental }: BookInfoProps) => {
+  const navigate = useNavigate();
+
   // 도서 상세 정보 조회
   const { data: bookData } = useSuspenseQuery({
     queryKey: ["bookdetail"],
     queryFn: () => getBookDetail(bookId),
   });
+
+  const mutation = useMutation({
+    mutationKey: ["RentalCostData"],
+    mutationFn: postTimeSpent,
+
+    onSuccess: () => {
+      console.log("체류 시간 저장 성공");
+    },
+
+    onError: (error) => {
+      console.log("체류 시간 저장 실패", error);
+    },
+  });
+
+  // 페이지 체류 시간 계산
+  useEffect(() => {
+    const startTime = new Date();
+
+    const handleTimeSpent = () => {
+      console.log("페이지 이탈");
+      const endTime = new Date();
+      const timeSpent = Math.floor(
+        (endTime.getTime() - startTime.getTime()) / 1000
+      ); // sec
+      if (bookData?.genre) {
+        mutation.mutate({
+          bookId: bookId,
+          genre: bookData.genre,
+          timeSpent: timeSpent,
+        });
+      }
+    };
+
+    window.addEventListener("beforeunload", handleTimeSpent);
+
+    return () => {
+      handleTimeSpent();
+      window.removeEventListener("beforeunload", handleTimeSpent);
+    };
+  }, [navigate]);
 
   const authorList = bookData.author.replace(" (지은이)", "").split(", ");
   const author =
@@ -29,7 +72,6 @@ const BookInfo = ({ bookId, rental }: BookInfoProps) => {
       : authorList[0];
   const [heart, setHeart] = useState(bookData.interest);
   const [open, setOpen] = useState<boolean>(false);
-  const navigate = useNavigate();
 
   const deleteMutation = useMutation({
     mutationKey: ["deleteInterestbook"],
@@ -119,7 +161,7 @@ const BookInfo = ({ bookId, rental }: BookInfoProps) => {
             </div>
           ) : null}
         </div>
-        <p>{author} 지음</p>
+        <p className="my-2">{author} 지음</p>
         <CategoryTag category={bookData.genre} />
         <p
           dangerouslySetInnerHTML={{ __html: bookData.description }}
