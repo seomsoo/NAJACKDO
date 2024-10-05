@@ -1,5 +1,6 @@
 package com.najackdo.server.domain.cart.repository;
 
+import static com.najackdo.server.domain.book.entity.QBook.*;
 import static com.najackdo.server.domain.book.entity.QUserBook.*;
 import static com.najackdo.server.domain.book.entity.QUserBookDetail.*;
 import static com.najackdo.server.domain.cart.entity.QCart.*;
@@ -101,6 +102,10 @@ public class CartQueryRepositoryImpl implements CartQueryRepository {
 				.leftJoin(cart.customer, customerUser)
 				.leftJoin(ownerUser.cashLogs, ownerCashLog)
 				.leftJoin(customerUser.cashLogs, customerCashLog)
+				.leftJoin(cart.cartItems, cartItem).fetchJoin()
+				.leftJoin(cartItem.userBookDetail, userBookDetail).fetchJoin()
+				.leftJoin(userBookDetail.userBook, userBook).fetchJoin()
+				.leftJoin(userBook.book, book).fetchJoin()
 				.where(cart.id.eq(cartId))
 				.fetchOne()
 		);

@@ -13,8 +13,10 @@ import com.najackdo.server.core.response.SuccessResponse;
 import com.najackdo.server.domain.book.dto.BookData;
 import com.najackdo.server.domain.book.entity.Book;
 import com.najackdo.server.domain.cart.entity.Cart;
+import com.najackdo.server.domain.cart.entity.CartItem;
 import com.najackdo.server.domain.cart.repository.CartRepository;
 import com.najackdo.server.domain.chat.repository.ChatRoomRepository;
+import com.najackdo.server.domain.recommendation.repository.RentalMongoRepository;
 import com.najackdo.server.domain.rental.dto.RentalData;
 import com.najackdo.server.domain.rental.entity.Rental;
 import com.najackdo.server.domain.rental.entity.RentalStatus;
@@ -35,6 +37,7 @@ public class RentalService {
 	private final CartRepository cartRepository;
 	private final RentalRepository rentalRepository;
 	private final ChatRoomRepository chatRoomRepository;
+	private final RentalMongoRepository rentalMongoRepository;
 
 	@Transactional
 	public SuccessResponse<Void> rentalCart(RentalData.RentalRequest rentalRequest) {
@@ -44,9 +47,27 @@ public class RentalService {
 		int rentalPeriod = rentalRequest.getRentalPeriod();
 		int rentalCost = rentalRequest.getRentalCost();
 
+
+
+
 		Cart cart = cartRepository.findByIdWithCashLogs(cartId).orElseThrow(
 			() -> new BaseException(ErrorCode.NOT_FOUND_CART)
 		);
+
+		cart.getCartItems().forEach(cartItem -> {
+
+			Book book = cartItem.getUserBookDetail().getUserBook().getBook();
+
+			com.najackdo.server.domain.recommendation.entity.Rental rental = new com.najackdo.server.domain.recommendation.entity.Rental();
+
+			rental.setUserId(cart.getCustomer().getId());
+			rental.setBookId(book.getId());
+			rental.setGenre(book.getGenre());
+			rental.setCreatedAt(LocalDateTime.now());
+			rental.setUpdatedAt(LocalDateTime.now());
+
+			rentalMongoRepository.save(rental);
+		});
 
 		Optional<Rental> byCartId = rentalRepository.findByCartId(cartId);
 

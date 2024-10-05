@@ -23,6 +23,7 @@ import com.najackdo.server.domain.book.repository.UserBooksRepository;
 import com.najackdo.server.domain.location.entity.ActivityAreaSetting;
 import com.najackdo.server.domain.location.repository.ActivityAreaSettingRepository;
 import com.najackdo.server.domain.recommendation.entity.Rental;
+import com.najackdo.server.domain.recommendation.repository.BookMarkMongoRepository;
 import com.najackdo.server.domain.recommendation.repository.RentalMongoRepository;
 import com.najackdo.server.domain.user.entity.User;
 import com.najackdo.server.domain.user.repository.UserRepository;
@@ -59,6 +60,7 @@ public class UserBooksService {
 	private final BookMarkRepository bookMarkRepository;
 	private final UserRepository userRepository;
 	private final LocationCacheRepository locationCacheRepository;
+	private final BookMarkMongoRepository bookMarkMongoRepository;
 
 	public List<String> postBookSpineDetection(MultipartFile file) {
 		ResponseEntity<BookSpineDetectionResponse> responseEntity;
@@ -160,11 +162,11 @@ public class UserBooksService {
 			}
 		);
 
-		Rental rental = new Rental();
-		rental.setUserId(user.getId());
-		rental.setBookId(book.getId());
-		rental.setGenre(book.getGenre());
-		rentalMongoRepository.save(rental);
+		com.najackdo.server.domain.recommendation.entity.BookMark bookMark = new com.najackdo.server.domain.recommendation.entity.BookMark();
+		bookMark.setBookId(book.getId());
+		bookMark.setUserId(user.getId());
+		bookMarkMongoRepository.save(bookMark);
+
 
 		bookMarkRepository.save(BookMark.createBookMark(user, book));
 	}
