@@ -1,7 +1,9 @@
 import pandas as pd
+import random
+import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics.pairwise import cosine_similarity
-
+from shapely import wkb
 
 
 def create_item_user_matrix(visits_df, book_marks_df, rentals_df):
@@ -71,3 +73,53 @@ def recomm_book_list(bookId, db, genre = ""):
         return []  # 매트릭스가 비어 있으면 빈 리스트 반환
 
     return recommend_books(item_user_matrix, bookId)
+
+def wkb_to_lac(wkb_hex):
+    wkb_bytes = bytes.fromhex(wkb_hex)
+
+    # WKB 파싱
+    point = wkb.loads(wkb_bytes)
+    
+    # 위도와 경도 추출
+    # longitude, latitude = point.x, point.y
+    return point
+
+def calculate_fit_score(user_preferences, items, liked_items):
+    fit_score = 0
+    for liked_item in liked_items:
+        if liked_item < len(items):
+            item_vector = items[liked_item][-1]  # 마지막 요소가 np.array
+            similarity = np.dot(user_preferences, item_vector)  # 사용자 선호도와 아이템 벡터의 내적
+            fit_score += similarity  # 유사도에 가중치를 부여 (평점은 제외)
+    return fit_score
+
+def genetic_algorithm_recommendation(user_preferences, items, liked_items, population_size=5, generations=5, num_recommendations=5):
+    population = random.sample(range(len(items)), population_size)
+    best_solutions = []  # 상위 아이템 저장을 위한 리스트
+
+    for generation in range(generations):
+        scores = []
+        for individual in population:
+            if individual not in liked_items:
+                fit_score = calculate_fit_score(user_preferences, items, liked_items)
+                scores.append((individual, fit_score))
+
+        # 가장 높은 적합도를 가진 아이템 찾기
+        scores.sort(key=lambda x: x[1], reverse=True)
+        if scores:
+            best_solutions.extend(scores[:num_recommendations])  # 상위 추천 아이템 추가
+
+        # 새로운 세대 생성 (상위 50% 선택)
+        population = [individual for individual, score in scores[:population_size // 2]]
+
+        # 무작위로 새 아이템 추가
+        while len(population) < population_size:
+            new_item_index = random.choice(range(len(items)))
+            if new_item_index not in population and new_item_index not in liked_items:
+                population.append(new_item_index)
+
+    # 유일한 추천 아이템과 점수 반환
+    unique_recommendations = list(set(individual for individual, score in best_solutions))
+    recommended_items_with_scores = [(items[idx][0], calculate_fit_score(user_preferences, items, [idx])) for idx in unique_recommendations[:num_recommendations]]
+    recommended_items_with_scores.sort(key = lambda x : -x[1])
+    return recommended_items_with_scores  # [(아이템 인덱스, 유사도 점수)]
