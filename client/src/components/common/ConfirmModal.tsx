@@ -49,7 +49,7 @@ const ConfirmModal = ({
                 className="border-2 border-sub7 px-10 py-2 rounded-xl bg-sub7 hover:bg-[#4F473D] text-white"
                 onClick={() => navigate(urlPath)}
               >
-                확인
+                이동
               </button>
             </div>
           </DialogDescription>
