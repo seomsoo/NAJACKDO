@@ -150,7 +150,7 @@ public class UserData {
 
 
 	public static int calMannerScore(int positive, int negative) {
-		double alpha = 0.1;  // 평가 수에 대한 가중치를 조정하는 상수
+		double alpha = 0.4;  // 평가 수에 대한 가중치를 조정하는 상수
 		int totalReviews = positive + negative;
 		return totalReviews == 0 ? 50 :
 			(int)	((100 * positive / (double) totalReviews) *

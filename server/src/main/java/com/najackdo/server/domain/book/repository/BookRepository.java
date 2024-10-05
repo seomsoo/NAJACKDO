@@ -35,6 +35,12 @@ public interface BookRepository extends JpaRepository<Book, Long>, BookQueryRepo
 
     Optional<Book> findByIsbn(Long isbn);
 
-    @Query("SELECT b FROM Book b WHERE b.title = :title")
+    @Query("""
+        SELECT b 
+        FROM Book b 
+        WHERE b.title = :title
+        ORDER BY b.id ASC 
+        LIMIT 1
+""")
     Optional<Book> findByTitle(@Param("title") String title);
 }
