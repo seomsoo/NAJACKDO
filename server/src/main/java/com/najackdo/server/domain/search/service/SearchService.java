@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -42,7 +44,7 @@ public class SearchService {
 	private static final String AUTO_COMPLETE_KEY = "autocomplete"; // 예: Redis에서 사용할 키 값
 	private static final String SCORE_KEY = "score";
 
-	public List<BookData.Search> searchKeyword(Long userId, String keyword) {
+	public Page<BookData.Search> searchKeyword(Long userId, String keyword, Pageable pageable) {
 
 		// 검색어 유효성 검사
 		if (isInvalidKeyword(keyword))
@@ -54,12 +56,8 @@ public class SearchService {
 
 		List<Book> userInterestingBooks = bookRepository.findInterestingBooks(userId);
 
-		// 검색어에 해당하는 책 제목 검색
-		List<BookData.Search> searchBooks = bookRepository.findByTitleContains(keyword)
-			.stream()
-			.map(book -> BookData.Search.of(book, userInterestingBooks))  // of 메서드를 사용하여 관심 여부 반영
-			.toList();
-
+		Page<BookData.Search> searchBooks = bookRepository.findByTitleContains(keyword, pageable)
+			.map(book -> BookData.Search.of(book, userInterestingBooks));  // of 메서드를 사용하여 관심 여부 반영
 
 		// 검색 결과가 있으면 Redis에 검색어 저장 및 관련 통계 업데이트
 		if (!searchBooks.isEmpty()) {

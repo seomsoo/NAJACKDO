@@ -136,7 +136,6 @@ public class BookService {
 
 	public BookData.Search getBookByTitle(String title) {
 		Book book = bookRepository.findByTitle(title).orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_BOOK));
-
 		return BookData.Search.from(book);
 	}
 

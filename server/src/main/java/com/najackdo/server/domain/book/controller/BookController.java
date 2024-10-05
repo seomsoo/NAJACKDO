@@ -65,7 +65,8 @@ public class BookController {
 	public SuccessResponse<BookData.Search> getBooks(
 		@CurrentUser User user,
 		@RequestParam(value = "isbn", required = false) Long isbn,
-		@RequestParam(value = "title", required = false) String title) {
+		@RequestParam(value = "title", required = false) String title,
+		Pageable pageable) {
 
 		if (isbn != null) {
 			return SuccessResponse.of(bookService.getBookByIsbn(isbn));

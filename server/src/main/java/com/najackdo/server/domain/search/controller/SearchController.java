@@ -2,6 +2,8 @@ package com.najackdo.server.domain.search.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,9 +40,10 @@ public class SearchController {
 	 */
 	@GetMapping
 	@Operation(summary = "도서 검색", description = "도서 검색")
-	public SuccessResponse<List<BookData.Search>> search(@CurrentUser User user,
-		@RequestParam("keyword") String keyword) {
-		return SuccessResponse.of(searchService.searchKeyword(user.getId(), keyword));
+	public SuccessResponse<Page<BookData.Search>> search(@CurrentUser User user,
+		@RequestParam("keyword") String keyword,
+		Pageable pageable) {
+		return SuccessResponse.of(searchService.searchKeyword(user.getId(), keyword, pageable));
 	}
 
 	/**

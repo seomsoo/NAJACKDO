@@ -1,5 +1,7 @@
 package com.najackdo.server.domain.book.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.najackdo.server.domain.book.entity.Book;
@@ -26,10 +28,10 @@ public interface BookRepository extends JpaRepository<Book, Long>, BookQueryRepo
     @Query("SELECT b FROM Book b WHERE b.isbn = :isbn")
     Optional<Book> findFirstByISBN(@Param("isbn") Long isbn);
 
-    List<Book> findByTitleContains(String keyword);
+    Page<Book> findByTitleContains(String keyword, Pageable pageable);
 
     @Query("SELECT b FROM Book b WHERE b.id IN :bookIds")
-	List<Book> findByIds(List<Integer> bookIds);
+    List<Book> findByIds(List<Integer> bookIds);
 
     Optional<Book> findByIsbn(Long isbn);
 
