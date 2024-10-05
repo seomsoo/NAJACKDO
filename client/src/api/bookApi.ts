@@ -8,6 +8,27 @@ import {
 } from "atoms/Book.type";
 import instance, { pythoninstance } from "./clientApi";
 
+
+
+
+// 베스트셀러 조회
+export const getLocalBestSeller = async (): Promise<IBookDetail[]> => {
+  try {
+    const {
+      data: { success, data },
+    } = await instance.get<BaseResponse<IBookDetail[]>>("rental/local-best-seller");
+
+    if (!success) {
+      throw new Error("베스트셀러 조회 실패");
+    }
+    // console.log('getLocalBestSeller');
+    return data;
+  } catch (error) {
+    throw new Error("베스트셀러 실패", error);
+  }
+};
+
+
 // 베스트셀러 조회
 export const getBestSeller = async (): Promise<IBookDetail[]> => {
   try {
@@ -18,7 +39,7 @@ export const getBestSeller = async (): Promise<IBookDetail[]> => {
     if (!success) {
       throw new Error("베스트셀러 조회 실패");
     }
-    console.log(getBestSeller);
+    // console.log('getBestSeller');
     return data;
   } catch (error) {
     throw new Error("베스트셀러 실패", error);

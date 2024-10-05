@@ -80,3 +80,6 @@ export const deleteInterestBookCase = async (userId: number): Promise<void> => {
   // console.log("관심 책장 해제 성공")
 };
 
+
+// AI 책장 등록
+// export const 

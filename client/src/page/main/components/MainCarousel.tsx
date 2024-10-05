@@ -102,8 +102,8 @@ const MainCarousel = () => {
                   }}
                   className="mt-2 text-xl font-extrabold"
                 >
-                  정가 : {book.priceStandard}원
-                </span>
+                  정가 : {book.priceStandard.toLocaleString()}원
+                  </span>
               </div>
 
               <span
