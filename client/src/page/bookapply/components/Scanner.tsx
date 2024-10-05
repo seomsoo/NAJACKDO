@@ -14,6 +14,8 @@ const config :QuaggaJSConfigObject = {
     constraints: {
       facingMode: "environment",
       // focusMode: "continuous",
+      width: {  max: 1280 },
+      height: {  max: 720 },
       aspectRatio: {
         min: 1,
         max: 2,
@@ -66,7 +68,25 @@ const Scanner = ({ onDetected, scan, setScan }: ScannerProps) => {
     };
   }, []);
 
-  return <div id="interactive" className="viewport w-4/5 h-4/5 mt-10" />;
+  return (<div
+    id="interactive"
+    className="viewport w-full h-full"
+    style={{ position: "relative", width: "100%", height: "100%" }}
+  >
+    <video
+      style={{
+        position: "absolute",
+        top: "5%",
+        left: "5%",
+        width: "90%",
+        height: "90%",
+        objectFit: "cover",
+      }}
+      autoPlay
+      muted
+      playsInline
+    />
+  </div>)
 };
 
 export default Scanner;

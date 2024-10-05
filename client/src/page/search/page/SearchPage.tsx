@@ -39,32 +39,39 @@ const SearchPage = () => {
   };
 
   return (
-    <Suspense fallback={<Loading />}>
-      <div className="mx-4 mt-8">
-        {/* 검색어 입력 창 */}
-        <SearchInput
-          handleSearchText={handleSearchText}
-          searchText={searchText}
-        />
-        <div
-          className="flex-grow overflow-y-auto flex flex-col justify-between"
-          style={{ height: "calc(100vh - 150px)" }}
-        >
-          {/* 검색어가 없을 때 */}
-          {!searchText ? (
-            <div>
-              <PopularSearch />
-              <RecentSearch />
-            </div>
-          ) : (
-            autoSearchText?.list && (
-              <AutoSearch autoSearch={autoSearchText.list} />
-            )
-          )}
-          <RecommendBook />
+    <>
+      <Suspense fallback={<Loading />}>
+        <div className="mx-[25px] mt-7">
+          {/* 검색어 입력 창 */}
+          <SearchInput
+            handleSearchText={handleSearchText}
+            searchText={searchText}
+          />
+          <div
+            className="flex-grow overflow-y-auto flex flex-col justify-between"
+            style={{ height: "calc(100vh - 150px)" }}
+          >
+            {/* 검색어가 없을 때 */}
+            {!searchText ? (
+              <div>
+                <PopularSearch />
+                <RecentSearch />
+              </div>
+            ) : (
+              autoSearchText?.list && (
+                <AutoSearch autoSearch={autoSearchText.list} />
+              )
+            )}
+          </div>
         </div>
+      </Suspense>
+      <div className="my-6 mx-[25px] absolute bottom-[86px]">
+        <span className="font-bold">추천 도서</span>
+        {/* <Suspense fallback={<ClipLoading />}> */}
+        <RecommendBook />
+        {/* </Suspense> */}
       </div>
-    </Suspense>
+    </>
   );
 };
 

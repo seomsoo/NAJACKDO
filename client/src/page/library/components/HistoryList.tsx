@@ -36,8 +36,15 @@ const HistoryList: React.FC<IHistoryListProps> = ({ historyData, title }) => {
               key={history.rentalId.toString()}
               value={history.rentalId.toString()}
             >
-              <AccordionTrigger className="flex items-center">
-                <BaseProfile userImage={history.otherUseProfileImg} width="12" height="12" />
+              <AccordionTrigger
+                className="flex items-center"
+                component="history"
+              >
+                <BaseProfile
+                  userImage={history.otherUseProfileImg}
+                  width="12"
+                  height="12"
+                />
                 <div className="flex flex-col">
                   <div className="font-semibold">
                     {history.otherUseNickName}

@@ -1,22 +1,24 @@
-import { IoIosArrowBack } from "react-icons/io";
-import { IoNotificationsOutline } from "react-icons/io5";
-import { Link, useNavigate } from "react-router-dom";
+import { IoIosSearch } from "react-icons/io";
+import { IoCartOutline, IoNotificationsOutline } from "react-icons/io5";
+import { Link } from "react-router-dom";
+import { useUserStore } from "store/useUserStore";
 
 const LibraryHeader = () => {
-  const navigate = useNavigate();
-  const goBack = () => {
-    navigate(-1);
-  };
-  
+  const nickname = useUserStore.getState().nickname;
+
   return (
-    <header className="sticky top-0 z-10 bg-[#F8F6F3] flex items-center justify-between p-6 py-4 mb-4">
-      <div className="items-center flex gap-2">
-        <button onClick={goBack} className="text-2xl ">
-          <IoIosArrowBack />
-        </button>
-        <span className="font-extrabold text-2xl">책 히스토리</span>
-      </div>
-      <div className="text-3xl text-[#545454]">
+    <header className="flex items-center justify-between p-4 px-6 mb-3 ">
+      <span className="font-extrabold text-2xl">
+        <span className="hakgyo text-3xl text-main">{nickname}</span>
+        님의 서재
+      </span>
+      <div className="flex justify-between text-3xl gap-3 text-[#545454]">
+        <Link to="/search">
+          <IoIosSearch />
+        </Link>
+        <Link to="/cart">
+          <IoCartOutline />
+        </Link>
         <Link to="/alarm">
           <IoNotificationsOutline />
         </Link>

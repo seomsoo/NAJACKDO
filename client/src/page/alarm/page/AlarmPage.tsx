@@ -73,18 +73,18 @@ const AlarmPage = () => {
   }, [handleObserver]);
 
   if (isAlarmLoading) {
-    return <Loading/>;
+    return <Loading />;
   }
 
   if (isAlarmError) {
-    return <div>Error loading location data.</div>;
+    return <div>Error</div>;
   }
 
   return (
     <div>
-      <div className="flex flex-row mx-6 gap-1 py-4 ">
+      <div className="flex flex-row mx-[25px] gap-1 py-4">
         <button onClick={goBack}>
-          <IoIosArrowBack className="text-xl" />
+          <IoIosArrowBack size={25} className="text-xl" />
         </button>
         <p className="text-2xl font-bold ">알림</p>
       </div>
@@ -93,11 +93,9 @@ const AlarmPage = () => {
         return (
           <Alarm
             key={index}
-            userId={item.userId}
             content={item.content}
             title={item.title}
             createAt={item.createAt}
-            updateAt={item.updateAt}
             type={item.type}
           />
         );
