@@ -38,7 +38,7 @@ const ProfilePage = () => {
   return (
     <div className="mx-6 my-4">
       {/* 유저 정보 */}
-      <p className="text-3xl font-extrabold tracking-wider mb-10">프로필</p>
+      <p className="font-extrabold text-2xl tracking-wider mb-10">프로필</p>
       <UserInfo
         userName={profileInfo.nickname}
         userLocation={profileInfo.locationName}

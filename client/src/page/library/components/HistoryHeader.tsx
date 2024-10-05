@@ -16,11 +16,7 @@ const HistoryHeader = () => {
         </button>
         <span className="font-extrabold text-2xl">책 히스토리</span>
       </div>
-      <div className="text-3xl text-[#545454]">
-        <Link to="/alarm">
-          <IoNotificationsOutline />
-        </Link>
-      </div>
+
     </header>
   );
 };
