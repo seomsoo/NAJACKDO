@@ -120,6 +120,6 @@ def genetic_algorithm_recommendation(user_preferences, items, liked_items, popul
 
     # 유일한 추천 아이템과 점수 반환
     unique_recommendations = list(set(individual for individual, score in best_solutions))
-    recommended_items_with_scores = [(idx, calculate_fit_score(user_preferences, items, [idx])) for idx in unique_recommendations[:num_recommendations]]
+    recommended_items_with_scores = [(items[idx][0], calculate_fit_score(user_preferences, items, [idx])) for idx in unique_recommendations[:num_recommendations]]
     recommended_items_with_scores.sort(key = lambda x : -x[1])
     return recommended_items_with_scores  # [(아이템 인덱스, 유사도 점수)]

@@ -157,10 +157,95 @@ def get_user_books_data():
         print(f"오류 발생: {e}")
         return None  # 예외 발생 시 None을 반환
     
+def get_user_books_data_by_genre(genre):
+    try:
+        with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+            query = f"""
+            SELECT b.book_id, b.price_standard,b.description, b.genre, b.pub_date
+            FROM books as b
+            WHERE b.genre = '{genre}';
+            """
+            cursor.execute(query)
+            row = cursor.fetchall()
+
+            if row:
+                pass
+                # print(row)
+            else:
+                print("No user books data found")
+            return row  # 데이터를 반환
+
+    except Exception as e:
+        print(f"오류 발생: {e}")
+        return None  # 예외 발생 시 None을 반환
+    
 def fetch_books(book_ids):
     try:
         with connection.cursor(cursor_factory=RealDictCursor) as cursor:
             query = f"SELECT b.description FROM books as b WHERE book_id IN ({','.join(map(str, book_ids))});"
+            cursor.execute(query)
+            row = cursor.fetchall()
+
+            if row:
+                pass
+                # print(row)
+            else:
+                print("No user books data found")
+            return row  # 데이터를 반환
+
+    except Exception as e:
+        print(f"오류 발생: {e}")
+        return None  # 예외 발생 시 None을 반환
+    
+def get_book_cover(book_ids):
+    try:
+        with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+            query = f"""SELECT b.cover 
+            FROM user_book as ub
+            JOIN books as b on ub.book_id = b.book_id
+            WHERE ub.user_book_id IN ({','.join(map(str, book_ids))});"""
+            cursor.execute(query)
+            row = cursor.fetchall()
+
+            if row:
+                pass
+                # print(row)
+            else:
+                print("No user books data found")
+            return row  # 데이터를 반환
+
+    except Exception as e:
+        print(f"오류 발생: {e}")
+        return None  # 예외 발생 시 None을 반환
+    
+def get_book_order_by_star():
+    try:
+        with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+            query = f"""SELECT b.book_id , b.cover
+            FROM books as b 
+            ORDER BY b.star_point
+            LIMIT 5
+            ;"""
+            cursor.execute(query)
+            row = cursor.fetchall()
+
+            if row:
+                pass
+                # print(row)
+            else:
+                print("No user books data found")
+            return row  # 데이터를 반환
+
+    except Exception as e:
+        print(f"오류 발생: {e}")
+        return None  # 예외 발생 시 None을 반환
+    
+def get_book_cover_for_genre(book_ids):
+    try:
+        with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+            query = f"""SELECT b.cover 
+            FROM books as b
+            WHERE b.book_id IN ({','.join(map(str, book_ids))});"""
             cursor.execute(query)
             row = cursor.fetchall()
 

@@ -215,7 +215,7 @@ async def quality_inspection(imageFile: UploadFile = File(...)):
 @app.get("/item/userrecommand/{userId}")
 async def recomm_books(userId : int):
     data = dao.get_user_books_data()
-    
+
     items = [
     [
         row['user_book_id'],
@@ -242,11 +242,19 @@ async def recomm_books(userId : int):
 
     merged_list = {item['bookId']: item for item in book_marks + rental_list}
 
+
+
     # 리스트로 변환
     book_ids = [book["bookId"] for book in list(merged_list.values())]
     
+    if not book_ids:
+        print("들어옴")
+        return {"recommended_items_with_scores": dao.get_book_order_by_star()}
+    
     user_like_books = dao.fetch_books(book_ids)
-
+    
+     
+        
     user_like_books_list = [
         [
             np.array(model.encode(row['description']))
@@ -259,7 +267,104 @@ async def recomm_books(userId : int):
     user_preferences = np.mean(combined_array, axis=0)
     
     recommended_items_with_scores = reco_sys.genetic_algorithm_recommendation(user_preferences, items, book_ids, num_recommendations=5)
+    
+    idx_list = [item[0] for item in recommended_items_with_scores]
+    cover_list = dao.get_book_cover(idx_list)
+    image_links = [row['cover'] for row in cover_list]
+    # print(recommended_items_with_scores)
+    # print(image_links)
+    combined_list = [(recommended_items_with_scores[i], image_links[i]) for i in range(len(recommended_items_with_scores))]
+    
     print("추천 아이템과 유사도 점수:")
     # for item, score in recommended_items_with_scores:
     #     print(f"아이템 인덱스: {items[item][:-1]}, 적합도 점수: {score:.2f}")
+    
+    recommended_items_with_scores = [
+    {
+        "book_id": item[0][0],
+        "fitness": item[0][1], # book_id는 첫 번째 리스트의 첫 번째 요소
+        "cover": item[1]        # cover는 두 번째 요소
+    }
+        for item in combined_list
+    ]   
+    return {"recommended_items_with_scores": recommended_items_with_scores}  
+
+
+@app.post("/item/userrecommandbygenre")
+async def recomm_books(userId: int = Form(...),category: str = Form(...)):
+    data = dao.get_user_books_data_by_genre(category)
+
+    items = [
+    [
+        row['book_id'],
+        [],
+        row['pub_date'],
+        row['genre'],
+        row['price_standard'],
+        [],
+        np.array(model.encode(row['description']))
+    ]
+        for row in data
+    ]
+    
+    today = datetime.now()
+    one_week_ago = today - timedelta(days=7)
+
+    book_marks = list(db["book_mark"].find({"userId": userId},{"bookId":1,"_id":0}))
+
+    rental_list = list(db["rental"].find({"userId":userId,
+        "createdAt": {
+            "$gte": one_week_ago,  # 일주일 전
+            "$lte": today          # 오늘
+        }},{"bookId":1,"_id":0}))
+
+    merged_list = {item['bookId']: item for item in book_marks + rental_list}
+
+
+
+    # 리스트로 변환
+    book_ids = [book["bookId"] for book in list(merged_list.values())]
+    
+    if not book_ids:
+        print("들어옴")
+        return {"recommended_items_with_scores": dao.get_book_order_by_star()}
+    
+    user_like_books = dao.fetch_books(book_ids)
+    
+     
+        
+    user_like_books_list = [
+        [
+            np.array(model.encode(row['description']))
+        ]
+        for row in user_like_books
+    ]
+    
+    combined_array = np.array([arr[0] for arr in user_like_books_list])
+
+    user_preferences = np.mean(combined_array, axis=0)
+    
+    recommended_items_with_scores = reco_sys.genetic_algorithm_recommendation(user_preferences, items, book_ids, num_recommendations=5)
+    
+    idx_list = [item[0] for item in recommended_items_with_scores]
+    print(idx_list)
+    cover_list = dao.get_book_cover_for_genre(idx_list)
+    print(cover_list)
+    image_links = [row['cover'] for row in cover_list]
+    # print(recommended_items_with_scores)
+    # print(image_links)
+    combined_list = [(recommended_items_with_scores[i], image_links[i]) for i in range(len(recommended_items_with_scores))]
+    
+    print("추천 아이템과 유사도 점수:")
+    # for item, score in recommended_items_with_scores:
+    #     print(f"아이템 인덱스: {items[item][:-1]}, 적합도 점수: {score:.2f}")
+    
+    recommended_items_with_scores = [
+    {
+        "book_id": item[0][0],
+        "fitness": item[0][1], # book_id는 첫 번째 리스트의 첫 번째 요소
+        "cover": item[1]        # cover는 두 번째 요소
+    }
+        for item in combined_list
+    ]   
     return {"recommended_items_with_scores": recommended_items_with_scores}  
