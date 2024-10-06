@@ -12,16 +12,24 @@ import { useNavigate } from 'react-router-dom';
 
 const MannerTree = ({
   mannerScore,
-  goodReviewCount,
-  badReviewCount,
+  goodReviewInfo,
+  badReviewInfo,
   nickname,
 }) => {
-  console.log(typeof goodReviewCount)
   const navigate = useNavigate();
   const goToGrade = () => {
-    navigate(`/profile/${nickname}/my-grade`);
+    navigate(`/profile/${nickname}/grade`, { state: {mannerScore, goodReviewInfo, badReviewInfo } });
   };
 
+
+  const goodReviewCount = goodReviewInfo.reduce(
+    (sum, review) => sum + review.count,
+    0
+  );
+  const badReviewCount = badReviewInfo.reduce(
+    (sum, review) => sum + review.count,
+    0
+  );
   const totalReviewCount = goodReviewCount + badReviewCount;
 
   return (
