@@ -9,11 +9,15 @@ import BookcaseContainer from "page/library/components/BookcaseContainer";
 import MannerTree from "page/profile/components/MannerTree";
 import UserInfo from "page/profile/components/UserInfo";
 import { useNavigate, useParams } from "react-router-dom";
+import { IoIosArrowBack } from "react-icons/io";
 
 const OtherProfilePage = () => {
   const { nickname } = useParams();
   const navigate = useNavigate();
-
+  
+  const goBack = () => {
+    navigate(-1);
+  };
   // 로그인된 사용자 정보 가져오기
   const {
     data: loggedInUser,
@@ -71,7 +75,12 @@ const OtherProfilePage = () => {
 
   return (
     <div className="mx-6 my-4">
-      <p className="text-[32px] font-extrabold tracking-wider mb-6">프로필</p>
+      <div className="flex items-center gap-2 mb-6">
+        <button onClick={goBack} className="text-2xl">
+          <IoIosArrowBack />
+        </button>
+      <p className="text-[32px] font-extrabold tracking-wider ">프로필</p>
+      </div>
       {/* 유저 정보 */}
       <UserInfo
         userName={profileInfo.nickname}
@@ -83,8 +92,8 @@ const OtherProfilePage = () => {
       <MannerTree
         nickname={profileInfo.nickname}
         mannerScore={profileInfo.mannerScore}
-        goodReviewCount={goodReviewCount}
-        badReviewCount={badReviewCount}
+        goodReviewInfo={profileInfo.goodReviewInfo}
+        badReviewInfo={profileInfo.badReviewInfo}
       />
       {/* 타인 책장 정보 */}
       <BookcaseContainer
