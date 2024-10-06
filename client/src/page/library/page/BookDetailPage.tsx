@@ -18,7 +18,7 @@ const BookDetailPage = () => {
         </div>
       </Suspense>
       <div className="mx-[25px] mt-10 mb-6">
-        <p className="mt-5 font-bold mb-3">추천 도서</p>
+        <p className="my-5 font-bold ">추천 도서</p>
         <Suspense fallback={<ClipLoading />}>
           <DetailRecommendBook bookId={Number(bookId)} />
         </Suspense>

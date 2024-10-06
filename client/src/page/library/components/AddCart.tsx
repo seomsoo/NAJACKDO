@@ -30,7 +30,7 @@ const AddCart = ({ ownerbookId }: AddCartProps) => {
   
   return (
     <button
-      className="bg-sub6 text-white font-bold px-8 py-2 rounded-lg mx-5"
+      className="bg-sub7 text-white font-bold px-8 w-full py-2 rounded-lg mx-5"
       onClick={() => handleAddCartItem(ownerbookId)}
     >
       장바구니 추가

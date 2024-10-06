@@ -30,9 +30,9 @@ const AlertModal = ({ content, open, setOpen }: AlertModalProps) => {
       <DialogContent className="bg-najackdo-background rounded-2xl">
         <DialogHeader>
           <DialogTitle />
-          <DialogDescription className="h-[200px] flex items-center justify-center text-stone-950 font-bold">
+          <DialogDescription className="h-[80px] flex items-center justify-center text-stone-950 font-bold">
             <span
-              className="text-lg"
+              className="text-2xl hakgyo"
               dangerouslySetInnerHTML={{ __html: content }}
             ></span>
           </DialogDescription>
