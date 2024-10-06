@@ -19,7 +19,7 @@ const SellerInfo = ({ seller }: SellerInfoProps) => {
       <div className="flex flex-row">
         <BaseProfile 
         userNickname= {seller.nickname}
-        userImage={seller.profileImage} width="12" height="12" />
+        userImage={seller.profileImage} width="16" height="16" />
         <div className="ml-3 flex flex-col">
           <span className="font-bold text-xl mb-1">{seller.nickname}</span>
 
