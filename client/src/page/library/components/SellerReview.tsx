@@ -34,7 +34,7 @@ const SellerReview = ({ nickname }: SellerReviewProps) => {
 
 
   return (
-    <div>
+    <div className='pb-2'>
       <p className="font-bold mt-10 mb-3">받은 판매자 리뷰</p>
       {hasReview ? null : <p>리뷰가 없습니다.</p>}
       <div>
@@ -42,11 +42,16 @@ const SellerReview = ({ nickname }: SellerReviewProps) => {
           profileInfo?.goodReviewInfo.map((review, index) => {
             return (
               <div
-                className="bg-[green]/10 flex flex-row items-center rounded-lg mx-1 my-3 p-2"
+                className="justify-between bg-[green]/10 flex flex-row items-center rounded-lg mx-1 my-3 p-2"
                 key={index}
               >
+                <div className='flex items-center'>
                 <TbMessage size={20} className="mr-2" />
                 {review.content}
+                </div>
+                <span className='font-bold mr-4'>
+                {review.count}
+                </span>
               </div>
             );
           })
@@ -57,11 +62,16 @@ const SellerReview = ({ nickname }: SellerReviewProps) => {
           profileInfo?.badReviewInfo.map((review, index) => {
             return (
               <div
-                className="bg-[red]/5 flex flex-row items-center rounded-lg mx-1 my-3 p-2"
+                className="justify-between bg-[red]/5 flex flex-row items-center rounded-lg mx-1 my-3 p-2"
                 key={index}
               >
+                <div className='flex items-center'>
                 <TbMessage size={20} className="mr-2" />
                 {review.content}
+                </div>
+                <span className='font-bold mr-4'>
+                {review.count}
+                </span>
               </div>
             );
           })

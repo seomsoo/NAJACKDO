@@ -76,10 +76,15 @@ const RentalBookInfo = ({ bookId, userId, setIsOwner, setPrice }) => {
     setIsOwner(userBookData.ownerId === userId);
     setPrice(userBookData.ondayPrice);
   }, []);
-
+  const images = [
+    userBookData.frontImagePath,
+    userBookData.backImagePath,
+    userBookData.inspectFrontImagePath,
+    userBookData.inspectBackImagePath
+  ];
   return (
     <div className="border-2">
-      <RentalBookDetail imageUrl={userBookData.frontImagePath} />
+      <RentalBookDetail images={images} />
       <div className="m-4 mt-11">
         <SellerInfo seller={seller} />
         <div>
@@ -96,6 +101,7 @@ const RentalBookInfo = ({ bookId, userId, setIsOwner, setPrice }) => {
           wornout={userBookData.wornout}
         />
         <SellerReview nickname={userBookData.nickname} />
+        <span className="font-bold">추천 도서</span>
         <DetailRecommendBook bookId={bookId} />
       </div>
     </div>

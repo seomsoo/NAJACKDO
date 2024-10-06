@@ -13,11 +13,13 @@ interface SellerInfoProps {
 }
 
 const SellerInfo = ({ seller }: SellerInfoProps) => {
-  console.log("locationName", seller.locationName);
+  console.log("locationName", seller);
   return (
     <div className="flex flex-row justify-between items-center my-5">
       <div className="flex flex-row">
-       <BaseProfile userImage={seller.profileImage} width="12" height="12" />
+        <BaseProfile 
+        userNickname= {seller.nickname}
+        userImage={seller.profileImage} width="12" height="12" />
         <div className="ml-3 flex flex-col">
           <span className="font-bold text-xl mb-1">{seller.nickname}</span>
 
@@ -33,9 +35,9 @@ const SellerInfo = ({ seller }: SellerInfoProps) => {
       </div>
 
       <div className="flex flex-col justify-center">
-        <div className="flex flex-row items-end  justify-center">
+        <div className="flex flex-row items-center  justify-center">
           <IoIosLeaf size={20} color="#A6B37D" className="mb-0.5" />
-          <p className="font-bold mx-1">{seller.ondayPrice ? seller.ondayPrice : "준비 중"}</p>
+          <p className="font-bold text-lg mx-1">{seller.ondayPrice ? seller.ondayPrice : "준비 중"}</p>
           <p className="text-sm text-[#A7A7A7]">/ 일</p>
         </div>
         <p className="text-white bg-sub1 rounded-xl px-2 py-0.5 my-1 text-sm text-center">
