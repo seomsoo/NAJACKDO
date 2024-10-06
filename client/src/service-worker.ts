@@ -28,7 +28,7 @@ precacheAndRoute(self.__WB_MANIFEST);
 // https://developers.google.com/web/fundamentals/architecture/app-shell
 const fileExtensionRegexp = new RegExp("/[^/?]+\\.[^/]+$");
 
-const URL_WHITE_LIST = ["/api", "/oauth2", "/login", "/docs", "/ws"];
+const URL_WHITE_LIST = ["/api", "/oauth2", "/login", "/docs", "/ws", "/python"];
 
 registerRoute(
   // Return false to exempt requests from being fulfilled by index.html.
