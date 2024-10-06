@@ -17,7 +17,7 @@ const SearchResultPage = () => {
 
   return (
     <Suspense fallback={<Loading />}>
-      <div className="mx-4 mt-8">
+      <div className="mx-4">
         {/* 검색어 입력 창 */}
         <SearchInput
           handleSearchText={handleSearchText}

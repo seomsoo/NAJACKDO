@@ -57,7 +57,9 @@ const BookContainer = ({
       />
       <div className="overflow-hidden ml-2 flex flex-col gap-1">
         <div className="flex justify-between items-center">
-          <p className="font-semibold">{title}</p>
+          <p className="font-semibold" onClick={handleBookClick}>
+            {title}
+          </p>
           {/* 하트 버튼 */}
           <div className="ml-2 cursor-pointer" onClick={handleHeart}>
             {heart ? (
@@ -70,10 +72,13 @@ const BookContainer = ({
             <AlertModal open={open} setOpen={setOpen} content={alertContent} />
           )}
         </div>
-        <p className="text-sm font-medium">{author}</p>
+        <p className="text-sm font-medium" onClick={handleBookClick}>
+          {author}
+        </p>
         <p
           className="text-xs leading-normal mt-2 pr-4 line-clamp-3"
           dangerouslySetInnerHTML={{ __html: description }}
+          onClick={handleBookClick}
         ></p>
       </div>
     </div>

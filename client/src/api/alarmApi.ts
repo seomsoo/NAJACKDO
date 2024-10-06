@@ -22,7 +22,7 @@ export const getAlarm = async (
   return data;
 };
 
-// 알림 리스트 로드 성공
+// 알림 읽음 처리
 export const getAlarmReadSucess = async (): Promise<void> => {
   try {
     const {
