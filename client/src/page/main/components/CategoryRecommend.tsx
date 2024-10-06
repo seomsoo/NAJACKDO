@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const CategoryRecommend = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>("로맨스");
+  const [selectedCategory, setSelectedCategory] = useState<string>("어린이");
 
   const select =
     "bg-sub2 border-2 border-sub2 text-white px-2 py-0.5 rounded-lg mx-2 my-3";
@@ -9,14 +9,15 @@ const CategoryRecommend = () => {
     "text-sub2 border-[1px] border-sub2 px-2  py-0.5 rounded-lg mx-2 my-3";
 
   const categories = [
-    "로맨스",
-    "무협",
-    "판타지",
-    "드라마",
-    "학습",
+    "어린이",
+    "소설/시/희곡",
+    "경제경영",
     "과학",
-    "액션",
-    "호러",
+    "사회과학",
+    "역사",
+    "에세이",
+    "자기계발",
+    "여행"
   ];
 
   return (
