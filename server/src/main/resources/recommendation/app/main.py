@@ -17,7 +17,7 @@ from rapidfuzz import fuzz
 from ultralytics import YOLO
 from pymongo import MongoClient
 from pydantic import BaseModel  
-from fastapi import FastAPI, File, UploadFile, Form
+from fastapi import FastAPI, File, UploadFile, Form, Query
 from dotenv import load_dotenv
 from PIL import Image 
 from math import log10
@@ -37,7 +37,7 @@ app.add_middleware(
 script_dir = os.path.dirname(os.path.abspath(__file__))
 model_path = os.path.join(script_dir, "quality_inspection/best.pt")
 spine_model_path = os.path.join(script_dir, "book_spine_detection/best.pt")
-model = YOLO(model_path)
+yolo_model = YOLO(model_path)
 spine_model = YOLO(spine_model_path)
 
 
@@ -108,7 +108,7 @@ async def quality_inspection(user_id: int = Form(...),
     count_wornout = 0
     
     # YOLO 모델로 예측 수행
-    results = model(images)
+    results = yolo_model(images)
 
     # 주석이 달린 이미지 S3에 업로드
     for i, result in enumerate(results):
@@ -290,8 +290,8 @@ async def recomm_books(userId : int):
     return {"recommended_items_with_scores": recommended_items_with_scores}  
 
 
-@app.post("/python/item/userrecommandbygenre")
-async def recomm_books(userId: int = Form(...),category: str = Form(...)):
+@app.get("/python/item/userrecommandbygenre")
+async def recomm_books(userId: int = Query(...), category: str = Query(...)):
     data = dao.get_user_books_data_by_genre(category)
 
     items = [

@@ -122,7 +122,7 @@ export const postAiCheckBook = async (formData: FormData): Promise<any> => {
 };
 
 
-// 유저에 대한 책 인증 
+// 유저에 대한 추천 책 
 export const getRecommBooks = async (userId : number) : Promise<IRecommendBooks> => {
   try{
     const { data } = await pythoninstance.get<IRecommendBooks>(
@@ -135,6 +135,28 @@ export const getRecommBooks = async (userId : number) : Promise<IRecommendBooks>
   }
 }
 
+// 유저에 대한 추천 책 장르 포함 
+export const getRecommBooksWithGenre = async (userId: number, category: string): Promise<IRecommendBooks> => {
+
+  console.log("장르 추천");
+  
+  try {
+    const { data } = await pythoninstance.get<IRecommendBooks>(
+      `/item/userrecommandbygenre`, {
+        params: {
+          userId,
+          category
+        }
+      }
+    );
+
+    console.log("data11",data)
+    return data;
+  } catch (error) {
+    console.error("API 요청 오류:", error);
+    throw error;
+  }
+};
 
 
 

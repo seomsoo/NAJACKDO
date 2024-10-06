@@ -24,7 +24,7 @@ const RentalBookDetailPage = () => {
         {!isOwner ? (
           <AddCart ownerbookId={Number(bookId)} />
         ) : (
-          <UpdatePrice userBookId={Number(bookId)} price={price / 100} />
+          <UpdatePrice userBookId={Number(bookId)} price={price} />
         )}
       </div>
     </Suspense>

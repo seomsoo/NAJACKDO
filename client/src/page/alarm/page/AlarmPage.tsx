@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getAlarm } from "api/alarmApi";
 import Error from "components/common/Error";
+import { getAlarm, getAlarmReadSucess } from "api/alarmApi";
 import Loading from "components/common/Loading";
 import Alarm from "page/alarm/components/Alarm";
 import { useCallback, useEffect, useRef } from "react";
@@ -58,6 +58,16 @@ const AlarmPage = () => {
       if (loadMoreRef.current) observer.unobserve(loadMoreRef.current);
     };
   }, [handleObserver]);
+
+  useEffect(() => {
+    const readAlarm = async () => {
+      await getAlarmReadSucess();
+    };
+
+    return () => {
+      readAlarm();
+    };
+  }, []);
 
   if (isAlarmLoading) {
     return <Loading />;
