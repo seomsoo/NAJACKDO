@@ -96,7 +96,6 @@ public class ReviewService {
 		if (isSend && isReceive) {
 			chatRoomRepository.deleteById(rental.getCart().getChatRoom().getRoomId());
 		}
-
 		return SuccessResponse.empty();
 	}
 

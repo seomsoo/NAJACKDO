@@ -290,7 +290,7 @@ async def recomm_books(userId : int):
     return {"recommended_items_with_scores": recommended_items_with_scores}  
 
 
-@app.post("/item/userrecommandbygenre")
+@app.post("/python/item/userrecommandbygenre")
 async def recomm_books(userId: int = Form(...),category: str = Form(...)):
     data = dao.get_user_books_data_by_genre(category)
 
