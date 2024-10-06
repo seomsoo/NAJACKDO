@@ -5,7 +5,6 @@ import Loading from "components/common/Loading";
 import LogoutButton from "page/profile/components/LogoutButton";
 import MannerTree from "page/profile/components/MannerTree";
 import MyLeaf from "page/profile/components/MyLeaf";
-import { useEffect } from "react";
 import UserInfo from "../components/UserInfo";
 import Error from "components/common/Error";
 
@@ -28,20 +27,9 @@ const ProfilePage = () => {
     console.log("유저 정보", profileInfo);
   }
 
-  const goodReviewCount = profileInfo?.goodReviewInfo.reduce(
-    (sum, review) => sum + review.count,
-    0
-  );
-
-  const badReviewCount = profileInfo?.badReviewInfo.reduce(
-    (sum, review) => sum + review.count,
-    0
-  );
-  
   return (
     <div className="mx-6 my-4">
       {/* 유저 정보 */}
-      <p className="font-extrabold text-2xl tracking-wider mb-10">프로필</p>
       <UserInfo
         userName={profileInfo.nickname}
         userLocation={profileInfo.locationName}
