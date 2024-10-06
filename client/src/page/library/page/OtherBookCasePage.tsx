@@ -1,23 +1,18 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery } from "@tanstack/react-query";
 import {
   deleteInterestBookCase,
   getOtherBookCase,
   postInterestBookCase,
-} from 'api/bookcaseApi';
-import { useEffect, useState } from 'react';
-import { IoIosArrowBack } from 'react-icons/io';
-import {
-  IoHeart,
-  IoHeartOutline,
-  IoNotificationsOutline,
-} from 'react-icons/io5';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import OtherBookGrid from '../components/OtherBookGrid';
-import Loading from 'components/common/Loading';
-import BaseProfile from 'components/common/BaseProfile';
+} from "api/bookcaseApi";
+import BaseProfile from "components/common/BaseProfile";
+import Loading from "components/common/Loading";
+import { useEffect, useState } from "react";
+import { IoIosArrowBack } from "react-icons/io";
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
+import { useNavigate, useParams } from "react-router-dom";
+import OtherBookGrid from "../components/OtherBookGrid";
 
 const OtherBookCasePage = () => {
-
   const navigate = useNavigate();
   const { userId } = useParams();
   const userIdAsNumber = parseInt(userId, 10);
@@ -28,7 +23,7 @@ const OtherBookCasePage = () => {
     isLoading: isBookcaseLoading,
     isError: isBookcaseError,
   } = useQuery({
-    queryKey: ['otherBookCase', userIdAsNumber],
+    queryKey: ["otherBookCase", userIdAsNumber],
     queryFn: () => getOtherBookCase(userIdAsNumber),
   });
 
@@ -68,7 +63,7 @@ const OtherBookCasePage = () => {
       }
       setIsFollowed(!isFollowed); // 상태 변경
     } catch (error) {
-      console.error('관심 책장 등록/해제 중 오류 발생:', error);
+      console.error("관심 책장 등록/해제 중 오류 발생:", error);
     }
   };
 
@@ -86,19 +81,20 @@ const OtherBookCasePage = () => {
 
   return (
     <div>
-      <header className="sticky top-0 z-10 bg-[#F8F6F3] flex items-center justify-between p-6 py-4">
+      <header className="sticky top-0 z-10 flex items-center justify-between px-4 py-3">
         <div className="items-center flex gap-2">
           <button onClick={goBack} className="text-2xl">
             <IoIosArrowBack />
           </button>
-          <span className="hakgyo text-3xl text-main">
-                {bookcase.nickname}
-          </span>
-          <span className='font-extrabold text-2xl'>님의 책장</span>
+          <span className="hakgyo text-3xl text-main">{bookcase.nickname}</span>
+          <span className="font-extrabold text-2xl">님의 책장</span>
           <button onClick={handleProfileClick}>
-            <BaseProfile userImage={bookcase?.profileImage} width="16" height="16" />
+            <BaseProfile
+              userImage={bookcase?.profileImage}
+              width="16"
+              height="16"
+            />
           </button>
-          
         </div>
         <div className="flex items-center gap-5">
           {/* 관심 등록/해제 하트 버튼 */}
@@ -109,7 +105,6 @@ const OtherBookCasePage = () => {
               <IoHeartOutline size={30} color="#D96363" />
             )}
           </div>
-
         </div>
       </header>
 
@@ -125,11 +120,7 @@ const OtherBookCasePage = () => {
             />
           ) : (
             <div className="flex flex-col items-center mt-16">
-              <img
-                src="/book_icon.png"
-                alt="book"
-                className="w-40 h-40 mb-6"
-              />
+              <img src="/book_icon.png" alt="book" className="w-40 h-40 mb-6" />
               <p className="text-lg font-semibold">책장이 텅 비었어요.</p>
             </div>
           )}

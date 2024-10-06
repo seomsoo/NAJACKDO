@@ -35,6 +35,7 @@ const UpdatePrice = ({ userBookId, price }: UpdatePriceProps) => {
       console.log("update error", error);
     },
   });
+  
   const handleUpdateRentalCost = () => {
     mutation.mutate({
       userBookId: userBookId,
@@ -61,7 +62,7 @@ const UpdatePrice = ({ userBookId, price }: UpdatePriceProps) => {
           <DrawerDescription className="mt-5 flex flex-row justify-center items-center">
             <IoIosLeaf color="#A6B37D" size={40} className="mr-2" />
             <input
-              type="text"
+              type="number"
               placeholder={String(price)}
               className="bg-transparent focus:outline-none pretendard text-3xl w-16"
               onChange={(e) => setUpdatePrice(Number(e.target.value))}

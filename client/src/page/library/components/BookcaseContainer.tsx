@@ -15,7 +15,7 @@ const BookcaseContainer = ({
   userId,
   name,
   imageArray,
-  isFollowed = false, // 기본값을 false로 설정
+  isFollowed
 }: BookcaseContainerProps) => {
   const [heart, setHeart] = useState<boolean>(isFollowed);
   const [open, setOpen] = useState<boolean>(false);
