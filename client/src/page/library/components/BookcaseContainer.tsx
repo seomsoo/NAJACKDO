@@ -1,6 +1,6 @@
 import { deleteInterestBookCase, postInterestBookCase } from "api/bookcaseApi";
 import AlertModal from "components/common/AlertModal";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
@@ -19,6 +19,7 @@ const BookcaseContainer = ({
 }: BookcaseContainerProps) => {
   const [heart, setHeart] = useState<boolean>(isFollowed);
   const [open, setOpen] = useState<boolean>(false);
+  const [alertContent, setAlertContent] = useState<string>("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,9 +30,11 @@ const BookcaseContainer = ({
     try {
       if (heart) {
         await deleteInterestBookCase(userId); // 관심 해제
+        setAlertContent(`${name}님 책장 좋아요<br /> 취소가 완료되었습니다.`);
         setOpen(true);
       } else {
         await postInterestBookCase(userId); // 관심 등록
+        setAlertContent(`${name}님 책장 좋아요가<br /> 완료되었습니다.`);
         setOpen(true);
       }
       setHeart(!heart); // 상태 변경
@@ -46,32 +49,19 @@ const BookcaseContainer = ({
   return (
     <div className="my-5 bg-white/30 shadow rounded-lg p-4">
       <div className="flex flex-row justify-between items-center mb-2">
-        <p className="text-base font-semibold" onClick={handleBookcaseClick} >{name}님의 책장</p>
+        <p className="text-base font-semibold" onClick={handleBookcaseClick}>
+          {name}님의 책장
+        </p>
         <div onClick={handleHeart}>
           {heart ? (
-            <Fragment>
-              <IoHeart size={25} color="#D96363" />
-              {open && (
-                <AlertModal
-                  open={open}
-                  setOpen={setOpen}
-                  content={`${name}님 책장 좋아요가<br /> 완료되었습니다.`}
-                />
-              )}
-            </Fragment>
+            <IoHeart size={25} color="#D96363" />
           ) : (
-            <Fragment>
-              <IoHeartOutline size={25} color="#D96363" />
-              {open && (
-                <AlertModal
-                  open={open}
-                  setOpen={setOpen}
-                  content={`${name}님 책장 좋아요<br /> 취소가 완료되었습니다.`}
-                />
-              )}
-            </Fragment>
+            <IoHeartOutline size={25} color="#D96363" />
           )}
         </div>
+        {open && (
+          <AlertModal open={open} setOpen={setOpen} content={alertContent} />
+        )}
       </div>
       <div
         onClick={handleBookcaseClick}

@@ -5,7 +5,6 @@ import AlertModal from "components/common/AlertModal";
 import { useState } from "react";
 import { IoIosLeaf } from "react-icons/io";
 import { PiXBold } from "react-icons/pi";
-import { useNavigate } from "react-router-dom";
 
 interface BookRentalInfoProps {
   cartItemId: number;
@@ -23,8 +22,8 @@ const BookRentalInfo = ({
   bookImage,
   chatting,
 }: BookRentalInfoProps) => {
-  const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
+  const [alertContent, setAlertContent] = useState<string>("");
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -32,12 +31,15 @@ const BookRentalInfo = ({
     mutationFn: postDeleteCartItem,
 
     onSuccess: () => {
+      setAlertContent(`${bookTitle} <br />삭제 성공`);
       setOpen(true);
       queryClient.setQueryData<ICartList[]>(["cartList"], (oldData) => {
         if (!oldData) return [];
         return oldData.map((cart) => ({
           ...cart,
-          cartItems: cart.cartItems.filter((item) => item.cartItemId !== cartItemId),
+          cartItems: cart.cartItems.filter(
+            (item) => item.cartItemId !== cartItemId
+          ),
         }));
       });
     },
@@ -52,7 +54,9 @@ const BookRentalInfo = ({
       <img src={bookImage} alt="book" width={71} height="auto" />
       <div className="ml-2 w-[80%] flex flex-col gap-1">
         <div className="flex flex-row gap-1 justify-between items-center">
-          <p className="text-sm font-medium line-clamp-1 h-[1.2rem] flex-grow">{bookTitle}</p>
+          <p className="text-sm font-medium line-clamp-1 h-[1.2rem] flex-grow">
+            {bookTitle}
+          </p>
           {!chatting && (
             <div className="flex items-center">
               <PiXBold
@@ -71,7 +75,7 @@ const BookRentalInfo = ({
         </div>
       </div>
       {open && (
-        <AlertModal open={open} setOpen={setOpen} content={`${bookTitle} <br />삭제 성공`} />
+        <AlertModal open={open} setOpen={setOpen} content={alertContent} />
       )}
     </div>
   );

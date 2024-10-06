@@ -1,6 +1,6 @@
 import { deleteInterestbook, postInterestbook } from "api/bookApi"; // API 호출 함수
 import AlertModal from "components/common/AlertModal";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
@@ -24,14 +24,17 @@ const BookContainer = ({
   const navigate = useNavigate();
   const [heart, setHeart] = useState(isInterested);
   const [open, setOpen] = useState<boolean>(false);
+  const [alertContent, setAlertContent] = useState<string>("");
 
   const handleHeart = async () => {
     try {
       if (heart) {
         await deleteInterestbook(bookId);
+        setAlertContent("관심 도서가 해제되었습니다.");
         setOpen(true);
       } else {
         await postInterestbook(bookId);
+        setAlertContent("관심 도서로 등록되었습니다.");
         setOpen(true);
       }
       setHeart(!heart);
@@ -58,29 +61,14 @@ const BookContainer = ({
           {/* 하트 버튼 */}
           <div className="ml-2 cursor-pointer" onClick={handleHeart}>
             {heart ? (
-              <Fragment>
-                <IoHeart size={25} color="#D96363" />
-                {open && (
-                  <AlertModal
-                    open={open}
-                    setOpen={setOpen}
-                    content="관심 도서로 등록되었습니다."
-                  />
-                )}
-              </Fragment>
+              <IoHeart size={25} color="#D96363" />
             ) : (
-              <Fragment>
-                <IoHeartOutline size={25} color="#D96363" />
-                {open && (
-                  <AlertModal
-                    open={open}
-                    setOpen={setOpen}
-                    content="관심 도서가 해제되었습니다."
-                  />
-                )}
-              </Fragment>
+              <IoHeartOutline size={25} color="#D96363" />
             )}
           </div>
+          {open && (
+            <AlertModal open={open} setOpen={setOpen} content={alertContent} />
+          )}
         </div>
         <p className="text-sm font-medium">{author}</p>
         <p
