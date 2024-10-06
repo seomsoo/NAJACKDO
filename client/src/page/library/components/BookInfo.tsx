@@ -8,7 +8,7 @@ import {
 import AlertModal from "components/common/AlertModal";
 import CategoryTag from "components/common/CategoryTag";
 import CenterCropImage from "page/library/components/CenterCropImage";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IoChevronBack, IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
@@ -72,6 +72,7 @@ const BookInfo = ({ bookId, rental }: BookInfoProps) => {
       : authorList[0];
   const [heart, setHeart] = useState(bookData.interest);
   const [open, setOpen] = useState<boolean>(false);
+  const [alertContent, setAlertContent] = useState<string>("");
 
   const deleteMutation = useMutation({
     mutationKey: ["deleteInterestbook"],
@@ -79,6 +80,7 @@ const BookInfo = ({ bookId, rental }: BookInfoProps) => {
 
     onSuccess: () => {
       setHeart(false);
+      setAlertContent("관심 도서에서 삭제되었습니다.");
       setOpen(true);
     },
 
@@ -93,6 +95,7 @@ const BookInfo = ({ bookId, rental }: BookInfoProps) => {
 
     onSuccess: () => {
       setHeart(true);
+      setAlertContent("관심 도서로 등록되었습니다.");
       setOpen(true);
     },
 
@@ -139,30 +142,15 @@ const BookInfo = ({ bookId, rental }: BookInfoProps) => {
           {!rental ? (
             <div className="ml-2" onClick={handleHeart}>
               {heart ? (
-                <Fragment>
-                  <IoHeart size={30} color="#D96363" />
-                  {open && (
-                    <AlertModal
-                      open={open}
-                      setOpen={setOpen}
-                      content="관심도서로 등록되었습니다."
-                    />
-                  )}
-                </Fragment>
+                <IoHeart size={30} color="#D96363" />
               ) : (
-                <Fragment>
-                  <IoHeartOutline size={30} color="#D96363" />
-                  {open && (
-                    <AlertModal
-                      open={open}
-                      setOpen={setOpen}
-                      content="관심도서에서 해제되었습니다."
-                    />
-                  )}
-                </Fragment>
+                <IoHeartOutline size={30} color="#D96363" />
               )}
             </div>
           ) : null}
+          {open && (
+            <AlertModal open={open} setOpen={setOpen} content={alertContent} />
+          )}
         </div>
         <p className="my-2">{author} 지음</p>
         <CategoryTag category={bookData.genre} />

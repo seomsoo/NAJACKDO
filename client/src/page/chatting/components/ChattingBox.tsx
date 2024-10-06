@@ -108,9 +108,7 @@ const ChattingBox = ({
     <div className="mx-[25px]">
       <div
         className="flex-grow overflow-y-auto py-4 scrollbar-hide"
-        style={{
-          height: "calc(100vh - 377px)",
-        }}
+        style={{ height: "calc(100vh - 309px)" }}
       >
         <div className="space-y-4">
           {chattingList.messages.map((chat, index) => {
