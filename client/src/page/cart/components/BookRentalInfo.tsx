@@ -1,5 +1,6 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postDeleteCartItem } from "api/cartApi";
+import { ICartList } from "atoms/Cart.type";
 import AlertModal from "components/common/AlertModal";
 import { useState } from "react";
 import { IoIosLeaf } from "react-icons/io";
@@ -24,6 +25,7 @@ const BookRentalInfo = ({
 }: BookRentalInfoProps) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
+  const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationKey: ["cartItemId"],
@@ -31,6 +33,13 @@ const BookRentalInfo = ({
 
     onSuccess: () => {
       setOpen(true);
+      queryClient.setQueryData<ICartList[]>(["cartList"], (oldData) => {
+        if (!oldData) return [];
+        return oldData.map((cart) => ({
+          ...cart,
+          cartItems: cart.cartItems.filter((item) => item.cartItemId !== cartItemId),
+        }));
+      });
     },
   });
 
@@ -43,15 +52,16 @@ const BookRentalInfo = ({
       <img src={bookImage} alt="book" width={71} height="auto" />
       <div className="ml-2 w-[80%] flex flex-col gap-1">
         <div className="flex flex-row gap-1 justify-between items-center">
-          <p className="text-sm font-medium line-clamp-1 h-[1.2rem]">
-            {bookTitle}
-          </p>
+          <p className="text-sm font-medium line-clamp-1 h-[1.2rem] flex-grow">{bookTitle}</p>
           {!chatting && (
-            <PiXBold
-              size={25}
-              color="black"
-              onClick={() => handleDeleteCartItem(cartItemId)}
-            />
+            <div className="flex items-center">
+              <PiXBold
+                size={25}
+                color="black"
+                className="self-center"
+                onClick={() => handleDeleteCartItem(cartItemId)}
+              />
+            </div>
           )}
         </div>
         <p className="text-xs w-[90%] line-clamp-1 h-[1.2rem]">{author}</p>
@@ -61,11 +71,7 @@ const BookRentalInfo = ({
         </div>
       </div>
       {open && (
-        <AlertModal
-          open={open}
-          setOpen={setOpen}
-          content={`${bookTitle} <br />삭제 성공`}
-        />
+        <AlertModal open={open} setOpen={setOpen} content={`${bookTitle} <br />삭제 성공`} />
       )}
     </div>
   );
