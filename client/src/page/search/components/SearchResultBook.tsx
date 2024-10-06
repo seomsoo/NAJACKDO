@@ -3,7 +3,7 @@ import { deleteInterestbook, postInterestbook } from "api/bookApi";
 import { ISearch } from "atoms/Search.type";
 import AlertModal from "components/common/AlertModal";
 import CategoryTag from "components/common/CategoryTag";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
@@ -15,6 +15,7 @@ const SearchResultBook = ({ search }: SearchResultBookProps) => {
   const navigate = useNavigate();
   const [interestBook, setInterestBook] = useState(search.interest);
   const [open, setOpen] = useState<boolean>(false);
+  const [alertContent, setAlertContent] = useState<string>("");
 
   const applyInterest = useMutation({
     mutationKey: ["book", "interest", "apply"],
@@ -22,6 +23,7 @@ const SearchResultBook = ({ search }: SearchResultBookProps) => {
 
     onSuccess: () => {
       setInterestBook(true);
+      setAlertContent("관심 도서로 등록되었습니다.");
       setOpen(true);
     },
   });
@@ -32,6 +34,7 @@ const SearchResultBook = ({ search }: SearchResultBookProps) => {
 
     onSuccess: () => {
       setInterestBook(false);
+      setAlertContent("관심 도서에서 해제되었습니다.");
       setOpen(true);
     },
   });
@@ -67,36 +70,22 @@ const SearchResultBook = ({ search }: SearchResultBookProps) => {
       </div>
       <div onClick={handleInterest}>
         {interestBook ? (
-          <Fragment>
-            <IoHeartSharp
-              size={25}
-              color="#D96363"
-              className="absolute right-0 bottom-4 cursor-pointer"
-            />
-            {open && (
-              <AlertModal
-                open={open}
-                setOpen={setOpen}
-                content="관심 도서로 등록되었습니다."
-              />
-            )}
-          </Fragment>
+          <IoHeartSharp
+            size={25}
+            color="#D96363"
+            className="absolute right-0 bottom-4 cursor-pointer"
+          />
         ) : (
-          <Fragment>
-            <IoHeartOutline
-              size={25}
-              className="absolute right-0 bottom-4 cursor-pointer"
-            />
-            {open && (
-              <AlertModal
-                open={open}
-                setOpen={setOpen}
-                content="관심 도서가 해제되었습니다."
-              />
-            )}
-          </Fragment>
+          <IoHeartOutline
+            size={25}
+            color="#D96363"
+            className="absolute right-0 bottom-4 cursor-pointer"
+          />
         )}
       </div>
+      {open && (
+        <AlertModal open={open} setOpen={setOpen} content={alertContent} />
+      )}
     </div>
   );
 };
