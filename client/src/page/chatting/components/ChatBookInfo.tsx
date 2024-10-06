@@ -3,7 +3,6 @@ import { getCartItem } from "api/cartApi";
 import { getIsReviewed } from "api/chatApi";
 import { postRental, postReturn } from "api/rentalApi";
 import { ICartList } from "atoms/Cart.type";
-import { IChatReview } from "atoms/Chat.type";
 import CartModal from "page/chatting/components/CartModal";
 import { Message } from "page/chatting/components/ChattingBox";
 import PayComplete from "page/chatting/components/PayComplete";
@@ -65,11 +64,11 @@ const ChatBookInfo = ({
   const { userId } = useUserStore.getState();
 
   // Cart 정보 가져오기
-  const { data: bookData, refetch: refetchRentalId } = useSuspenseQuery<ICartList>({
-    queryKey: ["cart", "book"],
-    queryFn: () => getCartItem(cartId),
-  });
-
+  const { data: bookData, refetch: refetchRentalId } =
+    useSuspenseQuery<ICartList>({
+      queryKey: ["cart", "book"],
+      queryFn: () => getCartItem(cartId),
+    });
 
   useEffect(() => {
     if (bookData) {
@@ -140,7 +139,6 @@ const ChatBookInfo = ({
 
   // 완료 메시지 전송
   const complete = async (talkType) => {
-    
     await refetchRentalId();
 
     const completeMessage = ReactDOMServer.renderToString(
@@ -183,9 +181,9 @@ const ChatBookInfo = ({
     if (step === ChatRentalStep.PAY) {
       payMutation.mutate({
         cartId: cartId,
-        rentalCost: dayPrice,
+        rentalCost: totalLeaf,
         rentalPeriod: rentalPeriod[0],
-        totalPrice: totalLeaf,
+        totalPrice: dayPrice,
       });
       return;
     }

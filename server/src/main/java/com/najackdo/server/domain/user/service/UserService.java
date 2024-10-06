@@ -73,8 +73,6 @@ public class UserService {
 
 		List<UserData.reviewInfo> goodReviews = userRepository.countUserReviewsByPositive(user.getId(), true);
 		List<UserData.reviewInfo> badReviews = userRepository.countUserReviewsByPositive(user.getId(), false);
-		log.info("goodReviews : {}", goodReviews);
-		log.info("badReviews : {}", badReviews);
 		Integer saveCash = userRepository.findUserSavingCash(user.getId());
 		Integer earnCash = userRepository.findUserEarningCash(user.getId());
 		return UserData.InfoResponse.of(user, locationName, goodReviews, badReviews, saveCash, earnCash);

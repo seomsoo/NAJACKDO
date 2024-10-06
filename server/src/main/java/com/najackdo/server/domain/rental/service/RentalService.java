@@ -3,7 +3,6 @@ package com.najackdo.server.domain.rental.service;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
@@ -16,12 +15,9 @@ import com.najackdo.server.domain.book.dto.BookData;
 import com.najackdo.server.domain.book.entity.Book;
 import com.najackdo.server.domain.book.entity.BookStatus;
 import com.najackdo.server.domain.book.entity.UserBook;
-import com.najackdo.server.domain.book.entity.UserBookDetail;
 import com.najackdo.server.domain.book.repository.UserBooksRepository;
 import com.najackdo.server.domain.cart.entity.Cart;
-import com.najackdo.server.domain.cart.entity.CartItem;
 import com.najackdo.server.domain.cart.repository.CartRepository;
-import com.najackdo.server.domain.chat.repository.ChatRoomRepository;
 import com.najackdo.server.domain.recommendation.repository.RentalMongoRepository;
 import com.najackdo.server.domain.rental.dto.RentalData;
 import com.najackdo.server.domain.rental.entity.Rental;
@@ -53,11 +49,9 @@ public class RentalService {
 		int rentalPeriod = rentalRequest.getRentalPeriod();
 		int rentalCost = rentalRequest.getRentalCost();
 
-
 		Cart cart = cartRepository.findByIdWithCashLogs(cartId).orElseThrow(
 			() -> new BaseException(ErrorCode.NOT_FOUND_CART)
 		);
-
 
 		Set<Long> bookIds = new HashSet<>();
 		cart.getCartItems().forEach(cartItem -> {
@@ -79,7 +73,6 @@ public class RentalService {
 			() -> new BaseException(ErrorCode.NOT_FOUND_RENTAL)
 		);
 
-
 		List<UserBook> userBooks = byCartId.getCart().getCartItems()
 			.stream()
 			.map(cartItem -> cartItem.getUserBookDetail().getUserBook())
@@ -87,8 +80,6 @@ public class RentalService {
 			.toList();
 
 		userBooksRepository.saveAll(userBooks);
-
-
 
 		User customer = cart.getCustomer();
 		User owner = cart.getOwner();
@@ -101,21 +92,17 @@ public class RentalService {
 		owner.plusCash(rentalCost);
 
 		List<CashLog> customerCashLogs = customer.getCashLogs();
-		customerCashLogs.add(CashLog.create(customer, -rentalCost, customer.getCash(), CashLogType.PAYMENT));
+		customerCashLogs.add(CashLog.create(customer, -rentalCost, customer.getCash(), CashLogType.RENTAL));
 		customer.updateCashLog(customerCashLogs);
 
 		List<CashLog> ownerCashLogs = owner.getCashLogs();
-		ownerCashLogs.add(CashLog.create(owner, rentalCost, owner.getCash(), CashLogType.PAYMENT));
+		ownerCashLogs.add(CashLog.create(owner, rentalCost, owner.getCash(), CashLogType.RENTAL));
 		owner.updateCashLog(ownerCashLogs);
 
 		LocalDateTime startDate = LocalDateTime.now();
 		LocalDateTime endDate = startDate.plusDays(rentalPeriod);
 		Rental rental = Rental.create(cart, startDate, endDate, rentalPeriod, totalCost, RentalStatus.RENTED);
 		rentalRepository.save(rental);
-
-
-
-
 
 		// ! 채팅 전송 로직 추가
 
@@ -149,7 +136,6 @@ public class RentalService {
 
 		userBooksRepository.saveAll(userBooks);
 
-
 		Cart cart = rental.getCart();
 		cart.deleteCart();
 
@@ -160,7 +146,6 @@ public class RentalService {
 
 	public List<RentalData.RentalHistory> lendList(User user) {
 		List<Rental> lendList = rentalRepository.findLendListByUserId(user.getId());
-
 
 		return lendList.stream().map(rental ->
 			RentalData.RentalHistory.create(
@@ -185,8 +170,6 @@ public class RentalService {
 		).toList();
 
 	}
-
-
 
 	public List<RentalData.RentalHistory> borrowList(User user) {
 		List<Rental> borrowList = rentalRepository.findBorrowListByUserId(user.getId());

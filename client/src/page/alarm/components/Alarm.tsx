@@ -1,7 +1,7 @@
 import useTime from "hooks/useTime";
 import { IoIosLeaf } from "react-icons/io";
-import { IoHeart } from "react-icons/io5";
-import { TbArrowBack, TbBellRingingFilled } from "react-icons/tb";
+import { IoChatbubbleEllipses, IoHeart } from "react-icons/io5";
+import { TbArrowBack } from "react-icons/tb";
 interface AlarmProps {
   content: string;
   title: string;
@@ -16,7 +16,7 @@ const iconSettings: { [key: string]: { icon: JSX.Element; color: string } } = {
     color: "#79AC78",
   },
   CHAT: {
-    icon: <TbBellRingingFilled size={24} color="#5F6F52" className="mt-1" />,
+    icon: <IoChatbubbleEllipses size={24} color="#5F6F52" className="mt-1" />,
     color: "#5F6F52",
   },
   좋아요: {
