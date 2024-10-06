@@ -4,13 +4,13 @@
   "description": "나의 작은 도서관",
   "icons": [
     {
-      "src": "images/icons/favicon-32x32.png",
-      "sizes": "32x32",
+      "src": "images/icons/favicon-196x196.png",
+      "sizes": "196x196",
       "type": "image/png"
     }
   ],
   "start_url": "./",
-  "orientation" : "portrait",
+  "orientation": "portrait",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
