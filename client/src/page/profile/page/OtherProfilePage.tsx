@@ -58,6 +58,10 @@ const OtherProfilePage = () => {
     return null;
   }
 
+  if (profileInfo) {
+    console.log('유저 정보', profileInfo);
+  }
+
   return (
     <div className="mx-6 my-4">
       <p className="text-[32px] font-extrabold tracking-wider mb-6">프로필</p>
@@ -68,12 +72,12 @@ const OtherProfilePage = () => {
         userImage={profileInfo.profileImage}
         mannerScore={profileInfo.mannerScore}
       />
-      {/* 신뢰나무 */}
+      {/* 신뢰 나무 */}
       <MannerTree
         nickname={profileInfo.nickname}
         mannerScore={profileInfo.mannerScore}
-        goodReviewCount={profileInfo.goodReviewInfo.length}
-        badReviewCount={profileInfo.badReviewInfo.length}
+        goodReviewInfo={profileInfo.goodReviewInfo}
+        badReviewInfo={profileInfo.badReviewInfo}
       />
       {/* 타인 책장 정보 */}
       <BookcaseContainer

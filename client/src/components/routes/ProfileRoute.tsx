@@ -11,7 +11,7 @@ const ProfileRoute = () => {
     <Routes>
       <Route path="/" element={<ProfilePage />} />
       <Route path="/:nickname" element={<OtherProfilePage />} />
-      <Route path="/:nickname/my-grade" element={<GradePage />} />
+      <Route path="/:nickname/grade" element={<GradePage />} />
       <Route path="/my-leaf" element={<LeafPage />} />
       <Route path="/my-leaf/charge" element={<KapayPage />} />
       <Route path="*" element={<Navigate to="/404" />} />
