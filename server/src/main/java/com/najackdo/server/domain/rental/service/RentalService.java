@@ -14,6 +14,10 @@ import com.najackdo.server.core.exception.ErrorCode;
 import com.najackdo.server.core.response.SuccessResponse;
 import com.najackdo.server.domain.book.dto.BookData;
 import com.najackdo.server.domain.book.entity.Book;
+import com.najackdo.server.domain.book.entity.BookStatus;
+import com.najackdo.server.domain.book.entity.UserBook;
+import com.najackdo.server.domain.book.entity.UserBookDetail;
+import com.najackdo.server.domain.book.repository.UserBooksRepository;
 import com.najackdo.server.domain.cart.entity.Cart;
 import com.najackdo.server.domain.cart.entity.CartItem;
 import com.najackdo.server.domain.cart.repository.CartRepository;
@@ -39,6 +43,7 @@ public class RentalService {
 	private final CartRepository cartRepository;
 	private final RentalRepository rentalRepository;
 	private final RentalMongoRepository rentalMongoRepository;
+	public final UserBooksRepository userBooksRepository;
 
 	@Transactional
 	public SuccessResponse<Void> rentalCart(RentalData.RentalRequest rentalRequest) {
@@ -49,40 +54,41 @@ public class RentalService {
 		int rentalCost = rentalRequest.getRentalCost();
 
 
-
-
 		Cart cart = cartRepository.findByIdWithCashLogs(cartId).orElseThrow(
 			() -> new BaseException(ErrorCode.NOT_FOUND_CART)
 		);
 
 
 		Set<Long> bookIds = new HashSet<>();
-
 		cart.getCartItems().forEach(cartItem -> {
-
 			Book book = cartItem.getUserBookDetail().getUserBook().getBook();
-
 			if (bookIds.contains(book.getId())) {
 				return;
 			}
-
 			bookIds.add(book.getId());
-
 			com.najackdo.server.domain.recommendation.entity.Rental rental = new com.najackdo.server.domain.recommendation.entity.Rental();
 			rental.setUserId(cart.getCustomer().getId());
 			rental.setBookId(book.getId());
 			rental.setGenre(book.getGenre());
 			rental.setCreatedAt(LocalDateTime.now());
 			rental.setUpdatedAt(LocalDateTime.now());
-
 			rentalMongoRepository.save(rental);
 		});
 
-		Optional<Rental> byCartId = rentalRepository.findByCartId(cartId);
+		Rental byCartId = rentalRepository.findByCartId(cartId).orElseThrow(
+			() -> new BaseException(ErrorCode.NOT_FOUND_RENTAL)
+		);
 
-		if (byCartId.isPresent()) {
-			throw new BaseException(ErrorCode.RENTAL_CART_ALREADY_RENTED);
-		}
+
+		List<UserBook> userBooks = byCartId.getCart().getCartItems()
+			.stream()
+			.map(cartItem -> cartItem.getUserBookDetail().getUserBook())
+			.peek(userBook -> userBook.updateBookStatus(BookStatus.AVAILABLE))
+			.toList();
+
+		userBooksRepository.saveAll(userBooks);
+
+
 
 		User customer = cart.getCustomer();
 		User owner = cart.getOwner();
@@ -107,6 +113,10 @@ public class RentalService {
 		Rental rental = Rental.create(cart, startDate, endDate, rentalPeriod, totalCost, RentalStatus.RENTED);
 		rentalRepository.save(rental);
 
+
+
+
+
 		// ! 채팅 전송 로직 추가
 
 		// chatRoomRepository.save()
@@ -130,6 +140,15 @@ public class RentalService {
 
 		rental.updateRentalEndDate(LocalDateTime.now());
 		rental.updateStatus(RentalStatus.RETURNED);
+
+		List<UserBook> userBooks = rental.getCart().getCartItems()
+			.stream()
+			.map(cartItem -> cartItem.getUserBookDetail().getUserBook())
+			.peek(userBook -> userBook.updateBookStatus(BookStatus.AVAILABLE))
+			.toList();
+
+		userBooksRepository.saveAll(userBooks);
+
 
 		Cart cart = rental.getCart();
 		cart.deleteCart();

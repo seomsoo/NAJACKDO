@@ -67,4 +67,8 @@ public class UserBook {
 		userBook.locationCode = location;
 		return userBook;
 	}
+
+	public void updateBookStatus(BookStatus bookStatus) {
+		this.bookStatus = bookStatus;
+	}
 }

@@ -100,8 +100,8 @@ public class UserBookData {
 			response.userBookId = userBook.getId();
 			response.bookStatus = userBook.getBookStatus().name();
 			response.ondayPrice = userBookDetail.getOnedayPrice();
-			response.backImagePath = userBookDetail.getBackImagePath();
 			response.frontImagePath = userBookDetail.getFrontImagePath();
+			response.backImagePath = userBookDetail.getBackImagePath();
 			response.inspectFrontImagePath = userBookDetail.getInspectFrontImagePath();
 			response.inspectBackImagePath = userBookDetail.getInspectBackImagePath();
 			response.usedPrice = userBookDetail.getUsedPrice();

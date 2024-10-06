@@ -12,7 +12,16 @@ import com.najackdo.server.domain.rental.entity.Rental;
 
 public interface RentalRepository extends JpaRepository<Rental, Long> {
 
-	@Query("SELECT r FROM Rental r WHERE r.cart.id = :cartId")
+	@Query("""
+
+		SELECT r 
+		FROM Rental r 
+		JOIN FETCH r.cart
+		JOIN FETCH r.cart.cartItems ci
+		JOIN FETCH ci.userBookDetail
+		JOIN FETCH ci.userBookDetail.userBook
+		WHERE r.cart.id = :cartId
+""")
 	Optional<Rental> findByCartId(@Param("cartId") Long cartId);
 
 

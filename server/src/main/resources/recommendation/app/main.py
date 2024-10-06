@@ -146,8 +146,8 @@ async def quality_inspection(user_id: int = Form(...),
     book = dao.get_book(user_id, user_book_id)
     
     dao.insert_user_book_detail(user_book_id, count_ripped, count_wornout, 
-                                "https://d16os79fbmszq4.cloudfront.net/" + uploaded_files_info[0]["filename"],
                                 "https://d16os79fbmszq4.cloudfront.net/" + uploaded_files_info[1]["filename"],
+                                "https://d16os79fbmszq4.cloudfront.net/" + uploaded_files_info[0]["filename"],
                                 "https://d16os79fbmszq4.cloudfront.net/" + uploaded_files_info[2]["filename"],
                                 "https://d16os79fbmszq4.cloudfront.net/" + uploaded_files_info[3]["filename"],
                                 book["price_standard"])

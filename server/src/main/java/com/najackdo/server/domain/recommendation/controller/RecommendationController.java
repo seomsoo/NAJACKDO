@@ -28,7 +28,6 @@ import lombok.RequiredArgsConstructor;
 public class RecommendationController {
 
 	private final RecommendationService recommendationService;
-	private final VisitMongoRepository visitMongoRepository;
 
 	@GetMapping("/{bookId}")
 	@Operation(summary = "책을 기반으로 비슷한 책 추천", description = "빈리스트 반환 시 추천 데이터가 부족")
