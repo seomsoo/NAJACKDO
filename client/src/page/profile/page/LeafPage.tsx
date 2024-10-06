@@ -4,6 +4,8 @@ import History from "../components/History";
 import { useQuery } from "@tanstack/react-query";
 import { getCashLog } from "api/cashlogApi";
 import { useLocation, useNavigate } from "react-router-dom";
+import Loading from "components/common/Loading";
+import Error from "components/common/Error";
 
 const LeafPage = () => {
   const navigate = useNavigate();
@@ -29,8 +31,8 @@ const LeafPage = () => {
   console.log("cashlogData", cashlogData);
 
   let year = "";
-  if (isLoading) return <div>로딩 중...</div>;
-  if (isError) return <div>오류가 발생했습니다.</div>;
+  if (isLoading) return <Loading />;
+  if (isError) return <Error />;
 
   return (
     <div className="mx-[25px] mt-6">

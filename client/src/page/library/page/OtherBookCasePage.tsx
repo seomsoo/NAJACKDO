@@ -11,6 +11,8 @@ import { IoIosArrowBack } from "react-icons/io";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useNavigate, useParams } from "react-router-dom";
 import OtherBookGrid from "../components/OtherBookGrid";
+import Error from 'components/common/Error';
+
 
 const OtherBookCasePage = () => {
   const navigate = useNavigate();
@@ -72,7 +74,7 @@ const OtherBookCasePage = () => {
   }
 
   if (isBookcaseError) {
-    return <div>에러가 발생했습니다.</div>;
+    return <Error />
   }
 
   const handleProfileClick = () => {

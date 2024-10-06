@@ -7,6 +7,7 @@ import MannerTree from "page/profile/components/MannerTree";
 import MyLeaf from "page/profile/components/MyLeaf";
 import { useEffect } from "react";
 import UserInfo from "../components/UserInfo";
+import Error from "components/common/Error";
 
 const ProfilePage = () => {
   const {
@@ -21,7 +22,7 @@ const ProfilePage = () => {
   if (isLoading) {
     return <Loading />;
   }
-  if (isError) return <div>오류가 발생했습니다.</div>;
+  if (isError) return <Error />;
 
   if (profileInfo) {
     console.log("유저 정보", profileInfo);

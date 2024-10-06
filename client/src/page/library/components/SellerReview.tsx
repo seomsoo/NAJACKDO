@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { getOtherProfile } from 'api/profileApi';
+import Error from 'components/common/Error';
 import Loading from 'components/common/Loading';
 import { TbMessage } from 'react-icons/tb';
 
@@ -22,7 +23,7 @@ const SellerReview = ({ nickname }: SellerReviewProps) => {
   }
 
   if (isOtherProfileError) {
-    return <div>오류가 발생했습니다.</div>;
+    return <Error />;
   }
 
   const hasReview =

@@ -99,7 +99,7 @@ const AICheckPage = () => {
           onClick={() =>
             navigate(`/ai-check/upload`, { state: { userId, userBookId } })
           } // userId, userBookId를 함께 넘김
-          className="text-center bg-sub7 w-full  mt-10 rounded-xl text-white font-bold py-3"
+          className="text-center bg-sub7 w-full  mt-4 rounded-xl text-white font-bold py-3"
         >
           AI 인증 하러 가기
         </button>

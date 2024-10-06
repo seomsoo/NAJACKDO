@@ -3,6 +3,7 @@ import { getSearch } from "api/searchApi";
 import { IPaging } from "atoms/Base.type";
 import { ISearch } from "atoms/Search.type";
 import ClipLoading from "components/common/ClipLoading";
+import Error from "components/common/Error";
 import SearchResultBook from "page/search/components/SearchResultBook";
 import { useCallback, useEffect, useRef } from "react";
 
@@ -71,7 +72,7 @@ const SearchResult = ({ keyword }: SearchResultProps) => {
   }
 
   if (isError) {
-    return <div>에러 페이지</div>;
+    return <Error />;
   }
 
   return (

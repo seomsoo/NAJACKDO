@@ -39,7 +39,7 @@ const GradePage = () => {
     gradeLevel = 'Lv.3 나작가지';
   } else if (mannerScore >= 20) {
     gradeImage = '/images/mannertree/새싹.png';
-    gradeLevel = 'Lv.1 나작씨앗';
+    gradeLevel = 'Lv.2 나작새싹';
   }
 
 

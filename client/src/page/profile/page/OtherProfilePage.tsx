@@ -3,6 +3,7 @@ import { getOtherBookCase } from "api/bookcaseApi";
 import { getOtherProfile, getUserInfo } from "api/profileApi";
 import { IBookCase } from "atoms/BookCase.type";
 import { IProfile } from "atoms/Profile.type";
+import Error from "components/common/Error";
 import Loading from "components/common/Loading";
 import BookcaseContainer from "page/library/components/BookcaseContainer";
 import MannerTree from "page/profile/components/MannerTree";
@@ -49,7 +50,7 @@ const OtherProfilePage = () => {
   }
 
   if (isUserInfoError || isOtherProfileError || isBookcaseError) {
-    return <div>오류가 발생했습니다.</div>;
+    return <Error />;
   }
 
   // 로그인된 유저와 프로필의 유저가 동일하면 나의 프로필로 리다이렉트
