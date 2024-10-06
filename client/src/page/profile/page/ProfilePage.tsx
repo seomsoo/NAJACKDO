@@ -26,14 +26,7 @@ const ProfilePage = () => {
     console.log('유저 정보', profileInfo);
   }
 
-  const goodReviewCount = profileInfo?.goodReviewInfo.reduce(
-    (sum, review) => sum + review.count,
-    0
-  );
-  const badReviewCount = profileInfo?.badReviewInfo.reduce(
-    (sum, review) => sum + review.count,
-    0
-  );
+
 
   return (
     <div className="mx-6 my-4">
@@ -49,8 +42,8 @@ const ProfilePage = () => {
       <MannerTree
         nickname={profileInfo.nickname}
         mannerScore={profileInfo.mannerScore}
-        goodReviewCount={goodReviewCount}
-        badReviewCount={badReviewCount}
+        goodReviewInfo={profileInfo.goodReviewInfo}
+        badReviewInfo={profileInfo.badReviewInfo}
       />
 
       {/* 나의 책잎 */}

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getOtherProfile } from 'api/profileApi';
 import { IoIosArrowBack } from 'react-icons/io';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Review from '../components/Review';
 import Loading from 'components/common/Loading';
 
@@ -11,47 +11,33 @@ const GradePage = () => {
   const goBack = () => {
     navigate(-1);
   };
+  const location = useLocation();
+  const { mannerScore, goodReviewInfo, badReviewInfo  } = location.state || {};
 
 
-  const {
-    data: profileInfo,
-    isLoading: isProfileLoading,
-    isError: isProfileError,
-  } = useQuery({
-    queryKey: ['profile', nickname],
-    queryFn: () => getOtherProfile(nickname || ''),
-    enabled: !!nickname,
-  });
 
-  if (isProfileLoading) {
-    return <Loading />;
-  }
-
-  if (isProfileError) {
-    return <div>오류가 발생했습니다.</div>;
-  }
 
 
   const hasReview =
-  profileInfo?.goodReviewInfo.length > 0 ||
-  profileInfo?.badReviewInfo.length > 0;
+    goodReviewInfo.length > 0 ||
+    badReviewInfo.length > 0;
 
-  const hasGoodReview = profileInfo?.goodReviewInfo.length > 0;
-  const hasBadReview = profileInfo?.badReviewInfo.length > 0;
+  const hasGoodReview = goodReviewInfo.length > 0;
+  const hasBadReview = badReviewInfo.length > 0;
 
 
   let gradeImage = '/images/mannertree/씨앗.png';
   let gradeLevel = 'Lv.1 나작씨앗';
-  if (profileInfo.mannerScore >= 80) {
+  if (mannerScore >= 80) {
     gradeImage = '/images/mannertree/숲.png';
     gradeLevel = 'Lv.5 나작숲';
-  } else if (profileInfo.mannerScore >= 60) {
+  } else if (mannerScore >= 60) {
     gradeImage = '/images/mannertree/나무.png';
     gradeLevel = 'Lv.4 나작나무';
-  } else if (profileInfo.mannerScore >= 40) {
+  } else if (mannerScore >= 40) {
     gradeImage = '/images/mannertree/가지.png';
     gradeLevel = 'Lv.3 나작가지';
-  } else if (profileInfo.mannerScore >= 20) {
+  } else if (mannerScore >= 20) {
     gradeImage = '/images/mannertree/새싹.png';
     gradeLevel = 'Lv.1 나작씨앗';
   }
@@ -64,10 +50,10 @@ const GradePage = () => {
       </button>
       <div className="flex text-xl  items-center font-bold justify-between">
         <div className="flex flex-row justify-start my-5">
-          <p>{profileInfo.nickname}님의&nbsp;</p>
+          <p>{nickname}님의&nbsp;</p>
           <p className=" font-semibold text-sub8">신뢰 나무</p>
         </div>
-        <span className=" text-[#508d1e]">{profileInfo.mannerScore} 점</span>
+        <span className=" text-[#508d1e]">{mannerScore} 점</span>
       </div>
 
       {/* 신뢰 나무 */}
@@ -84,7 +70,7 @@ const GradePage = () => {
         <div className="w-full p-3 rounded-lg bg-sub8/20">
           <p className="text-[15px] font-medium ">받은 매너 칭찬</p>
           {hasGoodReview ? (
-            profileInfo?.goodReviewInfo.map((review, index) => {
+            goodReviewInfo.map((review, index) => {
               return (
               <Review key={index} count={review.count} comment={review.content} />
               );
@@ -97,7 +83,7 @@ const GradePage = () => {
         <div className="w-full p-3 rounded-lg bg-sub4/20">
           <p className="text-[15px] font-medium ">받은 비매너</p>
           {hasBadReview ? (
-            profileInfo?.badReviewInfo.map((review, index) => {
+            badReviewInfo.map((review, index) => {
               return (
               <Review key={index} count={review.count} comment={review.content} />
               );
