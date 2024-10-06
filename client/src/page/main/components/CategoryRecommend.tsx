@@ -1,12 +1,38 @@
-import { useState } from "react";
+import { queryOptions, useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { getRecommBooksWithGenre } from "api/bookApi";
+import ClipLoading from "components/common/ClipLoading";
+import { number } from "prop-types";
+import { useEffect, useState } from "react";
+import { useUserStore } from "store/useUserStore";
 
 const CategoryRecommend = () => {
+  const userId = useUserStore().userId;
+
   const [selectedCategory, setSelectedCategory] = useState<string>("어린이");
 
-  const select =
-    "bg-sub2 border-2 border-sub2 text-white px-2 py-0.5 rounded-lg mx-2 my-3";
-  const notSelect =
-    "text-sub2 border-[1px] border-sub2 px-2  py-0.5 rounded-lg mx-2 my-3";
+  // const { data: recommendBooksData, refetch } = useSuspenseQuery({
+  //   queryKey: ["recommendBooks", selectedCategory],
+  //   queryFn: () => getRecommBooksWithGenre(userId, selectedCategory),
+  // });
+
+  // useEffect(() => {
+  //   if (userId) {
+  //     refetch();
+  //   }
+  // }, [selectedCategory, userId]);
+
+  const { data: recommendBooksData, isLoading } = useQuery({
+    queryKey: ["recommendBooks", selectedCategory, userId],
+    queryFn: () => getRecommBooksWithGenre(userId, selectedCategory),
+    enabled: !!userId,
+  });
+
+  const select = "bg-sub2 border-2 border-sub2 text-white px-2 py-0.5 rounded-lg mx-2 my-3";
+  const notSelect = "text-sub2 border-[1px] border-sub2 px-2  py-0.5 rounded-lg mx-2 my-3";
+
+  const recommendedItemsWithScores = recommendBooksData?.recommended_items_with_scores;
+
+  console.log("recommendedItemsWithScores : ", recommendedItemsWithScores);
 
   const categories = [
     "어린이",
@@ -17,14 +43,16 @@ const CategoryRecommend = () => {
     "역사",
     "에세이",
     "자기계발",
-    "여행"
+    "여행",
   ];
+
+  if (isLoading) {
+    return <ClipLoading />;
+  }
 
   return (
     <div>
-      <div
-        className="flex overflow-x-auto whitespace-nowrap mt-3 scrollbar-hide"
-      >
+      <div className="flex overflow-x-auto whitespace-nowrap mt-3 scrollbar-hide">
         {categories.map((category, index) => {
           return (
             <div
@@ -44,21 +72,11 @@ const CategoryRecommend = () => {
         </span>
         추천도서는?
       </p>
-      <div
-        className="flex overflow-x-auto whitespace-nowrap scrollbar-hide"
-      >
+      <div className="flex overflow-x-auto whitespace-nowrap scrollbar-hide">
         {Array(10)
           .fill(null)
           .map((_, index) => {
-            return (
-              <img
-                src="ssafy.png"
-                alt=""
-                width={150}
-                className="mx-1 mt-5"
-                key={index}
-              />
-            );
+            return <img src="ssafy.png" alt="" width={150} className="mx-1 mt-5" key={index} />;
           })}
       </div>
     </div>
