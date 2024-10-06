@@ -4,9 +4,10 @@ import { ILocationRange } from 'atoms/Location.type';
 import Loading from 'components/common/Loading';
 import { RangeSlider } from 'components/ui/rangeslider';
 import { useEffect, useState } from 'react';
-import { set } from 'react-hook-form';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useLocation, useNavigate } from 'react-router-dom';
+import ConfirmModal from "components/common/ConfirmModal";
+
 
 declare global {
   interface Window {
@@ -22,6 +23,8 @@ const RangeSetting = ({ selectedLocation }) => {
   const [mapLoaded, setMapLoaded] = useState(false);
   const [range, setRange] = useState(0);
   const [ polygonPath, setPolygonPath ] = useState([]);
+  const [open, setOpen] = useState(false);
+
 
   const {
     data: locationRangeData,
@@ -107,8 +110,7 @@ const RangeSetting = ({ selectedLocation }) => {
     mutationFn: postMyLocation,
 
     onSuccess: () => {
-      alert('모달로 만들기');
-      navigate('/location');
+      setOpen(true);
     },
   });
 
@@ -170,6 +172,14 @@ const RangeSetting = ({ selectedLocation }) => {
           </span>
           으로 지역 설정
         </button>
+      </div>
+      <div onClick={() => navigate('/location')}>
+        <ConfirmModal
+          content="지역 설정이 완료되었습니다."
+          open={open}
+          setOpen={setOpen}
+          urlPath="/location"
+        />
       </div>
     </div>
   );
