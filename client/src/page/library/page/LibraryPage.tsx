@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getInterestbook } from "api/bookApi";
 import { getMyBookCase } from "api/bookcaseApi";
+import Error from "components/common/Error";
 import Loading from "components/common/Loading";
 import LibraryHeader from "page/library/components/LibraryHeader";
 import { SlArrowRight } from "react-icons/sl";
@@ -38,12 +39,12 @@ const LibraryPage = () => {
     queryFn: getInterestbook,
   });
 
-  // 로딩 상태 처리
+
   if (isInterestBooksLoading || isMyBookCaseLoading) return <Loading />;
 
-  // 에러 상태 처리
+
   if (isInterestBooksError || isMyBookCaseError)
-    return <div>오류가 발생했습니다.</div>;
+    return <Error />
 
   const myBookCaseImages =
     myBookCase?.displayBooks.slice(0, 3).map((book) => book.cover) || [];

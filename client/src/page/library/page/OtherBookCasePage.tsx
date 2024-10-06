@@ -15,6 +15,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import OtherBookGrid from '../components/OtherBookGrid';
 import Loading from 'components/common/Loading';
 import BaseProfile from 'components/common/BaseProfile';
+import Error from 'components/common/Error';
 
 const OtherBookCasePage = () => {
 
@@ -77,7 +78,7 @@ const OtherBookCasePage = () => {
   }
 
   if (isBookcaseError) {
-    return <div>에러가 발생했습니다.</div>;
+    return <Error />
   }
 
   const handleProfileClick = () => {

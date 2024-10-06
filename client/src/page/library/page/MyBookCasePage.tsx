@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import MyBookGrid from '../components/MyBookGrid';
 import Loading from 'components/common/Loading';
 import BaseProfile from 'components/common/BaseProfile';
+import Error from 'components/common/Error';
 
 const MyBookCasePage = () => {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ const MyBookCasePage = () => {
   }
 
   if (isBookcaseError) {
-    return <div>에러가 발생했습니다.</div>;
+    return <Error />
   }
 
   // 책 데이터가 없으면 메시지 표시

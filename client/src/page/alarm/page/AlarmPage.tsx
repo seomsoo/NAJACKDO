@@ -1,5 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getAlarm } from "api/alarmApi";
+import Error from "components/common/Error";
 import Loading from "components/common/Loading";
 import Alarm from "page/alarm/components/Alarm";
 import { useCallback, useEffect, useRef } from "react";
@@ -63,7 +64,7 @@ const AlarmPage = () => {
   }
 
   if (isAlarmError) {
-    return <div>Error</div>;
+    return <Error />;
   }
 
   return (

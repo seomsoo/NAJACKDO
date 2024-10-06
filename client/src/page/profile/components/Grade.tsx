@@ -8,12 +8,12 @@ interface GradeProps {
 const Grade = ({ degree, color }: GradeProps) => {
   return (
     <div className='relative w-[95%] mx-auto'>
-      <div
+      {/* <div
         className='text-nowrap text-xs  font-normal mb-2 '
         style={{ marginLeft: `${3 * degree - 8}px`, color: color }}
       >
         {degree}점
-      </div>
+      </div> */}
 
       <div className='w-full h-[6px] bg-white rounded-[10px] relative'>
         <div

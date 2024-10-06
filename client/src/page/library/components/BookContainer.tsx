@@ -53,6 +53,9 @@ const BookContainer = ({
         onClick={handleBookClick}
         className="row-span-2 w-24 cursor-pointer"
         src={cover}
+        style={{
+          boxShadow: '0 8px 8px rgba(0, 0, 0, 0.1), 0 8px 20px rgba(0, 0, 0, 0.1)',
+        }}
         alt="BookContainer"
       />
       <div className="overflow-hidden ml-2 flex flex-col gap-1">
