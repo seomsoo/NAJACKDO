@@ -152,12 +152,12 @@ const OtherBookGrid = ({
       {/* 선택된 책이 있을 때만 모달 표시 */}
       {isAnyChecked && (
         <aside className="fixed bottom-20 w-full max-w-[430px] text-white flex text-lg justify-around rounded-t-xl items-center bg-sub7">
-          <button className="px-12 p-8" onClick={handleAddToCart}>
-            담기
+          <button className="px-12 p-8" onClick={handleCancel}>
+            취소
           </button>
           <span className="mr-2">|</span>
-          <button className="p-8 mr-4" onClick={handleCancel}>
-            취소
+          <button className="p-8 mr-4" onClick={handleAddToCart}>
+            장바구니 추가
           </button>
         </aside>
       )}
