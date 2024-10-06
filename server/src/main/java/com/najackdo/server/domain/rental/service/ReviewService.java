@@ -77,7 +77,7 @@ public class ReviewService {
 		}
 		reviewee.updateMannerScore(calMannerScore(positive, negative));
 		userRepository.save(reviewee);
-		
+
 		rentalCacheRepository.saveRentalReview(rentalId, user.getId(), reviewee.getId());
 		List<RentalReview> byRentalId = rentalReviewRepository.findByRentalId(rental.getId());
 
