@@ -51,8 +51,8 @@ const ProfilePage = () => {
       <MannerTree
         nickname={profileInfo.nickname}
         mannerScore={profileInfo.mannerScore}
-        goodReviewCount={goodReviewCount}
-        badReviewCount={badReviewCount}
+        goodReviewInfo={profileInfo.goodReviewInfo}
+        badReviewInfo={profileInfo.badReviewInfo}
       />
 
       {/* 나의 책잎 */}
