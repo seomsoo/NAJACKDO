@@ -18,6 +18,7 @@ import com.najackdo.server.domain.rental.repository.RentalRepository;
 import com.najackdo.server.domain.rental.repository.RentalReviewRepository;
 import com.najackdo.server.domain.rental.repository.ReviewItemsRepository;
 import com.najackdo.server.domain.user.entity.User;
+import com.najackdo.server.domain.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,7 @@ public class ReviewService {
 	private final ReviewItemsRepository reviewItemsRepository;
 	private final ChatRoomRepository chatRoomRepository;
 	private final RentalCacheRepository rentalCacheRepository;
+	private final UserRepository userRepository;
 
 	// FIXME : 리뷰 종류에 따라서 사용자 매너 점수 업데이트 로직 필요
 	@Transactional
@@ -60,8 +62,23 @@ public class ReviewService {
 			})
 			.forEach(rentalReviewRepository::save);
 
-		rentalCacheRepository.saveRentalReview(rentalId, user.getId(), reviewee.getId());
 
+		// 매너 점수 갱신
+		List<RentalReview> reviews = rentalReviewRepository.findByUserId(reviewee.getId());
+		int positive = 0;
+		int negative = 0;
+
+		for (RentalReview review : reviews) {
+			if (review.getReviewItems().isPositive()) {
+				positive++;
+			} else {
+				negative++;
+			}
+		}
+		reviewee.updateMannerScore(calMannerScore(positive, negative));
+		userRepository.save(reviewee);
+		
+		rentalCacheRepository.saveRentalReview(rentalId, user.getId(), reviewee.getId());
 		List<RentalReview> byRentalId = rentalReviewRepository.findByRentalId(rental.getId());
 
 		boolean isSend = false;
@@ -82,4 +99,14 @@ public class ReviewService {
 
 		return SuccessResponse.empty();
 	}
+
+
+	public static int calMannerScore(int positive, int negative) {
+		double alpha = 0.4;  // 평가 수에 대한 가중치를 조정하는 상수
+		int totalReviews = positive + negative;
+		return totalReviews == 0 ? 50 :
+			(int)	((100 * positive / (double) totalReviews) *
+				(1 - Math.exp(-alpha * totalReviews)));
+	}
+
 }

@@ -170,4 +170,7 @@ public class User extends BaseEntity {
 		this.fcmToken = Token;
 	}
 
+	public void updateMannerScore(int mannerScore) {
+		this.mannerScore = mannerScore;
+	}
 }
