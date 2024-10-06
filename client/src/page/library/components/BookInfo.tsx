@@ -118,7 +118,7 @@ const BookInfo = ({ bookId, rental }: BookInfoProps) => {
           onClick={() => navigate(-1)}
           className="cursor-pointer absolute left-0 top-0 z-10 p-4"
         >
-          <IoChevronBack size={25} color="#FFFFFF" />
+          <IoChevronBack size={25} />
         </div>
         <div className="absolute inset-0 flex items-center justify-center p-4 h-80">
           <img
@@ -126,6 +126,9 @@ const BookInfo = ({ bookId, rental }: BookInfoProps) => {
             alt="사진 커버"
             width={180}
             className="z-20"
+            style={{
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1)',
+            }}
           />
         </div>
       </div>
@@ -165,9 +168,9 @@ const BookInfo = ({ bookId, rental }: BookInfoProps) => {
         <CategoryTag category={bookData.genre} />
         <p
           dangerouslySetInnerHTML={{ __html: bookData.description }}
-          className="my-8"
+          className="my-6"
         ></p>
-        <p className="font-bold">중고가 : {bookData.priceStandard}</p>
+        <p className="font-extrabold text-lg text-right">중고가 : {bookData.priceStandard.toLocaleString()}원</p>
       </div>
     </div>
   );

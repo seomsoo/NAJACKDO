@@ -14,14 +14,14 @@ const DetailRecommendBook = ({ bookId }: DetailRecommendBookProps) => {
     queryKey: ["recommend", bookId],
     queryFn: () => getRecommendbook(bookId),
   });
-  console.log("recommendData", recommendData);
+  // console.log("recommendData", recommendData);
 
   const handleBookClick = (userBookId: number) => {
     navigate(`/book/${userBookId}`);
   };
 
   return (
-    <div className="grid grid-cols-4 gap-3">
+    <div className="grid mt-4 grid-cols-4 gap-3">
       {recommendData ? (
         recommendData.map((book, index) => {
           return (
@@ -32,6 +32,9 @@ const DetailRecommendBook = ({ bookId }: DetailRecommendBookProps) => {
               width={80}
               className="rounded-e-md"
               onClick={() => handleBookClick(book.bookId)}
+              style={{
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1)',
+              }}
             />
           );
         })
