@@ -66,6 +66,14 @@ const SearchResult = ({ keyword }: SearchResultProps) => {
 
   const totalElements = searchData?.pages?.[0]?.totalElements ?? 0;
 
+  if (isLoading) {
+    return <ClipLoading />;
+  }
+
+  if (isError) {
+    return <div>에러 페이지</div>;
+  }
+
   return (
     <div>
       <div className="ml-1 mt-4">
