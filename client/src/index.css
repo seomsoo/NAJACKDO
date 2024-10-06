@@ -64,7 +64,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-[#F8F6F3] pretendard touch-none;
+    @apply bg-[#F8F6F3] pretendard;
   }
   html {
     padding-bottom: 0px !important;
