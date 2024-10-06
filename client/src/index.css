@@ -65,10 +65,10 @@
   }
   body {
     @apply bg-[#F8F6F3] pretendard;
+    touch-action: none;
   }
   html {
     padding-bottom: 0px !important;
-    touch-action: none;
   }
 }
 
