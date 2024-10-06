@@ -109,7 +109,7 @@ const ChattingBox = ({
       <div
         className="flex-grow overflow-y-auto py-4 scrollbar-hide"
         style={{
-          height: "calc(100vh - 242px)",
+          height: "calc(100vh - 377px)",
         }}
       >
         <div className="space-y-4">
@@ -147,7 +147,7 @@ const ChattingBox = ({
         <div ref={messagesEndRef} />
       </div>
       <form onSubmit={handleSendMessage}>
-        <div className="flex flex-row items-center absolute bottom-[100px] w-[90%]">
+        <div className="flex flex-row items-center my-4">
           <Input
             placeholder="메시지를 입력해주세요."
             className="bg-[#EAE7E3] border-none"

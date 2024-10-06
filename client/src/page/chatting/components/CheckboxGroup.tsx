@@ -66,14 +66,18 @@ function CheckboxGroup({
       </div>
 
       {checkboxOptions.map((option) => (
-        <div key={option.id} className="flex items-center gap-2">
-          <input
+        <div
+          key={option.id}
+          className="flex items-center gap-2"
+          onClick={() => onCheckboxChange(option.id)}
+        >
+          {/* <input
             type="checkbox"
             id={option.id}
             className="hidden peer"
             checked={checkedItems[option.id]}
             onChange={() => onCheckboxChange(option.id)}
-          />
+          /> */}
           <label
             htmlFor={option.id}
             className={`flex items-center justify-center w-6 h-6 border-2 rounded-lg cursor-pointer ${

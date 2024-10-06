@@ -1,5 +1,5 @@
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { getAlarm, getAlarmReadSucess } from "api/alarmApi";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { getAlarm } from "api/alarmApi";
 import Loading from "components/common/Loading";
 import Alarm from "page/alarm/components/Alarm";
 import { useCallback, useEffect, useRef } from "react";
@@ -33,20 +33,6 @@ const AlarmPage = () => {
   });
 
   const alarmArray = alarmData?.pages?.flatMap((page) => page.content) || [];
-
-  // 알람 리스트 읽기 성공
-  const {
-    data: success,
-    isLoading: isUserLoading,
-    isError: isUserError,
-  } = useQuery({
-    queryKey: ["success"],
-    queryFn: getAlarmReadSucess,
-    enabled: alarmArray.length > 0 && !isAlarmError,
-  });
-  console.log("AlarmReadSucess", alarmArray.length > 0 && !isAlarmError);
-  console.log("length", alarmArray.length);
-  console.log("isAlarmError", isAlarmError);
 
   const handleObserver = useCallback(
     (entries) => {
