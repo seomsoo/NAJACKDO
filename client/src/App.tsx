@@ -10,13 +10,7 @@ import ProfileRoute from "components/routes/ProfileRoute";
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import { useEffect, useState } from "react";
-import {
-  Route,
-  Routes,
-  useLocation,
-  useMatch,
-  useNavigate,
-} from "react-router-dom";
+import { Route, Routes, useLocation, useMatch, useNavigate } from "react-router-dom";
 import { useAuthStore } from "store/useAuthStore";
 import { useValidStore } from "store/useValidStore";
 
@@ -82,8 +76,7 @@ function App() {
 
   const [isRequested, setIsRequested] = useState(false);
   const { accessToken } = useAuthStore.getState();
-  const { isSurvey, isLocation, setIsSurvey, setIsLocation } =
-    useValidStore.getState();
+  const { isSurvey, isLocation, setIsSurvey, setIsLocation } = useValidStore.getState();
 
   useEffect(() => {
     if (isRequested) return;
@@ -155,18 +148,16 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="h-full pb-[86px] relative">
-        {!isDetailPage &&
-          !isRentalPage &&
-          !hideHeaderPaths.includes(currentPath) && <Header />}
+        {!isDetailPage && !isRentalPage && !hideHeaderPaths.includes(currentPath) && <Header />}
         <Routes>
           <Route path="/*" element={<MainRoute />} />
           <Route path="/profile/*" element={<ProfileRoute />} />
           <Route path="/library/*" element={<LibraryRoute />} />
           <Route path="/404" element={<NotFoundPage />} />
         </Routes>
-        {!isRentalPage &&
-          !shouldHideHeaderFooter &&
-          !hideFooterPaths.includes(currentPath) && <Footer />}
+        {!isRentalPage && !shouldHideHeaderFooter && !hideFooterPaths.includes(currentPath) && (
+          <Footer />
+        )}
       </div>
     </QueryClientProvider>
   );
