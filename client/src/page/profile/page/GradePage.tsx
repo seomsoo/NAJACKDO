@@ -13,84 +13,21 @@ const GradePage = () => {
   };
 
 
-  /*
-   const {
-    data: profileInfo,
-    isLoading: isOtherProfileLoading,
-    isError: isOtherProfileError,
-  } = useQuery({
-    queryKey: ['profile', nickname],
-    queryFn: () => getOtherProfile(nickname),
-  });
-
-  if (isOtherProfileLoading) {
-    return <Loading />;
-  }
-
-  if (isOtherProfileError) {
-    return <div>오류가 발생했습니다.</div>;
-  }
-
-  const hasReview =
-  profileInfo?.goodReviewInfo.length > 0 ||
-  profileInfo?.badReviewInfo.length > 0;
-  const hasGoodReview = profileInfo?.goodReviewInfo.length > 0;
-  const hasBadReview = profileInfo?.badReviewInfo.length > 0;
-
-
-
-  return (
-    <div>
-      <p className="font-bold mt-10 mb-3">받은 판매자 리뷰</p>
-      {hasReview ? null : <p>리뷰가 없습니다.</p>}
-      <div>
-        {hasGoodReview ? (
-          profileInfo?.goodReviewInfo.map((review, index) => {
-            return (
-              <div
-                className="bg-[green]/10 flex flex-row items-center rounded-lg mx-1 my-3 p-2"
-                key={index}
-              >
-                <TbMessage size={20} className="mr-2" />
-                {review.content}
-              </div>
-            );
-          })
-        ) : null}
-      </div>
-      <div>
-        {hasBadReview ? (
-          profileInfo?.badReviewInfo.map((review, index) => {
-            return (
-              <div
-                className="bg-[red]/5 flex flex-row items-center rounded-lg mx-1 my-3 p-2"
-                key={index}
-              >
-                <TbMessage size={20} className="mr-2" />
-                {review.content}
-              </div>
-            );
-          })
-        ) : null}
-      </div>
-    </div>
-  );
-  */
   const {
     data: profileInfo,
-    isLoading: isOtherProfileLoading,
-    isError: isOtherProfileError,
+    isLoading: isProfileLoading,
+    isError: isProfileError,
   } = useQuery({
     queryKey: ['profile', nickname],
     queryFn: () => getOtherProfile(nickname || ''),
     enabled: !!nickname,
   });
 
-  if (isOtherProfileLoading) {
+  if (isProfileLoading) {
     return <Loading />;
   }
 
-  if (isOtherProfileError) {
+  if (isProfileError) {
     return <div>오류가 발생했습니다.</div>;
   }
 

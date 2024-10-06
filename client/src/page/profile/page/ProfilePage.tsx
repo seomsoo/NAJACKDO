@@ -30,7 +30,7 @@ const ProfilePage = () => {
     (sum, review) => sum + review.count,
     0
   );
-  const badReviewCount = profileInfo?.goodReviewInfo.reduce(
+  const badReviewCount = profileInfo?.badReviewInfo.reduce(
     (sum, review) => sum + review.count,
     0
   );
