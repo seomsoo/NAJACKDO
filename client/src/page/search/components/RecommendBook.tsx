@@ -1,16 +1,36 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { getRecommBooks } from "api/bookApi";
+import {  IRecommendBooks } from "atoms/Book.type";
+import { useNavigate } from "react-router-dom";
+import { useUserStore } from "store/useUserStore";
+
 const RecommendBook = () => {
-  const book = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+ const userId = useUserStore().userId;
+ const navigate = useNavigate()
+
+ console.log(userId);
+
+ const { data: books } = useSuspenseQuery<IRecommendBooks>({
+  queryKey: ["recommBooks"],
+  queryFn: ()=> getRecommBooks(
+    userId
+  ),
+ });
+
   return (
     <div className="relative">
       <div className="flex overflow-x-auto whitespace-nowrap scrollbar-hide">
-        {book.map((i) => (
+        {books.recommended_items_with_scores.map((book) => (
           <img
-            key={i}
-            src="/pubao.png"
+            key={book.book_id}
+            src={book.cover}
             alt="푸바오"
             width={80}
             height={100}
             className="my-2 mx-1"
+            onClick = {() => navigate(`/book/${book.book_id}`)
+            } 
           />
         ))}
       </div>

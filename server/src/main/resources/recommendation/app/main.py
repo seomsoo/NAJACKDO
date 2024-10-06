@@ -212,7 +212,7 @@ async def quality_inspection(imageFile: UploadFile = File(...)):
         title_list.append(save_title)
     return {"titles": title_list}
 
-@app.get("/item/userrecommand/{userId}")
+@app.get("/python/item/userrecommand/{userId}")
 async def recomm_books(userId : int):
     data = dao.get_user_books_data()
 

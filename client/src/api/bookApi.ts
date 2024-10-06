@@ -2,6 +2,7 @@ import { BaseResponse } from "atoms/Base.type";
 import {
   IBookDetail,
   INearAvailableBook,
+  IRecommendBooks,
   IRentalCost,
   ITimeSpent,
   IUserBookDetail,
@@ -119,6 +120,25 @@ export const postAiCheckBook = async (formData: FormData): Promise<any> => {
     throw error;
   }
 };
+
+
+// 유저에 대한 책 인증 
+export const getRecommBooks = async (userId : number) : Promise<IRecommendBooks> => {
+  try{
+    const { data } = await pythoninstance.get<IRecommendBooks>(
+      `/item/userrecommand/${userId}`
+    )
+    return data
+  } catch (error){
+    console.log(error);
+    throw error;
+  }
+}
+
+
+
+
+
 // isbn으로 도서 등록
 export const postRegisterBook = async (isbn: number): Promise<void> => {
   console.log("post isbn", isbn);

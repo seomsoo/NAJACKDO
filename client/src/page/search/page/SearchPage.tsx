@@ -1,5 +1,6 @@
 import { getAutoSearchText } from "api/searchApi";
 import { IAutoArray } from "atoms/Search.type";
+import ClipLoading from "components/common/ClipLoading";
 import Loading from "components/common/Loading";
 import AutoSearch from "page/search/components/AutoSearch";
 import PopularSearch from "page/search/components/PopularSearch";
@@ -67,9 +68,9 @@ const SearchPage = () => {
       </Suspense>
       <div className="my-6 mx-[25px] absolute bottom-[86px]">
         <span className="font-bold">추천 도서</span>
-        {/* <Suspense fallback={<ClipLoading />}> */}
-        <RecommendBook />
-        {/* </Suspense> */}
+        <Suspense fallback={<ClipLoading />}>
+          <RecommendBook />
+        </Suspense>
       </div>
     </>
   );

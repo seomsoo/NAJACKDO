@@ -1,3 +1,5 @@
+import { number } from "prop-types";
+
 export interface IBookDetail {
   bookId: number;
   title: string;
@@ -53,4 +55,15 @@ export interface INearAvailableBook {
   imagePath: string;
   bookStatus: string;
   oneDayPrice: number;
+}
+
+
+export interface IRecommBook {
+  book_id : number;
+  fitness : number; 
+  cover : string;
+}
+
+export interface IRecommendBooks {
+  recommended_items_with_scores : IRecommBook[];
 }
