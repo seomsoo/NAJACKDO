@@ -58,6 +58,16 @@ const OtherProfilePage = () => {
     return null;
   }
 
+  const goodReviewCount = profileInfo?.goodReviewInfo.reduce(
+    (sum, review) => sum + review.count,
+    0
+  );
+
+  const badReviewCount = profileInfo?.badReviewInfo.reduce(
+    (sum, review) => sum + review.count,
+    0
+  );
+
   return (
     <div className="mx-6 my-4">
       <p className="text-[32px] font-extrabold tracking-wider mb-6">프로필</p>
@@ -68,12 +78,12 @@ const OtherProfilePage = () => {
         userImage={profileInfo.profileImage}
         mannerScore={profileInfo.mannerScore}
       />
-      {/* 신뢰나무 */}
+      {/* 신뢰 나무 */}
       <MannerTree
         nickname={profileInfo.nickname}
         mannerScore={profileInfo.mannerScore}
-        goodReviewCount={profileInfo.goodReviewInfo.length}
-        badReviewCount={profileInfo.badReviewInfo.length}
+        goodReviewCount={goodReviewCount}
+        badReviewCount={badReviewCount}
       />
       {/* 타인 책장 정보 */}
       <BookcaseContainer

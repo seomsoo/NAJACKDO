@@ -1,11 +1,12 @@
-import { getUserInfo } from 'api/profileApi';
-import { IProfile } from 'atoms/Profile.type';
-import LogoutButton from 'page/profile/components/LogoutButton';
-import MannerTree from 'page/profile/components/MannerTree';
-import MyLeaf from 'page/profile/components/MyLeaf';
-import { useQuery } from '@tanstack/react-query';
-import UserInfo from '../components/UserInfo';
-import Loading from 'components/common/Loading';
+import { useQuery } from "@tanstack/react-query";
+import { getUserInfo } from "api/profileApi";
+import { IProfile } from "atoms/Profile.type";
+import Loading from "components/common/Loading";
+import LogoutButton from "page/profile/components/LogoutButton";
+import MannerTree from "page/profile/components/MannerTree";
+import MyLeaf from "page/profile/components/MyLeaf";
+import { useEffect } from "react";
+import UserInfo from "../components/UserInfo";
 
 const ProfilePage = () => {
   const {
@@ -13,7 +14,7 @@ const ProfilePage = () => {
     isLoading,
     isError,
   } = useQuery<IProfile>({
-    queryKey: ['profile'],
+    queryKey: ["profile"],
     queryFn: async () => await getUserInfo(),
   });
 
@@ -23,18 +24,19 @@ const ProfilePage = () => {
   if (isError) return <div>오류가 발생했습니다.</div>;
 
   if (profileInfo) {
-    console.log('유저 정보', profileInfo);
+    console.log("유저 정보", profileInfo);
   }
 
   const goodReviewCount = profileInfo?.goodReviewInfo.reduce(
     (sum, review) => sum + review.count,
     0
   );
-  const badReviewCount = profileInfo?.goodReviewInfo.reduce(
+
+  const badReviewCount = profileInfo?.badReviewInfo.reduce(
     (sum, review) => sum + review.count,
     0
   );
-
+  
   return (
     <div className="mx-6 my-4">
       {/* 유저 정보 */}
@@ -49,8 +51,8 @@ const ProfilePage = () => {
       <MannerTree
         nickname={profileInfo.nickname}
         mannerScore={profileInfo.mannerScore}
-        goodReviewCount={goodReviewCount}
-        badReviewCount={badReviewCount}
+        goodReviewInfo={profileInfo.goodReviewInfo}
+        badReviewInfo={profileInfo.badReviewInfo}
       />
 
       {/* 나의 책잎 */}

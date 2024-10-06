@@ -1,33 +1,95 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { getSearch } from "api/searchApi";
+import { IPaging } from "atoms/Base.type";
 import { ISearch } from "atoms/Search.type";
+import ClipLoading from "components/common/ClipLoading";
 import SearchResultBook from "page/search/components/SearchResultBook";
-import { useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 interface SearchResultProps {
   keyword: string;
 }
 
 const SearchResult = ({ keyword }: SearchResultProps) => {
-  const { data: searchData, refetch } = useSuspenseQuery<ISearch[]>({
-    queryKey: ["search", "result"],
-    queryFn: () => getSearch(keyword),
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+
+  const {
+    data: searchData,
+    isLoading,
+    isError,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    refetch,
+  } = useInfiniteQuery({
+    queryKey: ["search"],
+    queryFn: ({ pageParam = 0 }) => getSearch(keyword, pageParam as number),
+    getNextPageParam: (lastPage, pages) => {
+      if (!lastPage.last) {
+        return pages.length;
+      }
+      return undefined;
+    },
+    initialPageParam: 0,
+    enabled: !!keyword,
   });
 
   useEffect(() => {
-    refetch();
-  }, [keyword])
+    if (keyword) {
+      refetch();
+    }
+  }, [keyword]);
+
+  const handleObserver = useCallback(
+    (entries) => {
+      const target = entries[0];
+      if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    },
+    [fetchNextPage, hasNextPage, isFetchingNextPage]
+  );
+
+  useEffect(() => {
+    const option = {
+      root: null, // viewport as root
+      rootMargin: "20px",
+      threshold: 1.0,
+    };
+    const observer = new IntersectionObserver(handleObserver, option);
+    if (loadMoreRef.current) observer.observe(loadMoreRef.current);
+
+    return () => {
+      if (loadMoreRef.current) observer.unobserve(loadMoreRef.current);
+    };
+  }, [handleObserver]);
+
+  const totalElements = searchData?.pages?.[0]?.totalElements ?? 0;
+
+  if (isLoading) {
+    return <ClipLoading />;
+  }
+
+  if (isError) {
+    return <div>에러 페이지</div>;
+  }
 
   return (
     <div>
       <div className="ml-1 mt-4">
-        <span>총 {searchData.length}개의 검색 결과가 있습니다.</span>
+        <span>총 {totalElements} 개의 검색 결과가 있습니다.</span>
       </div>
-      {/* 검색 결과 */}
-      {searchData.length > 0 &&
-        searchData.map((search, index) => {
-          return <SearchResultBook key={index} search={search} />;
-        })}
+
+      {totalElements > 0 &&
+        searchData.pages.map((page, pageIndex) => (
+          <div key={pageIndex}>
+            {page.content.map((search, index) => (
+              <SearchResultBook key={search.bookId} search={search} />
+            ))}
+          </div>
+        ))}
+
+      <div ref={loadMoreRef}>{isFetchingNextPage && <ClipLoading />}</div>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import instance from "api/clientApi";
-import { BaseResponse } from "atoms/Base.type";
+import { BaseResponse, IPaging } from "atoms/Base.type";
 import { IAutoArray, ISearch } from "atoms/Search.type";
 
 // 인기 검색어 조회
@@ -41,38 +41,34 @@ export const getRecentSearch = async (): Promise<string[]> => {
 };
 
 // 키워드로 검색
-export const getSearch = async (keyword: string): Promise<ISearch[]> => {
+export const getSearch = async (
+  keyword: string,
+  pageParam: number
+): Promise<IPaging<ISearch[]>> => {
   try {
-    console.log("keyword", keyword);
     const {
       data: { success, data },
-    } = await instance.get<BaseResponse<ISearch[]>>(
-      `/search?keyword=${keyword}`
+    } = await instance.get<BaseResponse<IPaging<ISearch[]>>>(
+      `/search?keyword=${keyword}&page=${pageParam}`
     );
 
     if (!success) {
       throw new Error("검색에 실패했습니다.");
     }
 
-    console.log("getSearch");
-
     return data;
   } catch (error) {
-    throw new Error("검색에 실패했습니다.", error);
+    throw new Error("검색에 실패했습니다.");
   }
 };
 
 // 자동완성 검색어 조회
-export const getAutoSearchText = async (
-  keyword: string
-): Promise<IAutoArray> => {
+export const getAutoSearchText = async (keyword: string): Promise<IAutoArray> => {
   console.log("keyword", keyword);
   try {
     const {
       data: { success, data },
-    } = await instance.get<BaseResponse<IAutoArray>>(
-      `/search/auto-complete?keyword=${keyword}`
-    );
+    } = await instance.get<BaseResponse<IAutoArray>>(`/search/auto-complete?keyword=${keyword}`);
 
     if (!success) {
       throw new Error("자동완성 검색어 조회에 실패했습니다.");
