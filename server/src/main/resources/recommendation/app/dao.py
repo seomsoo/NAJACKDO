@@ -7,8 +7,8 @@ connection = psycopg2.connect(
     dbname="najackdo",
     user="najackdo",
     password="najackdo",
-    # host="localhost",
-    host="najackdo-database",
+    host="localhost",
+    # host="najackdo-database",
     port="5432"
 )
 
@@ -158,12 +158,15 @@ def get_user_books_data():
         return None  # 예외 발생 시 None을 반환
     
 def get_user_books_data_by_genre(genre):
+    
     try:
         with connection.cursor(cursor_factory=RealDictCursor) as cursor:
             query = f"""
-            SELECT b.book_id, b.price_standard,b.description, b.genre, b.pub_date
+            SELECT b.book_id, b.price_standard, b.description, b.genre, b.pub_date
             FROM books as b
-            WHERE b.genre = '{genre}';
+            WHERE b.genre = '{genre}'
+            ORDER BY RANDOM()
+            LIMIT 100;
             """
             cursor.execute(query)
             row = cursor.fetchall()

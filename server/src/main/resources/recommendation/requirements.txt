@@ -17,3 +17,4 @@ easyocr
 shapely
 sentence_transformers
 tf_keras
+faiss-cpu
