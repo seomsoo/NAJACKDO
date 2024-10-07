@@ -17,6 +17,8 @@ const ChattingRoomPage = () => {
   const [totalLeaf, setTotalLeaf] = useState<number>(0);
   const [step, setStep] = useState<ChatRentalStep>(ChatRentalStep.READY);
 
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+
   // 웹소켓
   const [client, setClient] = useState<Client | null>(null);
 
@@ -75,33 +77,54 @@ const ChattingRoomPage = () => {
     return () => disconnect();
   }, []);
 
+ useEffect(() => {
+  const handleResize = () => {
+    if (window.innerHeight < 500) {
+      setIsKeyboardOpen(true);
+    } else {
+      setIsKeyboardOpen(false);
+    }
+  };
+
+  window.addEventListener("resize", handleResize);
+  return () => {
+    window.removeEventListener("resize", handleResize);
+  };
+}, []);
+
+  
   return (
-    <Suspense fallback={<Loading />}>
-      <ChattingRoomHeader ownerName={ownerName} customerName={customerName} />
-      <ChatBookInfo
-        client={client}
-        cartId={cartId}
-        roomId={Number(roomId)}
-        ownerId={ownerId}
-        ownerName={ownerName}
-        customerId={customerId}
-        customerName={customerName}
-        totalLeaf={totalLeaf}
-        setTotalLeaf={setTotalLeaf}
-        step={step}
-        setStep={setStep}
-      />
-      <ChattingBox
-        client={client}
-        roomId={Number(roomId)}
-        totalLeaf={totalLeaf}
-        messages={messages}
-        ownerId={ownerId}
-        ownerName={ownerName}
-        customerId={customerId}
-        customerName={customerName}
-      />
-    </Suspense>
+    <div
+      className="relative"
+      style={{ bottom: isKeyboardOpen ? "-86px" : "0px" }}
+    >
+      <Suspense fallback={<Loading />}>
+        <ChattingRoomHeader ownerName={ownerName} customerName={customerName} />
+        <ChatBookInfo
+          client={client}
+          cartId={cartId}
+          roomId={Number(roomId)}
+          ownerId={ownerId}
+          ownerName={ownerName}
+          customerId={customerId}
+          customerName={customerName}
+          totalLeaf={totalLeaf}
+          setTotalLeaf={setTotalLeaf}
+          step={step}
+          setStep={setStep}
+        />
+        <ChattingBox
+          client={client}
+          roomId={Number(roomId)}
+          totalLeaf={totalLeaf}
+          messages={messages}
+          ownerId={ownerId}
+          ownerName={ownerName}
+          customerId={customerId}
+          customerName={customerName}
+        />
+      </Suspense>
+    </div>
   );
 };
 
