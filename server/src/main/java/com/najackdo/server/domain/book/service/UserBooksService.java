@@ -100,7 +100,6 @@ public class UserBooksService {
 
 		List<String> notFoundBooks = new ArrayList<>();
 		List<String> alreadyExistBooks = new ArrayList<>();
-		postBookSpineDetection(create.getFile());
 		List<String> titles = postBookSpineDetection(create.getFile());
 		log.info("titles: {}", titles);
 		for (String title : titles) {
