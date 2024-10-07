@@ -17,6 +17,13 @@ module.exports = {
       },
     },
     extend: {
+      transitionDelay: {
+        '0': '0s',
+        '1': '0.7s',
+        '2': '1.4s',
+        '3': '2.1s',
+        '4': '2.8s',
+      },
       boxShadow: {
         "book-shadow": "0 11px 20px rgba(0, 0, 0, 0.7)", // 부드러운 그림자
       },
@@ -90,6 +97,22 @@ module.exports = {
           "0%": { transform: "translateY(50px)", opacity: "0" },
           "100%": { transform: "translateY(0)", opacity: "1" },
         },
+        slideDown: {
+          "0%": { transform: "translateY(-50px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        shake: {
+          '0%, 100%': { transform: 'translateX(0)' }, // 시작과 끝은 원래 위치
+          '35%': { transform: 'translateX(-5px)' },  // 왼쪽으로 이동
+          '65%': { transform: 'translateX(5px)' },   // 오른쪽으로 이동
+        },
+        swing: {
+          '20%': { transform: 'rotate(15deg)' },
+          '40%': { transform: 'rotate(-10deg)' },
+          '60%': { transform: 'rotate(5deg)' },
+          '80%': { transform: 'rotate(-5deg)' },
+          '100%': { transform: 'rotate(0deg)' },
+        },
         "accordion-down": {
           from: {
             height: "0",
@@ -108,10 +131,16 @@ module.exports = {
         },
       },
       animation: {
+        swing: 'swing 1s ease-in-out ',
+        swing2: 'swing 1.2s ease-in-out ',
+        shake: 'shake 1.5s ease-in-out ', 
         glow: "glow 2s ease-in-out infinite",
-        bounceTwice: "bounceTwice 1.2s ease-in-out",
-        fadeIn: "fadeIn 1.5s ease-in-out",
+        bounceTwice: "bounceTwice 1s ease-in-out",
+        bounceTwice2: "bounceTwice 1.8s ease-in-out",
+        fadeIn: "fadeIn 1s ease-in-out forwards",
+        fadeIn2: "fadeIn 3s ease-in-out forwards",
         slideUp: "slideUp 1.5s ease-in-out",
+        slideDown: "slideDown 1.5s ease-in-out",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
