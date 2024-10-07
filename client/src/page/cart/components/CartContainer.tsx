@@ -43,7 +43,7 @@ const CartContainer = ({
   return (
     <div className="mx-3 mb-5 bg-white/30 shadow rounded-lg p-4">
       <div className="flex flex-row item-center justify-between">
-        <span className="flex font-semibold">
+        <span className="flex font-semibold text-lg mb-2">
           <p className="text-sub8 font-bold">{ownerUsername}</p>
           님의 책장
         </span>
@@ -79,7 +79,7 @@ const CartContainer = ({
       </div>
       <div className="flex justify-center mt-4">
         <button
-          className="w-4/5 bg-sub7 text-[12px] text-white rounded-[12px] p-2 text-center"
+          className="w-full bg-sub7 text-sm font-bold text-white rounded-xl p-2 text-center"
           onClick={handleCreateChatRoom}
         >
           도서 대출 신청

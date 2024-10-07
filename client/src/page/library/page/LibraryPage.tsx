@@ -127,29 +127,29 @@ const LibraryPage = () => {
                 <div className="flex w-[340px] justify-around ml-1 ">
                   <img
                     src="/images/mannertree/씨앗.png"
-                    className="w-4 h-4 mt-[106px]  opacity-0 animate-fadeIn delay-0"
+                    className="w-4 h-4 mt-[106px]  "
                     alt="씨앗"
                   />
 
                   <img
                     src="/images/mannertree/새싹.png"
-                    className="w-12 h-9 opacity-0 mt-[86px] animate-fadeIn delay-1"
+                    className="w-12 h-9 opacity-0 mt-[86px] animate-fadeIn delay-0"
                     alt="새싹"
                   />
 
                   <img
                     src="/images/mannertree/가지.png"
-                    className="w-14 h-14 mt-[66px] opacity-0  animate-fadeIn delay-2"
+                    className="w-14 h-14 mt-[66px] opacity-0  animate-fadeIn delay-1"
                     alt="가지"
                   />
                   <img
                     src="/images/mannertree/나무.png"
-                    className="w-[70px] h-[70px] mt-[52px] opacity-0  animate-fadeIn delay-3"
+                    className="w-[70px] h-[70px] mt-[52px] opacity-0  animate-fadeIn delay-2"
                     alt="나무"
                   />
                   <img
                     src="/images/mannertree/숲.png"
-                    className="w-[85px] h-[85px] mt-[37px] opacity-0   animate-fadeIn delay-4"
+                    className="w-[85px] h-[85px] mt-[37px] opacity-0   animate-fadeIn delay-3"
                     alt="숲"
                   />
                 </div>
