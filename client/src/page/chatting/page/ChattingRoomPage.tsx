@@ -81,7 +81,7 @@ const ChattingRoomPage = () => {
   }, []);
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerHeight < 500) {
+      if (window.innerHeight < 700) {
         setIsKeyboardOpen(true);
       } else {
         setIsKeyboardOpen(false);
