@@ -2,23 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import { getRecommBooksWithGenre } from "api/bookApi";
 import ClipLoading from "components/common/ClipLoading";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useUserStore } from "store/useUserStore";
 
 const CategoryRecommend = () => {
+  const nav = useNavigate();
   const userId = useUserStore().userId;
-
   const [selectedCategory, setSelectedCategory] = useState<string>("어린이");
-
-  // const { data: recommendBooksData, refetch } = useSuspenseQuery({
-  //   queryKey: ["recommendBooks", selectedCategory],
-  //   queryFn: () => getRecommBooksWithGenre(userId, selectedCategory),
-  // });
-
-  // useEffect(() => {
-  //   if (userId) {
-  //     refetch();
-  //   }
-  // }, [selectedCategory, userId]);
 
   const { data: recommendBooksData, isLoading } = useQuery({
     queryKey: ["recommendBooks", selectedCategory, userId],
@@ -26,15 +16,10 @@ const CategoryRecommend = () => {
     enabled: !!userId,
   });
 
-  const select =
-    "bg-sub2 border-2 border-sub2 text-white px-2 py-0.5 rounded-lg mx-2 my-3";
-  const notSelect =
-    "text-sub2 border-[1px] border-sub2 px-2  py-0.5 rounded-lg mx-2 my-3";
+  const selectClass = "bg-sub2 border-2 border-sub2 text-white px-2 py-0.5 rounded-lg mx-2 my-3";
+  const notSelectClass = "text-sub2 border-[1px] border-sub2 px-2 py-0.5 rounded-lg mx-2 my-3";
 
-  const recommendedItemsWithScores =
-    recommendBooksData?.recommended_items_with_scores;
-
-  console.log("recommendedItemsWithScores : ", recommendedItemsWithScores);
+  const recommendedItemsWithScores = recommendBooksData?.recommended_items_with_scores;
 
   const categories = [
     "어린이",
@@ -48,49 +33,44 @@ const CategoryRecommend = () => {
     "여행",
   ];
 
-  // if (isLoading) {
-  //   return <ClipLoading />;
-  // }
-
   return (
     <div>
       <div className="flex overflow-x-auto whitespace-nowrap mt-3 scrollbar-hide">
-        {categories.map((category, index) => {
-          return (
-            <div
-              key={index}
-              className={selectedCategory === category ? select : notSelect}
-              onClick={() => setSelectedCategory(category)}
-            >
-              <span>{category}</span>
-            </div>
-          );
-        })}
+        {categories.map((category) => (
+          <div
+            key={category}
+            className={selectedCategory === category ? selectClass : notSelectClass}
+            onClick={() => setSelectedCategory(category)}
+          >
+            <span>{category}</span>
+          </div>
+        ))}
       </div>
+
       <p className="font-bold text-xl mt-2">
         오늘의
-        <span className="bg-sub2 border-2  border-sub2 font-medium text-white px-3 py-0.5 rounded-full mx-1">
+        <span className="bg-sub2 border-2 border-sub2 font-medium text-white px-3 py-0.5 rounded-full mx-1">
           {selectedCategory}
         </span>
         추천도서는?
       </p>
+
       {isLoading ? (
-        <ClipLoading />
+        <div className="mt-10">
+          <ClipLoading />
+        </div>
       ) : (
         <div className="flex overflow-x-auto whitespace-nowrap scrollbar-hide">
-          {Array(10)
-            .fill(null)
-            .map((_, index) => {
-              return (
-                <img
-                  src="ssafy.png"
-                  alt=""
-                  width={150}
-                  className="mx-1 mt-5"
-                  key={index}
-                />
-              );
-            })}
+          {recommendedItemsWithScores?.map((book) => (
+            <img
+              src={book.cover}
+              alt={book.book_id.toString()} // Providing an alt text for better accessibility
+              width={150}
+              className="mx-1 mt-5"
+              key={book.book_id}
+              onClick={() => nav(`/book/${book.book_id}`)}
+            />
+          ))}
         </div>
       )}
     </div>
