@@ -1,12 +1,12 @@
 package com.najackdo.server.domain.notification.controller;
 
-import java.util.List;
-
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.najackdo.server.core.annotation.CurrentUser;
 import com.najackdo.server.core.response.SuccessResponse;
@@ -34,16 +34,17 @@ public class NotificationController {
 	// 1. 송신됬지만 확인되지 않은 알람 조회
 	@GetMapping("/searchById")
 	public SuccessResponse<Page<NotificationDto.Notification>> searchById(@CurrentUser User user,
-																		  @PageableDefault(size = 10) Pageable pageable) {
+		@PageableDefault(size = 10) Pageable pageable) {
 
 		return SuccessResponse.of(notificationService.searchByUserId(user.getId(), pageable));
 	}
+
 	/**
 	 * 알람들 성공적 조회시 읽음 처리
+	 *
 	 * @return
 	 */
-	//2. 알람 클릭시 읽음 처리 - 보류
-	@GetMapping("/readSucess")
+	@PostMapping("/readSucess")
 	public SuccessResponse<Void> readSucess(@CurrentUser User user) {
 		notificationService.readSuccess();
 		return SuccessResponse.empty();
