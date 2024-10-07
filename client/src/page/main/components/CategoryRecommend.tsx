@@ -56,9 +56,7 @@ const CategoryRecommend = () => {
       </p>
 
       {isLoading ? (
-        <div className="mt-10">
-          <ClipLoading />
-        </div>
+        <ClipLoading className="h-40" />
       ) : (
         <div className="flex overflow-x-auto whitespace-nowrap scrollbar-hide">
           {recommendedItemsWithScores?.map((book) => (

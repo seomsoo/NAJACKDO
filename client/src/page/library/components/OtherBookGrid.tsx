@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { postAddCartItem } from "api/cartApi";
 import { IBookCase } from "atoms/BookCase.type";
+import AlertModal from "components/common/AlertModal";
 import ConfirmModal from "components/common/ConfirmModal";
 import { useState } from "react";
 import { FaCheck } from "react-icons/fa";
@@ -21,6 +22,8 @@ const OtherBookGrid = ({
 }: OtherBookGridProps) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
+  const [content, setContent] = useState<string>("");
+  const [status, setStatus] = useState<string>("");
 
   // 이미지를 3개씩 묶는 함수
   const chunkArray = (
@@ -76,10 +79,14 @@ const OtherBookGrid = ({
       return Promise.all(ownerBookIds.map((id) => postAddCartItem(id)));
     },
     onSuccess: () => {
+      setStatus("confirm");
+      setContent("장바구니에 추가되었습니다.");
       setOpen(true);
     },
     onError: (error) => {
-      console.error("장바구니 추가 실패:", error);
+      setStatus("alert");
+      setContent("이미 장바구니에 담긴 책입니다.");
+      setOpen(true);
     },
   });
 
@@ -161,11 +168,13 @@ const OtherBookGrid = ({
           </button>
         </aside>
       )}
-      {open && (
+      {status === "alert" ? (
+        <AlertModal content={content} open={open} setOpen={setOpen} />
+      ) : (
         <ConfirmModal
+          content={content}
           open={open}
           setOpen={setOpen}
-          content="장바구니 추가가 완료되었습니다. <br /> 장바구니로 이동하시겠습니까?"
           urlPath="/cart"
         />
       )}

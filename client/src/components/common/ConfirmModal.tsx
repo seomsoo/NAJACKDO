@@ -28,17 +28,17 @@ const ConfirmModal = ({
         !open && setOpen(false);
       }}
     >
-      <DialogContent className="bg-najackdo-background rounded-2xl">
+      <DialogContent className="bg-najackdo-background rounded-2xl hakgyo">
         <DialogHeader>
           <DialogTitle />
           <DialogDescription className="h-[200px] flex flex-col items-center justify-center text-black">
             <span
-              className="text-lg my-12"
+              className="text-2xl my-12"
               dangerouslySetInnerHTML={{ __html: content }}
             ></span>
             <div className="space-x-6">
               <button
-                className="border-2 border-sub7 px-10 py-2 rounded-xl hover:bg-[#EBE9E7]"
+                className="border-2 border-sub7 px-10 py-2 rounded-xl hover:bg-[#EBE9E7] text-base"
                 onClick={() => {
                   setOpen(false);
                 }}
@@ -46,7 +46,7 @@ const ConfirmModal = ({
                 닫기
               </button>
               <button
-                className="border-2 border-sub7 px-10 py-2 rounded-xl bg-sub7 hover:bg-[#4F473D] text-white"
+                className="border-2 border-sub7 px-10 py-2 rounded-xl bg-sub7 hover:bg-[#4F473D] text-white text-base"
                 onClick={() => navigate(urlPath)}
               >
                 이동

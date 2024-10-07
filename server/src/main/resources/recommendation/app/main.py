@@ -215,17 +215,21 @@ async def quality_inspection(imageFile: UploadFile = File(...)):
 async def recomm_books(userId : int):
     data = dao.get_user_books_data()
 
+    if not data:
+        print("db 정보 없음")
+        return
+
     items = [
-    [
-        row['user_book_id'],
-        reco_sys.wkb_to_lac(row['location_point']),
-        row['pub_date'],
-        row['genre'],
-        row['used_price'],
-        row['wornout'],
-        np.array(model.encode(row['description']))
-    ]
-        for row in data
+        [
+            row['user_book_id'],
+            reco_sys.wkb_to_lac(row['location_point']),
+            row['pub_date'],
+            row['genre'],
+            row['used_price'],
+            row['wornout'],
+            np.array(model.encode(row['description']))
+        ]
+            for row in data
     ]
     
     today = datetime.now()
@@ -293,6 +297,10 @@ async def recomm_books(userId : int):
 async def recomm_books(userId: int = Query(...), category: str = Query(...)):
     data = dao.get_user_books_data_by_genre(category)
 
+    if not data:
+        print("db 정보 없음")
+        return
+    
     items = [
     [
         row['book_id'],
@@ -353,10 +361,6 @@ async def recomm_books(userId: int = Query(...), category: str = Query(...)):
     # print(recommended_items_with_scores)
     # print(image_links)
     combined_list = [(recommended_items_with_scores[i], image_links[i]) for i in range(len(recommended_items_with_scores))]
-    
-    print("추천 아이템과 유사도 점수:")
-    # for item, score in recommended_items_with_scores:
-    #     print(f"아이템 인덱스: {items[item][:-1]}, 적합도 점수: {score:.2f}")
     
     recommended_items_with_scores = [
     {

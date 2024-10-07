@@ -53,57 +53,7 @@ const LibraryPage = () => {
     <div>
       <LibraryHeader />
       <main className="px-6">
-        <section className="flex flex-col gap-10">
-          <nav>
-            <button onClick={goToMyHistory}>
-              <article className="flex items-center mb-7">
-                <span className="font-bold text-2xl">책 히스토리</span>
-                <SlArrowRight className="ml-2 text-[#807B7B] text-xl" />
-              </article>
-              <article>
-                <div className="flex w-[340px] justify-around ml-1 ">
-                  <img
-                    src="/images/mannertree/씨앗.png"
-                    className="w-4 h-4 mt-[106px]  opacity-0 animate-fadeIn delay-0"
-                    alt="씨앗"
-                  />
-                  <div className="flex flex-col items-center">
-                    <img
-                      src="/images/mannertree/cloud.png"
-                      className="w-20 h-[70px] opacity-0  mb-4 animate-fadeIn2"
-                      alt="구름"
-                    />
-                    <img
-                      src="/images/mannertree/새싹.png"
-                      className="w-12 h-9 opacity-0  animate-fadeIn delay-1"
-                      alt="새싹"
-                    />
-                  </div>
-                  <img
-                    src="/images/mannertree/가지.png"
-                    className="w-14 h-14 mt-[66px] opacity-0  animate-fadeIn delay-2"
-                    alt="가지"
-                  />
-                  <img
-                    src="/images/mannertree/나무.png"
-                    className="w-[70px] h-[70px] mt-[52px] opacity-0  animate-fadeIn delay-3"
-                    alt="나무"
-                  />
-                  <img
-                    src="/images/mannertree/숲.png"
-                    className="w-[85px] h-[85px] mt-[37px] opacity-0   animate-fadeIn delay-4"
-                    alt="숲"
-                  />
-                </div>
-                <img
-                  src="/images/Library/bar.png"
-                  className="w-[342px]"
-                  alt="bar"
-                />
-              </article>
-            </button>
-          </nav>
-
+        <section className="flex flex-col gap-8">
           <nav>
             <button onClick={goToMyBookCase}>
               <article className="flex items-center mb-7">
@@ -122,7 +72,7 @@ const LibraryPage = () => {
                       />
                     ))
                   ) : (
-                    <span className="hakgyo text-2xl mt-10 mb-12">
+                    <span className="hakgyo text-2xl items-center ml-16 mt-10 mb-12">
                       나의 책장이 비었어요.
                     </span>
                   )}
@@ -151,12 +101,63 @@ const LibraryPage = () => {
                       />
                     ))
                   ) : (
-                    <span className="hakgyo text-2xl mt-10 mb-12">
+                    <span className="hakgyo text-2xl  ml-16 mt-10 mb-12">
                       관심 도서가 없습니다.
                     </span>
                   )}
                 </div>
                 <img src="/images/Library/bar.png" alt="bar" />
+              </article>
+            </button>
+          </nav>
+
+          <nav>
+            <button onClick={goToMyHistory}>
+              <article className="flex items-center mb-3">
+                <span className="font-bold text-2xl">책 히스토리</span>
+                <SlArrowRight className="ml-2 text-[#807B7B] text-xl" />
+              </article>
+              <article
+                style={{
+                  boxShadow:
+                    '0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1)',
+                }}
+                className=" rounded-lg pb-3 bg-[#edebe8] "
+              >
+                <div className="flex w-[340px] justify-around ml-1 ">
+                  <img
+                    src="/images/mannertree/씨앗.png"
+                    className="w-4 h-4 mt-[106px]  opacity-0 animate-fadeIn delay-0"
+                    alt="씨앗"
+                  />
+
+                  <img
+                    src="/images/mannertree/새싹.png"
+                    className="w-12 h-9 opacity-0 mt-[86px] animate-fadeIn delay-1"
+                    alt="새싹"
+                  />
+
+                  <img
+                    src="/images/mannertree/가지.png"
+                    className="w-14 h-14 mt-[66px] opacity-0  animate-fadeIn delay-2"
+                    alt="가지"
+                  />
+                  <img
+                    src="/images/mannertree/나무.png"
+                    className="w-[70px] h-[70px] mt-[52px] opacity-0  animate-fadeIn delay-3"
+                    alt="나무"
+                  />
+                  <img
+                    src="/images/mannertree/숲.png"
+                    className="w-[85px] h-[85px] mt-[37px] opacity-0   animate-fadeIn delay-4"
+                    alt="숲"
+                  />
+                </div>
+                <img
+                  src="/images/Library/bar.png"
+                  className="w-[342px]"
+                  alt="bar"
+                />
               </article>
             </button>
           </nav>

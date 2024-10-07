@@ -166,7 +166,7 @@ def get_user_books_data_by_genre(genre):
             FROM books as b
             WHERE b.genre = '{genre}'
             ORDER BY RANDOM()
-            LIMIT 100;
+            LIMIT 50;
             """
             cursor.execute(query)
             row = cursor.fetchall()

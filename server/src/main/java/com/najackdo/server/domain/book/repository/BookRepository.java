@@ -11,8 +11,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-import javax.swing.text.html.Option;
-
 public interface BookRepository extends JpaRepository<Book, Long>, BookQueryRepository {
 
     @Query("""
@@ -31,7 +29,11 @@ public interface BookRepository extends JpaRepository<Book, Long>, BookQueryRepo
     Page<Book> findByTitleContains(String keyword, Pageable pageable);
 
     @Query("SELECT b FROM Book b WHERE b.id IN :bookIds AND b.genre = :genre")
-    List<Book> findByIds(List<Integer> bookIds, String genre);
+    List<Book> findByIdsWithGenre(List<Integer> bookIds, String genre);
+
+
+    @Query("SELECT b FROM Book b WHERE b.id IN :bookIds")
+    List<Book> findByIds(List<Integer> bookIds);
 
     Optional<Book> findByIsbn(Long isbn);
 
