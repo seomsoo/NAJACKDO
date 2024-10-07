@@ -8,7 +8,7 @@ import PopularSearch from "page/search/components/PopularSearch";
 import RecentSearch from "page/search/components/RecentSearch";
 import RecommendBook from "page/search/components/RecommendBook";
 import SearchInput from "page/search/components/SearchInput";
-import { Fragment, Suspense, useState } from "react";
+import { Suspense, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 const SearchPage = () => {
@@ -42,7 +42,7 @@ const SearchPage = () => {
   };
 
   return (
-    <Fragment>
+    <div>
       <ErrorBoundary fallback={<SmallError />}>
         <Suspense fallback={<Loading />}>
           <div className="mx-[25px]">
@@ -70,17 +70,15 @@ const SearchPage = () => {
           </div>
         </Suspense>
       </ErrorBoundary>
-      <ErrorBoundary fallback={<SmallError />}>
-        <div className="mx-[25px] fixed bottom-[86px]">
-          <span className="font-bold">추천 도서</span>
-          <Suspense
-            fallback={<ClipLoading className="w-full h-20 mx-[25px]" />}
-          >
+      <div className="mx-[25px]">
+        <span className="font-bold">추천 도서</span>
+        <ErrorBoundary fallback={<SmallError />}>
+          <Suspense fallback={<ClipLoading className="h-[100px]" />}>
             <RecommendBook />
           </Suspense>
-        </div>
-      </ErrorBoundary>
-    </Fragment>
+        </ErrorBoundary>
+      </div>
+    </div>
   );
 };
 

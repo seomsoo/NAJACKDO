@@ -151,13 +151,12 @@ export const postRegisterBook = async (isbn: number): Promise<void> => {
   console.log("post isbn", isbn);
   try {
     const {
-      data: { success, data, message, status },
+      data: { success },
     } = await instance.post<BaseResponse<void>>("/book/regist-book", { isbn });
 
-    console.log("success", success);
-    console.log("message", message);
-    console.log("status", status);
-    console.log("postRegisterBook");
+    if (!success) {
+      throw new Error("isbn으로 도서 등록 실패");
+    }
   } catch (error) {
     throw new Error("isbn으로 도서 등록 실패", error);
   }

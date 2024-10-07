@@ -1,11 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import {
-  getMainRecommendBook,
-  getRecommBooks,
-  getRecommBooksWithGenre,
-  getRecommendbook,
-} from "api/bookApi";
-import { IRecommendBooks } from "atoms/Book.type";
+import { getMainRecommendBook } from "api/bookApi";
 import ClipLoading from "components/common/ClipLoading";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -28,8 +22,10 @@ const CategoryRecommend = () => {
     enabled: !!userId,
   });
 
-  const selectClass = "bg-sub2 border-2 border-sub2 text-white px-2 py-0.5 rounded-lg mx-2 my-3";
-  const notSelectClass = "text-sub2 border-[1px] border-sub2 px-2 py-0.5 rounded-lg mx-2 my-3";
+  const selectClass =
+    "bg-sub2 border-2 border-sub2 text-white px-2 py-0.5 rounded-lg mx-2 my-3";
+  const notSelectClass =
+    "text-sub2 border-[1px] border-sub2 px-2 py-0.5 rounded-lg mx-2 my-3";
 
   // const recommendedItemsWithScores = recommendBooksData?.recommended_items_with_scores;
 
@@ -51,7 +47,9 @@ const CategoryRecommend = () => {
         {categories.map((category) => (
           <div
             key={category}
-            className={selectedCategory === category ? selectClass : notSelectClass}
+            className={
+              selectedCategory === category ? selectClass : notSelectClass
+            }
             onClick={() => setSelectedCategory(category)}
           >
             <span>{category}</span>

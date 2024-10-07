@@ -3,9 +3,9 @@ import History from "../components/History";
 
 import { useQuery } from "@tanstack/react-query";
 import { getCashLog } from "api/cashlogApi";
-import { useLocation, useNavigate } from "react-router-dom";
-import Loading from "components/common/Loading";
 import Error from "components/common/Error";
+import Loading from "components/common/Loading";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const LeafPage = () => {
   const navigate = useNavigate();
@@ -36,12 +36,13 @@ const LeafPage = () => {
 
   return (
     <div className="mx-[25px] mt-6">
-      <button onClick={goBack}>
-        <IoIosArrowBack />
-      </button>
       <div className="flex flex-row justify-start mt-5 mb-7">
-        <p className="text-xl font-semibold ">
-          {userName}님의 <span className="text-sub8">책잎</span>
+        <button onClick={goBack}>
+          <IoIosArrowBack size={25} />
+        </button>
+        <p className="text-xl font-semibold space-x-1 ml-2">
+          <span className="hakgyo text-2xl">{userName}</span>님의
+          <span className="text-sub8">책잎</span>
         </p>
       </div>
 
