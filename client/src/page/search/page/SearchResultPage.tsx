@@ -1,7 +1,9 @@
 import Loading from "components/common/Loading";
+import SmallError from "components/common/SmallError";
 import SearchInput from "page/search/components/SearchInput";
 import SearchResult from "page/search/components/SearchResult";
 import { Suspense, useState } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { useSearchParams } from "react-router-dom";
 
 const SearchResultPage = () => {
@@ -16,17 +18,19 @@ const SearchResultPage = () => {
   };
 
   return (
-    <Suspense fallback={<Loading />}>
-      <div className="mx-4">
-        {/* 검색어 입력 창 */}
-        <SearchInput
-          handleSearchText={handleSearchText}
-          searchText={searchText}
-        />
-        {/* 검색 결과 */}
-        <SearchResult keyword={keyword} />
-      </div>
-    </Suspense>
+    <ErrorBoundary fallback={<SmallError />}>
+      <Suspense fallback={<Loading />}>
+        <div className="mx-4">
+          {/* 검색어 입력 창 */}
+          <SearchInput
+            handleSearchText={handleSearchText}
+            searchText={searchText}
+          />
+          {/* 검색 결과 */}
+          <SearchResult keyword={keyword} />
+        </div>
+      </Suspense>
+    </ErrorBoundary>
   );
 };
 

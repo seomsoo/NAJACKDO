@@ -2,12 +2,14 @@ import { getAutoSearchText } from "api/searchApi";
 import { IAutoArray } from "atoms/Search.type";
 import ClipLoading from "components/common/ClipLoading";
 import Loading from "components/common/Loading";
+import SmallError from "components/common/SmallError";
 import AutoSearch from "page/search/components/AutoSearch";
 import PopularSearch from "page/search/components/PopularSearch";
 import RecentSearch from "page/search/components/RecentSearch";
 import RecommendBook from "page/search/components/RecommendBook";
 import SearchInput from "page/search/components/SearchInput";
-import { Suspense, useState } from "react";
+import { Fragment, Suspense, useState } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 const SearchPage = () => {
   const [searchText, setSearchText] = useState("");
@@ -40,39 +42,45 @@ const SearchPage = () => {
   };
 
   return (
-    <>
-      <Suspense fallback={<Loading />}>
-        <div className="mx-[25px]">
-          {/* 검색어 입력 창 */}
-          <SearchInput
-            handleSearchText={handleSearchText}
-            searchText={searchText}
-          />
-          <div
-            className="flex-grow overflow-y-auto flex flex-col justify-between"
-            style={{ height: "calc(100vh - 356px)" }}
-          >
-            {/* 검색어가 없을 때 */}
-            {!searchText ? (
-              <div>
-                <PopularSearch />
-                <RecentSearch />
-              </div>
-            ) : (
-              autoSearchText?.list && (
-                <AutoSearch autoSearch={autoSearchText.list} />
-              )
-            )}
+    <Fragment>
+      <ErrorBoundary fallback={<SmallError />}>
+        <Suspense fallback={<Loading />}>
+          <div className="mx-[25px]">
+            {/* 검색어 입력 창 */}
+            <SearchInput
+              handleSearchText={handleSearchText}
+              searchText={searchText}
+            />
+            <div
+              className="flex-grow overflow-y-auto flex flex-col justify-between"
+              style={{ height: "calc(100vh - 356px)" }}
+            >
+              {/* 검색어가 없을 때 */}
+              {!searchText ? (
+                <div>
+                  <PopularSearch />
+                  <RecentSearch />
+                </div>
+              ) : (
+                autoSearchText?.list && (
+                  <AutoSearch autoSearch={autoSearchText.list} />
+                )
+              )}
+            </div>
           </div>
-        </div>
-      </Suspense>
-      <div className="mx-[25px] fixed bottom-[86px]">
-        <span className="font-bold">추천 도서</span>
-        <Suspense fallback={<ClipLoading className="w-full h-20 mx-[25px]" />}>
-          <RecommendBook />
         </Suspense>
-      </div>
-    </>
+      </ErrorBoundary>
+      <ErrorBoundary fallback={<SmallError />}>
+        <div className="mx-[25px] fixed bottom-[86px]">
+          <span className="font-bold">추천 도서</span>
+          <Suspense
+            fallback={<ClipLoading className="w-full h-20 mx-[25px]" />}
+          >
+            <RecommendBook />
+          </Suspense>
+        </div>
+      </ErrorBoundary>
+    </Fragment>
   );
 };
 

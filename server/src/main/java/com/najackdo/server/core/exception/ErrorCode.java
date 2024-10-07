@@ -84,7 +84,11 @@ public enum ErrorCode {
 
 	//REVIEW
 	NOT_FOUND_RENTAL_REVIEW(13000, HttpStatus.NOT_FOUND, "대여 리뷰를 찾을 수 없습니다."),
-	;
+
+
+	// RECOMMEND
+	NESSARY_BOOKMARK(14000, HttpStatus.BAD_REQUEST, "북마크가 필요합니다.");
+
 
 	private final int code;
 	private final HttpStatus status;
