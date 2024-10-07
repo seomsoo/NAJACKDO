@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { GoHomeFill } from "react-icons/go";
 import { IoChatbubbleEllipses, IoLibrary } from "react-icons/io5";
@@ -9,6 +9,7 @@ import { useUserStore } from "store/useUserStore";
 const Footer = () => {
   const location = useLocation();
   const [clicked, setClicked] = useState<string | null>(null);
+  const [footerHeight, setFooterHeight] = useState(0);
 
   const handleClick = (path: string) => {
     setClicked(path);
@@ -21,6 +22,29 @@ const Footer = () => {
   const isMyProfile =
     location.pathname === `/profile` ||
     location.pathname === `/profile/${userNickname}`;
+
+  useEffect(() => {
+    const handleResize = () => {
+      const footerEl = document.getElementById("footer");
+      if (footerEl) {
+        setFooterHeight(footerEl.clientHeight);
+      }
+    };
+
+    handleResize(); // 로딩 시 호출
+    window.addEventListener("resize", handleResize); // 화면 사이즈 변경 시 호출
+
+    return () => {
+      window.removeEventListener("resize", handleResize); // cleanup
+    };
+  }, []);
+
+  useEffect(() => {
+    const footerEl = document.getElementById("footer");
+    if (footerEl) {
+      footerEl.style.bottom = `-${footerHeight}px`;
+    }
+  }, [footerHeight]);
 
   return (
     <footer className="fixed font-medium bg-[#F8F6F3] bottom-0 w-screen max-w-[430px] border-t-[1px] pt-3 flex flex-row justify-around pb-7">
