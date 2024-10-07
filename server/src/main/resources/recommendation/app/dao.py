@@ -7,8 +7,8 @@ connection = psycopg2.connect(
     dbname="najackdo",
     user="najackdo",
     password="najackdo",
-    host="localhost",
-    # host="najackdo-database",
+    # host="localhost",
+    host="najackdo-database",
     port="5432"
 )
 

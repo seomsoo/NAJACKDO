@@ -52,8 +52,8 @@ s3 = boto3.client(
 
 model = SentenceTransformer('all-MiniLM-L6-v2')
 
-# client = MongoClient("mongodb://najackdo:najackdo@mongodb:27017/najackdo?authSource=admin", maxPoolSize=30, minPoolSize=5)
-client = MongoClient("mongodb://najackdo:najackdo@www.najackdo.kro.kr:27017/najackdo?authSource=admin", maxPoolSize=30, minPoolSize=5)
+client = MongoClient("mongodb://najackdo:najackdo@mongodb:27017/najackdo?authSource=admin", maxPoolSize=30, minPoolSize=5)
+# client = MongoClient("mongodb://najackdo:najackdo@www.najackdo.kro.kr:27017/najackdo?authSource=admin", maxPoolSize=30, minPoolSize=5)
 
 db = client.najackdo
 
