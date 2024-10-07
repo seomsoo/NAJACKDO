@@ -39,7 +39,7 @@ public class RecommendationService {
 		return bookRepository.findByIdsWithGenre(bookIds, genre)
 			.stream()
 			.map(BookData.Search::from)
-			.filter(book -> book.getBookId() != bookId)
+			.filter(book -> !book.getBookId().equals(bookId))
 			.toList();
 	}
 
@@ -57,15 +57,16 @@ public class RecommendationService {
 			return bookRepository.findByIdsWithGenre(bookIds, genre)
 				.stream()
 				.map(BookData.Search::from)
-				.filter(book -> book.getBookId() != userBookMarkBook.getId())
+				.filter(book -> !book.getBookId().equals(userBookMarkBook.getId()))
 				.toList();
 		}
 
+		userBookMarkBook.getId();
 
 		return bookRepository.findByIds(bookIds)
 			.stream()
 			.map(BookData.Search::from)
-			.filter(book -> book.getBookId() != userBookMarkBook.getId())
+			.filter(book -> !book.getBookId().equals(userBookMarkBook.getId()))
 			.toList();
 
 	}
