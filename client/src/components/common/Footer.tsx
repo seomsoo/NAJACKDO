@@ -25,24 +25,24 @@ const Footer = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      const footerEl = document.getElementById("footer");
-      if (footerEl) {
-        setFooterHeight(footerEl.clientHeight);
+      const ft = document.getElementById("footer");
+      if (ft) {
+        setFooterHeight(ft.clientHeight);
       }
     };
 
-    handleResize(); // 로딩 시 호출
-    window.addEventListener("resize", handleResize); // 화면 사이즈 변경 시 호출
+    handleResize();
+    window.addEventListener("resize", handleResize); 
 
     return () => {
-      window.removeEventListener("resize", handleResize); // cleanup
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
   useEffect(() => {
-    const footerEl = document.getElementById("footer");
-    if (footerEl) {
-      footerEl.style.bottom = `-${footerHeight}px`;
+    const ft = document.getElementById("footer");
+    if (ft) {
+      ft.style.bottom = `-${footerHeight}px`;
     }
   }, [footerHeight]);
 
