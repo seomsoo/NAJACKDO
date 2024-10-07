@@ -52,30 +52,6 @@ const DetailRecommendBook = ({
           추천 도서가 없습니다.
         </p>
       )}
-      {/* <div className="grid mt-4 grid-cols-4 gap-3">
-        {recommendData.length !== 0 ? (
-          recommendData.map((book, index) => {
-            return (
-              <img
-                key={index}
-                src={book.cover}
-                alt={book.title}
-                width={80}
-                className="rounded-e-md"
-                onClick={() => handleBookClick(book.bookId)}
-                style={{
-                  boxShadow:
-                    "0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1)",
-                }}
-              />
-            );
-          })
-        ) : (
-          <div className="w-screen flex justify-center items-center">
-            추천 도서가 없습니다.
-          </div>
-        )}
-      </div> */}
     </Fragment>
   );
 };
