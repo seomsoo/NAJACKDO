@@ -41,17 +41,31 @@ public class BookController {
 	private final BookService bookService;
 
 	/**
-	 * 책 제목으로 다중 등록
+	 * 책등 사진으로 도서 리스트 반환
 	 *
 	 * @param create
 	 * @return
 	 */
 	@PostMapping("/regist-books")
-	@Operation(summary = "책장 사진으로 도서 등록", description = "책장 사진으로 도서 등록")
+	@Operation(summary = "책장 사진으로 도서 리스트 반환", description = "책장 사진으로 도서 리스트 반환")
 	public SuccessResponse<Map<String, List<String>>> registBooks(@CurrentUser User user,
 		@ModelAttribute UserBookData.Create create) {
 		Map<String, List<String>> result = userBooksService.addBookList(user, create);
 		return SuccessResponse.of(result);
+	}
+
+	/**
+	 * bookIds 로 도서 등록
+	 *
+	 * @param create
+	 * @return
+	 */
+	@PostMapping("/regist-books-by-ids")
+	@Operation(summary = "도서 등록", description = "bookIds 로 도서 등록")
+	public SuccessResponse<Void> registBooksByIds(@CurrentUser User user,
+		@RequestBody UserBookData.CreateByIds create) {
+		userBooksService.addBookListByIds(user, create);
+		return SuccessResponse.empty();
 	}
 
 	@PostMapping("/regist-book")
