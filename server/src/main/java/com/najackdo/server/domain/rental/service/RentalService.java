@@ -69,17 +69,6 @@ public class RentalService {
 			rentalMongoRepository.save(rental);
 		});
 
-		Rental byCartId = rentalRepository.findByCartId(cartId).orElseThrow(
-			() -> new BaseException(ErrorCode.NOT_FOUND_RENTAL)
-		);
-
-		List<UserBook> userBooks = byCartId.getCart().getCartItems()
-			.stream()
-			.map(cartItem -> cartItem.getUserBookDetail().getUserBook())
-			.peek(userBook -> userBook.updateBookStatus(BookStatus.AVAILABLE))
-			.toList();
-
-		userBooksRepository.saveAll(userBooks);
 
 		User customer = cart.getCustomer();
 		User owner = cart.getOwner();
@@ -107,6 +96,20 @@ public class RentalService {
 		// ! 채팅 전송 로직 추가
 
 		// chatRoomRepository.save()
+
+
+		Rental byCartId = rentalRepository.findByCartId(cartId).orElseThrow(
+			() -> new BaseException(ErrorCode.NOT_FOUND_RENTAL)
+		);
+
+		List<UserBook> userBooks = byCartId.getCart().getCartItems()
+			.stream()
+			.map(cartItem -> cartItem.getUserBookDetail().getUserBook())
+			.peek(userBook -> userBook.updateBookStatus(BookStatus.AVAILABLE))
+			.toList();
+
+		userBooksRepository.saveAll(userBooks);
+		
 
 		return SuccessResponse.empty();
 	}
