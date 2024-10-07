@@ -75,7 +75,7 @@ const ISBNScanPage = () => {
         <IoChevronBack size={25} color="#545454" />
         <span className="font-bold text-xl ml-2">도서 등록 - ISBN</span>
       </div>
-      <p className="text-center font-bold text-xl my-10">BARCODE SCANNER</p>
+      <p className="text-center font-bold text-2xl mb-5">BARCODE SCANNER</p>
       <div className="relative border-2 border-sub7 h-[300px] rounded-2xl flex items-center justify-center">
         <Scanner onDetected={onDetected} scan={scan} setScan={setScan} />
         {fail && (
@@ -99,9 +99,9 @@ const ISBNScanPage = () => {
           ? `인식된 ISBN : ${isbn !== undefined ? isbn : ""}`
           : "바코드 인식 실패"}
       </p>
-      <div className="mt-16 flex flex-row justify-around">
+      <div className="mt-8 flex flex-row justify-around">
         <p
-          className={`${!fail ? "bg-sub6 hover:bg-sub7" : "bg-[#D0D0D0]"} text-white font-bold w-[153px] h-[54px] rounded-xl mx-2 flex items-center justify-center cursor-pointer`}
+          className={`${!fail ? "bg-sub7 hover:bg-sub7" : "bg-[#D0D0D0]"} text-white font-bold w-[153px] h-[54px] rounded-xl mx-2 flex items-center justify-center cursor-pointer`}
           onClick={handleClick}
         >
           ISBN으로 등록

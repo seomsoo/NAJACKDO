@@ -19,10 +19,10 @@ module.exports = {
     extend: {
       transitionDelay: {
         '0': '0s',
-        '1': '0.7s',
-        '2': '1.4s',
-        '3': '2.1s',
-        '4': '2.8s',
+        '1': '0.6s',
+        '2': '1.2s',
+        '3': '1.8s',
+        '4': '2.4s',
       },
       boxShadow: {
         "book-shadow": "0 11px 20px rgba(0, 0, 0, 0.7)", // 부드러운 그림자
@@ -137,7 +137,7 @@ module.exports = {
         glow: "glow 2s ease-in-out infinite",
         bounceTwice: "bounceTwice 1s ease-in-out",
         bounceTwice2: "bounceTwice 1.8s ease-in-out",
-        fadeIn: "fadeIn 1s ease-in-out forwards",
+        fadeIn: "fadeIn 0.5s ease-in-out forwards",
         fadeIn2: "fadeIn 3s ease-in-out forwards",
         slideUp: "slideUp 1.5s ease-in-out",
         slideDown: "slideDown 1.5s ease-in-out",
