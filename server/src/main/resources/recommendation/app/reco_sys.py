@@ -14,8 +14,13 @@ def create_item_user_matrix(visits_df, book_marks_df, rentals_df):
     if visits_df.empty and book_marks_df.empty and rentals_df.empty:
         return pd.DataFrame()
 
-    book_ids = pd.concat([visits_df['bookId'], book_marks_df['bookId'], rentals_df['bookId']]).unique()
-    user_ids = pd.concat([visits_df['userId'], book_marks_df['userId'], rentals_df['userId']]).unique()
+    # book_ids = pd.concat([visits_df['bookId'], book_marks_df['bookId'], rentals_df['bookId']]).unique()
+    # user_ids = pd.concat([visits_df['userId'], book_marks_df['userId'], rentals_df['userId']]).unique()
+    
+    
+    book_ids = pd.concat([visits_df['bookId'], rentals_df['bookId']]).unique()
+    user_ids = pd.concat([visits_df['userId'], rentals_df['userId']]).unique()
+    
 
     item_user_matrix = pd.DataFrame(0.0, index=book_ids, columns=user_ids)
     
@@ -24,8 +29,8 @@ def create_item_user_matrix(visits_df, book_marks_df, rentals_df):
     for idx, row in visits_df.iterrows():
         item_user_matrix.loc[row['bookId'], row['userId']] += row['timeSpent'] / visits_df['timeSpent'].max() * time_spent_weight
 
-    for idx, row in book_marks_df.iterrows():
-        item_user_matrix.loc[row['bookId'], row['userId']] += 1 * favorite_weight
+    # for idx, row in book_marks_df.iterrows():
+    #     item_user_matrix.loc[row['bookId'], row['userId']] += 1 * favorite_weight
 
     for idx, row in rentals_df.iterrows():
         item_user_matrix.loc[row['bookId'], row['userId']] += 1 * like_weight
@@ -61,7 +66,7 @@ def recomm_book_list(bookId, db, genre = ""):
 
     if (genre):
         visits_df = visits_df[visits_df['genre'] == genre]
-        book_marks_df = book_marks_df[book_marks_df['genre'] == genre]
+        # book_marks_df = book_marks_df[book_marks_df['genre'] == genre]
         rentals_df = rentals_df[rentals_df['genre'] == genre]
     
     item_user_matrix = create_item_user_matrix(visits_df, book_marks_df, rentals_df)
