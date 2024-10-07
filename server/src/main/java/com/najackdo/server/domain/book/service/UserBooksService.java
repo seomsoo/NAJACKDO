@@ -245,20 +245,12 @@ public class UserBooksService {
 
 	@Transactional
 	public void addBookListByIds(User user, UserBookData.CreateByIds create) {
-		ActivityAreaSetting activityAreaSetting = activityAreaSettingRepository.findUserActivityArea(user.getId())
-			.orElseThrow(
-				() -> new BaseException(ErrorCode.ACTIVITY_AREA_NOT_FOUND)
-			);
 
-		List<String> alreadyExistBooks = new ArrayList<>();
+		ActivityAreaSetting activityAreaSetting = activityAreaSettingRepository.findUserActivityArea(user.getId())
+			.orElseThrow(() -> new BaseException(ErrorCode.ACTIVITY_AREA_NOT_FOUND));
+
 		for (Long bookId : create.getBookIds()) {
 			Book book = bookRepository.findById(bookId).orElseThrow(() -> new BaseException(ErrorCode.BOOK_NOT_FOUND));
-
-			if (userBooksRepository.findByUserAndIsbn(user.getId(), book.getIsbn()).isPresent()) {
-				alreadyExistBooks.add(book.getTitle());
-				continue;
-			}
-
 			userBooksRepository.save(UserBook.createUserBook(user, book, activityAreaSetting.getLocation()));
 		}
 	}
