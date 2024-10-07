@@ -1,8 +1,7 @@
-import { queryOptions, useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getRecommBooksWithGenre } from "api/bookApi";
 import ClipLoading from "components/common/ClipLoading";
-import { number } from "prop-types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useUserStore } from "store/useUserStore";
 
 const CategoryRecommend = () => {
@@ -27,10 +26,13 @@ const CategoryRecommend = () => {
     enabled: !!userId,
   });
 
-  const select = "bg-sub2 border-2 border-sub2 text-white px-2 py-0.5 rounded-lg mx-2 my-3";
-  const notSelect = "text-sub2 border-[1px] border-sub2 px-2  py-0.5 rounded-lg mx-2 my-3";
+  const select =
+    "bg-sub2 border-2 border-sub2 text-white px-2 py-0.5 rounded-lg mx-2 my-3";
+  const notSelect =
+    "text-sub2 border-[1px] border-sub2 px-2  py-0.5 rounded-lg mx-2 my-3";
 
-  const recommendedItemsWithScores = recommendBooksData?.recommended_items_with_scores;
+  const recommendedItemsWithScores =
+    recommendBooksData?.recommended_items_with_scores;
 
   console.log("recommendedItemsWithScores : ", recommendedItemsWithScores);
 
@@ -46,9 +48,9 @@ const CategoryRecommend = () => {
     "여행",
   ];
 
-  if (isLoading) {
-    return <ClipLoading />;
-  }
+  // if (isLoading) {
+  //   return <ClipLoading />;
+  // }
 
   return (
     <div>
@@ -72,13 +74,25 @@ const CategoryRecommend = () => {
         </span>
         추천도서는?
       </p>
-      <div className="flex overflow-x-auto whitespace-nowrap scrollbar-hide">
-        {Array(10)
-          .fill(null)
-          .map((_, index) => {
-            return <img src="ssafy.png" alt="" width={150} className="mx-1 mt-5" key={index} />;
-          })}
-      </div>
+      {isLoading ? (
+        <ClipLoading />
+      ) : (
+        <div className="flex overflow-x-auto whitespace-nowrap scrollbar-hide">
+          {Array(10)
+            .fill(null)
+            .map((_, index) => {
+              return (
+                <img
+                  src="ssafy.png"
+                  alt=""
+                  width={150}
+                  className="mx-1 mt-5"
+                  key={index}
+                />
+              );
+            })}
+        </div>
+      )}
     </div>
   );
 };

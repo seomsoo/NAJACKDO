@@ -7,15 +7,9 @@ import org.springframework.web.client.RestTemplate;
 
 import com.najackdo.server.domain.book.dto.BookData;
 import com.najackdo.server.domain.book.repository.BookRepository;
-import com.najackdo.server.domain.recommendation.dto.BookMarkDto;
 import com.najackdo.server.domain.recommendation.dto.RecommendationResponse;
-import com.najackdo.server.domain.recommendation.dto.RentalDto;
 import com.najackdo.server.domain.recommendation.dto.VisitDto;
-import com.najackdo.server.domain.recommendation.entity.BookMark;
-import com.najackdo.server.domain.recommendation.entity.Rental;
 import com.najackdo.server.domain.recommendation.entity.Visit;
-import com.najackdo.server.domain.recommendation.repository.BookMarkMongoRepository;
-import com.najackdo.server.domain.recommendation.repository.RentalMongoRepository;
 import com.najackdo.server.domain.recommendation.repository.VisitMongoRepository;
 import com.najackdo.server.domain.user.entity.User;
 
@@ -25,18 +19,24 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RecommendationService {
 
-	private final String BASE_URL = "http://localhost:8000/item/recomm/";
+	private final String BASE_URL = "http://localhost:8000/item/recomm";
 
 	private final  RestTemplate restTemplate;
 
 	private final BookRepository bookRepository;
 	private final VisitMongoRepository visitMongoRepository;
 
-	public List<BookData.Search> getBookBasedReccom(Long bookId) {
+	public List<BookData.Search> getBookBasedReccom(Long bookId, String genre) {
 
-		List<Integer> bookIds = restTemplate.getForObject(BASE_URL + bookId, RecommendationResponse.class).getBookIds();
+		List<Integer> bookIds = restTemplate.getForObject(BASE_URL + "?bookId={bookId}&genre={genre}",
+			RecommendationResponse.class, bookId, genre).getBookIds();
 
-		return  bookRepository.findByIds(bookIds).stream().map(BookData.Search::from).filter(book -> book.getBookId() != bookId).toList();
+		return bookRepository.findByIds(bookIds, genre)
+			.stream()
+			.map(BookData.Search::from)
+			.filter(book -> book.getBookId() != bookId)
+			.toList();
+
 	}
 
 	/**

@@ -15,8 +15,9 @@ import { useNavigate } from "react-router-dom";
 interface BookInfoProps {
   bookId: number;
   rental?: boolean;
+  setBookGenre?: (genre: string) => void;
 }
-const BookInfo = ({ bookId, rental }: BookInfoProps) => {
+const BookInfo = ({ bookId, rental, setBookGenre }: BookInfoProps) => {
   const navigate = useNavigate();
 
   // 도서 상세 정보 조회
@@ -24,6 +25,10 @@ const BookInfo = ({ bookId, rental }: BookInfoProps) => {
     queryKey: ["bookdetail", bookId],
     queryFn: () => getBookDetail(bookId),
   });
+
+  if (bookData) {
+    setBookGenre(bookData.genre);
+  }
 
   const mutation = useMutation({
     mutationKey: ["RentalCostData"],
@@ -130,7 +135,8 @@ const BookInfo = ({ bookId, rental }: BookInfoProps) => {
             width={180}
             className="z-20"
             style={{
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1)',
+              boxShadow:
+                "0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1)",
             }}
           />
         </div>
@@ -158,7 +164,9 @@ const BookInfo = ({ bookId, rental }: BookInfoProps) => {
           dangerouslySetInnerHTML={{ __html: bookData.description }}
           className="my-6"
         ></p>
-        <p className="font-extrabold text-lg text-right">중고가 : {bookData.priceStandard.toLocaleString()}원</p>
+        <p className="font-extrabold text-lg text-right">
+          중고가 : {bookData.priceStandard.toLocaleString()}원
+        </p>
       </div>
     </div>
   );

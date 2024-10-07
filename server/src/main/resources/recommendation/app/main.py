@@ -61,11 +61,10 @@ class QualityInspectionRequest(BaseModel):
     user_id: int
     user_book_id: int
 
-
-@app.get("/item/recomm/{bookId}")
-async def recomm_books(bookId : int):
+@app.get("/item/recomm")
+async def recomm_books(bookId: int = Query(...), genre: str = Query(...)):
     
-    result = reco_sys.recomm_book_list(bookId, db, None)
+    result = reco_sys.recomm_book_list(bookId, db, genre)
     
     return {"bookIds": result}  
 

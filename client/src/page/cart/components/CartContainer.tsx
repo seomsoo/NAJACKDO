@@ -41,7 +41,7 @@ const CartContainer = ({
   };
 
   return (
-    <div className="mx-3 my-5 bg-white/30 shadow rounded-lg p-4">
+    <div className="mx-3 mb-5 bg-white/30 shadow rounded-lg p-4">
       <div className="flex flex-row item-center justify-between">
         <span className="flex font-semibold">
           <p className="text-sub8">{ownerUsername}</p>
