@@ -2,11 +2,8 @@ import { IAlarm } from "atoms/Alarm.type";
 import { BaseResponse, IPaging } from "atoms/Base.type";
 import instance from "./clientApi";
 
-
 // 알람 리스트 조회
-export const getAlarm = async (
-  page: number
-): Promise<IPaging<IAlarm[]>> => {
+export const getAlarm = async (page: number): Promise<IPaging<IAlarm[]>> => {
   const {
     data: { success, data },
   } = await instance.get<BaseResponse<IPaging<IAlarm[]>>>(
@@ -23,7 +20,7 @@ export const getAlarm = async (
 };
 
 // 알림 읽음 처리
-export const getAlarmReadSucess = async (): Promise<void> => {
+export const postAlarmReadSucess = async (): Promise<void> => {
   try {
     const {
       data: { success },
