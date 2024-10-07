@@ -2,6 +2,7 @@ import pandas as pd
 import random
 import numpy as np
 import faiss
+from collections import OrderedDict
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics.pairwise import cosine_similarity
 from shapely import wkb
@@ -133,8 +134,17 @@ def genetic_algorithm_recommendation(user_preferences, items, liked_items, popul
             if new_item_index not in population and new_item_index not in liked_items:
                 population.append(new_item_index)
 
+    # print("bestsolution =")
+    # print(best_solutions)
+    
+    
+    
     # 유일한 추천 아이템과 점수 반환
-    unique_recommendations = list(set(individual for individual, score in best_solutions))
-    recommended_items_with_scores = [(items[idx][0], calculate_fit_score(user_preferences, items, [idx])) for idx in unique_recommendations[:num_recommendations]]
-    recommended_items_with_scores.sort(key = lambda x : -x[1])
+    # unique_recommendations = list(set(individual for individual, score in best_solutions))
+    unique_recommendations = list(OrderedDict.fromkeys(individual for individual, score in best_solutions))
+    
+    # print("unique_recommendations =")
+    # print(unique_recommendations)
+    recommended_items_with_scores = [items[idx] for idx in unique_recommendations[:num_recommendations]]
+
     return recommended_items_with_scores  # [(아이템 인덱스, 유사도 점수)]

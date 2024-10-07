@@ -245,8 +245,6 @@ async def recomm_books(userId : int):
 
     merged_list = {item['bookId']: item for item in book_marks + rental_list}
 
-
-
     # 리스트로 변환
     book_ids = [book["bookId"] for book in list(merged_list.values())]
     
@@ -256,7 +254,6 @@ async def recomm_books(userId : int):
     
     user_like_books = dao.fetch_books(book_ids)
     
-     
         
     user_like_books_list = [
         [
@@ -270,27 +267,27 @@ async def recomm_books(userId : int):
     user_preferences = np.mean(combined_array, axis=0)
     
     recommended_items_with_scores = reco_sys.genetic_algorithm_recommendation(user_preferences, items, book_ids, num_recommendations=5)
-    
+    print(recommended_items_with_scores)
     idx_list = [item[0] for item in recommended_items_with_scores]
+    print(idx_list)
     cover_list = dao.get_book_cover(idx_list)
     image_links = [row['cover'] for row in cover_list]
     # print(recommended_items_with_scores)
     # print(image_links)
-    combined_list = [(recommended_items_with_scores[i], image_links[i]) for i in range(len(recommended_items_with_scores))]
+    combined_list = [(recommended_items_with_scores[i][0], image_links[i]) for i in range(len(recommended_items_with_scores))]
     
     print("추천 아이템과 유사도 점수:")
     # for item, score in recommended_items_with_scores:
     #     print(f"아이템 인덱스: {items[item][:-1]}, 적합도 점수: {score:.2f}")
-    
-    recommended_items_with_scores = [
+    print(combined_list)
+    recommended_items_with_scores2 = [
     {
-        "book_id": item[0][0],
-        "fitness": item[0][1], # book_id는 첫 번째 리스트의 첫 번째 요소
+        "book_id": item[0],
         "cover": item[1]        # cover는 두 번째 요소
     }
         for item in combined_list
     ]   
-    return {"recommended_items_with_scores": recommended_items_with_scores}  
+    return {"recommended_items_with_scores": recommended_items_with_scores2}  
 
 
 @app.get("/python/item/userrecommandbygenre")
@@ -359,10 +356,10 @@ async def recomm_books(userId: int = Query(...), category: str = Query(...)):
     print(cover_list)
     image_links = [row['cover'] for row in cover_list]
     # print(recommended_items_with_scores)
-    # print(image_links)
+    print(image_links)
     combined_list = [(recommended_items_with_scores[i], image_links[i]) for i in range(len(recommended_items_with_scores))]
     
-    recommended_items_with_scores = [
+    recommended_items_with_scores2 = [
     {
         "book_id": item[0][0],
         "fitness": item[0][1], # book_id는 첫 번째 리스트의 첫 번째 요소
@@ -370,4 +367,4 @@ async def recomm_books(userId: int = Query(...), category: str = Query(...)):
     }
         for item in combined_list
     ]   
-    return {"recommended_items_with_scores": recommended_items_with_scores}  
+    return {"recommended_items_with_scores": recommended_items_with_scores2}  
