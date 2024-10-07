@@ -113,7 +113,7 @@ const LibraryPage = () => {
 
           <nav>
             <button onClick={goToMyHistory}>
-              <article className="flex items-center mb-7">
+              <article className="flex items-center mb-3">
                 <span className="font-bold text-2xl">책 히스토리</span>
                 <SlArrowRight className="ml-2 text-[#807B7B] text-xl" />
               </article>
