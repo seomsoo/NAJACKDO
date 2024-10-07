@@ -79,6 +79,8 @@ const ChattingRoomPage = () => {
 
     return () => disconnect();
   }, []);
+
+  
   useEffect(() => {
     const handleResize = () => {
       if (window.innerHeight < 700) {

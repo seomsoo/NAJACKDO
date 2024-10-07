@@ -1,22 +1,19 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getRecommBooks } from "api/bookApi";
-import {  IRecommendBooks } from "atoms/Book.type";
+import { IRecommendBooks } from "atoms/Book.type";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "store/useUserStore";
 
 const RecommendBook = () => {
+  const userId = useUserStore().userId;
+  const navigate = useNavigate();
 
- const userId = useUserStore().userId;
- const navigate = useNavigate()
+  console.log(userId);
 
- console.log(userId);
-
- const { data: books } = useSuspenseQuery<IRecommendBooks>({
-  queryKey: ["recommBooks"],
-  queryFn: ()=> getRecommBooks(
-    userId
-  ),
- });
+  const { data: books } = useSuspenseQuery<IRecommendBooks>({
+    queryKey: ["recommBooks"],
+    queryFn: () => getRecommBooks(userId),
+  });
 
   return (
     <div className="relative">
@@ -29,8 +26,7 @@ const RecommendBook = () => {
             width={80}
             height={100}
             className="my-2 mx-1"
-            onClick = {() => navigate(`/book/${book.book_id}`)
-            } 
+            onClick={() => navigate(`/book/${book.book_id}`)}
           />
         ))}
       </div>

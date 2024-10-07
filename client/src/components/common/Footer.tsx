@@ -16,6 +16,9 @@ const Footer = () => {
   };
 
   const userNickname = useUserStore.getState().nickname;
+  
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+
 
   // 프로필 경로가 현재 로그인된 유저의 프로필인지 확인
   const isMyProfile =
@@ -23,8 +26,25 @@ const Footer = () => {
     location.pathname === `/profile/${userNickname}`;
 
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerHeight < 700) {
+        setIsKeyboardOpen(true);
+      } else {
+        setIsKeyboardOpen(false);
+      }
+    };
+  
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
-    <footer className="fixed font-medium bg-[#F8F6F3] bottom-0 w-screen max-w-[430px] border-t-[1px] pt-3 flex flex-row justify-around pb-7">
+    <footer className="fixed font-medium bg-[#F8F6F3] bottom-0 w-screen max-w-[430px] border-t-[1px] pt-3 flex flex-row justify-around pb-7"
+    style={{ bottom: isKeyboardOpen ? "-86px" : "0px" }}
+    >
       <Link
         to="/"
         onClick={() => handleClick("")}
