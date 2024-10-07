@@ -14,14 +14,13 @@ public interface BookMarkRepository extends JpaRepository<BookMark, Long>, BookQ
 
 	Optional<BookMark> findByUserIdAndBookId(Long userId, Long bookId);
 
-	@Query("""
-    SELECT bm.book
-    FROM BookMark bm
-    JOIN FETCH bm.book
-    WHERE bm.user.id = :id
-    ORDER BY bm.id DESC
-    LIMIT 1
-""")
-	Optional<Book> findFirstByUserId(Long id);
-
+// 	@Query("""
+//     SELECT bm.book
+//     FROM BookMark bm
+//     JOIN FETCH bm.book
+//     WHERE bm.user.id = :id
+//     ORDER BY bm.id DESC
+//     LIMIT 1
+// """)
+// 	Optional<Book> findFirstByUserId(Long id);
 }
