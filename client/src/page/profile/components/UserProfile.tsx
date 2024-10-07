@@ -4,8 +4,11 @@ import { IProfile } from "atoms/Profile.type";
 import MannerTree from "page/profile/components/MannerTree";
 import UserInfo from "page/profile/components/UserInfo";
 import { Fragment } from "react/jsx-runtime";
+import GradeInfoModal from "./GradeInfoModal";
+import { useState } from "react";
 
 const UserProfile = () => {
+
   const { data: profileInfo } = useSuspenseQuery<IProfile>({
     queryKey: ["profile"],
     queryFn: async () => await getUserInfo(),
