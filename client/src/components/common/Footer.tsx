@@ -28,7 +28,7 @@ const Footer = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerHeight < 700) {
+      if (window.visualViewport.height < 700) {
         setIsKeyboardOpen(true);
       } else {
         setIsKeyboardOpen(false);
@@ -41,9 +41,15 @@ const Footer = () => {
     };
   }, []);
 
+  const footerStyle = {
+    display: isKeyboardOpen ? "none" : "flex",
+  };
+  
   return (
-    <footer className="fixed font-medium bg-[#F8F6F3] bottom-0 w-screen max-w-[430px] border-t-[1px] pt-3 flex flex-row justify-around pb-7"
-    style={{ bottom: isKeyboardOpen ? "-86px" : "0px" }}
+    <footer 
+      className={`fixed font-medium bg-[#F8F6F3] bottom-0 w-screen max-w-[430px] border-t-[1px] pt-3 flex flex-row justify-around pb-7 ${
+        isKeyboardOpen ? "hidden" : ""
+      }`}
     >
       <Link
         to="/"
