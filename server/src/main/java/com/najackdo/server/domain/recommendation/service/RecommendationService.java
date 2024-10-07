@@ -45,30 +45,29 @@ public class RecommendationService {
 
 
 	public List<BookData.Search> getMainRecommendation(User user, String genre) {
-		// Book userBookMarkBook = bookMarkRepository.findFirstByUserId(user.getId()).orElseThrow(
-		// 	() -> new BaseException(ErrorCode.NESSARY_BOOKMARK)
-		// );
-		//
-		// List<Integer> bookIds = restTemplate.getForObject(BASE_URL + "?bookId={bookId}&genre={genre}",
-		// 	RecommendationResponse.class, userBookMarkBook.getId(), genre).getBookIds();
-		//
-		//
-		// if (genre != null){
-		// 	return bookRepository.findByIdsWithGenre(bookIds, genre)
-		// 		.stream()
-		// 		.map(BookData.Search::from)
-		// 		.filter(book -> book.getBookId() != userBookMarkBook.getId())
-		// 		.toList();
-		// }
-		//
-		//
-		// return bookRepository.findByIds(bookIds)
-		// 	.stream()
-		// 	.map(BookData.Search::from)
-		// 	.filter(book -> book.getBookId() != userBookMarkBook.getId())
-		// 	.toList();
+		Book userBookMarkBook = bookMarkRepository.findFirstByUserId(user.getId()).orElseThrow(
+			() -> new BaseException(ErrorCode.NESSARY_BOOKMARK)
+		).getBook();
 
-		return null;
+		List<Integer> bookIds = restTemplate.getForObject(BASE_URL + "?bookId={bookId}&genre={genre}",
+			RecommendationResponse.class, userBookMarkBook.getId(), genre).getBookIds();
+
+
+		if (genre != null){
+			return bookRepository.findByIdsWithGenre(bookIds, genre)
+				.stream()
+				.map(BookData.Search::from)
+				.filter(book -> book.getBookId() != userBookMarkBook.getId())
+				.toList();
+		}
+
+
+		return bookRepository.findByIds(bookIds)
+			.stream()
+			.map(BookData.Search::from)
+			.filter(book -> book.getBookId() != userBookMarkBook.getId())
+			.toList();
+
 	}
 
 
