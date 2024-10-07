@@ -30,8 +30,8 @@ public interface BookRepository extends JpaRepository<Book, Long>, BookQueryRepo
 
     Page<Book> findByTitleContains(String keyword, Pageable pageable);
 
-    @Query("SELECT b FROM Book b WHERE b.id IN :bookIds")
-    List<Book> findByIds(List<Integer> bookIds);
+    @Query("SELECT b FROM Book b WHERE b.id IN :bookIds AND b.genre = :genre")
+    List<Book> findByIds(List<Integer> bookIds, String genre);
 
     Optional<Book> findByIsbn(Long isbn);
 

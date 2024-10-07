@@ -47,7 +47,6 @@ public class RecommendationController {
 	@Operation(summary = "방문 체류 시간 기록", description = "방문 체류 시간 기록")
 	public SuccessResponse<Void> createVisit(@CurrentUser User user, @RequestBody VisitDto visitDto) {
 		recommendationService.createMongoVisit(user, visitDto);
-
 		return SuccessResponse.empty();
 	}
 }

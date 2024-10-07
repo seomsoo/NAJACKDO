@@ -31,7 +31,12 @@ public class RecommendationService {
 		List<Integer> bookIds = restTemplate.getForObject(BASE_URL + "?bookId={bookId}&genre={genre}",
 			RecommendationResponse.class, bookId, genre).getBookIds();
 
-		return  bookRepository.findByIds(bookIds).stream().map(BookData.Search::from).filter(book -> book.getBookId() != bookId).toList();
+		return bookRepository.findByIds(bookIds, genre)
+			.stream()
+			.map(BookData.Search::from)
+			.filter(book -> book.getBookId() != bookId)
+			.toList();
+
 	}
 
 	/**
