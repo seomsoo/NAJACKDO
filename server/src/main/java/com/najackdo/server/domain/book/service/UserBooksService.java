@@ -81,7 +81,6 @@ public class UserBooksService {
 			// 요청 본문 생성
 			HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 			responseEntity = restTemplate.exchange(BookSpineURL, HttpMethod.POST, requestEntity, BookSpineDetectionResponse.class);
-			log.info(responseEntity.getBody().getTitles().toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new BaseException(ErrorCode.BOOK_NOT_FOUND);
@@ -101,7 +100,6 @@ public class UserBooksService {
 		List<String> notFoundBooks = new ArrayList<>();
 		List<String> alreadyExistBooks = new ArrayList<>();
 		List<String> titles = postBookSpineDetection(create.getFile());
-		log.info("titles: {}", titles);
 		for (String title : titles) {
 
 			Book book = bookRepository.findFirstByTitle(title).orElseGet(() -> {

@@ -79,7 +79,6 @@ public class KapayService {
 			ReadyResponse.class
 		);
 
-		log.info("response: {}", response);
 
 		// TID 저장 (승인 요청 시 사용)
 		this.tid = response.getBody().getTid();
@@ -90,8 +89,6 @@ public class KapayService {
 	public ResponseEntity<?> approve(String pgToken) {
 		try {
 
-			log.info("pgToken: {}", pgToken);
-			log.info("user: {}", user);
 
 			// 요청 헤더 설정
 			HttpHeaders headers = new HttpHeaders();
@@ -115,12 +112,10 @@ public class KapayService {
 				String.class
 			);
 
-			log.info("response: {}", response);
 
 			ObjectMapper objectMapper = new ObjectMapper();
 			ApproveResponse approveResponse = objectMapper.readValue(response.getBody(), ApproveResponse.class);
 
-			log.info("approveResponse: {}", approveResponse);
 
 			if (approveResponse != null) {
 				Integer totalAmount = approveResponse.getAmount().getTotal(); // 결제 금액

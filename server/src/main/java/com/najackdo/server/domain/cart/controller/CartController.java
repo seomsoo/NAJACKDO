@@ -49,7 +49,6 @@ public class CartController {
 	@GetMapping("/{cartId}")
 	@Operation(summary = "특정 장바구니 조회", description = "특정 장바구니 조회")
 	public SuccessResponse<CartData.CartInfo> getCart(@PathVariable Long cartId) {
-		log.info("cartId : {}", cartId);
 		CartData.CartInfo cart = cartService.getCart(cartId);
 		return SuccessResponse.of(cart);
 	}

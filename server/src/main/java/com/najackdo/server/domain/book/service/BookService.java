@@ -144,7 +144,6 @@ public class BookService {
 		Set<Object> myLocationCodes = locationCacheRepository.getUserNearLocation(user.getId());
 
 		if (myLocationCodes == null || myLocationCodes.isEmpty()) {
-			log.info("myLocationCodes is empty");
 			return Page.empty();
 		}
 
@@ -168,7 +167,6 @@ public class BookService {
 		}
 
 		if (nearUserIds.isEmpty()) {
-			log.info("nearUserIds is empty");
 			return Page.empty();
 		}
 

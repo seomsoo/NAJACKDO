@@ -44,7 +44,6 @@ public class ChatController {
 
 	@MessageMapping("chat.message.{chatRoomId}")
 	public void sendMessage(@Payload ChatDTO chat, @DestinationVariable String chatRoomId) {
-		log.info("CHAT {}", chat);
 		chat.setTime(LocalDateTime.now());
 		chat.setMessage(chat.getMessage());
 		rabbitTemplate.convertAndSend(CHAT_EXCHANGE_NAME, "room." + chatRoomId, chat);
@@ -53,8 +52,6 @@ public class ChatController {
 	//기본적으로 chat.queue가 exchange에 바인딩 되어있기 때문에 모든 메시지 처리
 	@RabbitListener(queues = CHAT_QUEUE_NAME)
 	public void receive(ChatDTO chatDTO) {
-		log.info("received : " + chatDTO.getSenderNickname());
-		log.info("received : " + chatDTO.getMessage());
 
 		// 새로운 메시지 생성
 		Chat.Message newMessage = new Chat.Message();
