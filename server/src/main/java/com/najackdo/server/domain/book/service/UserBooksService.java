@@ -1,13 +1,23 @@
 package com.najackdo.server.domain.book.service;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-import com.najackdo.server.domain.location.repository.LocationCacheRepository;
-import com.najackdo.server.domain.recommendation.dto.BookSpineDetectionResponse;
-
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.najackdo.server.core.exception.BaseException;
 import com.najackdo.server.core.exception.ErrorCode;
@@ -23,28 +33,17 @@ import com.najackdo.server.domain.book.repository.UserBookDetailRepository;
 import com.najackdo.server.domain.book.repository.UserBooksRepository;
 import com.najackdo.server.domain.location.entity.ActivityAreaSetting;
 import com.najackdo.server.domain.location.repository.ActivityAreaSettingRepository;
-import com.najackdo.server.domain.recommendation.entity.Rental;
+import com.najackdo.server.domain.location.repository.LocationCacheRepository;
+import com.najackdo.server.domain.recommendation.dto.BookSpineDetectionResponse;
 import com.najackdo.server.domain.recommendation.entity.Visit;
 import com.najackdo.server.domain.recommendation.repository.BookMarkMongoRepository;
 import com.najackdo.server.domain.recommendation.repository.RentalMongoRepository;
 import com.najackdo.server.domain.recommendation.repository.VisitMongoRepository;
 import com.najackdo.server.domain.user.entity.User;
 import com.najackdo.server.domain.user.repository.UserRepository;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -84,7 +83,8 @@ public class UserBooksService {
 
 			// 요청 본문 생성
 			HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
-			responseEntity = restTemplate.exchange(BookSpineURL, HttpMethod.POST, requestEntity, BookSpineDetectionResponse.class);
+			responseEntity = restTemplate.exchange(BookSpineURL, HttpMethod.POST, requestEntity,
+				BookSpineDetectionResponse.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new BaseException(ErrorCode.BOOK_NOT_FOUND);
@@ -168,7 +168,6 @@ public class UserBooksService {
 		bookMark.setUserId(user.getId());
 		bookMarkMongoRepository.save(bookMark);
 
-
 		bookMarkRepository.save(BookMark.createBookMark(user, book));
 	}
 
@@ -226,12 +225,11 @@ public class UserBooksService {
 
 	}
 
-
 	public List<UserBookData.AvailableNearBook> isNearAvailableBook(User user, Long bookId) {
 		// Set<Integer>로 수집
 		Set<Integer> locations = locationCacheRepository.getUserNearLocation(user.getId()).stream()
 			.filter(obj -> obj instanceof Integer) // Integer인 경우만 필터링
-			.map(obj -> (Integer) obj) // 안전하게 캐스팅
+			.map(obj -> (Integer)obj) // 안전하게 캐스팅
 			.collect(Collectors.toSet());
 
 		return userBooksRepository.findUserBooksByLocations(bookId, locations).stream().map(
@@ -245,4 +243,23 @@ public class UserBooksService {
 		).toList();
 	}
 
+	@Transactional
+	public void addBookListByIds(User user, UserBookData.CreateByIds create) {
+		ActivityAreaSetting activityAreaSetting = activityAreaSettingRepository.findUserActivityArea(user.getId())
+			.orElseThrow(
+				() -> new BaseException(ErrorCode.ACTIVITY_AREA_NOT_FOUND)
+			);
+
+		List<String> alreadyExistBooks = new ArrayList<>();
+		for (Long bookId : create.getBookIds()) {
+			Book book = bookRepository.findById(bookId).orElseThrow(() -> new BaseException(ErrorCode.BOOK_NOT_FOUND));
+
+			if (userBooksRepository.findByUserAndIsbn(user.getId(), book.getIsbn()).isPresent()) {
+				alreadyExistBooks.add(book.getTitle());
+				continue;
+			}
+
+			userBooksRepository.save(UserBook.createUserBook(user, book, activityAreaSetting.getLocation()));
+		}
+	}
 }
