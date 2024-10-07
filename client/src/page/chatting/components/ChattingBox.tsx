@@ -45,6 +45,9 @@ const ChattingBox = ({
   const receiverNickname =
     senderNickname === ownerName ? customerName : ownerName;
 
+
+  const [inputHeight, setInputHeight] = useState(0);
+
   // 채팅 내역 불러오기
   const { data: chattingList } = useSuspenseQuery<IChatList>({
     queryKey: ["chatList"],
@@ -103,6 +106,32 @@ const ChattingBox = ({
       setFirst(false);
     }
   }, [messages]);
+
+
+  
+  
+  useEffect(() => {
+    const handleResize = () => {
+      const inputTag = document.getElementById("Input");
+      if (inputTag) {
+        setInputHeight(inputTag.clientHeight);
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize); 
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    const inputTag = document.getElementById("Input");
+    if (inputTag) {
+      inputTag.style.bottom = `86-${inputHeight}px`;
+    }
+  }, [inputHeight]);
 
   return (
     <div className="mx-[25px]">
