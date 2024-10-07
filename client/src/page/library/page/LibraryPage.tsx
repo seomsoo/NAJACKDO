@@ -1,22 +1,22 @@
-import { useQuery } from "@tanstack/react-query";
-import { getInterestbook } from "api/bookApi";
-import { getMyBookCase } from "api/bookcaseApi";
-import Error from "components/common/Error";
-import Loading from "components/common/Loading";
-import LibraryHeader from "page/library/components/LibraryHeader";
-import { SlArrowRight } from "react-icons/sl";
-import { useNavigate } from "react-router-dom";
+import { useQuery } from '@tanstack/react-query';
+import { getInterestbook } from 'api/bookApi';
+import { getMyBookCase } from 'api/bookcaseApi';
+import Error from 'components/common/Error';
+import Loading from 'components/common/Loading';
+import LibraryHeader from 'page/library/components/LibraryHeader';
+import { SlArrowRight } from 'react-icons/sl';
+import { useNavigate } from 'react-router-dom';
 
 const LibraryPage = () => {
   const navigate = useNavigate();
   const goToMyFavorite = () => {
-    navigate("/library/my-favorite");
+    navigate('/library/my-favorite');
   };
   const goToMyBookCase = () => {
-    navigate("/library/my-bookcase");
+    navigate('/library/my-bookcase');
   };
   const goToMyHistory = () => {
-    navigate("/library/my-history");
+    navigate('/library/my-history');
   };
 
   // 나의 책장 이미지 목록 가져오기
@@ -25,7 +25,7 @@ const LibraryPage = () => {
     isLoading: isMyBookCaseLoading,
     isError: isMyBookCaseError,
   } = useQuery({
-    queryKey: ["myBookCase"],
+    queryKey: ['myBookCase'],
     queryFn: getMyBookCase,
   });
 
@@ -35,16 +35,13 @@ const LibraryPage = () => {
     isLoading: isInterestBooksLoading,
     isError: isInterestBooksError,
   } = useQuery({
-    queryKey: ["interestBooks"],
+    queryKey: ['interestBooks'],
     queryFn: getInterestbook,
   });
 
-
   if (isInterestBooksLoading || isMyBookCaseLoading) return <Loading />;
 
-
-  if (isInterestBooksError || isMyBookCaseError)
-    return <Error />
+  if (isInterestBooksError || isMyBookCaseError) return <Error />;
 
   const myBookCaseImages =
     myBookCase?.displayBooks.slice(0, 3).map((book) => book.cover) || [];
@@ -57,6 +54,56 @@ const LibraryPage = () => {
       <LibraryHeader />
       <main className="px-6">
         <section className="flex flex-col gap-10">
+          <nav>
+            <button onClick={goToMyHistory}>
+              <article className="flex items-center mb-7">
+                <span className="font-bold text-2xl">책 히스토리</span>
+                <SlArrowRight className="ml-2 text-[#807B7B] text-xl" />
+              </article>
+              <article>
+                <div className="flex w-[340px] justify-around ml-1 ">
+                  <img
+                    src="/images/mannertree/씨앗.png"
+                    className="w-4 h-4 mt-[106px]  opacity-0 animate-fadeIn delay-0"
+                    alt="씨앗"
+                  />
+                  <div className="flex flex-col items-center">
+                    <img
+                      src="/images/mannertree/cloud.png"
+                      className="w-20 h-[70px] opacity-0  mb-4 animate-fadeIn2"
+                      alt="구름"
+                    />
+                    <img
+                      src="/images/mannertree/새싹.png"
+                      className="w-12 h-9 opacity-0  animate-fadeIn delay-1"
+                      alt="새싹"
+                    />
+                  </div>
+                  <img
+                    src="/images/mannertree/가지.png"
+                    className="w-14 h-14 mt-[66px] opacity-0  animate-fadeIn delay-2"
+                    alt="가지"
+                  />
+                  <img
+                    src="/images/mannertree/나무.png"
+                    className="w-[70px] h-[70px] mt-[52px] opacity-0  animate-fadeIn delay-3"
+                    alt="나무"
+                  />
+                  <img
+                    src="/images/mannertree/숲.png"
+                    className="w-[85px] h-[85px] mt-[37px] opacity-0   animate-fadeIn delay-4"
+                    alt="숲"
+                  />
+                </div>
+                <img
+                  src="/images/Library/bar.png"
+                  className="w-[342px]"
+                  alt="bar"
+                />
+              </article>
+            </button>
+          </nav>
+
           <nav>
             <button onClick={goToMyBookCase}>
               <article className="flex items-center mb-7">
@@ -79,36 +126,6 @@ const LibraryPage = () => {
                       나의 책장이 비었어요.
                     </span>
                   )}
-                </div>
-                <img src="/images/Library/bar.png" alt="bar" />
-              </article>
-            </button>
-          </nav>
-
-          <nav>
-            <button onClick={goToMyHistory}>
-              <article className="flex items-center mb-7">
-                <span className="font-bold text-2xl">책 히스토리</span>
-                <SlArrowRight className="ml-2 text-[#807B7B] text-xl" />
-              </article>
-              <article>
-                <div className="flex justify-start gap-8 mx-5">
-                  {/* dummy 이미지 */}
-                  <img
-                    src="ssafy.png"
-                    className="w-20 h-28 object-cover"
-                    alt="dummy"
-                  />
-                  <img
-                    src="ssafy.png"
-                    className="w-20 h-28 object-cover"
-                    alt="dummy"
-                  />
-                  <img
-                    src="ssafy.png"
-                    className="w-20 h-28 object-cover"
-                    alt="dummy"
-                  />
                 </div>
                 <img src="/images/Library/bar.png" alt="bar" />
               </article>
