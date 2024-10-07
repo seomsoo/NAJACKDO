@@ -1,11 +1,13 @@
 import { Client } from "@stomp/stompjs";
 import Loading from "components/common/Loading";
+import SmallError from "components/common/SmallError";
 import ChatBookInfo, {
   ChatRentalStep,
 } from "page/chatting/components/ChatBookInfo";
 import ChattingBox, { Message } from "page/chatting/components/ChattingBox";
 import ChattingRoomHeader from "page/chatting/components/ChattingRoomHeader";
 import { Suspense, useEffect, useState } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { useLocation, useParams } from "react-router-dom";
 import SockJS from "sockjs-client";
 
@@ -18,6 +20,7 @@ const ChattingRoomPage = () => {
   const [step, setStep] = useState<ChatRentalStep>(ChatRentalStep.READY);
 
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+
 
   // 웹소켓
   const [client, setClient] = useState<Client | null>(null);
@@ -76,28 +79,28 @@ const ChattingRoomPage = () => {
 
     return () => disconnect();
   }, []);
-
- useEffect(() => {
-  const handleResize = () => {
-    if (window.innerHeight < 500) {
-      setIsKeyboardOpen(true);
-    } else {
-      setIsKeyboardOpen(false);
-    }
-  };
-
-  window.addEventListener("resize", handleResize);
-  return () => {
-    window.removeEventListener("resize", handleResize);
-  };
-}, []);
-
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerHeight < 500) {
+        setIsKeyboardOpen(true);
+      } else {
+        setIsKeyboardOpen(false);
+      }
+    };
   
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+  
+
   return (
     <div
-      className="relative"
-      style={{ bottom: isKeyboardOpen ? "-86px" : "0px" }}
-    >
+    className="relative"
+    style={{ bottom: isKeyboardOpen ? "-86px" : "0px" }}
+  >
+    <ErrorBoundary fallback={<SmallError />}>
       <Suspense fallback={<Loading />}>
         <ChattingRoomHeader ownerName={ownerName} customerName={customerName} />
         <ChatBookInfo
@@ -124,6 +127,7 @@ const ChattingRoomPage = () => {
           customerName={customerName}
         />
       </Suspense>
+    </ErrorBoundary>
     </div>
   );
 };
