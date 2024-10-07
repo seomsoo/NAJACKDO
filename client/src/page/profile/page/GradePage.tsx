@@ -1,6 +1,9 @@
 import { IoIosArrowBack } from "react-icons/io";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Review from "../components/Review";
+import { useState } from "react";
+import { IoInformationCircleOutline } from "react-icons/io5";
+import GradeInfoModal from "../components/GradeInfoModal";
 
 const GradePage = () => {
   const { nickname } = useParams();
@@ -10,6 +13,7 @@ const GradePage = () => {
   };
   const location = useLocation();
   const { mannerScore, goodReviewInfo, badReviewInfo } = location.state || {};
+  const [open, setOpen] = useState(false);
 
   const hasGoodReview = goodReviewInfo.length > 0;
   const hasBadReview = badReviewInfo.length > 0;
@@ -32,6 +36,9 @@ const GradePage = () => {
 
   return (
     <div className="p-6">
+    <GradeInfoModal  
+    open={open}
+    setOpen={setOpen}/>
       <div className="flex flex-row justify-between items-center">
         <div className="flex text-xl items-center font-bold">
           <button onClick={goBack}>
@@ -42,6 +49,8 @@ const GradePage = () => {
               <span className="hakgyo text-2xl">{nickname}</span>님의
             </p>
             <p className="font-semibold text-sub8">신뢰 나무</p>
+            <IoInformationCircleOutline size={15} color={'#79ac78'}
+              onClick={() => setOpen(true)}/>
           </div>
         </div>
         <span className="text-[#508d1e] font-semibold">{mannerScore} 점</span>
