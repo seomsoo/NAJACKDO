@@ -1,5 +1,7 @@
 package com.najackdo.server.domain.book.dto;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.najackdo.server.domain.book.entity.Book;
@@ -45,7 +47,7 @@ public class UserBookData {
 
 	@Data
 	public static class CreateByIds {
-		private Long[] bookIds;
+		private List<Long> bookIds;
 	}
 
 	@Data

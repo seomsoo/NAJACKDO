@@ -249,9 +249,10 @@ public class UserBooksService {
 		ActivityAreaSetting activityAreaSetting = activityAreaSettingRepository.findUserActivityArea(user.getId())
 			.orElseThrow(() -> new BaseException(ErrorCode.ACTIVITY_AREA_NOT_FOUND));
 
-		for (Long bookId : create.getBookIds()) {
-			Book book = bookRepository.findById(bookId).orElseThrow(() -> new BaseException(ErrorCode.BOOK_NOT_FOUND));
-			userBooksRepository.save(UserBook.createUserBook(user, book, activityAreaSetting.getLocation()));
-		}
+		create.getBookIds().stream()
+			.map(bookId -> bookRepository.findById(bookId)
+				.orElseThrow(() -> new BaseException(ErrorCode.BOOK_NOT_FOUND)))
+			.map(book -> UserBook.createUserBook(user, book, activityAreaSetting.getLocation()))
+			.forEach(userBooksRepository::save);
 	}
 }
