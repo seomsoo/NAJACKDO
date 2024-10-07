@@ -42,7 +42,7 @@ const Footer = () => {
   useEffect(() => {
     const ft = document.getElementById("footer");
     if (ft) {
-      ft.style.bottom = `-${footerHeight}px`;
+      ft.style.bottom = `${-(86 - footerHeight)}px`;
     }
   }, [footerHeight]);
 
