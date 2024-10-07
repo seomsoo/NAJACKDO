@@ -16,10 +16,10 @@ public interface RentalRepository extends JpaRepository<Rental, Long> {
 
 		SELECT r 
 		FROM Rental r 
-		JOIN FETCH r.cart
-		JOIN FETCH r.cart.cartItems ci
-		JOIN FETCH ci.userBookDetail
-		JOIN FETCH ci.userBookDetail.userBook
+		LEFT JOIN FETCH r.cart
+		LEFT JOIN FETCH r.cart.cartItems ci
+		LEFT JOIN FETCH ci.userBookDetail
+		LEFT JOIN FETCH ci.userBookDetail.userBook
 		WHERE r.cart.id = :cartId
 """)
 	Optional<Rental> findByCartId(@Param("cartId") Long cartId);
