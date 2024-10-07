@@ -1,9 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
-import { getOtherProfile } from 'api/profileApi';
-import { IoIosArrowBack } from 'react-icons/io';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import Review from '../components/Review';
-import Loading from 'components/common/Loading';
+import { IoIosArrowBack } from "react-icons/io";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import Review from "../components/Review";
 
 const GradePage = () => {
   const { nickname } = useParams();
@@ -12,36 +9,28 @@ const GradePage = () => {
     navigate(-1);
   };
   const location = useLocation();
-  const { mannerScore, goodReviewInfo, badReviewInfo  } = location.state || {};
+  const { mannerScore, goodReviewInfo, badReviewInfo } = location.state || {};
 
-
-
-
-
-  const hasReview =
-    goodReviewInfo.length > 0 ||
-    badReviewInfo.length > 0;
+  const hasReview = goodReviewInfo.length > 0 || badReviewInfo.length > 0;
 
   const hasGoodReview = goodReviewInfo.length > 0;
   const hasBadReview = badReviewInfo.length > 0;
 
-
-  let gradeImage = '/images/mannertree/씨앗.png';
-  let gradeLevel = 'Lv.1 나작씨앗';
+  let gradeImage = "/images/mannertree/씨앗.png";
+  let gradeLevel = "Lv.1 나작씨앗";
   if (mannerScore >= 80) {
-    gradeImage = '/images/mannertree/숲.png';
-    gradeLevel = 'Lv.5 나작숲';
+    gradeImage = "/images/mannertree/숲.png";
+    gradeLevel = "Lv.5 나작숲";
   } else if (mannerScore >= 60) {
-    gradeImage = '/images/mannertree/나무.png';
-    gradeLevel = 'Lv.4 나작나무';
+    gradeImage = "/images/mannertree/나무.png";
+    gradeLevel = "Lv.4 나작나무";
   } else if (mannerScore >= 40) {
-    gradeImage = '/images/mannertree/가지.png';
-    gradeLevel = 'Lv.3 나작가지';
+    gradeImage = "/images/mannertree/가지.png";
+    gradeLevel = "Lv.3 나작가지";
   } else if (mannerScore >= 20) {
-    gradeImage = '/images/mannertree/새싹.png';
-    gradeLevel = 'Lv.2 나작새싹';
+    gradeImage = "/images/mannertree/새싹.png";
+    gradeLevel = "Lv.2 나작새싹";
   }
-
 
   return (
     <div className="p-6 ">
@@ -72,10 +61,16 @@ const GradePage = () => {
           {hasGoodReview ? (
             goodReviewInfo.map((review, index) => {
               return (
-              <Review key={index} count={review.count} comment={review.content} />
+                <Review
+                  key={index}
+                  count={review.count}
+                  comment={review.content}
+                />
               );
             })
-          ) : (<p>받은 매너 칭찬이 없습니다.</p>)}
+          ) : (
+            <p>받은 매너 칭찬이 없습니다.</p>
+          )}
         </div>
       </div>
 
@@ -85,10 +80,16 @@ const GradePage = () => {
           {hasBadReview ? (
             badReviewInfo.map((review, index) => {
               return (
-              <Review key={index} count={review.count} comment={review.content} />
+                <Review
+                  key={index}
+                  count={review.count}
+                  comment={review.content}
+                />
               );
             })
-          ) : (<p>받은 비매너 리뷰가 없습니다.</p>)}
+          ) : (
+            <p>받은 비매너 리뷰가 없습니다.</p>
+          )}
         </div>
       </div>
     </div>

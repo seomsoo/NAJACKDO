@@ -1,11 +1,13 @@
 import { Client } from "@stomp/stompjs";
 import Loading from "components/common/Loading";
+import SmallError from "components/common/SmallError";
 import ChatBookInfo, {
   ChatRentalStep,
 } from "page/chatting/components/ChatBookInfo";
 import ChattingBox, { Message } from "page/chatting/components/ChattingBox";
 import ChattingRoomHeader from "page/chatting/components/ChattingRoomHeader";
 import { Suspense, useEffect, useState } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { useLocation, useParams } from "react-router-dom";
 import SockJS from "sockjs-client";
 
@@ -76,32 +78,34 @@ const ChattingRoomPage = () => {
   }, []);
 
   return (
-    <Suspense fallback={<Loading />}>
-      <ChattingRoomHeader ownerName={ownerName} customerName={customerName} />
-      <ChatBookInfo
-        client={client}
-        cartId={cartId}
-        roomId={Number(roomId)}
-        ownerId={ownerId}
-        ownerName={ownerName}
-        customerId={customerId}
-        customerName={customerName}
-        totalLeaf={totalLeaf}
-        setTotalLeaf={setTotalLeaf}
-        step={step}
-        setStep={setStep}
-      />
-      <ChattingBox
-        client={client}
-        roomId={Number(roomId)}
-        totalLeaf={totalLeaf}
-        messages={messages}
-        ownerId={ownerId}
-        ownerName={ownerName}
-        customerId={customerId}
-        customerName={customerName}
-      />
-    </Suspense>
+    <ErrorBoundary fallback={<SmallError />}>
+      <Suspense fallback={<Loading />}>
+        <ChattingRoomHeader ownerName={ownerName} customerName={customerName} />
+        <ChatBookInfo
+          client={client}
+          cartId={cartId}
+          roomId={Number(roomId)}
+          ownerId={ownerId}
+          ownerName={ownerName}
+          customerId={customerId}
+          customerName={customerName}
+          totalLeaf={totalLeaf}
+          setTotalLeaf={setTotalLeaf}
+          step={step}
+          setStep={setStep}
+        />
+        <ChattingBox
+          client={client}
+          roomId={Number(roomId)}
+          totalLeaf={totalLeaf}
+          messages={messages}
+          ownerId={ownerId}
+          ownerName={ownerName}
+          customerId={customerId}
+          customerName={customerName}
+        />
+      </Suspense>
+    </ErrorBoundary>
   );
 };
 
