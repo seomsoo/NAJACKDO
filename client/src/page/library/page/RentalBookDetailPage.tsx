@@ -1,3 +1,4 @@
+import ClipLoading from "components/common/ClipLoading";
 import Loading from "components/common/Loading";
 import AddCart from "page/library/components/AddCart";
 import DetailRecommendBook from "page/library/components/DetailRecommendBook";
@@ -28,7 +29,7 @@ const RentalBookDetailPage = () => {
           setPrice={setPrice}
           setBookGenre={setBookGenre}
         />
-        <div className="fixed bg-[#F8F6F3] bottom-0 w-screen max-w-[430px] border-t-[1px] pt-3 flex flex-row justify-center pb-7">
+        <div className="fixed bg-[#F8F6F3] bottom-0 w-screen max-w-[430px] pt-3 flex flex-row justify-center pb-7">
           {!isOwner ? (
             <AddCart ownerbookId={Number(bookId)} />
           ) : (
@@ -36,12 +37,17 @@ const RentalBookDetailPage = () => {
           )}
         </div>
       </Suspense>
-      <span className="font-bold">추천 도서</span>
-      {bookGenre && (
-        <Suspense fallback={<Loading />}>
-          <DetailRecommendBook bookId={Number(bookId)} bookGenre={bookGenre} />
-        </Suspense>
-      )}
+      <div className="mx-[25px] mb-2">
+        <span className="font-bold">추천 도서</span>
+        {bookGenre && (
+          <Suspense fallback={<ClipLoading />}>
+            <DetailRecommendBook
+              bookId={Number(bookId)}
+              bookGenre={bookGenre}
+            />
+          </Suspense>
+        )}
+      </div>
     </>
   );
 };

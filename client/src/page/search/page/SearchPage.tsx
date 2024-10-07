@@ -68,7 +68,7 @@ const SearchPage = () => {
       </Suspense>
       <div className="mx-[25px] fixed bottom-[86px]">
         <span className="font-bold">추천 도서</span>
-        <Suspense fallback={<ClipLoading />}>
+        <Suspense fallback={<ClipLoading className="w-full h-20 mx-[25px]" />}>
           <RecommendBook />
         </Suspense>
       </div>

@@ -100,7 +100,7 @@ const RentalBookInfo = ({
     userBookData.inspectBackImagePath,
   ];
   return (
-    <div className="border-2">
+    <div>
       <RentalBookDetail images={images} />
       <div className="m-4 mt-11">
         <SellerInfo seller={seller} />

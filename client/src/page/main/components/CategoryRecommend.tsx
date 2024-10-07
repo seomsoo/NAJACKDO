@@ -75,7 +75,7 @@ const CategoryRecommend = () => {
         추천도서는?
       </p>
       {isLoading ? (
-        <ClipLoading />
+        <ClipLoading className="h-40" />
       ) : (
         <div className="flex overflow-x-auto whitespace-nowrap scrollbar-hide">
           {Array(10)
