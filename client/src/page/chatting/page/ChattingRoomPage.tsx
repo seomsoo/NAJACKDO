@@ -18,7 +18,9 @@ const ChattingRoomPage = () => {
   } = useLocation();
   const [totalLeaf, setTotalLeaf] = useState<number>(0);
   const [step, setStep] = useState<ChatRentalStep>(ChatRentalStep.READY);
-
+  
+  const initialInnerHeight = window.innerHeight;
+  const initialVisualViewportHeight = window.visualViewport.height;
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
 
@@ -83,7 +85,9 @@ const ChattingRoomPage = () => {
   
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerHeight > window.visualViewport.height) {
+      if ((window.innerHeight < initialInnerHeight) 
+        || (window.visualViewport.height < initialVisualViewportHeight) 
+      ||(window.innerHeight > window.visualViewport.height)) {
         setIsKeyboardOpen(true);
       } else {
         setIsKeyboardOpen(false);
@@ -94,8 +98,7 @@ const ChattingRoomPage = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [window.visualViewport.height]);
-  
+  }, [initialInnerHeight, initialVisualViewportHeight, window.innerHeight, window.visualViewport.height]);
 
   return (
     <div

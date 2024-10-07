@@ -9,6 +9,8 @@ import { useUserStore } from "store/useUserStore";
 const Footer = () => {
   const location = useLocation();
   const [clicked, setClicked] = useState<string | null>(null);
+  const initialInnerHeight = window.innerHeight;
+  const initialVisualViewportHeight = window.visualViewport.height;
 
   const handleClick = (path: string) => {
     setClicked(path);
@@ -25,24 +27,25 @@ const Footer = () => {
     location.pathname === `/profile` ||
     location.pathname === `/profile/${userNickname}`;
 
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerHeight > window.visualViewport.height) {
-        setIsKeyboardOpen(true);
-      } else {
-        setIsKeyboardOpen(false);
-      }
-    };
-  
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [window.visualViewport.height]);
+    useEffect(() => {
+      const handleResize = () => {
+        if ((window.innerHeight < initialInnerHeight) 
+          || (window.visualViewport.height < initialVisualViewportHeight) 
+        ||(window.innerHeight > window.visualViewport.height)) {
+          setIsKeyboardOpen(true);
+        } else {
+          setIsKeyboardOpen(false);
+        }
+      };
+    
+      window.addEventListener("resize", handleResize);
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }, [initialInnerHeight, initialVisualViewportHeight, window.innerHeight, window.visualViewport.height]);
   
   return (
-    <footer 
+    <footer
       className={`fixed font-medium bg-[#F8F6F3] bottom-0 w-screen max-w-[430px] border-t-[1px] pt-3 flex flex-row justify-around pb-7 ${
         isKeyboardOpen ? "hidden" : ""
       }`}
