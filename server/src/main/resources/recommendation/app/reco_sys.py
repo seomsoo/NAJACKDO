@@ -25,7 +25,6 @@ def create_item_user_matrix(visits_df, book_marks_df, rentals_df):
         item_user_matrix.loc[row['bookId'], row['userId']] += row['timeSpent'] / visits_df['timeSpent'].max() * time_spent_weight
 
     for idx, row in book_marks_df.iterrows():
-        
         item_user_matrix.loc[row['bookId'], row['userId']] += 1 * favorite_weight
 
     for idx, row in rentals_df.iterrows():
@@ -38,7 +37,6 @@ def create_item_user_matrix(visits_df, book_marks_df, rentals_df):
 def recommend_books(item_user_matrix, bookId):
     if bookId not in item_user_matrix.index:
         return []  # bookId가 매트릭스에 없으면 빈 리스트 반환
-
 
     cosine_similarities = cosine_similarity(item_user_matrix)
     book_index = item_user_matrix.index.get_loc(bookId)
