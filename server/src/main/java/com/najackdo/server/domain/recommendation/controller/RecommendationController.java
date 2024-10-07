@@ -49,4 +49,17 @@ public class RecommendationController {
 		recommendationService.createMongoVisit(user, visitDto);
 		return SuccessResponse.empty();
 	}
+
+
+	@GetMapping("/main")
+	@Operation(summary = "메인 화면 추천", description = "메인 화면 추천")
+	public SuccessResponse<List<BookData.Search>> getMainRecommendation(
+		@CurrentUser User user,
+		@RequestParam String genre) {
+
+		List<BookData.Search> mainRecommendation = recommendationService.getMainRecommendation(user,genre);
+
+		return SuccessResponse.of(mainRecommendation);
+	}
+
 }
