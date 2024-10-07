@@ -52,7 +52,6 @@ public class UserBookController {
 	public SuccessResponse<Void> updateRentalCost(
 		@RequestBody UserBookData.UpdateRentalCost updateRentalCost
 	) {
-			updateRentalCost.getUpdateRentalCost());
 		userBooksService.updateRentalCost(updateRentalCost.getUserBookId(), updateRentalCost.getUpdateRentalCost());
 		return SuccessResponse.empty();
 	}

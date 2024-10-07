@@ -85,7 +85,7 @@ public interface RentalRepository extends JpaRepository<Rental, Long> {
     ORDER BY COUNT(r) DESC
     LIMIT 10
 """)
-	List<Book> findLocalBestSeller( Integer locationCode);
+	List<Book> findLocalBestSeller(Integer locationCode);
 
 	@Query("""
 		SELECT r FROM Rental r 
