@@ -1,5 +1,6 @@
 package com.najackdo.server.domain.book.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -21,6 +22,8 @@ import com.najackdo.server.domain.book.entity.Book;
 import com.najackdo.server.domain.book.entity.UserBook;
 import com.najackdo.server.domain.book.repository.BookRepository;
 import com.najackdo.server.domain.location.repository.LocationCacheRepository;
+import com.najackdo.server.domain.recommendation.entity.Visit;
+import com.najackdo.server.domain.recommendation.repository.VisitMongoRepository;
 import com.najackdo.server.domain.user.entity.User;
 import com.najackdo.server.domain.user.repository.InterestUserRepository;
 import com.najackdo.server.domain.user.repository.UserRepository;
@@ -40,6 +43,7 @@ public class BookService {
 
 	private static final String Location_KEY = "location:";
 	private final LocationCacheRepository locationCacheRepository;
+	private final VisitMongoRepository visitMongoRepository;
 
 	private static String apply(Object value) {
 		return ((Map<String, String>)value).get("value");
@@ -100,9 +104,19 @@ public class BookService {
 	public BookData.Search getBook(User user, Long bookId) {
 		List<Book> userInterestingBooks = bookRepository.findInterestingBooks(user.getId()); // 사용자 관심 도서 목록 조회
 
-		return bookRepository.findById(bookId)
+		BookData.Search search = bookRepository.findById(bookId)
 			.map(book -> BookData.Search.of(book, userInterestingBooks)) // 관심 도서 여부를 포함한 결과 반환
-			.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_BOOK)); // 도서가 존재하지 않을 경우 예외 발생
+			.orElseThrow(() -> new BaseException(ErrorCode.NOT_FOUND_BOOK));// 도서가 존재하지 않을 경우 예외 발생
+
+		Visit visit = new Visit();
+		visit.setUserId(user.getId());
+		visit.setBookId(bookId);
+		visit.setTimeSpent(1);
+		visit.setGenre(search.getGenre());
+		visit.setVisitTime(LocalDateTime.now());
+		visitMongoRepository.save(visit);
+
+		return search;
 	}
 
 	public BookData.BookCase getMyBookCaseByuserId(Long id) {

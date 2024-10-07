@@ -1,5 +1,6 @@
 package com.najackdo.server.domain.book.service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import com.najackdo.server.domain.location.repository.LocationCacheRepository;
@@ -23,8 +24,10 @@ import com.najackdo.server.domain.book.repository.UserBooksRepository;
 import com.najackdo.server.domain.location.entity.ActivityAreaSetting;
 import com.najackdo.server.domain.location.repository.ActivityAreaSettingRepository;
 import com.najackdo.server.domain.recommendation.entity.Rental;
+import com.najackdo.server.domain.recommendation.entity.Visit;
 import com.najackdo.server.domain.recommendation.repository.BookMarkMongoRepository;
 import com.najackdo.server.domain.recommendation.repository.RentalMongoRepository;
+import com.najackdo.server.domain.recommendation.repository.VisitMongoRepository;
 import com.najackdo.server.domain.user.entity.User;
 import com.najackdo.server.domain.user.repository.UserRepository;
 import org.springframework.util.LinkedMultiValueMap;
@@ -61,6 +64,7 @@ public class UserBooksService {
 	private final UserRepository userRepository;
 	private final LocationCacheRepository locationCacheRepository;
 	private final BookMarkMongoRepository bookMarkMongoRepository;
+	private final VisitMongoRepository visitMongoRepository;
 
 	public List<String> postBookSpineDetection(MultipartFile file) {
 		ResponseEntity<BookSpineDetectionResponse> responseEntity;
@@ -183,7 +187,7 @@ public class UserBooksService {
 
 	}
 
-	public UserBookData.InfoResponse getUserBookInfo(Long userBookId) {
+	public UserBookData.InfoResponse getUserBookInfo(User user, Long userBookId) {
 
 		UserBook userBook = userBooksRepository.findById(userBookId).orElseThrow(
 			() -> new BaseException(ErrorCode.BOOK_NOT_FOUND)
@@ -198,6 +202,14 @@ public class UserBooksService {
 		UserBookDetail userBookDetail = userBookDetailRepository.findByUserBookId(userBookId).orElseThrow(
 			() -> new BaseException(ErrorCode.BOOK_DETAIL_NOT_FOUND)
 		);
+
+		Visit visit = new Visit();
+		visit.setUserId(user.getId());
+		visit.setBookId(book.getId());
+		visit.setTimeSpent(1);
+		visit.setGenre(book.getGenre());
+		visit.setVisitTime(LocalDateTime.now());
+		visitMongoRepository.save(visit);
 
 		return UserBookData.InfoResponse.of(owner, locationName, book, userBook, userBookDetail);
 
