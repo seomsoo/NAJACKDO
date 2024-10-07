@@ -83,7 +83,7 @@ const ChattingRoomPage = () => {
   
   useEffect(() => {
     const handleResize = () => {
-      if (window.visualViewport.height < 700) {
+      if (window.innerHeight > window.visualViewport.height) {
         setIsKeyboardOpen(true);
       } else {
         setIsKeyboardOpen(false);
@@ -94,7 +94,7 @@ const ChattingRoomPage = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [window.visualViewport.height]);
   
 
   return (

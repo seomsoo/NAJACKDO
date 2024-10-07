@@ -28,7 +28,7 @@ const Footer = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.visualViewport.height < 700) {
+      if (window.innerHeight > window.visualViewport.height) {
         setIsKeyboardOpen(true);
       } else {
         setIsKeyboardOpen(false);
@@ -39,11 +39,7 @@ const Footer = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
-
-  const footerStyle = {
-    display: isKeyboardOpen ? "none" : "flex",
-  };
+  }, [window.visualViewport.height]);
   
   return (
     <footer 
