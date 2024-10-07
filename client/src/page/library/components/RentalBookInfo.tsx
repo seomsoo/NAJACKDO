@@ -1,7 +1,6 @@
 import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import { getUserBookDetail, postTimeSpent } from "api/bookApi";
 import CategoryTag from "components/common/CategoryTag";
-import DetailRecommendBook from "page/library/components/DetailRecommendBook";
 import DetectionInfo from "page/library/components/DetectionInfo";
 import RentalBookDetail from "page/library/components/RentalBookDetail";
 import SellerInfo from "page/library/components/SellerInfo";
@@ -9,7 +8,21 @@ import SellerReview from "page/library/components/SellerReview";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const RentalBookInfo = ({ bookId, userId, setIsOwner, setPrice }) => {
+interface RentalBookInfoProps {
+  bookId: number;
+  userId: number;
+  setIsOwner: (isOwner: boolean) => void;
+  setPrice: (price: number) => void;
+  setBookGenre: (genre: string) => void;
+}
+
+const RentalBookInfo = ({
+  bookId,
+  userId,
+  setIsOwner,
+  setPrice,
+  setBookGenre,
+}: RentalBookInfoProps) => {
   const navigate = useNavigate();
 
   // 대여 도서 상세 정보 조회
@@ -17,6 +30,10 @@ const RentalBookInfo = ({ bookId, userId, setIsOwner, setPrice }) => {
     queryKey: ["bookdetail", "rental"],
     queryFn: () => getUserBookDetail(bookId),
   });
+
+  if (userBookData) {
+    setBookGenre(userBookData.genre);
+  }
 
   const mutation = useMutation({
     mutationKey: ["RentalCostData"],
@@ -80,7 +97,7 @@ const RentalBookInfo = ({ bookId, userId, setIsOwner, setPrice }) => {
     userBookData.frontImagePath,
     userBookData.backImagePath,
     userBookData.inspectFrontImagePath,
-    userBookData.inspectBackImagePath
+    userBookData.inspectBackImagePath,
   ];
   return (
     <div className="border-2">
@@ -101,8 +118,6 @@ const RentalBookInfo = ({ bookId, userId, setIsOwner, setPrice }) => {
           wornout={userBookData.wornout}
         />
         <SellerReview nickname={userBookData.nickname} />
-        <span className="font-bold">추천 도서</span>
-        <DetailRecommendBook bookId={bookId} />
       </div>
     </div>
   );

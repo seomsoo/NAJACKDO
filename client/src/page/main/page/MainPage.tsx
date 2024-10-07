@@ -9,7 +9,7 @@ import { FaRankingStar } from "react-icons/fa6";
 const MainPage = () => {
   return (
     <Suspense fallback={<Loading />}>
-      <div>
+      <div className="mb-3">
         {/* 유저 정보 저장 */}
         <GetUserInfo />
         {/* 메인 캐로셀 */}
