@@ -43,7 +43,7 @@ def recommend_books(item_user_matrix, bookId):
     cosine_similarities = cosine_similarity(item_user_matrix)
     book_index = item_user_matrix.index.get_loc(bookId)
 
-    most_similar_books = cosine_similarities[book_index].argsort()[:-15:-1]
+    most_similar_books = cosine_similarities[book_index].argsort()[:-100:-1]
 
     recommended_books = item_user_matrix.iloc[most_similar_books].index.tolist()
 
