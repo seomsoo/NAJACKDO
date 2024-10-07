@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ConfirmModal from "components/common/ConfirmModal";
+import { useUserStore } from 'store/useUserStore';
 
 
 declare global {
@@ -24,6 +25,7 @@ const RangeSetting = ({ selectedLocation }) => {
   const [range, setRange] = useState(0);
   const [ polygonPath, setPolygonPath ] = useState([]);
   const [open, setOpen] = useState(false);
+  const setLocation = useUserStore.getState().setLocation
 
 
   const {
@@ -111,6 +113,7 @@ const RangeSetting = ({ selectedLocation }) => {
 
     onSuccess: () => {
       setOpen(true);
+      setLocation(locationName)
     },
   });
 
