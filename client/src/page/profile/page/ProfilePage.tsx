@@ -1,56 +1,25 @@
-import { useQuery } from "@tanstack/react-query";
-import { getUserInfo } from "api/profileApi";
-import { IProfile } from "atoms/Profile.type";
+import Error from "components/common/Error";
 import Loading from "components/common/Loading";
 import LogoutButton from "page/profile/components/LogoutButton";
-import MannerTree from "page/profile/components/MannerTree";
 import MyLeaf from "page/profile/components/MyLeaf";
-import UserInfo from "../components/UserInfo";
-import Error from "components/common/Error";
+import UserProfile from "page/profile/components/UserProfile";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
-const ProfilePage = () => {
-  const {
-    data: profileInfo,
-    isLoading,
-    isError,
-  } = useQuery<IProfile>({
-    queryKey: ["profile"],
-    queryFn: async () => await getUserInfo(),
-  });
+const ProfilePage = () => (
+  <div className="mx-[25px] my-4">
+    <ErrorBoundary fallback={<Error />}>
+      <Suspense fallback={<Loading />}>
+        <UserProfile />
+      </Suspense>
+    </ErrorBoundary>
 
-  if (isLoading) {
-    return <Loading />;
-  }
-  if (isError) return <Error />;
+    {/* 나의 책잎 */}
+    <MyLeaf />
 
-  if (profileInfo) {
-    console.log("유저 정보", profileInfo);
-  }
-
-  return (
-    <div className="mx-6 my-4">
-      {/* 유저 정보 */}
-      <UserInfo
-        userName={profileInfo.nickname}
-        userLocation={profileInfo.locationName}
-        userImage={profileInfo.profileImage}
-        mannerScore={profileInfo.mannerScore} // mannerScore 전달
-      />
-      {/* 신뢰 나무 */}
-      <MannerTree
-        nickname={profileInfo.nickname}
-        mannerScore={profileInfo.mannerScore}
-        goodReviewInfo={profileInfo.goodReviewInfo}
-        badReviewInfo={profileInfo.badReviewInfo}
-      />
-
-      {/* 나의 책잎 */}
-      <MyLeaf />
-
-      {/* 로그아웃 버튼 */}
-      <LogoutButton />
-    </div>
-  );
-};
+    {/* 로그아웃 버튼 */}
+    <LogoutButton />
+  </div>
+);
 
 export default ProfilePage;

@@ -26,4 +26,3 @@ const SmallError = ({ className }: SmallErrorProps) => {
 };
 
 export default SmallError;
-//

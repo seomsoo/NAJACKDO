@@ -11,8 +11,6 @@ const GradePage = () => {
   const location = useLocation();
   const { mannerScore, goodReviewInfo, badReviewInfo } = location.state || {};
 
-  const hasReview = goodReviewInfo.length > 0 || badReviewInfo.length > 0;
-
   const hasGoodReview = goodReviewInfo.length > 0;
   const hasBadReview = badReviewInfo.length > 0;
 
@@ -33,16 +31,20 @@ const GradePage = () => {
   }
 
   return (
-    <div className="p-6 ">
-      <button onClick={goBack}>
-        <IoIosArrowBack className="text-2xl" />
-      </button>
-      <div className="flex text-xl  items-center font-bold justify-between">
-        <div className="flex flex-row justify-start my-5">
-          <p>{nickname}님의&nbsp;</p>
-          <p className=" font-semibold text-sub8">신뢰 나무</p>
+    <div className="p-6">
+      <div className="flex flex-row justify-between items-center">
+        <div className="flex text-xl items-center font-bold">
+          <button onClick={goBack}>
+            <IoIosArrowBack size={25} />
+          </button>
+          <div className="flex text-xl items-center font-bold space-x-1 ml-1">
+            <p>
+              <span className="hakgyo text-2xl">{nickname}</span>님의
+            </p>
+            <p className="font-semibold text-sub8">신뢰 나무</p>
+          </div>
         </div>
-        <span className=" text-[#508d1e]">{mannerScore} 점</span>
+        <span className="text-[#508d1e] font-semibold">{mannerScore} 점</span>
       </div>
 
       {/* 신뢰 나무 */}
@@ -69,7 +71,7 @@ const GradePage = () => {
               );
             })
           ) : (
-            <p>받은 매너 칭찬이 없습니다.</p>
+            <p className="text-center my-6">받은 매너 칭찬이 없습니다.</p>
           )}
         </div>
       </div>
@@ -88,7 +90,7 @@ const GradePage = () => {
               );
             })
           ) : (
-            <p>받은 비매너 리뷰가 없습니다.</p>
+            <p className="text-center my-6">받은 비매너 리뷰가 없습니다.</p>
           )}
         </div>
       </div>

@@ -20,7 +20,11 @@ const CategoryRecommend = () => {
   //   }
   // }, [selectedCategory, userId]);
 
-  const { data: recommendBooksData, isLoading } = useQuery({
+  const {
+    data: recommendBooksData,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["recommendBooks", selectedCategory, userId],
     queryFn: () => getRecommBooksWithGenre(userId, selectedCategory),
     enabled: !!userId,
@@ -48,9 +52,12 @@ const CategoryRecommend = () => {
     "여행",
   ];
 
-  // if (isLoading) {
-  //   return <ClipLoading />;
-  // }
+  if (
+    !isLoading &&
+    recommendBooksData?.recommended_items_with_scores.length === 0
+  ) {
+    return refetch();
+  }
 
   return (
     <div>
