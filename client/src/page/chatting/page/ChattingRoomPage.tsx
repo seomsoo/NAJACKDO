@@ -82,29 +82,8 @@ const ChattingRoomPage = () => {
     return () => disconnect();
   }, []);
 
-  
-  useEffect(() => {
-    const handleResize = () => {
-      if ((window.innerHeight < initialInnerHeight) 
-        || (window.visualViewport.height < initialVisualViewportHeight) 
-      ||(window.innerHeight > window.visualViewport.height)) {
-        setIsKeyboardOpen(true);
-      } else {
-        setIsKeyboardOpen(false);
-      }
-    };
-  
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [initialInnerHeight, initialVisualViewportHeight, window.innerHeight, window.visualViewport.height]);
 
   return (
-    <div
-    className="relative"
-    style={{ bottom: isKeyboardOpen ? "-86px" : "0px" }}
-  >
     <ErrorBoundary fallback={<SmallError />}>
       <Suspense fallback={<Loading />}>
         <ChattingRoomHeader ownerName={ownerName} customerName={customerName} />
@@ -133,7 +112,6 @@ const ChattingRoomPage = () => {
         />
       </Suspense>
     </ErrorBoundary>
-    </div>
   );
 };
 

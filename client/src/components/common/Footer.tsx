@@ -9,8 +9,6 @@ import { useUserStore } from "store/useUserStore";
 const Footer = () => {
   const location = useLocation();
   const [clicked, setClicked] = useState<string | null>(null);
-  const initialInnerHeight = window.innerHeight;
-  const initialVisualViewportHeight = window.visualViewport.height;
 
   const handleClick = (path: string) => {
     setClicked(path);
@@ -19,36 +17,15 @@ const Footer = () => {
 
   const userNickname = useUserStore.getState().nickname;
   
-  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
-
 
   // 프로필 경로가 현재 로그인된 유저의 프로필인지 확인
   const isMyProfile =
     location.pathname === `/profile` ||
     location.pathname === `/profile/${userNickname}`;
-
-    useEffect(() => {
-      const handleResize = () => {
-        if ((window.innerHeight < initialInnerHeight) 
-          || (window.visualViewport.height < initialVisualViewportHeight) 
-        ||(window.innerHeight > window.visualViewport.height)) {
-          setIsKeyboardOpen(true);
-        } else {
-          setIsKeyboardOpen(false);
-        }
-      };
-    
-      window.addEventListener("resize", handleResize);
-      return () => {
-        window.removeEventListener("resize", handleResize);
-      };
-    }, [initialInnerHeight, initialVisualViewportHeight, window.innerHeight, window.visualViewport.height]);
   
   return (
     <footer
-      className={`fixed font-medium bg-[#F8F6F3] bottom-0 w-screen max-w-[430px] border-t-[1px] pt-3 flex flex-row justify-around pb-7 ${
-        isKeyboardOpen ? "hidden" : ""
-      }`}
+      className="fixed font-medium bg-[#F8F6F3] bottom-0 w-screen max-w-[430px] border-t-[1px] pt-3 flex flex-row justify-around pb-7"
     >
       <Link
         to="/"
