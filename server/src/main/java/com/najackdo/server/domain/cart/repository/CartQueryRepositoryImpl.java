@@ -44,7 +44,7 @@ public class CartQueryRepositoryImpl implements CartQueryRepository {
 					cart.owner.id.eq(ownerId),
 					cart.isDelete.isFalse()
 				)
-				.fetchOne()
+				.fetchFirst() // 첫 번째 결과를 가져옵니다.
 		);
 	}
 
