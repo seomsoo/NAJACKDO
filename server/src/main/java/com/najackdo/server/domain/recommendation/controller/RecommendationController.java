@@ -30,7 +30,7 @@ public class RecommendationController {
 
 	private final RecommendationService recommendationService;
 
-	@GetMapping("/{bookId}")
+	@GetMapping("")
 	@Operation(summary = "책을 기반으로 비슷한 책 추천", description = "빈리스트 반환 시 추천 데이터가 부족")
 	public SuccessResponse<List<BookData.Search>> getBookBasedReccom(
 		@RequestParam Long bookId,
