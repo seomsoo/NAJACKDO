@@ -19,7 +19,7 @@ from pymongo import MongoClient
 from pydantic import BaseModel  
 from fastapi import FastAPI, File, UploadFile, Form, Query
 from dotenv import load_dotenv
-from PIL import Image 
+from PIL import Image, ExifTags
 from math import log10
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime, timedelta 
@@ -39,7 +39,7 @@ model_path = os.path.join(script_dir, "quality_inspection/best.pt")
 spine_model_path = os.path.join(script_dir, "book_spine_detection/best.pt")
 yolo_model = YOLO(model_path)
 spine_model = YOLO(spine_model_path)
-
+ocr_reader = easyocr.Reader(['ko','en'])
 
 aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
 aws_secret_access_key = os.getenv("AWS_SECRET_ACCESS_KEY")
@@ -175,41 +175,114 @@ async def quality_inspection(imageFile: UploadFile = File(...)):
             for book in book_list:
                 csv_writer.writerow([book])  # 각 제목을 새로운 행으로 추가
 
-    reader = easyocr.Reader(['ko','en'])
+    
 
     image_data = await imageFile.read()
-    img = Image.open(io.BytesIO(image_data)).convert("RGB")
-    # img = Image.open('image2.png')
-    result = spine_model(img,device="cpu")
+    bw_img = Image.open(io.BytesIO(image_data)).convert("L")
+    
+    for orientation in ExifTags.TAGS.keys():
+        if ExifTags.TAGS[orientation] == 'Orientation':
+            break
+
+    # EXIF 데이터에서 Orientation 값 얻기
+    exif = bw_img.getexif()
+    if exif is not None:
+        orientation = exif.get(orientation)
+        if orientation == 3:
+            bw_img = bw_img.rotate(180, expand=True)
+        elif orientation == 6:
+            bw_img = bw_img.rotate(270, expand=True)
+        elif orientation == 8:
+            bw_img = bw_img.rotate(90, expand=True)
+    
+    result = spine_model(bw_img,device="cpu")
     output = np.array(result[0].boxes.data)
 
     title_list = []
+    title_list2 = []
     rotate_list = [90]
 
+    for rotate in rotate_list:     
+        rotate_image = bw_img.rotate(rotate, expand=1)  
+        titles = ocr_reader.readtext(np.array(rotate_image))
+
+        # rotate_image.show()
+        if titles == []:
+            break
+            
+            # 타이틀을 길이에 따라 내림차순 정렬
+        # sorted_titles = sorted(titles, key=lambda x: len(x[1]), reverse=True)
+            
+        #     # 가장 긴 3개의 타이틀 선택
+        # num_titles_to_select = min(len(sorted_titles), 4)
+            
+        #     # 가장 긴 타이틀 선택
+        # longest_titles = sorted_titles[:num_titles_to_select]
+            
+        
+
+        for idx,title in enumerate(titles):
+        
+            if(len(title[1])<=1):
+                continue
+                # 모든 책 제목 리스트에서 rapidfuzz를 사용해 가장 가까운 책 제목 뽑아내, title_list에 추가
+            for bookTitle in book_list:
+                Qratio = fuzz.ratio(bookTitle[0],title[1])
+                if(Qratio>=50):
+                    title_list2.append(bookTitle[0])
+                    # print("일치율: "+ str(Qratio) + ", 인식된 제목: " + str(title[1]) + ", 인식된 책: " + str(bookTitle[0]))
+            
+    # print("결과")
+    # print(save_title)
+
+
+            
+    # 저장된 제목 리스트를 Spring 서버로 전송
+    unique_titles = list(set(title_list2))
+    
     for idx, book in enumerate(output):
-        crop_image = img.crop((book[0],book[1],book[2],book[3]))
-        for rotate in rotate_list:
-            rotate_image = crop_image.rotate(rotate, expand=1)
-            titles = reader.readtext(np.array(rotate_image))
+        crop_image = bw_img.crop((book[0],book[1],book[2],book[3]))
+        for rotate in rotate_list:     
+            rotate_image = crop_image.rotate(rotate, expand=1)  
+            titles = ocr_reader.readtext(np.array(rotate_image))
 
-            # print(titles)
-
+            
+            if titles == []:
+                continue
+            
+            # 타이틀을 길이에 따라 내림차순 정렬
+            sorted_titles = sorted(titles, key=lambda x: len(x[1]), reverse=True)
+            
+            # 가장 긴 3개의 타이틀 선택
+            num_titles_to_select = min(len(sorted_titles), 4)
+            
+            # 가장 긴 타이틀 선택
+            longest_titles = sorted_titles[:num_titles_to_select]
+            
             save_title = ""
             save_Qratio = 0.0
-            for idx,title in enumerate(titles):
+
+            for idx,title in enumerate(longest_titles):
                 if(len(title[1])<=1) :
                     continue
                 # 모든 책 제목 리스트에서 rapidfuzz를 사용해 가장 가까운 책 제목 뽑아내, title_list에 추가
-                for bookTitle in book_list:
-                    Qratio = fuzz.ratio(bookTitle[0],title[1])
+                for bookTitle in unique_titles:
+                    Qratio = fuzz.ratio(bookTitle,title[1])
                     if(Qratio > save_Qratio):
                         save_Qratio=Qratio
-                        save_title=bookTitle[0]
+                        save_title=bookTitle
+                # print("일치율: "+ str(save_Qratio) + ", 인식된 제목: " + str(title[1]) + ", 인식된 책: " + str(save_title))
+
+        # print("결과")
+        print(save_title)
+
         if(save_title==""):
             continue
-
-        title_list.append(save_title)
-    return {"titles": title_list}
+        if(save_Qratio>=40):
+            title_list.append(save_title)
+            
+    # 저장된 제목 리스트를 Spring 서버로 전송
+    return {"titles": list(set(title_list))}
 
 @app.get("/python/item/userrecommand/{userId}")
 async def recomm_books(userId : int):
