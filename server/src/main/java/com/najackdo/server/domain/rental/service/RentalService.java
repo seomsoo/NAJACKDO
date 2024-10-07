@@ -105,11 +105,11 @@ public class RentalService {
 		List<UserBook> userBooks = byCartId.getCart().getCartItems()
 			.stream()
 			.map(cartItem -> cartItem.getUserBookDetail().getUserBook())
-			.peek(userBook -> userBook.updateBookStatus(BookStatus.AVAILABLE))
+			.peek(userBook -> userBook.updateBookStatus(BookStatus.RENTED))
 			.toList();
 
 		userBooksRepository.saveAll(userBooks);
-		
+
 
 		return SuccessResponse.empty();
 	}
