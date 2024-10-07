@@ -14,7 +14,7 @@ const CartList = () => {
   const filteredCart = cartList.filter((item) => item.rentalId === null);
 
   return (
-    <div>
+    <div className="mx-[25px]">
       {filteredCart.length ? (
         <Fragment>
           {filteredCart.map((item: ICartList, index) => {

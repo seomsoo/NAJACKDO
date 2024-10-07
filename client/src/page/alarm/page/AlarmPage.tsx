@@ -1,10 +1,10 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getAlarm, postAlarmReadSucess } from "api/alarmApi";
+import ClipLoading from "components/common/ClipLoading";
 import Error from "components/common/Error";
 import Loading from "components/common/Loading";
 import Alarm from "page/alarm/components/Alarm";
 import { useCallback, useEffect, useRef } from "react";
-import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
 const AlarmPage = () => {
@@ -75,13 +75,6 @@ const AlarmPage = () => {
 
   return (
     <div>
-      <div className="flex flex-row mx-[25px] gap-1 py-4">
-        <button onClick={goBack}>
-          <IoIosArrowBack size={25} className="text-xl" />
-        </button>
-        <p className="text-2xl font-bold ">알림</p>
-      </div>
-
       {alarmArray.map((item, index) => {
         return (
           <Alarm
@@ -94,7 +87,7 @@ const AlarmPage = () => {
         );
       })}
       <div ref={loadMoreRef} className="loading">
-        {isFetchingNextPage ? "Loading more..." : ""}
+        {isFetchingNextPage ? <ClipLoading /> : ""}
       </div>
     </div>
   );
