@@ -18,7 +18,9 @@ const ChattingRoomPage = () => {
   } = useLocation();
   const [totalLeaf, setTotalLeaf] = useState<number>(0);
   const [step, setStep] = useState<ChatRentalStep>(ChatRentalStep.READY);
-
+  
+  const initialInnerHeight = window.innerHeight;
+  const initialVisualViewportHeight = window.visualViewport.height;
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
 
@@ -79,27 +81,9 @@ const ChattingRoomPage = () => {
 
     return () => disconnect();
   }, []);
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerHeight < 500) {
-        setIsKeyboardOpen(true);
-      } else {
-        setIsKeyboardOpen(false);
-      }
-    };
-  
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-  
+
 
   return (
-    <div
-    className="relative"
-    style={{ bottom: isKeyboardOpen ? "-86px" : "0px" }}
-  >
     <ErrorBoundary fallback={<SmallError />}>
       <Suspense fallback={<Loading />}>
         <ChattingRoomHeader ownerName={ownerName} customerName={customerName} />
@@ -128,7 +112,6 @@ const ChattingRoomPage = () => {
         />
       </Suspense>
     </ErrorBoundary>
-    </div>
   );
 };
 

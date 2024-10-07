@@ -16,15 +16,17 @@ const Footer = () => {
   };
 
   const userNickname = useUserStore.getState().nickname;
+  
 
   // 프로필 경로가 현재 로그인된 유저의 프로필인지 확인
   const isMyProfile =
     location.pathname === `/profile` ||
     location.pathname === `/profile/${userNickname}`;
-
-
+  
   return (
-    <footer className="fixed font-medium bg-[#F8F6F3] bottom-0 w-screen max-w-[430px] border-t-[1px] pt-3 flex flex-row justify-around pb-7">
+    <footer
+      className="fixed font-medium bg-[#F8F6F3] bottom-0 w-screen max-w-[430px] border-t-[1px] pt-3 flex flex-row justify-around pb-7"
+    >
       <Link
         to="/"
         onClick={() => handleClick("")}

@@ -14,9 +14,7 @@ export const getLocalBestSeller = async (): Promise<IBookDetail[]> => {
   try {
     const {
       data: { success, data },
-    } = await instance.get<BaseResponse<IBookDetail[]>>(
-      "rental/local-best-seller"
-    );
+    } = await instance.get<BaseResponse<IBookDetail[]>>("rental/local-best-seller");
 
     if (!success) {
       throw new Error("베스트셀러 조회 실패");
@@ -101,15 +99,11 @@ export const deleteInterestbook = async (bookId: number): Promise<void> => {
 // AI 도서 인증
 export const postAiCheckBook = async (formData: FormData): Promise<any> => {
   try {
-    const { data } = await pythoninstance.post<any>(
-      "/item/quality-inspection",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const { data } = await pythoninstance.post<any>("/item/quality-inspection", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     console.log(data);
 
     return data;
@@ -120,13 +114,9 @@ export const postAiCheckBook = async (formData: FormData): Promise<any> => {
 };
 
 // 유저에 대한 추천 책
-export const getRecommBooks = async (
-  userId: number
-): Promise<IRecommendBooks> => {
+export const getRecommBooks = async (userId: number): Promise<IRecommendBooks> => {
   try {
-    const { data } = await pythoninstance.get<IRecommendBooks>(
-      `/item/userrecommand/${userId}`
-    );
+    const { data } = await pythoninstance.get<IRecommendBooks>(`/item/userrecommand/${userId}`);
     return data;
   } catch (error) {
     console.log(error);
@@ -142,15 +132,12 @@ export const getRecommBooksWithGenre = async (
   console.log("장르 추천", userId, category);
 
   try {
-    const { data } = await pythoninstance.get<IRecommendBooks>(
-      `/item/userrecommandbygenre`,
-      {
-        params: {
-          userId,
-          category,
-        },
-      }
-    );
+    const { data } = await pythoninstance.get<IRecommendBooks>(`/item/userrecommandbygenre`, {
+      params: {
+        userId,
+        category,
+      },
+    });
 
     return data;
   } catch (error) {
@@ -186,9 +173,7 @@ export const getBookInfo = async ({
   try {
     const {
       data: { success, data },
-    } = await instance.get<BaseResponse<IBookDetail>>(
-      `/book?${kind}=${keyword}`
-    );
+    } = await instance.get<BaseResponse<IBookDetail>>(`/book?${kind}=${keyword}`);
 
     if (!success) {
       throw new Error("도서 검색 실패");
@@ -218,10 +203,7 @@ export const getBookDetail = async (bookId: number): Promise<IBookDetail> => {
 };
 
 // 비슷한 책 추천
-export const getRecommendbook = async (
-  bookId: number,
-  genre: string
-): Promise<IBookDetail[]> => {
+export const getRecommendbook = async (bookId: number, genre: string): Promise<IBookDetail[]> => {
   try {
     const {
       data: { success, data },
@@ -242,14 +224,10 @@ export const getRecommendbook = async (
 };
 
 // 대여 도서 상세 조회
-export const getUserBookDetail = async (
-  userBookId: number
-): Promise<IUserBookDetail> => {
+export const getUserBookDetail = async (userBookId: number): Promise<IUserBookDetail> => {
   const {
     data: { success, data },
-  } = await instance.get<BaseResponse<IUserBookDetail>>(
-    `/user-book/${userBookId}`
-  );
+  } = await instance.get<BaseResponse<IUserBookDetail>>(`/user-book/${userBookId}`);
 
   console.log("getUserBookDetail 대여도사 상세", data);
 
@@ -283,10 +261,7 @@ export const postTimeSpent = async (TimeData): Promise<void> => {
   try {
     const {
       data: { success, data },
-    } = await instance.post<BaseResponse<ITimeSpent>>(
-      "/recommend/visits",
-      TimeData
-    );
+    } = await instance.post<BaseResponse<ITimeSpent>>("/recommend/visits", TimeData);
 
     if (!success) {
       throw new Error("체류 시간 저장 실패");
@@ -297,14 +272,10 @@ export const postTimeSpent = async (TimeData): Promise<void> => {
 };
 
 // 대여 가능한 주변 도서 조회
-export const getNearAvailableBook = async (
-  bookId: number
-): Promise<INearAvailableBook[]> => {
+export const getNearAvailableBook = async (bookId: number): Promise<INearAvailableBook[]> => {
   const {
     data: { success, data },
-  } = await instance.get<BaseResponse<INearAvailableBook[]>>(
-    `user-book/near-available/${bookId}`
-  );
+  } = await instance.get<BaseResponse<INearAvailableBook[]>>(`user-book/near-available/${bookId}`);
 
   console.log("getNearAvailableBook", data);
 
@@ -313,4 +284,27 @@ export const getNearAvailableBook = async (
   }
 
   return data;
+};
+
+// 메인 페이지 추천 도서 조회
+export const getMainRecommendBook = async (category: string): Promise<IBookDetail[]> => {
+  try {
+    const {
+      data: { success, data },
+    } = await instance.get<BaseResponse<IBookDetail[]>>("/recommend/main", {
+      params: {
+        genre: category,
+      },
+    });
+
+    if (!success) {
+      throw new Error("메인 페이지 추천 도서 조회 실패");
+    }
+
+    console.log("getMainRecommendBook");
+
+    return data;
+  } catch (error) {
+    throw new Error("메인 페이지 추천 도서 조회 실패", error);
+  }
 };

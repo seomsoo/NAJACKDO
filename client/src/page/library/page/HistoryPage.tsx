@@ -12,9 +12,9 @@ const HistoryPage = () => {
     <ErrorBoundary fallback={<SmallError />}>
       <Suspense fallback={<Loading />}>
         <HistoryHeader />
-        <main className="px-[25px]">
+        <main className="px-6">
           <Tabs defaultValue="borrow" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
+            <TabsList className="grid w-full grid-cols-2 border-b">
               <TabsTrigger value="borrow">내가 빌린 책</TabsTrigger>
               <TabsTrigger value="lend">내가 빌려준 책</TabsTrigger>
             </TabsList>
