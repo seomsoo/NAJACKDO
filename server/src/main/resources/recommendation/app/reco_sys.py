@@ -106,6 +106,9 @@ def calculate_fit_score(user_preferences, items, individual=None):
 
 def genetic_algorithm_recommendation(user_preferences, items, liked_items, population_size=5, generations=5, num_recommendations=5):
 
+    if(population_size>len(items)):
+        population_size=len(items)
+        
     population = random.sample(range(len(items)), population_size)
     best_solutions = []  # 상위 아이템 저장을 위한 리스트
 
