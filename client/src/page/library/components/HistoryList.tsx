@@ -1,11 +1,12 @@
-import { IHistory } from "atoms/History.type";
-import BaseProfile from "components/common/BaseProfile";
+import { IHistory } from 'atoms/History.type';
+import { IoIosLeaf } from 'react-icons/io';
+import BaseProfile from 'components/common/BaseProfile';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "components/ui/accordion";
+} from 'components/ui/accordion';
 
 interface IHistoryListProps {
   historyData?: IHistory[];
@@ -14,11 +15,13 @@ interface IHistoryListProps {
 
 export const formatDate = (dateString: string) => {
   const date = new Date(dateString);
-  return date.toLocaleDateString("ko-KR", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  });
+  return date
+    .toLocaleDateString('ko-KR', {
+      year: '2-digit',
+      month: 'long',
+      day: '2-digit',
+    })
+    .replace(/\./g, '');
 };
 
 const HistoryList: React.FC<IHistoryListProps> = ({ historyData, title }) => {
@@ -30,30 +33,33 @@ const HistoryList: React.FC<IHistoryListProps> = ({ historyData, title }) => {
         </div>
       ) : (
         <Accordion type="multiple">
-          {" "}
+          {' '}
           {historyData.map((history) => (
             <AccordionItem
               key={history.rentalId.toString()}
               value={history.rentalId.toString()}
             >
-              <AccordionTrigger
-                className="flex items-center"
-                component="history"
-              >
+              <AccordionTrigger component="history">
                 <BaseProfile
                   userImage={history.otherUseProfileImg}
                   width="12"
                   height="12"
                 />
-                <div className="flex flex-col">
-                  <div className="font-semibold">
-                    {history.otherUseNickName}
+                <div className="flex flex-col ml-3 ">
+                  <div className="flex flex-col ">
+                    <div className="font-bold text-lg flex ">
+                      {history.otherUseNickName}
+                    </div>
                   </div>
-                  <div className="text-sm">
-                    {formatDate(history.rentalStartDate)} ~{" "}
+                  <div className="text-sm text-nowrap ">
+                    {formatDate(history.rentalStartDate)} ~{' '}
                     {formatDate(history.rentalEndDate)}
                   </div>
                 </div>
+                <span className="flex items-center font-bold mb-6 text-lg ">
+                  <IoIosLeaf className="text-sub8  " />
+                  {history.rentalCost}
+                </span>
               </AccordionTrigger>
               <AccordionContent>
                 <div className="mt-2">
@@ -62,11 +68,15 @@ const HistoryList: React.FC<IHistoryListProps> = ({ historyData, title }) => {
                       <img
                         src={book.coverImg}
                         alt="Book cover"
-                        className="w-20 h-28 object-cover mr-4"
+                        style={{
+                          boxShadow:
+                            '4px 4px 8px 2px  rgba(0, 0, 0, 0.2), 0 6px 12px rgba(0, 0, 0, 0.2)',
+                        }}
+                        className="w-20 h-28 ml-2 object-cover mr-4"
                       />
                       <div>
                         <div className="font-semibold">{book.title}</div>
-                        <div className="text-sm">{book.author}</div>
+                        <div className="text-sm font-medium">{book.author}</div>
                         <div className="text-sm">{book.publisher}</div>
                       </div>
                     </div>
