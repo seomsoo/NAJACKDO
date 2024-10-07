@@ -1,5 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { getRecommBooksWithGenre } from "api/bookApi";
+import {
+  getMainRecommendBook,
+  getRecommBooks,
+  getRecommBooksWithGenre,
+  getRecommendbook,
+} from "api/bookApi";
+import { IRecommendBooks } from "atoms/Book.type";
 import ClipLoading from "components/common/ClipLoading";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -10,16 +16,22 @@ const CategoryRecommend = () => {
   const userId = useUserStore().userId;
   const [selectedCategory, setSelectedCategory] = useState<string>("어린이");
 
+  // const { data: recommendBooksData, isLoading } = useQuery({
+  //   queryKey: ["recommendBooks", selectedCategory, userId],
+  //   queryFn: () => getRecommBooksWithGenre(userId, selectedCategory),
+  //   enabled: !!userId,
+  // });
+
   const { data: recommendBooksData, isLoading } = useQuery({
-    queryKey: ["recommendBooks", selectedCategory, userId],
-    queryFn: () => getRecommBooksWithGenre(userId, selectedCategory),
+    queryKey: ["recommBooks", selectedCategory],
+    queryFn: () => getMainRecommendBook(selectedCategory),
     enabled: !!userId,
   });
 
   const selectClass = "bg-sub2 border-2 border-sub2 text-white px-2 py-0.5 rounded-lg mx-2 my-3";
   const notSelectClass = "text-sub2 border-[1px] border-sub2 px-2 py-0.5 rounded-lg mx-2 my-3";
 
-  const recommendedItemsWithScores = recommendBooksData?.recommended_items_with_scores;
+  // const recommendedItemsWithScores = recommendBooksData?.recommended_items_with_scores;
 
   const categories = [
     "어린이",
@@ -55,18 +67,35 @@ const CategoryRecommend = () => {
         추천도서는?
       </p>
 
-      {isLoading ? (
+      {/* {isLoading ? (
         <ClipLoading className="h-40" />
       ) : (
         <div className="flex overflow-x-auto whitespace-nowrap scrollbar-hide">
           {recommendedItemsWithScores?.map((book) => (
             <img
               src={book.cover}
-              alt={book.book_id.toString()} // Providing an alt text for better accessibility
+              alt={book.book_id.toString()}
               width={150}
               className="mx-1 mt-5"
               key={book.book_id}
               onClick={() => nav(`/book/${book.book_id}`)}
+            />
+          ))}
+        </div>
+      )} */}
+
+      {isLoading ? (
+        <ClipLoading className="h-40" />
+      ) : (
+        <div className="flex overflow-x-auto whitespace-nowrap scrollbar-hide">
+          {recommendBooksData?.map((book) => (
+            <img
+              src={book.cover}
+              alt={book.title}
+              width={150}
+              className="mx-1 mt-5"
+              key={book.bookId}
+              onClick={() => nav(`/book/${book.bookId}`)}
             />
           ))}
         </div>
