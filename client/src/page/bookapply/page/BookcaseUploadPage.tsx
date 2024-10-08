@@ -92,14 +92,14 @@ const BookcaseUploadPage = () => {
         <IoChevronBack className="text-2xl" color="#545454" />
         <span className="font-bold text-2xl ml-2">도서 등록 - 책장 촬영</span>
       </div>
-      <div className="w-full h-[500px] max-w-md p-4">
+      <div className="w-full max-w-md p-4">
         <form
           onSubmit={handleSubmit(onSubmit, onInvalid)}
-          className="flex flex-col items-center justify-center h-full"
+          className="flex flex-col items-center"
         >
           <label
             htmlFor="bookcaseImage"
-            className="w-full h-full flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-100"
+            className="flex flex-col items-center justify-center w-full h-96 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-100"
           >
             {bookcaseImagePreview ? (
               <img
@@ -137,8 +137,8 @@ const BookcaseUploadPage = () => {
             )}
           />
           <div className="px-6">
-            <button className="text-center bg-sub7 w-full mt-10 rounded-xl text-white font-bold py-3 px-16 cursor-pointer">
-              AI 인증 요청
+            <button className="text-center bg-sub7 w-full mt-4 px-16 rounded-xl text-white font-bold py-3 cursor-pointer">
+              책장 등록 요청
             </button>
           </div>
         </form>

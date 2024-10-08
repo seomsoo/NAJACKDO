@@ -1,7 +1,5 @@
-import { useInfiniteQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { getSearch } from "api/searchApi";
-import { IPaging } from "atoms/Base.type";
-import { ISearch } from "atoms/Search.type";
 import ClipLoading from "components/common/ClipLoading";
 import Error from "components/common/Error";
 import SearchResultBook from "page/search/components/SearchResultBook";
@@ -84,7 +82,7 @@ const SearchResult = ({ keyword }: SearchResultProps) => {
       {totalElements > 0 &&
         searchData.pages.map((page, pageIndex) => (
           <div key={pageIndex}>
-            {page.content.map((search, index) => (
+            {page.content.map((search) => (
               <SearchResultBook key={search.bookId} search={search} />
             ))}
           </div>
