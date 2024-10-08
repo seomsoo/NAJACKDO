@@ -91,9 +91,9 @@ const TextApply = () => {
 
   useEffect(() => {
     const option = {
-      root: null, // viewport as root
-      rootMargin: "20px",
-      threshold: 1.0,
+      root: loadMoreRef.current?.parentElement as HTMLElement, // viewport as root
+      rootMargin: "10px",
+      threshold: 0.1,
     };
     const observer = new IntersectionObserver(handleObserver, option);
     if (loadMoreRef.current) observer.observe(loadMoreRef.current);
@@ -177,7 +177,6 @@ const TextApply = () => {
           </DialogDescription>
           {/* 검색 결과 리스트 */}
           <div
-            ref={loadMoreRef}
             className="flex-grow overflow-y-auto space-y-4"
             style={{
               height: "calc(100vh - 510px)",
@@ -197,7 +196,7 @@ const TextApply = () => {
                     ))}
                   </div>
                 ))}
-            {/* <div ref={loadMoreRef}>{isFetchingNextPage && <ClipLoading />}</div> */}
+            <div ref={loadMoreRef}>{isFetchingNextPage && <ClipLoading />}</div>
           </div>
         </DialogHeader>
       </DialogContent>

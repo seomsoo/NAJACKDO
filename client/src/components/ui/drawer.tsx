@@ -65,9 +65,9 @@ const DrawerContent = React.forwardRef<
             className
           )}
           style={{
-            position: 'fixed',
+            position: "fixed",
             bottom: isKeyboardOpen ? 280 : 0,
-            transition: 'bottom 0.3s ease-in-out',
+            transition: "bottom 0.3s ease-in-out",
           }}
           {...props}
         >
