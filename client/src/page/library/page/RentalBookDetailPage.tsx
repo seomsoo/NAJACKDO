@@ -16,28 +16,12 @@ const RentalBookDetailPage = () => {
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [price, setPrice] = useState<number>(0);
   const [bookGenre, setBookGenre] = useState<string>("");
-  const [keyboard, setKeyboard] = useState(0); // 키보드 높이를 저장하는 상태
-
 
 
   if (bookGenre) {
     console.log("bookGenre", bookGenre);
   }
 
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.visualViewport) {
-        const keyboardHeight = window.innerHeight - window.visualViewport.height;
-        setKeyboard(keyboardHeight > 0 ? keyboardHeight : 0);
-      }
-    };
-
-    window.visualViewport?.addEventListener("resize", handleResize);
-    return () => {
-      window.visualViewport?.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   return (
     <Fragment>
@@ -50,10 +34,7 @@ const RentalBookDetailPage = () => {
             setPrice={setPrice}
             setBookGenre={setBookGenre}
           />
-          <div className="fixed bg-[#F8F6F3] bottom-0 w-screen max-w-[430px] pt-3 flex flex-row justify-center pb-7"
-            style={{
-              transform: `translateY(-${keyboard}px)`,
-            }}>
+          <div className="fixed bg-[#F8F6F3] bottom-0 w-screen max-w-[430px] pt-3 flex flex-row justify-center pb-7">
             {!isOwner ? (
               <AddCart ownerbookId={Number(bookId)} />
             ) : (
