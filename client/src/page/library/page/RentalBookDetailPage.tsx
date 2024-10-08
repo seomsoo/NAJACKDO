@@ -16,8 +16,7 @@ const RentalBookDetailPage = () => {
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [price, setPrice] = useState<number>(0);
   const [bookGenre, setBookGenre] = useState<string>("");
-  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
-
+  const [keyboardOffset, setKeyboardOffset] = useState(0);
 
   if (bookGenre) {
     console.log("bookGenre", bookGenre);
@@ -25,9 +24,10 @@ const RentalBookDetailPage = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      const viewportHeight = window.visualViewport?.height || window.innerHeight;
-      console.log("차이", window.innerHeight - window.visualViewport?.height)
-      setIsKeyboardOpen((viewportHeight < window.innerHeight) || window.innerHeight < 700);
+      if (window.visualViewport) {
+        const offset = window.innerHeight - window.visualViewport.height;
+        setKeyboardOffset(offset > 0 ? offset : 0);
+      }
     };
 
     window.visualViewport?.addEventListener("resize", handleResize);
@@ -36,8 +36,9 @@ const RentalBookDetailPage = () => {
     };
   }, []);
 
+
   return (
-    <Fragment>
+    <Fragment>z
       <ErrorBoundary fallback={<SmallError />}>
         <Suspense fallback={<Loading />}>
           <RentalBookInfo
@@ -47,11 +48,11 @@ const RentalBookDetailPage = () => {
             setPrice={setPrice}
             setBookGenre={setBookGenre}
           />
-          <div className="fixed bg-[#F8F6F3] bottom-0 w-screen max-w-[430px] pt-3 flex flex-row justify-center pb-7"
+          <div
+            className="fixed bottom-0 bg-[#F8F6F3] w-screen max-w-[430px] pt-3 flex flex-row justify-center pb-7"
             style={{
-              bottom: isKeyboardOpen ? `${window.innerHeight - window.visualViewport?.height}px` : "0px",
-            }}
-          >
+              transform: `translateY(-${keyboardOffset}px)`,
+            }}>
             {!isOwner ? (
               <AddCart ownerbookId={Number(bookId)} />
             ) : (
