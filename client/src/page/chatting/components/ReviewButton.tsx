@@ -17,7 +17,6 @@ const ReviewButton = ({
   bookImageUrl,
   bookCount,
 }: ReviewButtonProps) => {
-  console.log("fefefef", bookCount);
   const navigate = useNavigate();
 
   const handleReview = () => {
