@@ -10,11 +10,9 @@ const CategoryRecommend = () => {
   const nav = useNavigate();
   const userId = useUserStore().userId;
   const [selectedCategory, setSelectedCategory] = useState<string>("어린이");
-  const [selectedCategory, setSelectedCategory] = useState<string>("어린이");
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
-    align: "center",
     align: "center",
     skipSnaps: false,
   });
