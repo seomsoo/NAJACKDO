@@ -101,7 +101,8 @@ function CheckboxGroup({
         disabled={!isAnyChecked}
         onClick={handelPostReview}
       >
-        후기 보내기
+        후기
+        <br /> 보내기
       </button>
     </div>
   );
