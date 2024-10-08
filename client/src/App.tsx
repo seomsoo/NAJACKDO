@@ -79,8 +79,10 @@ function App() {
   ];
   const isDetailPage = useMatch('/book/:bookId');
   const isRentalPage = useMatch('/book/:bookId/rental');
+  const isChattingRoomPage = useMatch('/chat/:roomId');
+  
 
-  const hideFooterPaths = ['/sign-in', '/survey', '/setting/location', '/404'];
+  const hideFooterPaths = ['/sign-in', '/survey', '/setting/location', '/404', ''];
 
   const [isRequested, setIsRequested] = useState(false);
   const { accessToken } = useAuthStore.getState();
@@ -163,6 +165,7 @@ function App() {
       <div className="h-full pb-[86px] relative">
         {!isDetailPage &&
           !isRentalPage &&
+          !isChattingRoomPage &&
           !hideHeaderPaths.includes(currentPath) && <Header />}
         <Routes>
           <Route path="/*" element={<MainRoute />} />
