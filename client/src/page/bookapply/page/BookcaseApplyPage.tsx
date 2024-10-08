@@ -1,43 +1,19 @@
 import { useState } from "react";
 import { HiOutlineCamera } from "react-icons/hi2";
 import { IoChevronBack } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const BookcaseApplyPage = () => {
   const navigate = useNavigate();
 
-  const books = [
-    {
-      title: "Why? 화학",
-      author: ["스토리 조영선", "작화 이영호"],
-      isbn: "9788930206341",
-      imageUrl: "/chemistryCover.png",
-      category: ["과학", "컴퓨터", "어린이 만화"],
-    },
-    {
-      title: "Why? 화학",
-      author: ["스토리 조영선", "작화 이영호"],
-      isbn: "9788930206341",
-      imageUrl: "/chemistryCover.png",
-      category: ["과학", "컴퓨터", "어린이 만화"],
-    },
-    {
-      title: "Why? 화학",
-      author: ["스토리 조영선", "작화 이영호"],
-      isbn: "9788930206341",
-      imageUrl: "/chemistryCover.png",
-      category: ["과학", "컴퓨터", "어린이 만화"],
-    },
-  ];
+  const location = useLocation();
+  const books = location.state.recognizedBooks || [];
 
   const [selectedCount, setSelectedCount] = useState<number>(books.length);
 
   return (
     <div>
-      <div
-        onClick={() => navigate(-1)}
-        className="cursor-pointer p-4 flex flex-row items-center"
-      >
+      <div onClick={() => navigate(-1)} className="cursor-pointer p-4 flex flex-row items-center">
         <IoChevronBack size={25} color="#545454" />
         <span className="font-bold text-xl ml-2">도서 등록 - 책장 촬영</span>
       </div>
@@ -51,22 +27,20 @@ const BookcaseApplyPage = () => {
             등록 도서 정보 (총 {books.length}권 인식 완료)
           </p>
           <div className="space-y-4">
-            {books.map((book, index) => {
-              return (
-                <></>
-                // <ApplyBookInfo
-                //   book={book}
-                //   key={index}
-                //   bookcase
-                //   setSelectedCount={setSelectedCount}
-                // />
-              );
-            })}
+            {books.map((book, index) => (
+              <div key={index} className="flex flex-col border p-4 rounded-md">
+                <img src={book.cover} alt={book.title} className="w-16 h-24 object-cover mb-2" />
+                <div>
+                  <p className="font-bold">{book.title}</p>
+                  <p>{book.author}</p>
+                  <p>{book.isbn}</p>
+                  <p>{book.genre}</p>
+                </div>
+              </div>
+            ))}
           </div>
           <div className="flex flex-row justify-center items-center  ml-auto bg-sub1 py-1 mt-2 rounded-lg w-5/12 ">
-            <span className="text-white font-bold text-sm">
-              책장 다시 촬영하기
-            </span>
+            <span className="text-white font-bold text-sm">책장 다시 촬영하기</span>
             <HiOutlineCamera color="white" className="ml-1" />
           </div>
         </div>

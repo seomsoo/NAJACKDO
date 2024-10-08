@@ -1,44 +1,40 @@
 import { BaseResponse } from "atoms/Base.type";
-import instance from "./clientApi";
-import { IBookCase } from 'atoms/BookCase.type';
-
+import instance from "api/clientApi";
+import { IBookCase } from "atoms/BookCase.type";
+import { IBookDetail } from "atoms/Book.type";
 
 // 나의 책장 조회 API 호출 (단일 객체 반환)
 export const getMyBookCase = async (): Promise<IBookCase> => {
   const {
     data: { success, data },
-  } = await instance.get<BaseResponse<IBookCase>>('/book/bookcase/me');
+  } = await instance.get<BaseResponse<IBookCase>>("/book/bookcase/me");
 
   if (!success) {
-    throw new Error('나의 책장 조회 실패');
+    throw new Error("나의 책장 조회 실패");
   }
 
   return data; // 단일 객체 반환
 };
 
-
 // 타인 책장 목록 조회
 export const getOtherBookCase = async (findUserId: number): Promise<IBookCase> => {
   const {
-    data: { success, data }, 
+    data: { success, data },
   } = await instance.get<BaseResponse<IBookCase>>(`/book/bookcase/${findUserId}`);
 
   if (!success) {
     throw new Error("타인 책장 조회 실패");
   }
 
-  console.log("타인 책장 조회", data)
+  console.log("타인 책장 조회", data);
   return data;
-}
-
+};
 
 // 관심 책장 목록 조회
 export const getInterestBookCase = async (): Promise<IBookCase[]> => {
   const {
     data: { success, data },
-  } = await instance.get<BaseResponse<IBookCase[]>>(
-    "/book/bookcase/interest"
-  );
+  } = await instance.get<BaseResponse<IBookCase[]>>("/book/bookcase/interest");
 
   if (!success) {
     throw new Error("관심 있는 책장 조회 실패");
@@ -47,7 +43,6 @@ export const getInterestBookCase = async (): Promise<IBookCase[]> => {
   // console.log("관심있는 책장 조회", data);
   return data;
 };
-
 
 // 관심 책장 등록
 export const postInterestBookCase = async (userId: number): Promise<void> => {
@@ -66,7 +61,6 @@ export const postInterestBookCase = async (userId: number): Promise<void> => {
   // console.log("관심책장 등록 성공");
 };
 
-
 // 관심 책장 해제
 export const deleteInterestBookCase = async (userId: number): Promise<void> => {
   const {
@@ -80,6 +74,36 @@ export const deleteInterestBookCase = async (userId: number): Promise<void> => {
   // console.log("관심 책장 해제 성공")
 };
 
+// 책장 사진으로 도서 리스트 반환
+export const postBookCaseImage = async (formData: FormData): Promise<IBookDetail[]> => {
+  const { data } = await instance.post<BaseResponse<IBookDetail[]>>(
+    "/book/regist-books",
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
 
-// AI 책장 등록
-// export const 
+  console.log("책장 사진으로 도서 리스트 반환", data);
+
+  if (!data.success) {
+    throw new Error("책장 사진으로 도서 리스트 반환 실패");
+  }
+
+  return data.data;
+};
+
+// ids로 도서 등록
+export const postBookCaseByIds = async (bookIds: number[]): Promise<void> => {
+  const { data } = await instance.post<BaseResponse<null>>("/book/regist-books-by-ids", {
+    bookIds,
+  });
+
+  console.log("도서 등록", data);
+
+  if (!data.success) {
+    throw new Error("도서 등록 실패");
+  }
+};

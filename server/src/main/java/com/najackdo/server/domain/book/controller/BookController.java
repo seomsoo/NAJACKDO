@@ -1,7 +1,6 @@
 package com.najackdo.server.domain.book.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -50,6 +49,7 @@ public class BookController {
 	@Operation(summary = "책장 사진으로 도서 리스트 반환", description = "책장 사진으로 도서 리스트 반환")
 	public SuccessResponse<List<BookData.Search>> registBooks(
 		@ModelAttribute UserBookData.Create create) {
+
 		List<BookData.Search> result = userBooksService.addBookList(create);
 		return SuccessResponse.of(result);
 	}
