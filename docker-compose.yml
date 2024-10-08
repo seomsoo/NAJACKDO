@@ -76,7 +76,6 @@ services:
           memory: 512M   # 메모리 제한 (512MB로 제한)
         reservations:
           memory: 256M   # 최소 메모리 예약
-    mem_limit: 512m       # 최대 메모리 512MB
 
 volumes:
   najackdo-db:
