@@ -48,9 +48,9 @@ public class BookController {
 	 */
 	@PostMapping("/regist-books")
 	@Operation(summary = "책장 사진으로 도서 리스트 반환", description = "책장 사진으로 도서 리스트 반환")
-	public SuccessResponse<Map<String, List<String>>> registBooks(@CurrentUser User user,
+	public SuccessResponse<List<BookData.Search>> registBooks(
 		@ModelAttribute UserBookData.Create create) {
-		Map<String, List<String>> result = userBooksService.addBookList(user, create);
+		List<BookData.Search> result = userBooksService.addBookList(create);
 		return SuccessResponse.of(result);
 	}
 
