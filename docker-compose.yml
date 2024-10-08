@@ -77,8 +77,6 @@ services:
           cpus: "0.5"    # CPU 제한
         reservations:
           memory: 256M   # 최소 메모리 예약
-    mem_limit: 512m       # 최대 메모리 512MB
-    memswap_limit: 1g     # 스왑 포함 최대 메모리 1GB (512MB RAM + 512MB 스왑)
 
 
 
