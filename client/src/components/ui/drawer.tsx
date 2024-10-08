@@ -47,12 +47,6 @@ const DrawerContent = React.forwardRef<
           "mt-24 flex h-auto w-full max-w-[430px] flex-col rounded-t-[10px] border bg-sub5",
           className
         )}
-        style={{
-          position: 'fixed',
-          bottom: 0,
-          transform: `translateY(-${window.innerHeight - window.visualViewport?.height}px)`,
-          transition: 'transform 0.3s ease-in-out',
-        }}
         {...props}
       >
         <div className="mx-auto mt-4 h-1.5 w-[150px] rounded-full bg-[#D9D9D9]" />
