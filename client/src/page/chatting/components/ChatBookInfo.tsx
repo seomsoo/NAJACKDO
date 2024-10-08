@@ -260,6 +260,9 @@ const ChatBookInfo = ({
           rentalId={bookData.rentalId}
           ownerName={ownerName}
           customerName={customerName}
+          bookTitle={bookData.cartItems[0].bookTitle}
+          bookImageUrl={bookData.cartItems[0].bookImage}
+          bookCount={bookData.cartItems.length - 1}
         />
       )}
     </div>

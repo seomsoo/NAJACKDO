@@ -11,7 +11,7 @@ function EmojiSelector({ selectedEmoji, onEmojiSelect }: EmojiSelectorProps) {
       <div className="flex flex-col items-center">
         <button
           className={`text-9xl ${
-            selectedEmoji === "like" ? "text-green-500" : "text-[#989898]"
+            selectedEmoji === "like" ? "text-sub8" : "text-[#989898]"
           }`}
           onClick={() => onEmojiSelect("like")}
         >
@@ -23,7 +23,7 @@ function EmojiSelector({ selectedEmoji, onEmojiSelect }: EmojiSelectorProps) {
       <div className="flex flex-col items-center">
         <button
           className={`text-9xl ${
-            selectedEmoji === "dislike" ? "text-red-500" : "text-[#989898]"
+            selectedEmoji === "dislike" ? "text-sub9" : "text-[#989898]"
           }`}
           onClick={() => onEmojiSelect("dislike")}
         >
