@@ -5,6 +5,7 @@ import AICheckUploadPage from "page/bookapply/page/AICheckUploadPage";
 import ApplyPage from "page/bookapply/page/ApplyPage";
 import BookApplyPage from "page/bookapply/page/BookApplyPage";
 import BookcaseApplyPage from "page/bookapply/page/BookcaseApplyPage";
+import BookcaseUploadPage from "page/bookapply/page/BookcaseUploadPage";
 import ISBNScanPage from "page/bookapply/page/ISBNScanPage";
 import CartPage from "page/cart/page/CartPage";
 import ChattingPage from "page/chatting/page/ChattingPage";
@@ -50,6 +51,7 @@ const MainRoute = () => {
       <Route path="/book/:bookId/rental" element={<RentalBookDetailPage />} />
       <Route path="/apply" element={<ApplyPage />} />
       <Route path="/apply/isbn" element={<ISBNScanPage />} />
+      <Route path="/apply/bookcase/upload" element={<BookcaseUploadPage />} />
       <Route path="/apply/book" element={<BookApplyPage />} />
       <Route path="/apply/bookcase" element={<BookcaseApplyPage />} />
       <Route path="/ai-check" element={<AICheckPage />} />

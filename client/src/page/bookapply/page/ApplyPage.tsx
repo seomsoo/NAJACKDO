@@ -40,7 +40,7 @@ const ApplyPage = () => {
         </Popover>
         <button
           className="bg-sub6 text-white font-bold w-[153px] h-[54px] rounded-xl mx-2"
-          onClick={() => navigate("/apply/bookcase")}
+          onClick={() => navigate("/apply/bookcase/upload")}
         >
           책장 등록
         </button>
