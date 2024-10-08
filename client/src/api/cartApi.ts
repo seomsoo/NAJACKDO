@@ -8,8 +8,6 @@ export const getCartList = async (): Promise<ICartList[]> => {
     data: { success, data },
   } = await instance.get<BaseResponse<ICartList[]>>("/cart/list");
 
-  console.log("getCartList data", data);
-
   if (!success) {
     throw new Error("장바구니 조회 실패");
   }
@@ -34,9 +32,8 @@ export const getCartItem = async (cartId: number): Promise<ICartList> => {
   }
 };
 
-// 장바구니 담기/cart-item/add/{ownerbookId}
+// 장바구니 담기
 export const postAddCartItem = async (ownerbookId: number): Promise<void> => {
-  console.log("ownerbookId", ownerbookId);
   try {
     const {
       data: { success },
@@ -54,7 +51,6 @@ export const postAddCartItem = async (ownerbookId: number): Promise<void> => {
 
 // 장바구니 삭제
 export const postDeleteCartItem = async (cartItemId: number): Promise<void> => {
-  console.log("cartItemId", cartItemId);
   try {
     const {
       data: { success },

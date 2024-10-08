@@ -5,7 +5,7 @@ import { useAuthStore } from "store/useAuthStore";
 import { useUserStore } from "store/useUserStore";
 
 const LogoutButton = () => {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
 
   const mutation = useMutation({
     mutationKey: ["signout"],
@@ -14,12 +14,11 @@ const LogoutButton = () => {
     onSuccess: () => {
       useUserStore.persist.clearStorage();
       useAuthStore.persist.clearStorage();
-      // sessionStorage.clear();
-      navigation("/sign-in");
+      navigate("/sign-in");
     },
 
     onError: (error) => {
-      console.log(error, "로그아웃 실패");
+      navigate("/profile");
     },
   });
 

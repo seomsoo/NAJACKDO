@@ -1,10 +1,10 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { postDeleteCartItem } from 'api/cartApi';
-import { ICartList } from 'atoms/Cart.type';
-import AlertModal from 'components/common/AlertModal';
-import { useState } from 'react';
-import { IoIosLeaf } from 'react-icons/io';
-import { PiXBold } from 'react-icons/pi';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { postDeleteCartItem } from "api/cartApi";
+import { ICartList } from "atoms/Cart.type";
+import AlertModal from "components/common/AlertModal";
+import { useState } from "react";
+import { IoIosLeaf } from "react-icons/io";
+import { PiXBold } from "react-icons/pi";
 
 interface BookRentalInfoProps {
   cartItemId: number;
@@ -23,17 +23,17 @@ const BookRentalInfo = ({
   chatting,
 }: BookRentalInfoProps) => {
   const [open, setOpen] = useState<boolean>(false);
-  const [alertContent, setAlertContent] = useState<string>('');
+  const [alertContent, setAlertContent] = useState<string>("");
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationKey: ['cartItemId'],
+    mutationKey: ["cartItemId"],
     mutationFn: postDeleteCartItem,
 
     onSuccess: () => {
       setAlertContent(`${bookTitle} <br />삭제 성공`);
       setOpen(true);
-      queryClient.setQueryData<ICartList[]>(['cartList'], (oldData) => {
+      queryClient.setQueryData<ICartList[]>(["cartList"], (oldData) => {
         if (!oldData) return [];
         return oldData.map((cart) => ({
           ...cart,

@@ -4,7 +4,7 @@ import SmallError from "components/common/SmallError";
 import AddCart from "page/library/components/AddCart";
 import DetailRecommendBook from "page/library/components/DetailRecommendBook";
 import RentalBookInfo from "page/library/components/RentalBookInfo";
-import { Fragment, Suspense, useEffect, useState } from "react";
+import { Fragment, Suspense, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useParams } from "react-router-dom";
 import { useUserStore } from "store/useUserStore";
@@ -16,12 +16,6 @@ const RentalBookDetailPage = () => {
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [price, setPrice] = useState<number>(0);
   const [bookGenre, setBookGenre] = useState<string>("");
-
-
-  if (bookGenre) {
-    console.log("bookGenre", bookGenre);
-  }
-
 
   return (
     <Fragment>

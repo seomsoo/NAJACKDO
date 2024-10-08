@@ -7,7 +7,7 @@ const FavoriteBookcase = () => {
     queryKey: ["interestBookCase"],
     queryFn: getInterestBookCase,
   });
-  
+
   return (
     <div>
       {bookcases?.map((bookcase) => (

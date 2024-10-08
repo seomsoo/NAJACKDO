@@ -47,19 +47,13 @@ function App() {
         const token = await getToken(messaging, {
           vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY,
         });
-        console.log("FCM Token:", token);
       } else {
-        console.log("Notification permission denied.");
       }
       // Handle foreground notifications
       onMessage(messaging, (payload) => {
-        console.log("Foreground Message:", payload);
-        console.log("app.tsx");
         // Handle the notification or update your UI
       });
-    } catch (error) {
-      console.error("Error setting up notifications:", error);
-    }
+    } catch (error) {}
   };
 
   const navigate = useNavigate();
@@ -68,7 +62,6 @@ function App() {
   const queryClient = new QueryClient();
 
   const popupPaths = ["/kapay/approve", "/kapay/cancel", "/kapay/fail"];
-  const showHeaderPaths = ["/"];
   const hideHeaderPaths = [
     "/sign-in",
     "/survey",
@@ -98,7 +91,6 @@ function App() {
 
     const checkValidation = async () => {
       try {
-        console.log("accessToken", accessToken);
         // 로그인 안되어있을 때
         if (!accessToken) {
           navigate("/sign-in");
@@ -163,10 +155,6 @@ function App() {
   const hideScrollTopButton = () => {
     return location.pathname.split("/")[1] !== "chat";
   };
-
-  useEffect(() => {
-    console.log("chatigasdlkfgjsad", hideScrollTopButton());
-  }, [hideScrollTopButton]);
 
   return (
     <QueryClientProvider client={queryClient}>

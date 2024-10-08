@@ -63,7 +63,6 @@ const ChatBookInfo = ({
 
   const { userId } = useUserStore.getState();
 
-  // Cart 정보 가져오기
   const { data: bookData, refetch: refetchRentalId } =
     useSuspenseQuery<ICartList>({
       queryKey: ["cart", "book"],
@@ -72,7 +71,7 @@ const ChatBookInfo = ({
 
   useEffect(() => {
     if (bookData) {
-      setIsOwner(bookData.ownerId === userId); // 사용자 소유 여부 확인
+      setIsOwner(bookData.ownerId === userId);
       setDayPrice(
         bookData.cartItems.reduce((sum, cartItem) => sum + cartItem.price, 0)
       );
@@ -103,7 +102,6 @@ const ChatBookInfo = ({
     },
 
     onError: (error) => {
-      console.log("error", error);
       setStep(ChatRentalStep.NO_LEAF);
     },
   });
@@ -195,8 +193,6 @@ const ChatBookInfo = ({
       return;
     }
   };
-
-  console.log("isReview", isReview);
 
   // Modal 및 기타 렌더링
   const showModal =

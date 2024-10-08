@@ -35,7 +35,7 @@ export interface IChatContent {
   time: string;
 }
 
-export interface IChatReview{
+export interface IChatReview {
   rentalId: number;
   revieweeId: number;
 }

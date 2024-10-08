@@ -5,10 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { useUserStore } from "store/useUserStore";
 
 const RecommendBook = () => {
-  const userId = useUserStore().userId;
+  const userId = useUserStore.getState().userId;
   const navigate = useNavigate();
-
-  console.log(userId);
 
   const { data: books, refetch } = useSuspenseQuery<IRecommendBooks>({
     queryKey: ["recommBooks"],

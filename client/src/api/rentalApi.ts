@@ -6,7 +6,7 @@ import { IRental, IReturn, IReview } from "atoms/Rental.type";
 export const postRental = async (RentalData: IRental): Promise<object> => {
   try {
     const {
-      data: { data, success, message },
+      data: { data, success },
     } = await instance.post<BaseResponse<object>>("/rental", RentalData);
 
     if (!success) {

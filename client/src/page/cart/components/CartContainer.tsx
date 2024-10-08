@@ -1,10 +1,10 @@
-import { useMutation } from '@tanstack/react-query';
-import { postCreateChatRoom } from 'api/chatApi';
-import { ICartItem } from 'atoms/Cart.type';
-import ConfirmModal from 'components/common/ConfirmModal';
-import { useState } from 'react';
-import { IoIosLeaf } from 'react-icons/io';
-import BookRentalInfo from './BookRentalInfo';
+import { useMutation } from "@tanstack/react-query";
+import { postCreateChatRoom } from "api/chatApi";
+import { ICartItem } from "atoms/Cart.type";
+import ConfirmModal from "components/common/ConfirmModal";
+import { useState } from "react";
+import { IoIosLeaf } from "react-icons/io";
+import BookRentalInfo from "./BookRentalInfo";
 
 interface CartContainerProps {
   cartId: number;
@@ -23,16 +23,11 @@ const CartContainer = ({
   const sumPrice = cartItems.reduce((sum, cartItem) => sum + cartItem.price, 0);
 
   const mutation = useMutation({
-    mutationKey: ['chat', 'create'],
+    mutationKey: ["chat", "create"],
     mutationFn: () => postCreateChatRoom({ ownerId, cartId }),
 
     onSuccess: () => {
       setOpen(true);
-      console.log('EFefefef');
-    },
-
-    onError: (error) => {
-      console.log('채팅방 생성 실패', error);
     },
   });
 
@@ -61,7 +56,7 @@ const CartContainer = ({
                 bookImage={item.bookImage}
               />
               <div
-                className={`${index !== cartItems.length - 1 ? 'border-b opacity-50 border-sub7/30' : ''}`}
+                className={`${index !== cartItems.length - 1 ? "border-b opacity-50 border-sub7/30" : ""}`}
               />
             </div>
           );
@@ -72,7 +67,7 @@ const CartContainer = ({
         <div className="flex flex-row justify-end items-center mt-auto">
           <IoIosLeaf size={16} color="#79AC78" />
           <p className="items-center flex">
-            {sumPrice.toLocaleString()}{' '}
+            {sumPrice.toLocaleString()}{" "}
             <span className="text-[12px] ml-1 font-light">/ 일</span>
           </p>
         </div>

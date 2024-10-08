@@ -14,5 +14,5 @@ export interface ILocationRange {
 
 export interface IMyLocation {
   locationCode: number;
-  distanceMeters: number
+  distanceMeters: number;
 }

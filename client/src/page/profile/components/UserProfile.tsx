@@ -4,11 +4,8 @@ import { IProfile } from "atoms/Profile.type";
 import MannerTree from "page/profile/components/MannerTree";
 import UserInfo from "page/profile/components/UserInfo";
 import { Fragment } from "react/jsx-runtime";
-import GradeInfoModal from "./GradeInfoModal";
-import { useState } from "react";
 
 const UserProfile = () => {
-
   const { data: profileInfo } = useSuspenseQuery<IProfile>({
     queryKey: ["profile"],
     queryFn: async () => await getUserInfo(),
@@ -21,7 +18,7 @@ const UserProfile = () => {
         userName={profileInfo.nickname}
         userLocation={profileInfo.locationName}
         userImage={profileInfo.profileImage}
-        mannerScore={profileInfo.mannerScore} // mannerScore 전달
+        mannerScore={profileInfo.mannerScore}
       />
       {/* 신뢰 나무 */}
       <MannerTree

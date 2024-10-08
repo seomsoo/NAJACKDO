@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface BaseProfileProps {
   userImage?: string;
@@ -22,16 +22,16 @@ const BaseProfile = ({
   };
 
   const isRentalPage =
-    location.pathname.includes('/book/') &&
-    location.pathname.includes('/rental');
+    location.pathname.includes("/book/") &&
+    location.pathname.includes("/rental");
 
   return (
     <img
       onClick={isRentalPage ? handleProfileClick : undefined}
-      src={userImage || '/basic_profile2.png'}
+      src={userImage || "/basic_profile2.png"}
       alt="profile"
       className={`h-${height} w-${width} rounded-full`}
-      style={{ cursor: isRentalPage ? 'pointer' : 'default' }}
+      style={{ cursor: isRentalPage ? "pointer" : "default" }}
     />
   );
 };

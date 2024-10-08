@@ -12,10 +12,6 @@ const BookDetailPage = () => {
   const { bookId } = useParams();
   const [bookGenre, setBookGenre] = useState<string>("");
 
-  if (bookGenre) {
-    console.log("bookGenre", bookGenre, typeof bookGenre);
-  }
-
   return (
     <Fragment>
       <ErrorBoundary fallback={<SmallError />}>
@@ -26,7 +22,6 @@ const BookDetailPage = () => {
           </div>
         </Suspense>
       </ErrorBoundary>
-
       <div className="mx-[25px] mt-10 mb-6">
         <p className="my-5 font-bold ">추천 도서</p>
         {bookGenre && (

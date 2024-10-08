@@ -10,7 +10,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "components/ui/drawer";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IoIosLeaf } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
@@ -30,22 +30,14 @@ const UpdatePrice = ({ userBookId, price }: UpdatePriceProps) => {
     onSuccess: () => {
       navigate(0);
     },
-
-    onError: (error) => {
-      console.log("update error", error);
-    },
   });
-  
+
   const handleUpdateRentalCost = () => {
     mutation.mutate({
       userBookId: userBookId,
       updateRentalCost: updatePrice,
     });
   };
-
-  useEffect(() => {
-    console.log(updatePrice);
-  }, [updatePrice]);
 
   return (
     <Drawer>

@@ -6,17 +6,16 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "components/ui/carousel";
-import { useEffect, useState } from "react";
-import { FaCircle } from "react-icons/fa";
-import { IoChevronBack } from "react-icons/io5";
-import { useLocation, useNavigate } from "react-router-dom"; // useLocation 추가
-import AiOnBoarding from "../components/AiOnBoarding";
 import Autoplay from "embla-carousel-autoplay";
+import { useEffect, useState } from "react";
+import { IoChevronBack } from "react-icons/io5";
+import { useLocation, useNavigate } from "react-router-dom";
+import AiOnBoarding from "../components/AiOnBoarding";
 
 const AICheckPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { userId, userBookId } = location.state; // BookGrid에서 전달받은 userId, userBookId
+  const { userId, userBookId } = location.state;
 
   const [api, setApi] = useState<CarouselApi>();
   const [carouselIndex, setCarouselIndex] = useState<number>(0);
@@ -54,11 +53,14 @@ const AICheckPage = () => {
       <div className="flex flex-col mt-2 items-center">
         <div className="  flex flex-col justify-center items-center">
           <Carousel
-           plugins={[
-            Autoplay({
-              delay: 2000,
-            }),
-          ]} className="" setApi={setApi}>
+            plugins={[
+              Autoplay({
+                delay: 2000,
+              }),
+            ]}
+            className=""
+            setApi={setApi}
+          >
             <CarouselContent>
               {onBoardingArray.map((onBoarding, index) => {
                 return (
@@ -93,7 +95,7 @@ const AICheckPage = () => {
         <button
           onClick={() =>
             navigate(`/ai-check/upload`, { state: { userId, userBookId } })
-          } // userId, userBookId를 함께 넘김
+          }
           className="text-center bg-sub7 w-full  mt-6 rounded-xl text-white font-bold py-3"
         >
           AI 인증 하러 가기

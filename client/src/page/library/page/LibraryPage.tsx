@@ -1,22 +1,22 @@
-import { useQuery } from '@tanstack/react-query';
-import { getInterestbook } from 'api/bookApi';
-import { getMyBookCase } from 'api/bookcaseApi';
-import Error from 'components/common/Error';
-import Loading from 'components/common/Loading';
-import LibraryHeader from 'page/library/components/LibraryHeader';
-import { SlArrowRight } from 'react-icons/sl';
-import { useNavigate } from 'react-router-dom';
+import { useQuery } from "@tanstack/react-query";
+import { getInterestbook } from "api/bookApi";
+import { getMyBookCase } from "api/bookcaseApi";
+import Error from "components/common/Error";
+import Loading from "components/common/Loading";
+import LibraryHeader from "page/library/components/LibraryHeader";
+import { SlArrowRight } from "react-icons/sl";
+import { useNavigate } from "react-router-dom";
 
 const LibraryPage = () => {
   const navigate = useNavigate();
   const goToMyFavorite = () => {
-    navigate('/library/my-favorite');
+    navigate("/library/my-favorite");
   };
   const goToMyBookCase = () => {
-    navigate('/library/my-bookcase');
+    navigate("/library/my-bookcase");
   };
   const goToMyHistory = () => {
-    navigate('/library/my-history');
+    navigate("/library/my-history");
   };
 
   // 나의 책장 이미지 목록 가져오기
@@ -25,7 +25,7 @@ const LibraryPage = () => {
     isLoading: isMyBookCaseLoading,
     isError: isMyBookCaseError,
   } = useQuery({
-    queryKey: ['myBookCase'],
+    queryKey: ["myBookCase"],
     queryFn: getMyBookCase,
   });
 
@@ -35,7 +35,7 @@ const LibraryPage = () => {
     isLoading: isInterestBooksLoading,
     isError: isInterestBooksError,
   } = useQuery({
-    queryKey: ['interestBooks'],
+    queryKey: ["interestBooks"],
     queryFn: getInterestbook,
   });
 
@@ -120,7 +120,7 @@ const LibraryPage = () => {
               <article
                 style={{
                   boxShadow:
-                    '0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1)',
+                    "0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1)",
                 }}
                 className=" rounded-lg pb-3 bg-[#edebe8] "
               >

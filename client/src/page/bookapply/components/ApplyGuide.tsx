@@ -21,8 +21,8 @@ const ApplyGuide = () => {
               <ApplyBookcase />
             </CarouselItem>
           </CarouselContent>
-          <CarouselPrevious className="ml-5"/>
-          <CarouselNext className="mr-5"/>
+          <CarouselPrevious className="ml-5" />
+          <CarouselNext className="mr-5" />
         </Carousel>
       </div>
     </div>

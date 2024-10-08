@@ -59,7 +59,6 @@ const ReviewPage = () => {
       ...prevItems,
       [item]: !prevItems[item],
     }));
-    console.log("checkedItems", checkedItems);
   };
 
   // 이모지 선택 시 상태 초기화 및 업데이트

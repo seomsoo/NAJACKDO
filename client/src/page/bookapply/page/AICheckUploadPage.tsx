@@ -41,7 +41,6 @@ const AICheckUploadPage = () => {
     if (file) {
       setFrontImage(file);
       setFrontImagePreview(URL.createObjectURL(file));
-      console.log("Front Image File:", file);
     }
   };
 
@@ -52,7 +51,6 @@ const AICheckUploadPage = () => {
     if (file) {
       setBackImage(file);
       setBackImagePreview(URL.createObjectURL(file));
-      console.log("Back Image File:", file);
     }
   };
 
@@ -64,11 +62,6 @@ const AICheckUploadPage = () => {
       formData.append("user_id", userId);
       formData.append("user_book_id", userBookId);
 
-      // FormData 확인용
-      // formData.forEach((value, key) => {
-      //   console.log(`FormData Key: ${key}, Value:`, value);
-      // });
-
       try {
         const response = await postAiCheckBook(formData);
 
@@ -76,7 +69,6 @@ const AICheckUploadPage = () => {
           state: { resultData: response },
         });
       } catch (error) {
-        console.error("AI 인증 실패:", error);
         alert("AI 인증에 실패했습니다. 다시 시도해주세요.");
       }
     } else {

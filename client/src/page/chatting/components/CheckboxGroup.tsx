@@ -33,7 +33,7 @@ function CheckboxGroup({
     mutationKey: ["review"],
     mutationFn: postReview,
     onSuccess: () => {
-      navigate(-1); // -1하면 채팅방으로 가겠지 뭐
+      navigate(-1);
     },
   });
 
@@ -46,9 +46,7 @@ function CheckboxGroup({
         submitList.push(index + key);
       }
     });
-    console.log("cartId", rentalId);
-    console.log("checkedItems", checkedItems);
-    console.log("submitList", submitList);
+
     mutation.mutate({
       rentalId: rentalId, // 카트아이디
       reviewItemIds: submitList,
@@ -71,13 +69,6 @@ function CheckboxGroup({
           className="flex items-center gap-2"
           onClick={() => onCheckboxChange(option.id)}
         >
-          {/* <input
-            type="checkbox"
-            id={option.id}
-            className="hidden peer"
-            checked={checkedItems[option.id]}
-            onChange={() => onCheckboxChange(option.id)}
-          /> */}
           <label
             htmlFor={option.id}
             className={`flex items-center justify-center w-6 h-6 border-2 rounded-lg cursor-pointer ${

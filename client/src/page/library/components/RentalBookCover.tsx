@@ -2,7 +2,6 @@ import { INearAvailableBook } from "atoms/Book.type";
 import { IoIosLeaf } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
-
 interface RentalBookCoverProps {
   book: INearAvailableBook;
 }
@@ -11,7 +10,7 @@ const RentalBookCover = ({ book }: RentalBookCoverProps) => {
   const navigate = useNavigate();
 
   // 책 이미지 클릭함수
-  const handleBookClick = ( userBookId: number ) => {
+  const handleBookClick = (userBookId: number) => {
     navigate(`/book/${userBookId}/rental`);
   };
   return (
