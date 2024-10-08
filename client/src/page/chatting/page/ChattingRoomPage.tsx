@@ -19,10 +19,6 @@ const ChattingRoomPage = () => {
   const [totalLeaf, setTotalLeaf] = useState<number>(0);
   const [step, setStep] = useState<ChatRentalStep>(ChatRentalStep.READY);
   
-  const initialInnerHeight = window.innerHeight;
-  const initialVisualViewportHeight = window.visualViewport.height;
-  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
-
 
   // 웹소켓
   const [client, setClient] = useState<Client | null>(null);
