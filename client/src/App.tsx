@@ -165,7 +165,6 @@ function App() {
       <div className="h-full pb-[86px] relative">
         {!isDetailPage &&
           !isRentalPage &&
-          !isChattingRoomPage &&
           !hideHeaderPaths.includes(currentPath) && <Header />}
         <Routes>
           <Route path="/*" element={<MainRoute />} />
@@ -175,6 +174,7 @@ function App() {
         </Routes>
         {!isRentalPage &&
           !shouldHideHeaderFooter &&
+          !isChattingRoomPage &&
           !hideFooterPaths.includes(currentPath) && <Footer />}
         {hideScrollTopButton() && <ScrollToTopButton />}
       </div>
