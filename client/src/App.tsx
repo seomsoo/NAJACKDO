@@ -166,11 +166,10 @@ function App() {
           <Route path="/library/*" element={<LibraryRoute />} />
           <Route path="/404" element={<NotFoundPage />} />
         </Routes>
-        {!ChattingRoomPage &&
-          !isRentalPage &&
+        {!isRentalPage &&
           !shouldHideHeaderFooter &&
           !hideFooterPaths.includes(currentPath) && <Footer />}
-        <ScrollToTopButton />
+        {!ChattingRoomPage && <ScrollToTopButton />}
       </div>
     </QueryClientProvider>
   );
