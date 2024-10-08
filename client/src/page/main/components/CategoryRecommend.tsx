@@ -95,7 +95,7 @@ const CategoryRecommend = () => {
       ) : (
         <div className="relative overflow-hidden h-[280px]" ref={emblaRef}>
           <div className="flex">
-            {recommendBooksData?.map((book, index) => (
+            {recommendBooksData?.slice(0, 8).map((book, index) => (
               <div
                 className={`flex-shrink-0 mx-2   mt-5  transition-transform duration-300 ${
                   index === selectedIndex

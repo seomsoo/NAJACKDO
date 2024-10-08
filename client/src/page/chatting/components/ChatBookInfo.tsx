@@ -37,7 +37,7 @@ export enum ChatRentalStep {
   READY = "대여기간 체크",
   PAY = "송금하기",
   NO_LEAF = "책잎 부족",
-  RENTED = "반납하기",
+  RENTED = "반납확인",
   RETURNED = "후기 보내기",
 }
 

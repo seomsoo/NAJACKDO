@@ -63,6 +63,7 @@ public class BookService {
 				List<BookData.DisplayBook> displayBooks = entry.getValue().stream()
 					.map(userBook -> BookData.DisplayBook.of(
 						userBook.getBook().getId(),
+						userBook.getBook().getTitle(),
 						userBook.getId(),
 						userBook.getBook().getCover(), // 커버 이미지 추출
 						userBook.getBookStatus() // 책 상태
@@ -86,6 +87,7 @@ public class BookService {
 		List<BookData.DisplayBook> displayBooks = bookRepository.findBookCaseByUserId(findUser).stream()
 			.map(userBook -> BookData.DisplayBook.of(
 				userBook.getBook().getId(),
+				userBook.getBook().getTitle(),
 				userBook.getId(),
 				userBook.getBook().getCover(), // 커버 이미지 추출
 				userBook.getBookStatus() // 책 상태
@@ -127,6 +129,7 @@ public class BookService {
 		List<BookData.DisplayBook> displayBooks = bookRepository.findBookCaseByUserId(user).stream()
 			.map(userBook -> BookData.DisplayBook.of(
 				userBook.getBook().getId(),
+				userBook.getBook().getTitle(),
 				userBook.getId(),
 				userBook.getBook().getCover(), // 커버 이미지 추출
 				userBook.getBookStatus() // 책 상태
@@ -202,6 +205,7 @@ public class BookService {
 			List<BookData.DisplayBook> displayBooks = bookRepository.findBookCaseByUserId(findUser).stream()
 				.map(userBook -> BookData.DisplayBook.of(
 					userBook.getBook().getId(),
+					userBook.getBook().getTitle(),
 					userBook.getId(),
 					userBook.getBook().getCover(),
 					userBook.getBookStatus()
