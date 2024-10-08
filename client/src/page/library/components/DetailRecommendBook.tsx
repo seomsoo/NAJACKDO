@@ -30,7 +30,7 @@ const DetailRecommendBook = ({
     <Fragment>
       {recommendData.length !== 0 ? (
         <div className="grid mt-4 grid-cols-4 gap-3">
-          {recommendData.map((book, index) => {
+          {recommendData.slice(0, 8).map((book, index) => {
             return (
               <img
                 key={index}
