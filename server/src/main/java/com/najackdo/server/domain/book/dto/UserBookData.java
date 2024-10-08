@@ -2,6 +2,8 @@ package com.najackdo.server.domain.book.dto;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.najackdo.server.domain.book.entity.Book;
 import com.najackdo.server.domain.book.entity.UserBook;
 import com.najackdo.server.domain.book.entity.UserBookDetail;
@@ -9,7 +11,6 @@ import com.najackdo.server.domain.user.entity.User;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import org.springframework.web.multipart.MultipartFile;
 
 public class UserBookData {
 
@@ -39,8 +40,14 @@ public class UserBookData {
 
 	@Data
 	public static class CreateByISBN {
+
 		@NotNull
 		private Long ISBN;
+	}
+
+	@Data
+	public static class CreateByIds {
+		private List<Long> bookIds;
 	}
 
 	@Data
@@ -117,17 +124,15 @@ public class UserBookData {
 		private Integer updateRentalCost;
 	}
 
-
-
-
 	@Data
-	public static class AvailableNearBook{
+	public static class AvailableNearBook {
 		private Long userBookId;
 		private String imagePath;
 		private Integer OneDayPrice;
 		private String bookStatus;
 
-		public static AvailableNearBook create(Long userBookId, String imagePath, Integer OneDayPrice, String bookStatus){
+		public static AvailableNearBook create(Long userBookId, String imagePath, Integer OneDayPrice,
+			String bookStatus) {
 			AvailableNearBook availableNearBook = new AvailableNearBook();
 			availableNearBook.userBookId = userBookId;
 			availableNearBook.imagePath = imagePath;
@@ -136,6 +141,5 @@ public class UserBookData {
 			return availableNearBook;
 		}
 	}
-
 
 }

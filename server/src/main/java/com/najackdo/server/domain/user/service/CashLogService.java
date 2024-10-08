@@ -25,7 +25,6 @@ public class CashLogService {
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void cashLogPaymentEvent(CashLogPaymentEvent event) {
 
-		log.info("cashLogPaymentEvent");
 
 		CashLog cashLog = CashLog.create(
 			event.getUser(),
@@ -34,7 +33,6 @@ public class CashLogService {
 			event.getLogType()
 		);
 
-		log.info("cashLog: {}", cashLog);
 
 		cashLogRepository.save(cashLog);
 

@@ -37,8 +37,8 @@ public class UserBookController {
 	 */
 	@GetMapping("/{userBookId}")
 	@Operation(summary = "유저 책 상세 정보 조회", description = "유저 책 상세 정보 조회")
-	public SuccessResponse<UserBookData.InfoResponse> getUserBookInfo(@PathVariable Long userBookId) {
-		return SuccessResponse.of(userBooksService.getUserBookInfo(userBookId));
+	public SuccessResponse<UserBookData.InfoResponse> getUserBookInfo(@CurrentUser User user, @PathVariable Long userBookId) {
+		return SuccessResponse.of(userBooksService.getUserBookInfo(user, userBookId));
 	}
 
 	/**
@@ -52,8 +52,6 @@ public class UserBookController {
 	public SuccessResponse<Void> updateRentalCost(
 		@RequestBody UserBookData.UpdateRentalCost updateRentalCost
 	) {
-		log.info("userBookId : {}, updateRentalCost : {}", updateRentalCost.getUserBookId(),
-			updateRentalCost.getUpdateRentalCost());
 		userBooksService.updateRentalCost(updateRentalCost.getUserBookId(), updateRentalCost.getUpdateRentalCost());
 		return SuccessResponse.empty();
 	}

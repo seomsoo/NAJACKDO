@@ -1,10 +1,10 @@
-import { useMutation } from "@tanstack/react-query";
-import { postCreateChatRoom } from "api/chatApi";
-import { ICartItem } from "atoms/Cart.type";
-import ConfirmModal from "components/common/ConfirmModal";
-import { useState } from "react";
-import { IoIosLeaf } from "react-icons/io";
-import BookRentalInfo from "./BookRentalInfo";
+import { useMutation } from '@tanstack/react-query';
+import { postCreateChatRoom } from 'api/chatApi';
+import { ICartItem } from 'atoms/Cart.type';
+import ConfirmModal from 'components/common/ConfirmModal';
+import { useState } from 'react';
+import { IoIosLeaf } from 'react-icons/io';
+import BookRentalInfo from './BookRentalInfo';
 
 interface CartContainerProps {
   cartId: number;
@@ -23,16 +23,16 @@ const CartContainer = ({
   const sumPrice = cartItems.reduce((sum, cartItem) => sum + cartItem.price, 0);
 
   const mutation = useMutation({
-    mutationKey: ["chat", "create"],
+    mutationKey: ['chat', 'create'],
     mutationFn: () => postCreateChatRoom({ ownerId, cartId }),
 
     onSuccess: () => {
       setOpen(true);
-      console.log("EFefefef");
+      console.log('EFefefef');
     },
 
     onError: (error) => {
-      console.log("채팅방 생성 실패", error);
+      console.log('채팅방 생성 실패', error);
     },
   });
 
@@ -43,8 +43,8 @@ const CartContainer = ({
   return (
     <div className="mx-3 mb-5 bg-white/30 shadow rounded-lg p-4">
       <div className="flex flex-row item-center justify-between">
-        <span className="flex font-semibold">
-          <p className="text-sub8">{ownerUsername}</p>
+        <span className="flex font-semibold text-lg mb-2">
+          <p className="text-sub8 font-bold">{ownerUsername}</p>
           님의 책장
         </span>
       </div>
@@ -61,25 +61,25 @@ const CartContainer = ({
                 bookImage={item.bookImage}
               />
               <div
-                className={`${index !== cartItems.length - 1 ? "border-b opacity-50 border-sub7/30" : ""}`}
+                className={`${index !== cartItems.length - 1 ? 'border-b opacity-50 border-sub7/30' : ''}`}
               />
             </div>
           );
         })}
       </div>
-      <div className="flex flex-row justify-between mt-3 px-3">
+      <div className="flex flex-row font-bold justify-between mt-3 px-3">
         <p>금액</p>
         <div className="flex flex-row justify-end items-center mt-auto">
           <IoIosLeaf size={16} color="#79AC78" />
-          <p>
-            {sumPrice.toLocaleString()}{" "}
-            <span className="text-[12px]">/ 일</span>
+          <p className="items-center flex">
+            {sumPrice.toLocaleString()}{' '}
+            <span className="text-[12px] ml-1 font-light">/ 일</span>
           </p>
         </div>
       </div>
       <div className="flex justify-center mt-4">
         <button
-          className="w-4/5 bg-sub7 text-[12px] text-white rounded-[12px] p-2 text-center"
+          className="w-full bg-sub7 text-sm font-bold text-white rounded-xl p-2 text-center"
           onClick={handleCreateChatRoom}
         >
           도서 대출 신청

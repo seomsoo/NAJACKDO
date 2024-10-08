@@ -17,15 +17,15 @@ const ApplyPage = () => {
         <span className="font-bold text-xl ml-2">도서 등록</span>
       </div>
       <ApplyGuide />
-      <div className="flex flex-row justify-center mt-6">
+      <div className="flex flex-row justify-center pt-12">
         <Popover>
-          <PopoverTrigger className="bg-sub6 text-white font-bold w-[153px] h-[54px] rounded-xl mx-2">
+          <PopoverTrigger className="bg-sub7 text-white font-bold w-[153px] h-[54px] rounded-xl mx-2">
             도서 단일 등록
           </PopoverTrigger>
           <PopoverContent
             align="start"
             side="top"
-            className="font-bold border-2 border-sub6"
+            className="font-bold border-2  border-sub6"
           >
             <div
               className="flex flex-row items-center cursor-pointer"

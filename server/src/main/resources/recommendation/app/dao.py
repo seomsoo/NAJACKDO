@@ -158,25 +158,28 @@ def get_user_books_data():
         return None  # 예외 발생 시 None을 반환
     
 def get_user_books_data_by_genre(genre):
-    
     try:
         with connection.cursor(cursor_factory=RealDictCursor) as cursor:
             query = f"""
+            WITH random_books AS (
+                SELECT b.book_id
+                FROM books AS b
+                WHERE b.genre = %s
+                ORDER BY RANDOM()
+                LIMIT 50
+            )
             SELECT b.book_id, b.price_standard, b.description, b.genre, b.pub_date
-            FROM books as b
-            WHERE b.genre = '{genre}'
-            ORDER BY RANDOM()
-            LIMIT 50;
+            FROM books AS b
+            JOIN random_books AS rb ON b.book_id = rb.book_id;
             """
-            cursor.execute(query)
+            cursor.execute(query, (genre,))
             row = cursor.fetchall()
 
             if row:
-                pass
-                # print(row)
+                return row  # 데이터를 반환
             else:
                 print("No user books data found")
-            return row  # 데이터를 반환
+                return None  # 데이터가 없을 경우 None 반환
 
     except Exception as e:
         print(f"오류 발생: {e}")
@@ -206,7 +209,9 @@ def get_book_cover(book_ids):
             query = f"""SELECT b.cover 
             FROM user_book as ub
             JOIN books as b on ub.book_id = b.book_id
-            WHERE ub.user_book_id IN ({','.join(map(str, book_ids))});"""
+            WHERE ub.user_book_id IN ({','.join(map(str, book_ids))})
+            ORDER BY ARRAY_POSITION(ARRAY[{','.join(map(str, book_ids))}], ub.user_book_id)
+            """
             cursor.execute(query)
             row = cursor.fetchall()
 
@@ -246,15 +251,18 @@ def get_book_order_by_star():
 def get_book_cover_for_genre(book_ids):
     try:
         with connection.cursor(cursor_factory=RealDictCursor) as cursor:
-            query = f"""SELECT b.cover 
+            query = f"""
+            SELECT b.cover 
             FROM books as b
-            WHERE b.book_id IN ({','.join(map(str, book_ids))});"""
+            WHERE b.book_id IN ({','.join(map(str, book_ids))})
+            ORDER BY ARRAY_POSITION(ARRAY[{','.join(map(str, book_ids))}], b.book_id);
+            """
             cursor.execute(query)
             row = cursor.fetchall()
 
             if row:
                 pass
-                # print(row)
+                print(row)
             else:
                 print("No user books data found")
             return row  # 데이터를 반환

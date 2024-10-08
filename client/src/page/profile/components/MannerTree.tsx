@@ -23,6 +23,7 @@ const MannerTree = ({
     });
   };
 
+
   const goodReviewCount = goodReviewInfo.reduce(
     (sum, review) => sum + review.count,
     0

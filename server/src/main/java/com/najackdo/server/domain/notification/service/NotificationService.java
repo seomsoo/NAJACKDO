@@ -65,7 +65,6 @@ public class NotificationService {
 	@EventListener
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void registNotification(NotificationRegistEvent regist) {
-		log.info("알람 등록");
 		com.najackdo.server.domain.notification.entity.Notification notification = com.najackdo.server.domain.notification.entity.Notification.createNotification(
 			regist);
 		notificationRepository.save(notification);
@@ -74,7 +73,6 @@ public class NotificationService {
 	@EventListener
 	// @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
 	public void sendNotificationEvent(NotificationEvent notificationEvent) {
-		log.info("알람 송신");
 		User user = usersRepository.findById(notificationEvent.getTargetUserId())
 			.orElseThrow(
 				() -> new BaseException(ErrorCode.NOT_FOUND_USER)
@@ -92,7 +90,6 @@ public class NotificationService {
 			.setTitle(notificationEvent.getTitle())
 			.setBody(notificationEvent.getBody())
 			.build();
-		//                log.info("토큰 : "+ user.get().getFcmToken());
 		Message message = Message.builder()
 			.setToken(user.getFcmToken())
 			.setNotification(notification)
@@ -109,12 +106,10 @@ public class NotificationService {
 		}
 
 		try {
-			//                    log.info("알람 송신 성공");
 			firebaseMessaging.send(message);
 			publisher.publishEvent(
 				new NotificationRegistEvent(user, notificationEvent.getType(), true, notificationEvent.getTitle(),
 					notificationEvent.getBody()));
-			//                    log.info("끝");
 		} catch (FirebaseMessagingException e) {
 			e.printStackTrace();
 			publisher.publishEvent(

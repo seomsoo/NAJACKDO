@@ -49,7 +49,6 @@ public class UserController {
 		@CurrentUser User user,
 		@RequestBody UserData.PushToken pushToken
 	) {
-		log.info("들어옴");
 		userService.pushToken(user, pushToken);
 		return SuccessResponse.empty();
 	}

@@ -176,7 +176,7 @@ const AICheckUploadPage = () => {
       <div className="px-6">
         <button
           onClick={handleSubmit}
-          className="text-center bg-sub7 w-full mt-10 rounded-xl text-white font-bold py-3 cursor-pointer"
+          className="text-center bg-sub7 w-full mt-4 rounded-xl text-white font-bold py-3 cursor-pointer"
         >
           AI 인증 요청
         </button>

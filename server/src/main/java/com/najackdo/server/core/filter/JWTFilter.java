@@ -31,9 +31,6 @@ public class JWTFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 		throws ServletException, IOException {
 
-		log.info("request: {}", request);
-		log.info("response: {}", response);
-		log.info("filterChain: {}", filterChain);
 
 		String requestURI = request.getRequestURI();
 		if (!requestURI.startsWith("/api/v1") || requestURI.startsWith("/api/v1/kapay/approve")) {
@@ -41,7 +38,6 @@ public class JWTFilter extends OncePerRequestFilter {
 			return;
 		}
 
-		log.info("requestURI: {}", requestURI);
 
 		String accessToken = resolveToken(request);
 
@@ -51,11 +47,9 @@ public class JWTFilter extends OncePerRequestFilter {
 				validateToken(request, authentication.getName());
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 			} else {
-				log.info("accessToken is null - JWTFilter");
 				throw new BaseException(ErrorCode.INVALID_ACCESS_TOKEN);
 			}
 		} catch (Exception e) {
-			log.error("errors: {}", e.getMessage());
 			SecurityContextHolder.clearContext();
 			request.setAttribute("error-message", e.getMessage());
 		}
@@ -76,7 +70,6 @@ public class JWTFilter extends OncePerRequestFilter {
 
 	private String resolveToken(HttpServletRequest request) {
 		String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
-		log.info("bearerToken: {}", bearerToken);
 		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
 			return bearerToken.substring(7);
 		}

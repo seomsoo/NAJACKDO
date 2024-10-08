@@ -170,8 +170,6 @@ public class SearchService {
 
 	public AutocompleteResponse getAutocomplete(String searchWord) {
 		List<String> autocompleteList = getAutoCompleteListFromRedis(searchWord);
-		log.info("autocompleteList {}", autocompleteList);
-
 		return sortAutocompleteListByScore(autocompleteList);
 	}
 

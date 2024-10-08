@@ -31,7 +31,7 @@ const MyBookCasePage = () => {
   }
 
   if (isBookcaseError) {
-    return <Error />
+    return <Error />;
   }
 
   // 책 데이터가 없으면 메시지 표시
@@ -44,19 +44,17 @@ const MyBookCasePage = () => {
           <button onClick={goBack} className="text-2xl">
             <IoIosArrowBack />
           </button>
-          <span className='font-extrabold text-2xl'>나의 책장</span>
+          <span className="font-extrabold text-2xl">나의 책장</span>
         </div>
         <div className="flex justify-between text-3xl gap-5 text-[#545454]">
           <Link to="/apply">
             <BiBookAdd />
           </Link>
-
         </div>
       </header>
 
       <main className="px-6">
-
-        <section className="flex flex-col items-center text-center mt-12 gap-6">
+        <section className="flex flex-col items-center text-center mt-12 gap-4">
           {/* 책 데이터가 있을 때 */}
           {hasBooks ? (
             <MyBookGrid
@@ -66,11 +64,7 @@ const MyBookCasePage = () => {
           ) : (
             // 책 데이터가 없을 때
             <div className="flex flex-col items-center mt-16">
-              <img
-                src="/book_icon.png"
-                alt="book"
-                className="w-40 h-40 mb-6"
-              />
+              <img src="/book_icon.png" alt="book" className="w-40 h-40 mb-6" />
               <p className="text-lg font-semibold">
                 책장이 텅 비었네요! 첫 책을 추가해보세요.
               </p>

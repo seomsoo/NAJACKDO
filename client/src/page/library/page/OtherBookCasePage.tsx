@@ -1,18 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
 import {
   deleteInterestBookCase,
   getOtherBookCase,
   postInterestBookCase,
-} from "api/bookcaseApi";
-import BaseProfile from "components/common/BaseProfile";
-import Loading from "components/common/Loading";
-import { useEffect, useState } from "react";
-import { IoIosArrowBack } from "react-icons/io";
-import { IoHeart, IoHeartOutline } from "react-icons/io5";
-import { useNavigate, useParams } from "react-router-dom";
-import OtherBookGrid from "../components/OtherBookGrid";
+} from 'api/bookcaseApi';
+import BaseProfile from 'components/common/BaseProfile';
+import Loading from 'components/common/Loading';
+import { useEffect, useState } from 'react';
+import { IoIosArrowBack } from 'react-icons/io';
+import { IoHeart, IoHeartOutline } from 'react-icons/io5';
+import { useNavigate, useParams } from 'react-router-dom';
+import OtherBookGrid from '../components/OtherBookGrid';
 import Error from 'components/common/Error';
-
 
 const OtherBookCasePage = () => {
   const navigate = useNavigate();
@@ -25,7 +24,7 @@ const OtherBookCasePage = () => {
     isLoading: isBookcaseLoading,
     isError: isBookcaseError,
   } = useQuery({
-    queryKey: ["otherBookCase", userIdAsNumber],
+    queryKey: ['otherBookCase', userIdAsNumber],
     queryFn: () => getOtherBookCase(userIdAsNumber),
   });
 
@@ -65,7 +64,7 @@ const OtherBookCasePage = () => {
       }
       setIsFollowed(!isFollowed); // 상태 변경
     } catch (error) {
-      console.error("관심 책장 등록/해제 중 오류 발생:", error);
+      console.error('관심 책장 등록/해제 중 오류 발생:', error);
     }
   };
 
@@ -74,7 +73,7 @@ const OtherBookCasePage = () => {
   }
 
   if (isBookcaseError) {
-    return <Error />
+    return <Error />;
   }
 
   const handleProfileClick = () => {
@@ -84,17 +83,17 @@ const OtherBookCasePage = () => {
   return (
     <div>
       <header className="sticky top-0 z-10 flex items-center justify-between px-4 py-3">
-        <div className="items-center flex gap-2">
-          <button onClick={goBack} className="text-2xl">
+        <div className="items-center flex ">
+          <button onClick={goBack} className="text-2xl mr-2">
             <IoIosArrowBack />
           </button>
           <span className="hakgyo text-3xl text-main">{bookcase.nickname}</span>
           <span className="font-extrabold text-2xl">님의 책장</span>
-          <button onClick={handleProfileClick}>
+          <button className="pl-2" onClick={handleProfileClick}>
             <BaseProfile
               userImage={bookcase?.profileImage}
-              width="16"
-              height="16"
+              width="14"
+              height="14"
             />
           </button>
         </div>
@@ -112,7 +111,7 @@ const OtherBookCasePage = () => {
 
       <main className="px-6">
         {/* 다른 사용자의 책장을 보여주는 BookGrid */}
-        <section className="flex flex-col items-center text-center mt-5 gap-6">
+        <section className="flex flex-col items-center text-center mt-5 ">
           {bookcase.displayBooks?.length > 0 ? (
             <OtherBookGrid
               books={bookcase.displayBooks}

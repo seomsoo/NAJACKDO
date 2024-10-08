@@ -11,6 +11,7 @@ import { FaCircle } from "react-icons/fa";
 import { IoChevronBack } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom"; // useLocation 추가
 import AiOnBoarding from "../components/AiOnBoarding";
+import Autoplay from "embla-carousel-autoplay";
 
 const AICheckPage = () => {
   const navigate = useNavigate();
@@ -50,9 +51,14 @@ const AICheckPage = () => {
           도서 등록 - AI 인증 가이드
         </span>
       </div>
-      <div className="flex flex-col mt-6 items-center">
+      <div className="flex flex-col mt-2 items-center">
         <div className="  flex flex-col justify-center items-center">
-          <Carousel className="" setApi={setApi}>
+          <Carousel
+           plugins={[
+            Autoplay({
+              delay: 2000,
+            }),
+          ]} className="" setApi={setApi}>
             <CarouselContent>
               {onBoardingArray.map((onBoarding, index) => {
                 return (
@@ -67,22 +73,11 @@ const AICheckPage = () => {
             </CarouselContent>
             <CarouselPrevious className="ml-12" />
             <CarouselNext className="mr-12" />
-            <div className="flex justify-center py-4 ">
-              <FaCircle
-                size={10}
-                className="mr-3"
-                color={carouselIndex === 0 ? "#000000" : "#888888"}
-              />
-              <FaCircle
-                size={10}
-                color={carouselIndex === 1 ? "#000000" : "#888888"}
-              />
-            </div>
           </Carousel>
 
-          <div className="flex flex-col font-medium items-center gap-2">
-            <span className="font-bold text-3xl">사진 촬영 가이드</span>
-            <p>
+          <div className="flex flex-col font-medium items-center ">
+            <span className="font-bold text-3xl my-4">사진 촬영 가이드</span>
+            <p className="mb-1">
               위 사진과 같이 도서의 <span className=" text-sub8">앞, 뒷면</span>
               을 촬영해주세요!
             </p>
@@ -99,7 +94,7 @@ const AICheckPage = () => {
           onClick={() =>
             navigate(`/ai-check/upload`, { state: { userId, userBookId } })
           } // userId, userBookId를 함께 넘김
-          className="text-center bg-sub7 w-full  mt-4 rounded-xl text-white font-bold py-3"
+          className="text-center bg-sub7 w-full  mt-6 rounded-xl text-white font-bold py-3"
         >
           AI 인증 하러 가기
         </button>
