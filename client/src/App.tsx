@@ -158,6 +158,22 @@ function App() {
     return location.pathname.split('/')[0] !== 'chat';
   };
 
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.visualViewport) {
+        const isOpen = window.visualViewport.height < window.innerHeight;
+        setIsKeyboardOpen(isOpen);
+      }
+    };
+
+    window.visualViewport?.addEventListener("resize", handleResize);
+    return () => {
+      window.visualViewport?.removeEventListener("resize", handleResize);
+    };
+  }, []);
+  
   return (
     <QueryClientProvider client={queryClient}>
       <div className="h-full pb-[86px] relative">
@@ -170,7 +186,8 @@ function App() {
           <Route path="/library/*" element={<LibraryRoute />} />
           <Route path="/404" element={<NotFoundPage />} />
         </Routes>
-        {!isRentalPage &&
+        { !isKeyboardOpen &&
+          !isRentalPage &&
           !shouldHideHeaderFooter &&
           !hideFooterPaths.includes(currentPath) && <Footer />}
         {hideScrollTopButton() && <ScrollToTopButton />}

@@ -105,22 +105,6 @@ const ChattingBox = ({
     }
   }, [messages]);
 
-  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.visualViewport) {
-        const isOpen = window.visualViewport.height < window.innerHeight;
-        setIsKeyboardOpen(isOpen);
-      }
-    };
-
-    window.visualViewport?.addEventListener("resize", handleResize);
-    return () => {
-      window.visualViewport?.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   return (
     <div className="mx-[25px]">
       <div
@@ -161,13 +145,7 @@ const ChattingBox = ({
         </div>
         <div ref={messagesEndRef} />
       </div>
-      <form onSubmit={handleSendMessage}
-      style={{
-        position: 'fixed',
-        zIndex: -1,
-        bottom: isKeyboardOpen ? 86 : 0,
-        transition: 'bottom 0.3s ease-in-out',
-      }}>
+      <form onSubmit={handleSendMessage}>
         <div className="flex flex-row items-center my-4">
           <Input
             placeholder="메시지를 입력해주세요."
