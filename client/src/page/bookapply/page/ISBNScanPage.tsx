@@ -63,7 +63,9 @@ const ISBNScanPage = () => {
   }, [scan, isbn]);
 
   const handleClick = () => {
-    navigate("/apply/book", { state: { kind: "isbn", keyword: isbn } });
+    if (isbn) {
+      navigate("/apply/book", { state: { kind: "isbn", keyword: isbn } });
+    }
   };
 
   return (
