@@ -38,10 +38,12 @@ const CategoryRecommend = () => {
     data: recommendBooksData,
     isLoading,
     isError,
+    refetch,
   } = useQuery({
     queryKey: ["recommBooks", selectedCategory],
     queryFn: () => getMainRecommendBook(selectedCategory),
     enabled: !!userId,
+    retry: 0,
   });
 
   const selectClass = "bg-main border-2 border-main text-white px-2 py-0.5 rounded-xl mx-1.5 my-3";
@@ -92,7 +94,7 @@ const CategoryRecommend = () => {
       {isLoading ? (
         <ClipLoading className="h-40" />
       ) : isError ? (
-        <div className="text-red-500 text-center mt-5">
+        <div className="text-red-500 text-center mt-5 py-10">
           최소 하나의 책에 하트를 눌러주세요. 바로 추천받을 수 있습니다.
         </div>
       ) : (
