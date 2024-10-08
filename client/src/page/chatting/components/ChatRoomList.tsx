@@ -12,7 +12,7 @@ const ChatRoomList = () => {
 
   return (
     <div>
-      {chatRoomInfo.chatRoomList ? (
+      {chatRoomInfo.chatRoomList.length !== 0 ? (
         chatRoomInfo.chatRoomList.map((chat, index) => (
           <ChatList key={index} chat={chat} userId={chatRoomInfo.userId} />
         ))

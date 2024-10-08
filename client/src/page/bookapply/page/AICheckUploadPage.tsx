@@ -93,7 +93,6 @@ const AICheckUploadPage = () => {
         <IoChevronBack className="text-2xl" color="#545454" />
         <span className="font-bold text-2xl ml-2">도서 등록 - AI 인증</span>
       </div>
-
       <Carousel className="w-full max-w-md p-4 pt-6" setApi={setApi}>
         <CarouselContent>
           <CarouselItem className="flex flex-col items-center">

@@ -10,10 +10,14 @@ const RecommendBook = () => {
 
   console.log(userId);
 
-  const { data: books } = useSuspenseQuery<IRecommendBooks>({
+  const { data: books, refetch } = useSuspenseQuery<IRecommendBooks>({
     queryKey: ["recommBooks"],
     queryFn: () => getRecommBooks(userId),
   });
+
+  if (books.recommended_items_with_scores.length === 0) {
+    refetch();
+  }
 
   return (
     <div className="relative">
@@ -22,7 +26,7 @@ const RecommendBook = () => {
           <img
             key={book.book_id}
             src={book.cover}
-            alt="푸바오"
+            alt={String(book.book_id)}
             width={80}
             height={100}
             className="my-2 mx-1"

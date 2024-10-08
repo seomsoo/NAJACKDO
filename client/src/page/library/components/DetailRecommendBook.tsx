@@ -1,5 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getRecommendbook } from "api/bookApi";
+import { IBookDetail } from "atoms/Book.type";
 import { useNavigate } from "react-router-dom";
 import { Fragment } from "react/jsx-runtime";
 
@@ -13,14 +14,12 @@ const DetailRecommendBook = ({
   bookGenre,
 }: DetailRecommendBookProps) => {
   const navigate = useNavigate();
-  console.log("detail recommend book", bookGenre, typeof bookGenre);
 
   // 비슷한 책 추천 조회
-  const { data: recommendData } = useSuspenseQuery({
-    queryKey: ["recommend", bookId],
+  const { data: recommendData } = useSuspenseQuery<IBookDetail[]>({
+    queryKey: ["recommend", bookId, bookGenre],
     queryFn: () => getRecommendbook(bookId, bookGenre),
   });
-  // console.log("recommendData", recommendData);
 
   const handleBookClick = (userBookId: number) => {
     navigate(`/book/${userBookId}`);
