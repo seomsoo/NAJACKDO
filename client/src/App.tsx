@@ -158,7 +158,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="h-full pb-[86px] relative">
+      <div className={`h-full ${isChattingRoomPage ? 'pb-0' : 'pb-[86px]'} relative`}>
         {!isDetailPage &&
           !isRentalPage &&
           !hideHeaderPaths.includes(currentPath) && <Header />}

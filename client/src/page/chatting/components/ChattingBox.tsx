@@ -142,13 +142,7 @@ const ChattingBox = ({
         </div>
         <div ref={messagesEndRef} />
       </div>
-      <form
-        onSubmit={handleSendMessage}
-        style={{
-          position: "fixed",
-          bottom: -86,
-        }}
-      >
+      <form onSubmit={handleSendMessage}>
         <div className="flex flex-row items-center my-4">
           <Input
             placeholder="메시지를 입력해주세요."
