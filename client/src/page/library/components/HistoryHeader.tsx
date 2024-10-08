@@ -1,6 +1,6 @@
-import { IoIosArrowBack } from "react-icons/io";
-import { IoNotificationsOutline } from "react-icons/io5";
-import { Link, useNavigate } from "react-router-dom";
+import { IoIosArrowBack } from 'react-icons/io';
+import { IoNotificationsOutline } from 'react-icons/io5';
+import { Link, useNavigate } from 'react-router-dom';
 
 const HistoryHeader = () => {
   const navigate = useNavigate();
@@ -9,14 +9,13 @@ const HistoryHeader = () => {
   };
 
   return (
-    <header className="sticky top-0 z-10 bg-[#F8F6F3] flex items-center justify-between p-6 py-4 mb-4">
+    <header className="top-0 z-10 bg-[#F8F6F3] flex items-center justify-between p-6 py-4 mb-4">
       <div className="items-center flex gap-2">
         <button onClick={goBack} className="text-2xl ">
           <IoIosArrowBack />
         </button>
         <span className="font-extrabold text-2xl">책 히스토리</span>
       </div>
-
     </header>
   );
 };

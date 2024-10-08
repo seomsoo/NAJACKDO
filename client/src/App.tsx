@@ -154,6 +154,10 @@ function App() {
 
   const isPopup = window.opener !== null && !window.opener.closed;
   const shouldHideHeaderFooter = popupPaths.includes(currentPath) && isPopup;
+  const hideScrollTopButton = () => {
+    return location.pathname.split('/')[0] !== 'chat';
+  };
+
   return (
     <QueryClientProvider client={queryClient}>
       <div className="h-full pb-[86px] relative">
@@ -169,7 +173,7 @@ function App() {
         {!isRentalPage &&
           !shouldHideHeaderFooter &&
           !hideFooterPaths.includes(currentPath) && <Footer />}
-        {!ChattingRoomPage && <ScrollToTopButton />}
+        {hideScrollTopButton() && <ScrollToTopButton />}
       </div>
     </QueryClientProvider>
   );
