@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { getMainRecommendBook } from "api/bookApi";
 import ClipLoading from "components/common/ClipLoading";
-import { useState, useEffect, useCallback } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "store/useUserStore";
-import useEmblaCarousel from "embla-carousel-react";
 
 const CategoryRecommend = () => {
   const nav = useNavigate();
@@ -46,8 +46,10 @@ const CategoryRecommend = () => {
     retry: 0,
   });
 
-  const selectClass = "bg-main border-2 border-main text-white px-2 py-0.5 rounded-xl mx-1.5 my-3";
-  const notSelectClass = "text-main border-[1px] border-main px-2 py-0.5 rounded-xl mx-1.5 my-3";
+  const selectClass =
+    "bg-main border-2 border-main text-white px-2 py-0.5 rounded-xl mx-1.5 my-3";
+  const notSelectClass =
+    "text-main border-[1px] border-main px-2 py-0.5 rounded-xl mx-1.5 my-3";
 
   const categories = [
     "어린이",
@@ -76,7 +78,9 @@ const CategoryRecommend = () => {
         {categories.map((category) => (
           <div
             key={category}
-            className={selectedCategory === category ? selectClass : notSelectClass}
+            className={
+              selectedCategory === category ? selectClass : notSelectClass
+            }
             onClick={() => setSelectedCategory(category)}
           >
             <span>{category}</span>
@@ -94,9 +98,10 @@ const CategoryRecommend = () => {
       {isLoading ? (
         <ClipLoading className="h-40" />
       ) : isError ? (
-        <div className="text-red-500 text-center mt-5 py-10">
-          최소 하나의 책에 하트를 눌러주세요. 바로 추천받을 수 있습니다.
-        </div>
+        <p className="text-red-500 mt-5 h-40 flex items-center justify-center text-center hakgyo text-xl">
+          최소 하나의 책에 하트를 눌러주세요. <br />
+          바로 추천받을 수 있습니다.
+        </p>
       ) : (
         <div className="relative overflow-hidden h-[280px]" ref={emblaRef}>
           <div className="flex">
@@ -117,7 +122,8 @@ const CategoryRecommend = () => {
                   className="w-[170px] h-[240px] object-cover"
                   onClick={() => nav(`/book/${book.bookId}`)}
                   style={{
-                    boxShadow: "0 8px 8px  rgba(0, 0, 0, 0.3), 0 6px 20px rgba(0, 0, 0, 0.1)",
+                    boxShadow:
+                      "0 8px 8px  rgba(0, 0, 0, 0.3), 0 6px 20px rgba(0, 0, 0, 0.1)",
                   }}
                 />
               </div>
