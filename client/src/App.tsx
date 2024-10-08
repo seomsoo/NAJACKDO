@@ -10,6 +10,7 @@ import MainRoute from 'components/routes/MainRoute';
 import ProfileRoute from 'components/routes/ProfileRoute';
 import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+import ChattingRoomPage from 'page/chatting/page/ChattingRoomPage';
 import { useEffect, useState } from 'react';
 import {
   Route,
@@ -165,7 +166,8 @@ function App() {
           <Route path="/library/*" element={<LibraryRoute />} />
           <Route path="/404" element={<NotFoundPage />} />
         </Routes>
-        {!isRentalPage &&
+        {!ChattingRoomPage &&
+          !isRentalPage &&
           !shouldHideHeaderFooter &&
           !hideFooterPaths.includes(currentPath) && <Footer />}
         <ScrollToTopButton />
