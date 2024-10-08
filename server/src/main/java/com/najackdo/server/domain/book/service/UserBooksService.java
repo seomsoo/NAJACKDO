@@ -94,10 +94,10 @@ public class UserBooksService {
 	}
 
 	@Transactional
-	public List<BookData.Search> addBookList(UserBookData.Create create) {
+	public Map<String, List<BookData.Search>> addBookList(User user, UserBookData.Create create) {
 
-		List<String> notFoundBooks = new ArrayList<>();
-		List<String> alreadyExistBooks = new ArrayList<>();
+
+		List<BookData.Search> alreadyExistBooks = new ArrayList<>();
 		List<String> titles = postBookSpineDetection(create.getFile());
 		List<BookData.Search> bookDataList = new ArrayList<>();
 		for (String title : titles){
@@ -105,10 +105,18 @@ public class UserBooksService {
 			if(book==null){
 				continue;
 			}
+			if (userBooksRepository.findByUserAndIsbn(user.getId(), book.getIsbn()).isPresent()) {
+				alreadyExistBooks.add(BookData.Search.from(book));
+				continue;
+			}
 			bookDataList.add(BookData.Search.from(book));
 		}
 
-		return bookDataList;
+		HashMap<String, List<BookData.Search>> map = new HashMap<>();
+		map.put("alreadyExistBooks", alreadyExistBooks);
+		map.put("bookDataList", bookDataList);
+
+		return map;
 	}
 
 	@Transactional
