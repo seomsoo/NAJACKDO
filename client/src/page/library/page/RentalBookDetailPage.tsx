@@ -16,29 +16,15 @@ const RentalBookDetailPage = () => {
   const [isOwner, setIsOwner] = useState<boolean>(false);
   const [price, setPrice] = useState<number>(0);
   const [bookGenre, setBookGenre] = useState<string>("");
-  const [keyboardOffset, setKeyboardOffset] = useState(0);
+
 
   if (bookGenre) {
     console.log("bookGenre", bookGenre);
   }
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.visualViewport) {
-        const offset = window.innerHeight - window.visualViewport.height;
-        setKeyboardOffset(offset > 0 ? offset : 0);
-      }
-    };
-
-    window.visualViewport?.addEventListener("resize", handleResize);
-    return () => {
-      window.visualViewport?.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
 
   return (
-    <Fragment>z
+    <Fragment>
       <ErrorBoundary fallback={<SmallError />}>
         <Suspense fallback={<Loading />}>
           <RentalBookInfo
@@ -48,11 +34,7 @@ const RentalBookDetailPage = () => {
             setPrice={setPrice}
             setBookGenre={setBookGenre}
           />
-          <div
-            className="fixed bottom-0 bg-[#F8F6F3] w-screen max-w-[430px] pt-3 flex flex-row justify-center pb-7"
-            style={{
-              transform: `translateY(-${keyboardOffset}px)`,
-            }}>
+          <div className="fixed bg-[#F8F6F3] bottom-0 w-screen max-w-[430px] pt-3 flex flex-row justify-center pb-7">
             {!isOwner ? (
               <AddCart ownerbookId={Number(bookId)} />
             ) : (
