@@ -48,10 +48,10 @@ const DrawerContent = React.forwardRef<
           className
         )}
         style={{
-          position: 'fixed',
+          position: "absolute",
           bottom: 0,
           transform: `translateY(-${window.innerHeight - window.visualViewport?.height}px)`,
-          transition: 'transform 0.3s ease-in-out',
+          transition: "transform 0.3s ease-in-out",
         }}
         {...props}
       >
