@@ -116,8 +116,7 @@ const RentalModal = ({
                 </button>
                 <button
                   className="border-2 border-sub7 px-5 py-2 rounded-xl bg-sub7 hover:bg-[#4F473D] text-white"
-                  // TODO : 책잎 충전하기 페이지로 이동
-                  onClick={() => navigate("/profile")}
+                  onClick={() => navigate("/profile/my-leaf/charge")}
                 >
                   책잎 충전하기
                 </button>

@@ -23,7 +23,8 @@ const ApplyBookcase = () => {
         책을 똑바로 꽂아주세요!
       </p>
       <p className="text-[13px] text-center  ">
-      <span className="text-[#ab831d] mr-1">?</span>책등 : 책을 책꽂이에 꽂았을 때의 보이는, <br /> 책 제목 등이 쓰여 있는 옆면
+        <span className="text-[#ab831d] mr-1">?</span>책등 : 책을 책꽂이에
+        꽂았을 때의 보이는, <br /> 책 제목 등이 쓰여 있는 옆면
       </p>
     </div>
   );

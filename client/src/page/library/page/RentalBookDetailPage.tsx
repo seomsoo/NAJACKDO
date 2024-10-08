@@ -17,10 +17,6 @@ const RentalBookDetailPage = () => {
   const [price, setPrice] = useState<number>(0);
   const [bookGenre, setBookGenre] = useState<string>("");
 
-  if (bookGenre) {
-    console.log("bookGenre", bookGenre);
-  }
-
   return (
     <Fragment>
       <ErrorBoundary fallback={<SmallError />}>

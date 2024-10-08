@@ -1,6 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { getAutoSearchText, getSearch } from "api/searchApi";
-import { IAutoArray, ISearch } from "atoms/Search.type";
+import { IAutoArray } from "atoms/Search.type";
+import ClipLoading from "components/common/ClipLoading";
+import SmallError from "components/common/SmallError";
 import {
   Dialog,
   DialogContent,
@@ -12,7 +14,7 @@ import {
 import { Input } from "components/ui/input";
 import TextApplyResult from "page/bookapply/components/TextApplyResult";
 import AutoSearch from "page/search/components/AutoSearch";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { LuPencilLine } from "react-icons/lu";
 import { useLocation } from "react-router-dom";
@@ -24,6 +26,7 @@ const TextApply = () => {
   const [autoSearchText, setAutoSearchText] = useState<IAutoArray>({
     list: [],
   });
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
   // 자동완성 검색어 조회
   const fetchAutoSearchText = async (keyword: string) => {
@@ -52,20 +55,55 @@ const TextApply = () => {
   // 검색
   const {
     data: searchData,
-    isLoading: searchLoading,
-    isError: searchError,
+    isLoading,
+    isError,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
     refetch,
-  } = useQuery<ISearch[]>({
-    queryKey: ["search", "result"],
-    queryFn: () => getSearch(searchText),
-    enabled: !!searchText && isClicked,
-    initialData: [],
+  } = useInfiniteQuery({
+    queryKey: ["search"],
+    queryFn: ({ pageParam = 0 }) => getSearch(searchText, pageParam as number),
+    getNextPageParam: (lastPage, pages) => {
+      if (!lastPage.last) {
+        return pages.length;
+      }
+      return undefined;
+    },
+    initialPageParam: 0,
+    enabled: !!searchText,
   });
 
   const handleClick = () => {
     setIsClicked(true);
     refetch();
   };
+
+  const handleObserver = useCallback(
+    (entries) => {
+      const target = entries[0];
+      if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    },
+    [fetchNextPage, hasNextPage, isFetchingNextPage]
+  );
+
+  useEffect(() => {
+    const option = {
+      root: loadMoreRef.current?.parentElement as HTMLElement, // viewport as root
+      rootMargin: "10px",
+      threshold: 0.1,
+    };
+    const observer = new IntersectionObserver(handleObserver, option);
+    if (loadMoreRef.current) observer.observe(loadMoreRef.current);
+
+    return () => {
+      if (loadMoreRef.current) observer.unobserve(loadMoreRef.current);
+    };
+  }, [handleObserver]);
+
+  const totalElements = searchData?.pages?.[0]?.totalElements ?? 0;
 
   useEffect(() => {
     // 자동완성 검색어 조회
@@ -96,6 +134,14 @@ const TextApply = () => {
       setSearchText("");
     };
   }, []); // 컴포넌트 언마운트 시 초기화
+
+  if (isLoading) {
+    return <ClipLoading />;
+  }
+
+  if (isError) {
+    return <SmallError />;
+  }
 
   return (
     <Dialog>
@@ -142,10 +188,15 @@ const TextApply = () => {
               ? autoSearchText?.list && (
                   <AutoSearch autoSearch={autoSearchText.list} />
                 )
-              : searchData?.length > 0 &&
-                searchData.map((bookInfo, index) => (
-                  <TextApplyResult key={index} book={bookInfo} />
+              : totalElements > 0 &&
+                searchData.pages.map((page, pageIndex) => (
+                  <div key={pageIndex}>
+                    {page.content.map((bookInfo, index) => (
+                      <TextApplyResult key={index} book={bookInfo} />
+                    ))}
+                  </div>
                 ))}
+            <div ref={loadMoreRef}>{isFetchingNextPage && <ClipLoading />}</div>
           </div>
         </DialogHeader>
       </DialogContent>

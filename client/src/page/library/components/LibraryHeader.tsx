@@ -7,7 +7,7 @@ const LibraryHeader = () => {
   const nickname = useUserStore.getState().nickname;
 
   return (
-    <header className="flex items-center justify-between p-4 px-6 mb-3 ">
+    <header className="flex items-center justify-between p-4 px-6 mb-1 ">
       <span className="font-extrabold text-2xl">
         <span className="hakgyo text-3xl text-main">{nickname}</span>
         님의 서재

@@ -38,8 +38,6 @@ const LocationPage = () => {
   });
   const bookcaseArray =
     bookcaseData?.pages?.flatMap((page) => page.content) || [];
-  bookcaseArray.map((bookcase, index) => console.log(bookcase));
-  console.log("length", bookcaseArray[0]);
 
   const handleObserver = useCallback(
     (entries) => {
@@ -68,12 +66,9 @@ const LocationPage = () => {
   if (isBookCaseLoading) return <Loading />;
   if (isBookCaseError) return <div>오류가 발생했습니다.</div>;
 
-  // const hasNeighbor = bookcaseData && bookcaseData.displayBooks?.length > 0;
-
-  console.log("bookcaseArray.length", bookcaseArray.length);
   return (
     <div className="px-6 ">
-      <div className="flex flex-row justify-between mt-4 mb-6 items-center">
+      <div className="flex flex-row justify-between mt-2 mb-6 items-center">
         <div className="text-2xl font-bold">
           <span className="text-sub8">
             {" "}

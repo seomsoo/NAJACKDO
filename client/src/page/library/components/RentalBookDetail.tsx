@@ -1,11 +1,15 @@
-import { Carousel, CarouselContent, CarouselItem } from 'components/ui/carousel';
-import Autoplay from 'embla-carousel-autoplay';
-import CenterCropImage from 'page/library/components/CenterCropImage';
-import { IoChevronBack } from 'react-icons/io5';
-import { useNavigate, useParams } from 'react-router-dom';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
+import CenterCropImage from "page/library/components/CenterCropImage";
+import { IoChevronBack } from "react-icons/io5";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface BookInfoProps {
-  images: string[]; // 이미지 배열을 props로 받음
+  images: string[];
 }
 
 const RentalBookDetail = ({ images }: BookInfoProps) => {
@@ -23,12 +27,13 @@ const RentalBookDetail = ({ images }: BookInfoProps) => {
           <IoChevronBack size={25} />
         </div>
 
-        {/* 캐러셀 추가 */}
-        <Carousel plugins={[
-        Autoplay({
-          delay: 2000,
-        }),
-      ]}>
+        <Carousel
+          plugins={[
+            Autoplay({
+              delay: 2000,
+            }),
+          ]}
+        >
           <CarouselContent>
             {images.map((imageUrl, index) => (
               <CarouselItem key={index}>

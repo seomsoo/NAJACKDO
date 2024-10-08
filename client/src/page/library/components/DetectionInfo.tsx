@@ -13,19 +13,18 @@ const DetectionInfo = ({ ripped, wornout }: DetectionInfoProps) => {
         </span>
       </div>
       <div className="flex text-xl justify-around items-center  rounded-lg border-main border py-3">
-  <div className="flex flex-col items-center pl-5 gap-2 py-1">
-    <span>찢김</span>
-    <span className="text-2xl text-[#c5c028] maplestory">{ripped}</span>
-  </div>
-  
-  
-  <div className="border-l h-8  border-gray-400"></div>
+        <div className="flex flex-col items-center pl-5 gap-2 py-1">
+          <span>찢김</span>
+          <span className="text-2xl text-[#c5c028] maplestory">{ripped}</span>
+        </div>
 
-  <div className="flex flex-col items-center gap-2 pr-5 py-1">
-    <span>닳음</span>
-    <span className="text-2xl text-[#e93838] maplestory">{wornout}</span>
-  </div>
-</div>
+        <div className="border-l h-8  border-gray-400"></div>
+
+        <div className="flex flex-col items-center gap-2 pr-5 py-1">
+          <span>닳음</span>
+          <span className="text-2xl text-[#e93838] maplestory">{wornout}</span>
+        </div>
+      </div>
     </div>
   );
 };

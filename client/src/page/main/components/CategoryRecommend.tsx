@@ -10,9 +10,11 @@ const CategoryRecommend = () => {
   const nav = useNavigate();
   const userId = useUserStore().userId;
   const [selectedCategory, setSelectedCategory] = useState<string>("어린이");
+  const [selectedCategory, setSelectedCategory] = useState<string>("어린이");
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
+    align: "center",
     align: "center",
     skipSnaps: false,
   });
@@ -48,6 +50,15 @@ const CategoryRecommend = () => {
   const notSelectClass = "text-main border-[1px] border-main px-2 py-0.5 rounded-xl mx-1.5 my-3";
 
   const categories = [
+    "어린이",
+    "소설/시/희곡",
+    "경제경영",
+    "과학",
+    "사회과학",
+    "역사",
+    "에세이",
+    "자기계발",
+    "여행",
     "어린이",
     "소설/시/희곡",
     "경제경영",
@@ -95,6 +106,8 @@ const CategoryRecommend = () => {
                   index === selectedIndex
                     ? "transform scale-100 opacity-100"
                     : "transform scale-75 opacity-70"
+                      ? "transform scale-100 opacity-100"
+                      : "transform scale-75 opacity-70"
                 }`}
                 key={book.bookId}
               >

@@ -37,24 +37,48 @@ DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName;
 const DrawerContent = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>
->(({ className, children, ...props }, ref) => (
-  <DrawerPortal>
-    <DrawerOverlay />
-    <div className="fixed inset-x-0 bottom-0 z-50 flex justify-center">
-      <DrawerPrimitive.Content
-        ref={ref}
-        className={cn(
-          "mt-24 flex h-auto w-full max-w-[430px] flex-col rounded-t-[10px] border bg-sub5",
-          className
-        )}
-        {...props}
-      >
-        <div className="mx-auto mt-4 h-1.5 w-[150px] rounded-full bg-[#D9D9D9]" />
-        {children}
-      </DrawerPrimitive.Content>
-    </div>
-  </DrawerPortal>
-));
+>(({ className, children, ...props }, ref) => {
+  const [isKeyboardOpen, setIsKeyboardOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.visualViewport) {
+        const isOpen = window.visualViewport.height < window.innerHeight;
+        setIsKeyboardOpen(isOpen);
+      }
+    };
+
+    window.visualViewport?.addEventListener("resize", handleResize);
+    return () => {
+      window.visualViewport?.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  return (
+    <DrawerPortal>
+      <DrawerOverlay />
+      <div className="fixed inset-x-0 bottom-0 z-50 flex justify-center">
+        <DrawerPrimitive.Content
+          ref={ref}
+          className={cn(
+            "mt-24 flex h-auto w-full max-w-[430px] flex-col rounded-t-[10px] border bg-sub5",
+            className
+          )}
+          style={{
+            position: "fixed",
+            bottom: isKeyboardOpen ? 280 : 0,
+            transition: "bottom 0.3s ease-in-out",
+          }}
+          {...props}
+        >
+          <div className="mx-auto mt-4 h-1.5 w-[150px] rounded-full bg-[#D9D9D9]" />
+          {children}
+        </DrawerPrimitive.Content>
+      </div>
+    </DrawerPortal>
+  );
+});
+
 DrawerContent.displayName = "DrawerContent";
 
 const DrawerHeader = ({

@@ -5,13 +5,9 @@ import Error from "components/common/Error";
 import Loading from "components/common/Loading";
 import Alarm from "page/alarm/components/Alarm";
 import { useCallback, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { IoNotificationsOutline } from "react-icons/io5";
 
 const AlarmPage = () => {
-  const navigate = useNavigate();
-  const goBack = () => {
-    navigate(-1);
-  };
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
   const {
@@ -74,22 +70,34 @@ const AlarmPage = () => {
   }
 
   return (
-    <div>
-      {alarmArray.map((item, index) => {
-        return (
-          <Alarm
-            key={index}
-            content={item.content}
-            title={item.title}
-            createAt={item.createAt}
-            type={item.type}
-          />
-        );
-      })}
-      <div ref={loadMoreRef} className="loading">
-        {isFetchingNextPage ? <ClipLoading /> : ""}
-      </div>
-    </div>
+    <>
+      {alarmArray.length === 0 ? (
+        <div
+          className="flex flex-col justify-center items-center space-y-3"
+          style={{ height: "calc(100vh - 150px)" }}
+        >
+          <IoNotificationsOutline size={100} color="#79AC78" />
+          <p className="font-bold text-xl">알람이 없습니다</p>
+        </div>
+      ) : (
+        <div>
+          {alarmArray.map((item, index) => {
+            return (
+              <Alarm
+                key={index}
+                content={item.content}
+                title={item.title}
+                createAt={item.createAt}
+                type={item.type}
+              />
+            );
+          })}
+          <div ref={loadMoreRef} className="loading">
+            {isFetchingNextPage ? <ClipLoading /> : ""}
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

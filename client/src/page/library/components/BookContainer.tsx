@@ -1,8 +1,8 @@
-import { deleteInterestbook, postInterestbook } from 'api/bookApi'; // API 호출 함수
-import AlertModal from 'components/common/AlertModal';
-import { useState } from 'react';
-import { IoHeart, IoHeartOutline } from 'react-icons/io5';
-import { useNavigate } from 'react-router-dom';
+import { deleteInterestbook, postInterestbook } from "api/bookApi"; // API 호출 함수
+import AlertModal from "components/common/AlertModal";
+import { useState } from "react";
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 interface BookContainerProps {
   bookId: number;
@@ -24,23 +24,21 @@ const BookContainer = ({
   const navigate = useNavigate();
   const [heart, setHeart] = useState(isInterested);
   const [open, setOpen] = useState<boolean>(false);
-  const [alertContent, setAlertContent] = useState<string>('');
+  const [alertContent, setAlertContent] = useState<string>("");
 
   const handleHeart = async () => {
     try {
       if (heart) {
         await deleteInterestbook(bookId);
-        setAlertContent('관심 도서가 해제되었습니다.');
+        setAlertContent("관심 도서가 해제되었습니다.");
         setOpen(true);
       } else {
         await postInterestbook(bookId);
-        setAlertContent('관심 도서로 등록되었습니다.');
+        setAlertContent("관심 도서로 등록되었습니다.");
         setOpen(true);
       }
       setHeart(!heart);
-    } catch (error) {
-      // console.error('관심 도서 등록/해제 중 오류 발생:', error);
-    }
+    } catch (error) {}
   };
 
   const handleBookClick = () => {
@@ -55,7 +53,7 @@ const BookContainer = ({
         src={cover}
         style={{
           boxShadow:
-            '0 8px 8px rgba(0, 0, 0, 0.1), 0 8px 20px rgba(0, 0, 0, 0.1)',
+            "0 8px 8px rgba(0, 0, 0, 0.1), 0 8px 20px rgba(0, 0, 0, 0.1)",
         }}
         alt="BookContainer"
       />

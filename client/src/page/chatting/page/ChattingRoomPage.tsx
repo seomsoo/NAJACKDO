@@ -18,11 +18,6 @@ const ChattingRoomPage = () => {
   } = useLocation();
   const [totalLeaf, setTotalLeaf] = useState<number>(0);
   const [step, setStep] = useState<ChatRentalStep>(ChatRentalStep.READY);
-  
-  const initialInnerHeight = window.innerHeight;
-  const initialVisualViewportHeight = window.visualViewport.height;
-  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
-
 
   // 웹소켓
   const [client, setClient] = useState<Client | null>(null);
@@ -40,7 +35,6 @@ const ChattingRoomPage = () => {
     });
 
     stompClient.onConnect = () => {
-      console.log("connected");
       // 채팅방 구독
       stompClient?.subscribe(
         `/exchange/chat.exchange/room.${roomId}`,
@@ -81,7 +75,6 @@ const ChattingRoomPage = () => {
 
     return () => disconnect();
   }, []);
-
 
   return (
     <ErrorBoundary fallback={<SmallError />}>

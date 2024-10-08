@@ -63,13 +63,15 @@ services:
       - TZ=Asia/Seoul
 
   fastapi:
-    image: ssafysm/fast-api-server:1.15
+    image: ssafysm/fast-api-server:1.16
     container_name: fastapi_app
     ports:
       - "8000:8000"
     depends_on:
       - mongodb
     command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "4"]
+
+
 
 volumes:
   najackdo-db:

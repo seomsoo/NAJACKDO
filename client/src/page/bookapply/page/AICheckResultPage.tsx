@@ -5,7 +5,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "components/ui/carousel"; // 캐러셀 관련 컴포넌트 추가
+} from "components/ui/carousel";
 import { useEffect, useState } from "react";
 import { FaCircle } from "react-icons/fa";
 import { IoIosArrowBack, IoIosLeaf } from "react-icons/io";

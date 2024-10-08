@@ -21,7 +21,7 @@ const ChatRoomList = () => {
           className="flex flex-col justify-center items-center space-y-3"
           style={{ height: "calc(100vh - 150px)" }}
         >
-          <PiChatsCircleFill size={100} color="#A6B37D" />
+          <PiChatsCircleFill size={100} color="#79AC78" />
           <p className="font-bold text-xl">채팅방이 없습니다</p>
         </div>
       )}

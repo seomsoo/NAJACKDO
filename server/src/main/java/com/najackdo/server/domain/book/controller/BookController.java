@@ -47,8 +47,9 @@ public class BookController {
 	 */
 	@PostMapping("/regist-books")
 	@Operation(summary = "책장 사진으로 도서 리스트 반환", description = "책장 사진으로 도서 리스트 반환")
-	public SuccessResponse<List<BookData.Search>> registBooks(
-		@ModelAttribute UserBookData.Create create) {
+	public SuccessResponse<Map<String, List<BookData.Search>>> registBooks(
+			@CurrentUser User user,
+			@ModelAttribute UserBookData.Create create) {
 
 		List<BookData.Search> result = userBooksService.addBookList(create);
 		return SuccessResponse.of(result);
@@ -63,7 +64,7 @@ public class BookController {
 	@PostMapping("/regist-books-by-ids")
 	@Operation(summary = "도서 등록", description = "bookIds 로 도서 등록")
 	public SuccessResponse<Void> registBooksByIds(@CurrentUser User user,
-		@RequestBody UserBookData.CreateByIds create) {
+			@RequestBody UserBookData.CreateByIds create) {
 		userBooksService.addBookListByIds(user, create);
 		return SuccessResponse.empty();
 	}
@@ -77,10 +78,10 @@ public class BookController {
 	@GetMapping("")
 	@Operation(summary = "도서 검색", description = "isbn 또는 제목으로 도서 검색")
 	public SuccessResponse<BookData.Search> getBooks(
-		@CurrentUser User user,
-		@RequestParam(value = "isbn", required = false) Long isbn,
-		@RequestParam(value = "title", required = false) String title,
-		Pageable pageable) {
+			@CurrentUser User user,
+			@RequestParam(value = "isbn", required = false) Long isbn,
+			@RequestParam(value = "title", required = false) String title,
+			Pageable pageable) {
 
 		if (isbn != null) {
 			return SuccessResponse.of(bookService.getBookByIsbn(isbn));
@@ -113,7 +114,7 @@ public class BookController {
 	@PostMapping("/interest/{bookId}")
 	@Operation(summary = "관심 도서 추가", description = "유저의 관심 도서 추가")
 	public SuccessResponse<Void> addInterestBook(@CurrentUser User user,
-		@PathVariable("bookId") Long interest) {
+			@PathVariable("bookId") Long interest) {
 		userBooksService.addInterestBook(user, interest);
 
 		return SuccessResponse.empty();
@@ -122,7 +123,7 @@ public class BookController {
 	@DeleteMapping("/interest/{bookId}")
 	@Operation(summary = "관심 도서 삭제", description = "유저의 관심 도서 삭제")
 	public SuccessResponse<Void> deleteInterestBook(@CurrentUser User user,
-		@PathVariable("bookId") Long interest) {
+			@PathVariable("bookId") Long interest) {
 		userBooksService.deleteInterestBook(user, interest);
 		return SuccessResponse.empty();
 	}
@@ -131,7 +132,7 @@ public class BookController {
 	 * 관심 책장 목록 조회 API
 	 *
 	 * @param user
-	 * @return {@link  List<BookData.BookCase>}
+	 * @return {@link List<BookData.BookCase>}
 	 */
 	@GetMapping("/bookcase/interest")
 	@Operation(summary = "관심 책장 목록 조회", description = "유저의 관심 책장 목록 조회")
@@ -149,15 +150,15 @@ public class BookController {
 	@GetMapping("/bookcase/{findUserId}")
 	@Operation(summary = "책장 목록 조회", description = "유저 아이디로 책장 목록 조회")
 	public SuccessResponse<BookData.BookCase> getUserBookCaseByNickName(
-		@CurrentUser User user,
-		@PathVariable Long findUserId) {
+			@CurrentUser User user,
+			@PathVariable Long findUserId) {
 		return SuccessResponse.of(bookService.getBookCaseByuserId(user, findUserId));
 	}
 
 	@GetMapping("/bookcase/me")
 	@Operation(summary = "나의 책장 목록 조회", description = "나의 책장 목록 조회")
 	public SuccessResponse<BookData.BookCase> getMyBookCaseByNickName(
-		@CurrentUser User user) {
+			@CurrentUser User user) {
 
 		return SuccessResponse.of(bookService.getMyBookCaseByuserId(user.getId()));
 	}

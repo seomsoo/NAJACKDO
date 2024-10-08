@@ -3,13 +3,6 @@ import MannerBarGraph from "page/profile/components/MannerBarGraph";
 import { IoIosArrowForward } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
-// interface MannerTreeProps {
-//   mannerScore: number;
-//   goodReviewCount: number;
-//   badReviewCount: number;
-//   nickname: string;
-// }
-
 const MannerTree = ({
   mannerScore,
   goodReviewInfo,
@@ -22,7 +15,6 @@ const MannerTree = ({
       state: { mannerScore, goodReviewInfo, badReviewInfo },
     });
   };
-
 
   const goodReviewCount = goodReviewInfo.reduce(
     (sum, review) => sum + review.count,

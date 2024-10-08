@@ -23,7 +23,12 @@ const AutoSearchText = ({ text }: IAutoSearchTextProps) => {
       <div>
         <IoIosSearch size={25} color="#545454" />
       </div>
-      <p className="ml-3 text-sm text-left" onClick={() => navigate(`/search/result?keyword=${text}`)}>{text}</p>
+      <p
+        className="ml-3 text-sm text-left"
+        onClick={() => navigate(`/search/result?keyword=${text}`)}
+      >
+        {text}
+      </p>
     </div>
   );
 };

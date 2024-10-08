@@ -28,7 +28,6 @@ const LeafPage = () => {
     queryKey: ["cashlog"],
     queryFn: getCashLog,
   });
-  console.log("cashlogData", cashlogData);
 
   let year = "";
   if (isLoading) return <Loading />;
@@ -61,7 +60,6 @@ const LeafPage = () => {
       <div className="w-full p-1 border-b-[1px] pt-1 border-sub7/30">
         {cashlogData.map((cashlog, index) => {
           const currentYear = cashlog.createdAt.split("T")[0].split("-")[0];
-          console.log("currentYear", currentYear);
           let showYear = false;
 
           if (currentYear !== year) {
@@ -78,24 +76,12 @@ const LeafPage = () => {
               )}
               <History
                 cash={cashlog.cash}
-                resultCash={cashlog.resultCash}
                 type={cashlog.type}
                 createdAt={cashlog.createdAt}
               />
             </div>
           );
         })}
-
-        {/* {cashlogData.map((cashlog, index) => {
-          return (
-            <History
-            cash={ cashlog.cash}
-            resultCash={ cashlog.resultCash}
-            type={ cashlog.type}
-            createdAt={ cashlog.createdAt}
-            />
-          );
-        })} */}
       </div>
     </div>
   );

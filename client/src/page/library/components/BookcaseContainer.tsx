@@ -15,7 +15,7 @@ const BookcaseContainer = ({
   userId,
   name,
   imageArray,
-  isFollowed
+  isFollowed,
 }: BookcaseContainerProps) => {
   const [heart, setHeart] = useState<boolean>(isFollowed);
   const [open, setOpen] = useState<boolean>(false);

@@ -33,14 +33,6 @@ const BookInfo = ({ bookId, rental, setBookGenre }: BookInfoProps) => {
   const mutation = useMutation({
     mutationKey: ["RentalCostData"],
     mutationFn: postTimeSpent,
-
-    onSuccess: () => {
-      console.log("체류 시간 저장 성공");
-    },
-
-    onError: (error) => {
-      console.log("체류 시간 저장 실패", error);
-    },
   });
 
   // 페이지 체류 시간 계산
@@ -48,7 +40,6 @@ const BookInfo = ({ bookId, rental, setBookGenre }: BookInfoProps) => {
     const startTime = new Date();
 
     const handleTimeSpent = () => {
-      console.log("페이지 이탈");
       const endTime = new Date();
       const timeSpent = Math.floor(
         (endTime.getTime() - startTime.getTime()) / 1000
@@ -78,6 +69,10 @@ const BookInfo = ({ bookId, rental, setBookGenre }: BookInfoProps) => {
   const [heart, setHeart] = useState(bookData.interest);
   const [open, setOpen] = useState<boolean>(false);
   const [alertContent, setAlertContent] = useState<string>("");
+
+  useEffect(() => {
+    setHeart(bookData.interest);
+  }, [bookData.interest]);
 
   const deleteMutation = useMutation({
     mutationKey: ["deleteInterestbook"],

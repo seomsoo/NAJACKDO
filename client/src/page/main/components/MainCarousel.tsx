@@ -1,16 +1,16 @@
-import { useQuery } from '@tanstack/react-query';
-import { getBestSeller } from 'api/bookApi';
-import Loading from 'components/common/Loading';
+import { useQuery } from "@tanstack/react-query";
+import { getBestSeller } from "api/bookApi";
+import Loading from "components/common/Loading";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-} from 'components/ui/carousel';
-import Autoplay from 'embla-carousel-autoplay';
-import CenterCropImage from 'page/library/components/CenterCropImage';
-import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
-import { FaStarHalfAlt } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+} from "components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
+import CenterCropImage from "page/library/components/CenterCropImage";
+import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import { FaStarHalfAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 const MainCarousel = () => {
   const navigate = useNavigate();
 
@@ -19,7 +19,7 @@ const MainCarousel = () => {
     isLoading: isBestSellerLoading,
     isError: isBestSellerError,
   } = useQuery({
-    queryKey: ['BestSeller'],
+    queryKey: ["BestSeller"],
     queryFn: getBestSeller,
   });
 
@@ -83,7 +83,7 @@ const MainCarousel = () => {
                 <span
                   className="text-2xl font-bold"
                   style={{
-                    textShadow: '1px 2px 4px rgba(0, 1, 1, 0.5)',
+                    textShadow: "1px 2px 4px rgba(0, 1, 1, 0.5)",
                   }}
                 >
                   {book.title}
@@ -98,20 +98,20 @@ const MainCarousel = () => {
                 <span className="mt-2 text-sm font-medium">{book.author}</span>
                 <span
                   style={{
-                    textShadow: '2px 2px 2px black',
+                    textShadow: "2px 2px 2px black",
                   }}
                   className="mt-2 text-xl font-extrabold"
                 >
                   정가 : {book.priceStandard.toLocaleString()}원
-                  </span>
+                </span>
               </div>
 
               <span
                 className="absolute text-[105px] text-white font-black z-20"
                 style={{
-                  textShadow: '2px 2px 4px black',
-                  bottom: '0px',
-                  left: '25px',
+                  textShadow: "2px 2px 4px black",
+                  bottom: "0px",
+                  left: "25px",
                 }}
               >
                 {index + 1}

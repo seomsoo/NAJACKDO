@@ -1,7 +1,6 @@
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from math import log10
-
 # PostgreSQL 데이터베이스에 연결
 connection = psycopg2.connect(
     dbname="najackdo",
@@ -206,7 +205,7 @@ def fetch_books(book_ids):
 def get_book_cover(book_ids):
     try:
         with connection.cursor(cursor_factory=RealDictCursor) as cursor:
-            query = f"""SELECT b.cover 
+            query = f"""SELECT b.book_id , b.cover 
             FROM user_book as ub
             JOIN books as b on ub.book_id = b.book_id
             WHERE ub.user_book_id IN ({','.join(map(str, book_ids))})

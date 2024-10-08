@@ -4,7 +4,6 @@ interface SendMessageProps {
 }
 
 const SendMessage = ({ message, talkType }: SendMessageProps) => {
-  console.log(talkType);
   return (
     <div className="flex flex-row justify-end w-full">
       {talkType === "MESSAGE" ? (

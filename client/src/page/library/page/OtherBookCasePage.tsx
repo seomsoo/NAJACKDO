@@ -1,17 +1,17 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery } from "@tanstack/react-query";
 import {
   deleteInterestBookCase,
   getOtherBookCase,
   postInterestBookCase,
-} from 'api/bookcaseApi';
-import BaseProfile from 'components/common/BaseProfile';
-import Loading from 'components/common/Loading';
-import { useEffect, useState } from 'react';
-import { IoIosArrowBack } from 'react-icons/io';
-import { IoHeart, IoHeartOutline } from 'react-icons/io5';
-import { useNavigate, useParams } from 'react-router-dom';
-import OtherBookGrid from '../components/OtherBookGrid';
-import Error from 'components/common/Error';
+} from "api/bookcaseApi";
+import BaseProfile from "components/common/BaseProfile";
+import Error from "components/common/Error";
+import Loading from "components/common/Loading";
+import { useEffect, useState } from "react";
+import { IoIosArrowBack } from "react-icons/io";
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
+import { useNavigate, useParams } from "react-router-dom";
+import OtherBookGrid from "../components/OtherBookGrid";
 
 const OtherBookCasePage = () => {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const OtherBookCasePage = () => {
     isLoading: isBookcaseLoading,
     isError: isBookcaseError,
   } = useQuery({
-    queryKey: ['otherBookCase', userIdAsNumber],
+    queryKey: ["otherBookCase", userIdAsNumber],
     queryFn: () => getOtherBookCase(userIdAsNumber),
   });
 
@@ -44,9 +44,9 @@ const OtherBookCasePage = () => {
 
   const handleCheck = (index: number) => {
     setChecked((prevChecked) => {
-      const newChecked = [...prevChecked]; // 기존 상태 복사
-      newChecked[index] = !newChecked[index]; // 선택된 책 상태 토글
-      return newChecked; // 업데이트된 배열 반환
+      const newChecked = [...prevChecked];
+      newChecked[index] = !newChecked[index];
+      return newChecked;
     });
   };
 
@@ -58,14 +58,12 @@ const OtherBookCasePage = () => {
   const handleFollowToggle = async () => {
     try {
       if (isFollowed) {
-        await deleteInterestBookCase(bookcase.userId); // 관심 해제
+        await deleteInterestBookCase(bookcase.userId);
       } else {
-        await postInterestBookCase(bookcase.userId); // 관심 등록
+        await postInterestBookCase(bookcase.userId);
       }
-      setIsFollowed(!isFollowed); // 상태 변경
-    } catch (error) {
-      console.error('관심 책장 등록/해제 중 오류 발생:', error);
-    }
+      setIsFollowed(!isFollowed);
+    } catch (error) {}
   };
 
   if (isBookcaseLoading) {
@@ -82,8 +80,8 @@ const OtherBookCasePage = () => {
 
   return (
     <div>
-      <header className="sticky top-0 z-10 flex items-center justify-between px-4 py-3">
-        <div className="items-center flex ">
+      <header className="top-0 z-10 flex items-center justify-between px-4 py-3">
+        <div className="items-center flex  ">
           <button onClick={goBack} className="text-2xl mr-2">
             <IoIosArrowBack />
           </button>

@@ -67,7 +67,6 @@ const KapayPage = () => {
           console.error("Popup을 열 수 없습니다!");
           return;
         }
-        console.log("redirectUrl", redirectUrl);
         popup.location.href = redirectUrl;
       } else {
         window.location.replace(redirectUrl);
