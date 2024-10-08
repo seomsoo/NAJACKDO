@@ -94,40 +94,21 @@ public class UserBooksService {
 	}
 
 	@Transactional
-	public Map<String, List<String>> addBookList(User user, UserBookData.Create create) {
-
-		ActivityAreaSetting activityAreaSetting = activityAreaSettingRepository.findUserActivityArea(user.getId())
-			.orElseThrow(
-				() -> new BaseException(ErrorCode.ACTIVITY_AREA_NOT_FOUND)
-			);
+	public List<BookData.Search> addBookList(UserBookData.Create create) {
 
 		List<String> notFoundBooks = new ArrayList<>();
 		List<String> alreadyExistBooks = new ArrayList<>();
 		List<String> titles = postBookSpineDetection(create.getFile());
-		for (String title : titles) {
-
-			Book book = bookRepository.findFirstByTitle(title).orElseGet(() -> {
-				notFoundBooks.add(title);
-				return null;
-			});
-
-			if (book == null) {
+		List<BookData.Search> bookDataList = new ArrayList<>();
+		for (String title : titles){
+			Book book = bookRepository.findFirstByTitle(title).orElse(null);
+			if(book==null){
 				continue;
 			}
-
-			if (userBooksRepository.findByUserAndIsbn(user.getId(), book.getIsbn()).isPresent()) {
-				alreadyExistBooks.add(book.getTitle());
-				continue;
-			}
-
-			userBooksRepository.save(UserBook.createUserBook(user, book, activityAreaSetting.getLocation()));
+			bookDataList.add(BookData.Search.from(book));
 		}
 
-		Map<String, List<String>> result = new HashMap<>();
-		result.put("notFoundBooks", notFoundBooks);
-		result.put("alreadyExistBooks", alreadyExistBooks);
-
-		return result;
+		return bookDataList;
 	}
 
 	@Transactional
