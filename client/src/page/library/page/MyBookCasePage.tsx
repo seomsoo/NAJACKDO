@@ -39,7 +39,7 @@ const MyBookCasePage = () => {
 
   return (
     <div>
-      <header className="sticky top-0 z-10 bg-[#F8F6F3] flex items-center justify-between p-6 py-4">
+      <header className="top-0 z-10 bg-[#F8F6F3] flex items-center justify-between p-6 py-4">
         <div className="items-center flex gap-2">
           <button onClick={goBack} className="text-2xl">
             <IoIosArrowBack />
