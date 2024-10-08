@@ -322,7 +322,7 @@ async def recomm_books(userId : int):
     book_ids = [book["bookId"] for book in list(merged_list.values())]
     
     if not book_ids:
-        print("들어옴")
+        print("유저 정보 없음")
         return {"recommended_items_with_scores": dao.get_book_order_by_star()}
     
     user_like_books = dao.fetch_books(book_ids)
@@ -340,25 +340,14 @@ async def recomm_books(userId : int):
     user_preferences = np.mean(combined_array, axis=0)
     
     recommended_items_with_scores = reco_sys.genetic_algorithm_recommendation(user_preferences, items, book_ids, num_recommendations=5)
-    print(recommended_items_with_scores)
     idx_list = [item[0] for item in recommended_items_with_scores]
-    print(idx_list)
     cover_list = dao.get_book_cover(idx_list)
-    image_links = [row['cover'] for row in cover_list]
-    # print(recommended_items_with_scores)
-    # print(image_links)
-    combined_list = [(recommended_items_with_scores[i][0], image_links[i]) for i in range(len(recommended_items_with_scores))]
-    
-    print("추천 아이템과 유사도 점수:")
-    # for item, score in recommended_items_with_scores:
-    #     print(f"아이템 인덱스: {items[item][:-1]}, 적합도 점수: {score:.2f}")
-    print(combined_list)
     recommended_items_with_scores2 = [
     {
-        "book_id": item[0],
-        "cover": item[1]        # cover는 두 번째 요소
+        "book_id": cover['book_id'],
+        "cover": cover['cover']        # cover는 두 번째 요소
     }
-        for item in combined_list
+        for cover in cover_list
     ]   
     return {"recommended_items_with_scores": recommended_items_with_scores2}  
 
