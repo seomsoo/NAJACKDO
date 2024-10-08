@@ -8,5 +8,6 @@ export interface IBookCase {
     userBookId: number; 
     cover: string; 
     bookStatus: string;
+    bookTitle: string;
   }[];
 }

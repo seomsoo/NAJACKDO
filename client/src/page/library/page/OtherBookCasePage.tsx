@@ -82,8 +82,8 @@ const OtherBookCasePage = () => {
 
   return (
     <div>
-      <header className="sticky top-0 z-10 flex items-center justify-between px-4 py-3">
-        <div className="items-center flex ">
+      <header className="top-0 z-10 flex items-center justify-between px-4 py-3">
+        <div className="items-center flex  ">
           <button onClick={goBack} className="text-2xl mr-2">
             <IoIosArrowBack />
           </button>
