@@ -79,6 +79,15 @@ const BookInfo = ({ bookId, rental, setBookGenre }: BookInfoProps) => {
   const [open, setOpen] = useState<boolean>(false);
   const [alertContent, setAlertContent] = useState<string>("");
 
+  useEffect(() => {
+    setHeart(bookData.interest);
+  }, [bookData.interest]);
+  
+  console.log("bookData", bookData);
+  console.log("heart", heart);
+  console.log("interest", bookData.interest);
+
+
   const deleteMutation = useMutation({
     mutationKey: ["deleteInterestbook"],
     mutationFn: deleteInterestbook,
