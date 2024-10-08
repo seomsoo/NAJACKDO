@@ -10,7 +10,7 @@ import MainRoute from "components/routes/MainRoute";
 import ProfileRoute from "components/routes/ProfileRoute";
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   Route,
   Routes,
@@ -81,13 +81,38 @@ function App() {
     "",
   ];
 
-  const [isRequested, setIsRequested] = useState(false);
+  const isPopup = window.opener !== null && !window.opener.closed;
+  const shouldHideHeaderFooter = popupPaths.includes(currentPath) && isPopup;
+  const hideScrollTopButton = () => {
+    return location.pathname.split("/")[1] !== "chat";
+  };
+
   const { accessToken } = useAuthStore.getState();
   const { isSurvey, isLocation, setIsSurvey, setIsLocation } =
     useValidStore.getState();
 
+  const pathCheck = (accessToken, survey, location, setting) => {
+    if (accessToken && survey && location) {
+      if (setting) {
+        setIsSurvey(true);
+        setIsLocation(true);
+      }
+
+      if (
+        currentPath === "/sign-in" ||
+        currentPath === "/survey" ||
+        currentPath === "/setting/location"
+      ) {
+        navigate("/");
+        return;
+      }
+    }
+  };
+
   useEffect(() => {
-    if (isRequested) return;
+    if (isSurvey && isLocation) {
+      return;
+    }
 
     const checkValidation = async () => {
       try {
@@ -97,19 +122,9 @@ function App() {
           return;
         }
 
-        if (accessToken && isSurvey && isLocation) {
-          if (
-            currentPath === "/sign-in" ||
-            currentPath === "/survey" ||
-            currentPath === "/setting/location"
-          ) {
-            navigate("/");
-            return;
-          }
-        }
+        pathCheck(accessToken, isSurvey, isLocation, false);
 
         const response = await getValid();
-        setIsRequested(true);
 
         if (!response.survey) {
           navigate("/survey");
@@ -121,18 +136,7 @@ function App() {
           return;
         }
 
-        if (accessToken && response.survey && response.location) {
-          setIsSurvey(true);
-          setIsLocation(true);
-          if (
-            currentPath === "/sign-in" ||
-            currentPath === "/survey" ||
-            currentPath === "/setting/location"
-          ) {
-            navigate("/");
-            return;
-          }
-        }
+        pathCheck(accessToken, response.survey, response.location, true);
       } catch (error) {
         console.error("유효성 검사 실패", error);
         navigate("/sign-in");
@@ -144,21 +148,16 @@ function App() {
     navigate,
     accessToken,
     isSurvey,
-    isRequested,
     setIsSurvey,
     isLocation,
     setIsLocation,
   ]);
 
-  const isPopup = window.opener !== null && !window.opener.closed;
-  const shouldHideHeaderFooter = popupPaths.includes(currentPath) && isPopup;
-  const hideScrollTopButton = () => {
-    return location.pathname.split("/")[1] !== "chat";
-  };
-
   return (
     <QueryClientProvider client={queryClient}>
-      <div className={`h-full ${isChattingRoomPage ? 'pb-0' : 'pb-[86px]'} relative`}>
+      <div
+        className={`h-full ${isChattingRoomPage ? "pb-0" : "pb-[86px]"} relative`}
+      >
         {!isDetailPage &&
           !isRentalPage &&
           !hideHeaderPaths.includes(currentPath) && <Header />}

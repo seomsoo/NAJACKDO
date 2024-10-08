@@ -6,7 +6,14 @@ import CheckboxGroup from "../components/CheckboxGroup";
 import EmojiSelector from "../components/EmojiSelector";
 
 const ReviewPage = () => {
-  const { rentalId, ownerName, customerName } = useLocation().state;
+  const {
+    rentalId,
+    ownerName,
+    customerName,
+    bookTitle,
+    bookImageUrl,
+    bookCount,
+  } = useLocation().state;
   const { nickname } = useUserStore();
   const navigate = useNavigate();
   const goBack = () => {
@@ -82,12 +89,17 @@ const ReviewPage = () => {
       <section className="pb-4 border-b">
         <div className="flex ml-7 items-center">
           <img
-            src="/화학.png"
-            alt="화학"
+            src={bookImageUrl}
+            alt={bookTitle}
             className="object-cover rounded-xl w-16 h-16"
           />
           <div className="flex flex-col gap-2 ml-4 font-medium">
-            <span>90일 완성 돈버는 습관</span>
+            <p className="text-gray-500 space-x-1">
+              <span className="text-black">{bookTitle}</span>
+              <span className="text-sm">
+                {bookCount > 0 && `외 ${bookCount - 1}권`}
+              </span>
+            </p>
             <span className="text-xs">
               <span className="text-gray-500">거래한 이웃 </span>
               {isOwner ? customerName : ownerName}
