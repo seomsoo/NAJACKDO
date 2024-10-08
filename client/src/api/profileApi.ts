@@ -45,8 +45,6 @@ export const getLeafLog = async (): Promise<ILeafLog[]> => {
       throw new Error("유저 책잎 로그 조회 실패");
     }
 
-    console.log("getLeafLog");
-
     return data;
   } catch (error) {
     throw new Error("유저 책잎 로그 조회 실패", error);
@@ -75,7 +73,9 @@ export const availableNickname = async (nickname: string): Promise<boolean> => {
   try {
     const {
       data: { success, data },
-    } = await instance.get<BaseResponse<boolean>>(`/user/available-nickname/${nickname}`);
+    } = await instance.get<BaseResponse<boolean>>(
+      `/user/available-nickname/${nickname}`
+    );
 
     if (!success) {
       throw new Error("닉네임 중복 조회 실패");
@@ -92,13 +92,13 @@ export const getOtherProfile = async (nickname: string): Promise<IProfile> => {
   try {
     const {
       data: { success, data },
-    } = await instance.get<BaseResponse<IProfile>>(`/user/info/${encodeURIComponent(nickname)}`);
+    } = await instance.get<BaseResponse<IProfile>>(
+      `/user/info/${encodeURIComponent(nickname)}`
+    );
 
     if (!success) {
       throw new Error("다른 사람 프로필 조회 실패");
     }
-
-    console.log("getOtherProfile");
 
     return data;
   } catch (error) {

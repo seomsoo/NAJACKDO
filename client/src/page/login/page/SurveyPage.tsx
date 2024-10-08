@@ -30,8 +30,6 @@ const SurveyPage = () => {
         nickname,
         interest: interests,
       });
-      console.log("설문 완료 및 정보 저장 성공");
-      // 추가적인 완료 처리 로직 (예: 페이지 이동)
       navigate("/setting/location");
     } catch (error) {
       console.error("설문 완료 시 오류:", error);

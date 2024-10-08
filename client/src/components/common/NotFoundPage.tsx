@@ -18,9 +18,7 @@ const NotFoundPage = () => {
           <p className="text-[28px] text-main font-bold">나의 작은 도서관</p>
         </div>
         <div className="justify-self-center">
-          <p className="maplestory text-[24px] text-sub  text-left">
-            404
-          </p>
+          <p className="maplestory text-[24px] text-sub  text-left">404</p>
           <p className="text-[20px] text-sub text-left ">
             사이트에 연결할 수 없습니다.
           </p>

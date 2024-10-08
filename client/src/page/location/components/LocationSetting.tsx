@@ -1,9 +1,9 @@
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { getNearLocation } from 'api/locationApi';
-import Loading from 'components/common/Loading';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { IoIosArrowBack } from 'react-icons/io';
-import { useNavigate } from 'react-router-dom';
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { getNearLocation } from "api/locationApi";
+import Loading from "components/common/Loading";
+import { useCallback, useEffect, useRef } from "react";
+import { IoIosArrowBack } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 declare global {
   interface Window {
@@ -23,14 +23,13 @@ const fetchLocation = (): Promise<{ latitude: number; longitude: number }> => {
         (error) => reject(error)
       );
     } else {
-      reject(new Error('Fail to load my location'));
+      reject(new Error("Fail to load my location"));
     }
   });
 };
 
 const LocationSetting = ({ onLocationSelect }) => {
   const navigate = useNavigate();
-  const [address, setAddress] = useState('');
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
   const {
@@ -38,7 +37,7 @@ const LocationSetting = ({ onLocationSelect }) => {
     isLoading: isLocationLoading,
     isError: isLocationError,
   } = useQuery({
-    queryKey: ['location'],
+    queryKey: ["location"],
     queryFn: fetchLocation,
   });
 
@@ -50,7 +49,7 @@ const LocationSetting = ({ onLocationSelect }) => {
     hasNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: ['nearLocations'],
+    queryKey: ["nearLocations"],
     queryFn: ({ pageParam = 0 }) =>
       getNearLocation(
         location?.latitude || 0,
@@ -76,7 +75,6 @@ const LocationSetting = ({ onLocationSelect }) => {
     longitude,
     locationCode
   ) => {
-    setAddress(locationName);
     onLocationSelect(locationName, latitude, longitude, locationCode);
   };
 
@@ -93,7 +91,7 @@ const LocationSetting = ({ onLocationSelect }) => {
   useEffect(() => {
     const option = {
       root: null, // viewport as root
-      rootMargin: '20px',
+      rootMargin: "20px",
       threshold: 1.0,
     };
     const observer = new IntersectionObserver(handleObserver, option);
@@ -142,7 +140,7 @@ const LocationSetting = ({ onLocationSelect }) => {
         ))}
       </ul>
       <div ref={loadMoreRef} className="loading">
-        {isFetchingNextPage ? 'Loading more...' : ''}
+        {isFetchingNextPage ? "Loading more..." : ""}
       </div>
     </div>
   );

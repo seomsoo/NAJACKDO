@@ -1,6 +1,5 @@
 import KapayPage from "page/kapay/page/KaPayPage";
 import GradePage from "page/profile/page/GradePage";
-import LeafChargePage from "page/profile/page/LeafChargePage";
 import LeafPage from "page/profile/page/LeafPage";
 import OtherProfilePage from "page/profile/page/OtherProfilePage";
 import ProfilePage from "page/profile/page/ProfilePage";

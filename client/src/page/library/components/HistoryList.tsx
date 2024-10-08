@@ -1,12 +1,12 @@
-import { IHistory } from 'atoms/History.type';
-import { IoIosLeaf } from 'react-icons/io';
-import BaseProfile from 'components/common/BaseProfile';
+import { IHistory } from "atoms/History.type";
+import BaseProfile from "components/common/BaseProfile";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from 'components/ui/accordion';
+} from "components/ui/accordion";
+import { IoIosLeaf } from "react-icons/io";
 
 interface IHistoryListProps {
   historyData?: IHistory[];
@@ -16,12 +16,12 @@ interface IHistoryListProps {
 export const formatDate = (dateString: string) => {
   const date = new Date(dateString);
   return date
-    .toLocaleDateString('ko-KR', {
-      year: '2-digit',
-      month: 'long',
-      day: '2-digit',
+    .toLocaleDateString("ko-KR", {
+      year: "2-digit",
+      month: "long",
+      day: "2-digit",
     })
-    .replace(/\./g, '');
+    .replace(/\./g, "");
 };
 
 const HistoryList: React.FC<IHistoryListProps> = ({ historyData, title }) => {
@@ -33,7 +33,7 @@ const HistoryList: React.FC<IHistoryListProps> = ({ historyData, title }) => {
         </div>
       ) : (
         <Accordion type="multiple">
-          {' '}
+          {" "}
           {historyData.map((history) => (
             <AccordionItem
               key={history.rentalId.toString()}
@@ -52,7 +52,7 @@ const HistoryList: React.FC<IHistoryListProps> = ({ historyData, title }) => {
                     </div>
                   </div>
                   <div className="text-sm text-nowrap ">
-                    {formatDate(history.rentalStartDate)} ~{' '}
+                    {formatDate(history.rentalStartDate)} ~{" "}
                     {formatDate(history.rentalEndDate)}
                   </div>
                 </div>
@@ -70,7 +70,7 @@ const HistoryList: React.FC<IHistoryListProps> = ({ historyData, title }) => {
                         alt="Book cover"
                         style={{
                           boxShadow:
-                            '4px 4px 8px 2px  rgba(0, 0, 0, 0.2), 0 6px 12px rgba(0, 0, 0, 0.2)',
+                            "4px 4px 8px 2px  rgba(0, 0, 0, 0.2), 0 6px 12px rgba(0, 0, 0, 0.2)",
                         }}
                         className="w-20 h-28 ml-2 object-cover mr-4"
                       />

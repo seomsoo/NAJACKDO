@@ -12,6 +12,5 @@ export const getCashLog = async (): Promise<ICashLog[]> => {
     throw new Error("책잎 사용 내역 조회 실패");
   }
 
-  // console.log("getCashLog called", data);
   return data;
 };

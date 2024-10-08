@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { AiOutlineArrowUp } from 'react-icons/ai';
+import { useEffect, useState } from "react";
+import { AiOutlineArrowUp } from "react-icons/ai";
 
 const ScrollToTopButton = () => {
   const [showScrollToTop, setShowScrollToTop] = useState(false);
@@ -14,13 +14,13 @@ const ScrollToTopButton = () => {
   };
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' }); // 부드럽게 맨 위로 이동
+    window.scrollTo({ top: 0, behavior: "smooth" }); // 부드럽게 맨 위로 이동
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll); // 스크롤 이벤트 추가
+    window.addEventListener("scroll", handleScroll); // 스크롤 이벤트 추가
     return () => {
-      window.removeEventListener('scroll', handleScroll); // 언마운트 시 이벤트 제거
+      window.removeEventListener("scroll", handleScroll); // 언마운트 시 이벤트 제거
     };
   }, []);
 

@@ -1,6 +1,5 @@
-import { IoIosArrowBack } from 'react-icons/io';
-import { IoNotificationsOutline } from 'react-icons/io5';
-import { Link, useNavigate } from 'react-router-dom';
+import { IoIosArrowBack } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 const FavoriteHeader = () => {
   const navigate = useNavigate();

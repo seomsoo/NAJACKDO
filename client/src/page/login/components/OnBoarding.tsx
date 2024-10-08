@@ -14,7 +14,7 @@ const OnBoarding = ({ title, content, onboardingImage }: OnBoardingProps) => {
           dangerouslySetInnerHTML={{ __html: content }}
         ></span>
       </div>
-      <img src={onboardingImage} alt="onboardingImage" width={290}/>
+      <img src={onboardingImage} alt="onboardingImage" width={290} />
     </div>
   );
 };

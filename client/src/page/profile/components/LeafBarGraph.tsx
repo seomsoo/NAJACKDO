@@ -20,8 +20,8 @@ const LeafBarGraph = ({ ratio, value, label }: LeafBarGraphProps) => {
             {value.toLocaleString()}
           </p>
           <IoLeaf
-            className="flex-shrink-0" // flex 레이아웃에서 크기 고정
-            style={{ width: "15px", height: "15px" }} // 아이콘 크기를 직접 설정
+            className="flex-shrink-0"
+            style={{ width: "15px", height: "15px" }}
             color="#A6B37D"
           />
         </div>

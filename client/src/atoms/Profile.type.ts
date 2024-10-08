@@ -1,11 +1,11 @@
 export interface IProfile {
-  userId :number;
+  userId: number;
   nickname: string;
   profileImage: string;
   locationName: string;
   mannerScore: number;
-  goodReviewInfo: IUserReview[]
-  badReviewInfo: IUserReview[]
+  goodReviewInfo: IUserReview[];
+  badReviewInfo: IUserReview[];
   cash?: number;
   saveCash?: number;
   earnCash?: number;
@@ -32,5 +32,5 @@ export interface IUserInfo {
 export interface IUserReview {
   reviewId: number;
   content: string;
-  count: number
-} 
+  count: number;
+}

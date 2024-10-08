@@ -1,12 +1,12 @@
-import Loading from 'components/common/Loading';
-import SmallError from 'components/common/SmallError';
-import CategoryRecommend from 'page/main/components/CategoryRecommend';
-import { GetUserInfo } from 'page/main/components/GetUserInfo';
-import LoactionRecommend from 'page/main/components/LoactionRecommend';
-import MainCarousel from 'page/main/components/MainCarousel';
-import { Suspense } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
-import { FaRankingStar } from 'react-icons/fa6';
+import Loading from "components/common/Loading";
+import SmallError from "components/common/SmallError";
+import CategoryRecommend from "page/main/components/CategoryRecommend";
+import { GetUserInfo } from "page/main/components/GetUserInfo";
+import LoactionRecommend from "page/main/components/LoactionRecommend";
+import MainCarousel from "page/main/components/MainCarousel";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import { FaRankingStar } from "react-icons/fa6";
 
 const MainPage = () => {
   return (

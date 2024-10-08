@@ -45,7 +45,6 @@ const ChattingBox = ({
   const receiverNickname =
     senderNickname === ownerName ? customerName : ownerName;
 
-
   // 채팅 내역 불러오기
   const { data: chattingList } = useSuspenseQuery<IChatList>({
     queryKey: ["chatList"],
@@ -58,8 +57,6 @@ const ChattingBox = ({
   const [inputMessage, setInputMessage] = useState<string>("");
 
   const sendMessage = (message: string) => {
-    console.log(message);
-
     const messageData: Message = {
       roomId: roomId,
       senderId: senderId,

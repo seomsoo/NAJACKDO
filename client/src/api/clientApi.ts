@@ -4,7 +4,9 @@ import { useAuthStore } from "store/useAuthStore";
 const BASE_URL = process.env.REACT_APP_BACKEND_PROD_HOST;
 
 export const host =
-  process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://www.najackdo.kro.kr";
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : "https://www.najackdo.kro.kr";
 
 export const KAKAO_AUTH_URL = `${BASE_URL}/oauth2/authorization/kakao?redirect_uri=${host}`;
 const REFRESH_URI = `${BASE_URL}/api/v1/auth/refresh`;

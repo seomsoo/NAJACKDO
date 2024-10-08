@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getOtherBookCase } from "api/bookcaseApi";
-import { getOtherProfile, getUserInfo } from "api/profileApi";
+import { getOtherProfile } from "api/profileApi";
 import { IBookCase } from "atoms/BookCase.type";
 import { IProfile } from "atoms/Profile.type";
 import Error from "components/common/Error";
@@ -8,25 +8,20 @@ import Loading from "components/common/Loading";
 import BookcaseContainer from "page/library/components/BookcaseContainer";
 import MannerTree from "page/profile/components/MannerTree";
 import UserInfo from "page/profile/components/UserInfo";
-import { useNavigate, useParams } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
+import { useNavigate, useParams } from "react-router-dom";
+import { useUserStore } from "store/useUserStore";
 
 const OtherProfilePage = () => {
   const { nickname } = useParams();
   const navigate = useNavigate();
-  
+
   const goBack = () => {
     navigate(-1);
   };
+
   // 로그인된 사용자 정보 가져오기
-  const {
-    data: loggedInUser,
-    isLoading: isUserInfoLoading,
-    isError: isUserInfoError,
-  } = useQuery<IProfile>({
-    queryKey: ["userInfo"],
-    queryFn: getUserInfo,
-  });
+  const loggedInUserNickname = useUserStore.getState().nickname;
 
   // 다른 사용자의 프로필 정보 가져오기
   const {
@@ -49,16 +44,16 @@ const OtherProfilePage = () => {
     enabled: !!profileInfo?.userId, // profileInfo.userId가 있을 때만 요청 실행
   });
 
-  if (isUserInfoLoading || isOtherProfileLoading || isBookcaseLoading) {
+  if (isOtherProfileLoading || isBookcaseLoading) {
     return <Loading />;
   }
 
-  if (isUserInfoError || isOtherProfileError || isBookcaseError) {
+  if (isOtherProfileError || isBookcaseError) {
     return <Error />;
   }
 
   // 로그인된 유저와 프로필의 유저가 동일하면 나의 프로필로 리다이렉트
-  if (loggedInUser?.nickname === profileInfo?.nickname) {
+  if (loggedInUserNickname === profileInfo?.nickname) {
     navigate("/profile");
     return null;
   }
@@ -79,7 +74,7 @@ const OtherProfilePage = () => {
         <button onClick={goBack} className="text-2xl">
           <IoIosArrowBack />
         </button>
-      <p className="text-[32px] font-extrabold tracking-wider ">프로필</p>
+        <p className="text-[32px] font-extrabold tracking-wider ">프로필</p>
       </div>
       {/* 유저 정보 */}
       <UserInfo

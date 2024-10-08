@@ -10,8 +10,6 @@ export const getAlarm = async (page: number): Promise<IPaging<IAlarm[]>> => {
     `/notification/searchById?page=${page}`
   );
 
-  console.log("알람 리스트 조회 API data", data);
-
   if (!success) {
     throw new Error("알람 리스트 조회 실패");
   }
@@ -30,7 +28,6 @@ export const postAlarmReadSucess = async (): Promise<void> => {
       throw new Error("읽음 처리 완료");
     }
 
-    console.log("postInterestbook");
   } catch (error) {
     throw new Error("읽음 처리 실패", error);
   }

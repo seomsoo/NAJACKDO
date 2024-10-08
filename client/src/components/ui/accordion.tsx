@@ -1,9 +1,9 @@
-import * as AccordionPrimitive from '@radix-ui/react-accordion';
-import * as React from 'react';
+import * as AccordionPrimitive from "@radix-ui/react-accordion";
+import * as React from "react";
 
-import { cn } from 'lib/utils';
+import { cn } from "lib/utils";
 
-import { FaAngleRight } from 'react-icons/fa6';
+import { FaAngleRight } from "react-icons/fa6";
 
 const Accordion = AccordionPrimitive.Root;
 
@@ -13,7 +13,7 @@ const AccordionItem = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <AccordionPrimitive.Item ref={ref} className={cn(className)} {...props} />
 ));
-AccordionItem.displayName = 'AccordionItem';
+AccordionItem.displayName = "AccordionItem";
 
 const AccordionTrigger = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Trigger>,
@@ -28,19 +28,19 @@ const AccordionTrigger = React.forwardRef<
       <AccordionPrimitive.Trigger
         ref={ref}
         className={cn(
-          'flex w-full items-center   py-4 font-medium transition-all [&[data-state=open]>svg]:rotate-90',
+          "flex w-full items-center   py-4 font-medium transition-all [&[data-state=open]>svg]:rotate-90",
           className
         )}
         onClick={() => setIsOpen(!isOpen)}
         {...props}
       >
         {children}
-        {component === 'history' && (
+        {component === "history" && (
           <FaAngleRight className="transition-transform ml-5 duration-200 text-xl" />
         )}
-        {component === 'rental' && (
+        {component === "rental" && (
           <span className="text-[#888888] ">
-            {isOpen ? '전체닫기' : '전체보기'}
+            {isOpen ? "전체닫기" : "전체보기"}
           </span>
         )}
       </AccordionPrimitive.Trigger>
@@ -58,7 +58,7 @@ const AccordionContent = React.forwardRef<
     className="overflow-hidden border-b data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
     {...props}
   >
-    <div className={cn('pb-4 pt-0', className)}>{children}</div>
+    <div className={cn("pb-4 pt-0", className)}>{children}</div>
   </AccordionPrimitive.Content>
 ));
 AccordionContent.displayName = AccordionPrimitive.Content.displayName;

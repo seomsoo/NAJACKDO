@@ -7,15 +7,14 @@ interface ScannerProps {
   setScan: (scan: boolean) => void;
 }
 
-const config :QuaggaJSConfigObject = {
+const config: QuaggaJSConfigObject = {
   inputStream: {
     name: "Live",
     type: "LiveStream",
     constraints: {
       facingMode: "environment",
-      // focusMode: "continuous",
-      width: {  max: 1280 },
-      height: {  max: 720 },
+      width: { max: 1280 },
+      height: { max: 720 },
       aspectRatio: {
         min: 1,
         max: 2,
@@ -31,7 +30,7 @@ const config :QuaggaJSConfigObject = {
   decoder: {
     readers: ["ean_reader"],
   },
-  locate: false, // 바코드를 자동으로 찾을 지 여부 -> 우리는 네모칸 안으로 들어와야 스캔
+  locate: true,
 };
 
 const Scanner = ({ onDetected, scan, setScan }: ScannerProps) => {
@@ -68,25 +67,27 @@ const Scanner = ({ onDetected, scan, setScan }: ScannerProps) => {
     };
   }, []);
 
-  return (<div
-    id="interactive"
-    className="viewport w-full h-full"
-    style={{ position: "relative", width: "100%", height: "100%" }}
-  >
-    <video
-      style={{
-        position: "absolute",
-        top: "5%",
-        left: "5%",
-        width: "90%",
-        height: "90%",
-        objectFit: "cover",
-      }}
-      autoPlay
-      muted
-      playsInline
-    />
-  </div>)
+  return (
+    <div
+      id="interactive"
+      className="viewport w-full h-full"
+      style={{ position: "relative", width: "100%", height: "100%" }}
+    >
+      <video
+        style={{
+          position: "absolute",
+          top: "5%",
+          left: "5%",
+          width: "90%",
+          height: "90%",
+          objectFit: "cover",
+        }}
+        autoPlay
+        muted
+        playsInline
+      />
+    </div>
+  );
 };
 
 export default Scanner;

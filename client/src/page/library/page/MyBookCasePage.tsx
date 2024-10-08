@@ -1,27 +1,25 @@
-import { useQuery } from '@tanstack/react-query';
-import { getMyBookCase } from 'api/bookcaseApi'; // API 호출 함수
-import { BiBookAdd } from 'react-icons/bi';
-import { IoIosArrowBack } from 'react-icons/io';
-import { IoNotificationsOutline } from 'react-icons/io5';
-import { Link, useNavigate } from 'react-router-dom';
-import MyBookGrid from '../components/MyBookGrid';
-import Loading from 'components/common/Loading';
-import BaseProfile from 'components/common/BaseProfile';
-import Error from 'components/common/Error';
+import { useQuery } from "@tanstack/react-query";
+import { getMyBookCase } from "api/bookcaseApi"; // API 호출 함수
+import Error from "components/common/Error";
+import Loading from "components/common/Loading";
+import { BiBookAdd } from "react-icons/bi";
+import { IoIosArrowBack } from "react-icons/io";
+import { Link, useNavigate } from "react-router-dom";
+import MyBookGrid from "../components/MyBookGrid";
 
 const MyBookCasePage = () => {
   const navigate = useNavigate();
 
-  // 나의 책장 데이터 조회 (단일 객체로 처리)
+  // 나의 책장 데이터 조회
   const {
-    data: bookcase, // 단일 객체로 반환됨
+    data: bookcase,
     isLoading: isBookcaseLoading,
     isError: isBookcaseError,
   } = useQuery({
-    queryKey: ['myBookCase'],
+    queryKey: ["myBookCase"],
     queryFn: getMyBookCase,
   });
-  console.log(bookcase);
+
   const goBack = () => {
     navigate(-1);
   };
@@ -34,7 +32,6 @@ const MyBookCasePage = () => {
     return <Error />;
   }
 
-  // 책 데이터가 없으면 메시지 표시
   const hasBooks = bookcase && bookcase.displayBooks?.length > 0;
 
   return (

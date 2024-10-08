@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { availableNickname, getUserNickname } from "api/profileApi";
-import Loading from "components/common/Loading";
+import { availableNickname } from "api/profileApi";
 import { Button } from "components/ui/button";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -16,22 +15,9 @@ const Nickname = () => {
   const [nicknameToCheck, setNicknameToCheck] = useState<string | null>(null);
 
   const {
-    data: userNicknameData,
-    error: userNicknameError,
-    isLoading: userNicknameLoading,
-  } = useQuery({
-    queryKey: ["userNickname"],
-    queryFn: getUserNickname,
-    // onSuccess: (data) => {
-    //   setNickname(data.nickname);
-    //   setValue("nickname", data.nickname);
-    // },
-  });
-
-  const {
     data: availableNicknameData,
-    error: availableNicknameError,
     isLoading: availableNicknameLoading,
+    error: availableNicknameError,
     refetch: checkNickname,
   } = useQuery({
     queryKey: ["availableNickname"],
@@ -55,10 +41,6 @@ const Nickname = () => {
     setNickname(data.nickname);
     setNicknameToCheck(data.nickname);
   };
-
-  if (userNicknameLoading) {
-    return <Loading />;
-  }
 
   return (
     <div className="flex flex-col items-center text-2xl py-8 font-semibold">

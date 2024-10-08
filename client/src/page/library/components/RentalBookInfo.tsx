@@ -53,10 +53,8 @@ const RentalBookInfo = ({
     if (userBookData?.ownerId === userId) return;
 
     const startTime = new Date();
-    console.log("시작 시간:", startTime);
 
     const handleTimeSpent = () => {
-      console.log("페이지 이탈");
       const endTime = new Date();
       const timeSpent = Math.floor(
         (endTime.getTime() - startTime.getTime()) / 1000
@@ -68,8 +66,6 @@ const RentalBookInfo = ({
           timeSpent: timeSpent,
         });
       }
-
-      console.log("페이지 체류 시간(ms):", timeSpent);
     };
 
     window.addEventListener("beforeunload", handleTimeSpent);

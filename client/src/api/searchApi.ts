@@ -13,8 +13,6 @@ export const getPopularSearch = async (): Promise<string[]> => {
       throw new Error("인기 검색어 조회에 실패했습니다.");
     }
 
-    console.log("getPopularSearch");
-
     return data;
   } catch (error) {
     throw new Error("인기 검색어 조회에 실패했습니다.", error);
@@ -31,8 +29,6 @@ export const getRecentSearch = async (): Promise<string[]> => {
     if (!success) {
       throw new Error("최근 검색어 조회에 실패했습니다.");
     }
-
-    console.log("search data", data);
 
     return data;
   } catch (error) {
@@ -52,8 +48,6 @@ export const getSearch = async (
       `/search?keyword=${keyword}&page=${pageParam}`
     );
 
-    console.log("search", data);
-
     if (!success) {
       throw new Error("검색에 실패했습니다.");
     }
@@ -68,7 +62,6 @@ export const getSearch = async (
 export const getAutoSearchText = async (
   keyword: string
 ): Promise<IAutoArray> => {
-  console.log("keyword", keyword);
   try {
     const {
       data: { success, data },
@@ -79,8 +72,6 @@ export const getAutoSearchText = async (
     if (!success) {
       throw new Error("자동완성 검색어 조회에 실패했습니다.");
     }
-
-    console.log("getAutoSearchText");
 
     return data;
   } catch (error) {
@@ -98,8 +89,6 @@ export const deleteRecentSearch = async (keyword: string): Promise<void> => {
     if (!success) {
       throw new Error("최근 검색어 삭제에 실패했습니다.");
     }
-
-    console.log("deleteRecentSearch");
   } catch (error) {
     throw new Error("최근 검색어 삭제에 실패했습니다.", error);
   }
