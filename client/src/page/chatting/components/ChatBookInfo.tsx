@@ -213,7 +213,7 @@ const ChatBookInfo = ({
         />
         <div className="ml-2">
           <p className="text-gray-500">
-            <span className="text-black">
+            <span className="text-black font-medium">
               {bookData.cartItems[0].bookTitle}
             </span>
             {bookData.cartItems.length > 1 &&
@@ -221,8 +221,9 @@ const ChatBookInfo = ({
           </p>
           <div className="flex flex-row items-center">
             <span className="text-black/50 text-sm">일일</span>
-            <span className="ml-2 mr-1 font-bold">{dayPrice}</span>
-            <IoIosLeaf color="#79AC78" size={20} />
+            <IoIosLeaf className="ml-2 mr-1 mb-1" color="#79AC78" size={20} />
+            <span className="font-semibold">{dayPrice}</span>
+            
           </div>
         </div>
       </div>

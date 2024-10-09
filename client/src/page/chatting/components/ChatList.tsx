@@ -54,7 +54,7 @@ const ChatList = ({ chat, userId }: ChatListProps) => {
             <span className="mr-2">
               {isOwner ? chat.customerNickname : chat.ownerNickname}
             </span>
-            <span className="text-black/60 text-sm">
+            <span className="text-black/50 text-xs">
               {location} {receivedTime}
             </span>
           </div>
