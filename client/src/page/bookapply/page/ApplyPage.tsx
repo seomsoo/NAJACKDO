@@ -13,8 +13,8 @@ const ApplyPage = () => {
         onClick={() => navigate(-1)}
         className="cursor-pointer p-4 flex flex-row items-center"
       >
-        <IoChevronBack size={25} color="#545454" />
-        <span className="font-bold text-xl ml-2">도서 등록</span>
+        <IoChevronBack className="text-2xl" color="#545454" />
+        <span className="font-bold text-2xl ml-2">도서 등록</span>
       </div>
       <ApplyGuide />
       <div className="flex flex-row justify-center pt-12">

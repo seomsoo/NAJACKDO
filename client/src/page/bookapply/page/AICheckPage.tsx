@@ -96,7 +96,7 @@ const AICheckPage = () => {
           onClick={() =>
             navigate(`/ai-check/upload`, { state: { userId, userBookId } })
           }
-          className="text-center bg-sub7 w-full  mt-6 rounded-xl text-white font-bold py-3"
+          className="text-center bg-sub7 w-full  mt-[41px] rounded-xl text-white font-bold py-3"
         >
           AI 인증 하러 가기
         </button>
