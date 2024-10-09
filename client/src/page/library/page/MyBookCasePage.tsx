@@ -51,7 +51,7 @@ const MyBookCasePage = () => {
       </header>
 
       <main className="px-6">
-        <section className="flex flex-col items-center text-center mt-12 gap-4">
+        <section className="flex flex-col items-center text-center mt-5 gap-4">
           {/* 책 데이터가 있을 때 */}
           {hasBooks ? (
             <MyBookGrid

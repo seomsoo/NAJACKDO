@@ -153,7 +153,7 @@ const AICheckUploadPage = () => {
         <CarouselNext className="mr-12" />
       </Carousel>
 
-      <div className="flex justify-center py-4">
+      <div className="flex justify-center">
         <FaCircle
           size={10}
           className="mr-3"
@@ -168,7 +168,7 @@ const AICheckUploadPage = () => {
       <div className="px-6">
         <button
           onClick={handleSubmit}
-          className="text-center bg-sub7 w-full mt-4 rounded-xl text-white font-bold py-3 cursor-pointer"
+          className="text-center bg-sub7 w-full mt-6 rounded-xl text-white font-bold py-3 cursor-pointer"
         >
           AI 인증 요청
         </button>
