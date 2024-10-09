@@ -143,10 +143,10 @@ const ChattingBox = ({
         <div ref={messagesEndRef} />
       </div>
       <form onSubmit={handleSendMessage}>
-        <div className="flex flex-row items-center my-4">
+        <div className="flex flex-row items-center my-4 fixed bottom-2">
           <Input
             placeholder="메시지를 입력해주세요."
-            className="bg-[#EAE7E3] border-none"
+            className="bg-[#EAE7E3] border-none w-[310px]"
             value={inputMessage}
             onChange={handleInputChange}
           />
