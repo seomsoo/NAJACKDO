@@ -10,7 +10,7 @@ import MainRoute from "components/routes/MainRoute";
 import ProfileRoute from "components/routes/ProfileRoute";
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Route,
   Routes,
@@ -86,6 +86,15 @@ function App() {
   const hideScrollTopButton = () => {
     return location.pathname.split("/")[1] !== "chat";
   };
+  const [isPwa, setIsPwa] = useState(false);
+
+  useEffect(() => {
+    // iOS에서 PWA로 실행되고 있는지 확인
+    const checkPwaMode = window.matchMedia(
+      "(display-mode: standalone)"
+    ).matches;
+    setIsPwa(checkPwaMode);
+  }, []);
 
   const { accessToken } = useAuthStore.getState();
   const { isSurvey, isLocation, setIsSurvey, setIsLocation } =
@@ -156,7 +165,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div
-        className={`h-full ${isChattingRoomPage ? "pb-0" : "pb-[86px]"} relative`}
+        className={`h-full ${isChattingRoomPage || isPwa ? "pb-0" : "pb-[86px]"} relative`}
       >
         {!isDetailPage &&
           !isRentalPage &&
