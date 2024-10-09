@@ -70,7 +70,7 @@ const SearchPage = () => {
           </div>
         </Suspense>
       </ErrorBoundary>
-      <div className="mx-[25px]">
+      <div className="mx-[25px] pb-0">
         <span className="font-bold">추천 도서</span>
         <ErrorBoundary fallback={<SmallError />}>
           <Suspense fallback={<ClipLoading className="h-[100px]" />}>
