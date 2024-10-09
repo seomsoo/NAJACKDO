@@ -19,7 +19,7 @@ const ChattingRoomHeader = ({
       className="cursor-pointer py-4 mx-[25px] flex flex-row items-center justify-between"
     >
       <IoChevronBack size={25} color="#545454" />
-      <span className="font-bold text-xl ml-2 text-center">
+      <span className="font-bold text-xl text-center">
         {nickname === ownerName ? customerName : ownerName}
       </span>
       <div />
