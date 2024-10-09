@@ -42,7 +42,10 @@ const SearchPage = () => {
   };
 
   return (
-    <div>
+    <div
+      className="flex flex-col flex-1 justify-between"
+      style={{ height: "calc(100vh - 153px)" }}
+    >
       <ErrorBoundary fallback={<SmallError />}>
         <Suspense fallback={<Loading />}>
           <div className="mx-[25px]">
@@ -51,10 +54,7 @@ const SearchPage = () => {
               handleSearchText={handleSearchText}
               searchText={searchText}
             />
-            <div
-              className="flex-grow overflow-y-auto flex flex-col justify-between"
-              style={{ height: "calc(100vh - 356px)" }}
-            >
+            <div className="flex-grow overflow-y-auto flex flex-col justify-between">
               {/* 검색어가 없을 때 */}
               {!searchText ? (
                 <div>
@@ -70,7 +70,7 @@ const SearchPage = () => {
           </div>
         </Suspense>
       </ErrorBoundary>
-      <div className="mx-[25px] pb-0">
+      <div className="mx-[25px]">
         <span className="font-bold">추천 도서</span>
         <ErrorBoundary fallback={<SmallError />}>
           <Suspense fallback={<ClipLoading className="h-[100px]" />}>
