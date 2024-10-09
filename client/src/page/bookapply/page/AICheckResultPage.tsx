@@ -49,8 +49,8 @@ const AICheckResultPage = () => {
         </span>
       </div>
 
-      <div className="mt-6">
-        <Carousel className="w-full max-w-md pt-6" setApi={setCarouselApi}>
+      <div>
+        <Carousel className="w-full max-w-md" setApi={setCarouselApi}>
           <CarouselContent>
             {resultData.uploaded_files
               .slice(2, 4)
@@ -62,7 +62,7 @@ const AICheckResultPage = () => {
                   <img
                     src={getImageUrl(file.filename)}
                     alt={`Uploaded file ${index + 3}`}
-                    className="w-full h-auto mb-4"
+                    className="w-full h-[248px] mb-4"
                   />
                 </CarouselItem>
               ))}
@@ -85,7 +85,7 @@ const AICheckResultPage = () => {
       </div>
 
       {/* 도서 정보 및 일일 대여료 */}
-      <div className="flex flex-col items-center gap-6 mt-5">
+      <div className="flex flex-col items-center gap-6 ">
         <div className="flex justify-center gap-12">
           <div className="flex flex-col items-center border justify-center text-[#e32929] border-[#e32929] hakgyo w-20 h-20 rounded-2xl gap-2 text-2xl text-nowrap">
             <span>닳음</span>

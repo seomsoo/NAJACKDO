@@ -109,7 +109,7 @@ const OtherBookCasePage = () => {
 
       <main className="px-6">
         {/* 다른 사용자의 책장을 보여주는 BookGrid */}
-        <section className="flex flex-col items-center text-center mt-5 ">
+        <section className="flex flex-col items-center text-center">
           {bookcase.displayBooks?.length > 0 ? (
             <OtherBookGrid
               books={bookcase.displayBooks}

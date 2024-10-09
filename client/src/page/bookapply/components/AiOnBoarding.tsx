@@ -10,7 +10,7 @@ const AiOnBoarding = ({ content, onboardingImage }: AiOnBoardingProps) => {
         src={onboardingImage}
         className="rounded-md"
         alt="onboardingImage"
-        width={250}
+        width={220}
       />
       <span
         className="text-sm font-semibold mt-1"

@@ -102,8 +102,6 @@ const CategoryRecommend = () => {
                   index === selectedIndex
                     ? "transform scale-100 opacity-100"
                     : "transform scale-75 opacity-70"
-                      ? "transform scale-100 opacity-100"
-                      : "transform scale-75 opacity-70"
                 }`}
                 key={book.bookId}
               >
