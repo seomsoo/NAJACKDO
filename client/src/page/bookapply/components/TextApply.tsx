@@ -135,10 +135,6 @@ const TextApply = () => {
     };
   }, []); // 컴포넌트 언마운트 시 초기화
 
-  if (isLoading) {
-    return <ClipLoading />;
-  }
-
   if (isError) {
     return <SmallError />;
   }
@@ -196,7 +192,9 @@ const TextApply = () => {
                     ))}
                   </div>
                 ))}
-            <div ref={loadMoreRef}>{isFetchingNextPage && <ClipLoading />}</div>
+            <div ref={loadMoreRef}>
+              {(isFetchingNextPage || isLoading) && <ClipLoading />}
+            </div>
           </div>
         </DialogHeader>
       </DialogContent>
