@@ -2,7 +2,7 @@ import LocationSetting from "page/location/components/LocationSetting";
 import RangeSetting from "page/location/components/RangeSetting";
 import { useState } from "react";
 
-const LocationSettingPage = () => {
+const LocationEditPage = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
 
   const handleLocationSelect = (
@@ -25,4 +25,4 @@ const LocationSettingPage = () => {
   );
 };
 
-export default LocationSettingPage;
+export default LocationEditPage;

@@ -10,7 +10,7 @@ import { useUserStore } from "store/useUserStore";
 const LocationPage = () => {
   const navigate = useNavigate();
   const goToLocationSetting = () => {
-    navigate("/setting/location");
+    navigate("/edit/location");
   };
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 

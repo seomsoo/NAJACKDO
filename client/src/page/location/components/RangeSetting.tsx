@@ -17,7 +17,6 @@ declare global {
 const RangeSetting = ({ selectedLocation }) => {
   const { latitude, longitude, locationName, locationCode } =
     selectedLocation || {};
-  const location = useLocation();
   const navigate = useNavigate();
   const [map, setMap] = useState<any>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
@@ -25,6 +24,8 @@ const RangeSetting = ({ selectedLocation }) => {
   const [polygonPath, setPolygonPath] = useState([]);
   const [open, setOpen] = useState(false);
   const setLocation = useUserStore.getState().setLocation;
+  const location = useLocation().pathname.split("/")[1];
+  console.log(location);
 
   const {
     data: locationRangeData,
@@ -163,14 +164,14 @@ const RangeSetting = ({ selectedLocation }) => {
           으로 지역 설정
         </button>
       </div>
-      <div onClick={() => navigate("/location")}>
+      {open && (
         <ConfirmModal
           content="지역 설정이 완료되었습니다."
           open={open}
           setOpen={setOpen}
-          urlPath="/location"
+          urlPath={location === "setting" ? "/" : "/location"}
         />
-      </div>
+      )}
     </div>
   );
 };
