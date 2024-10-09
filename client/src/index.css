@@ -91,7 +91,7 @@
   :root {
     width: screen;
     height: screen;
-    padding: 0;
+    padding-bottom: 0;
   }
 }
 
