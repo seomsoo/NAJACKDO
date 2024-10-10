@@ -93,7 +93,7 @@ public class NotificationService {
 			.setNotification(notification)
 			.build();
 
-		log.info("notificationEvent.getType().equals(NotificationType.CHAT) start");
+		log.info("notificationEvent.getType() start : {}", notificationEvent.getType());
 		// 알림이 채팅이면 알림 푸시 알람만 전송
 		if (notificationEvent.getType().equals(NotificationType.CHAT)) {
 			try {
