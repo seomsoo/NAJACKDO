@@ -6,8 +6,8 @@ connection = psycopg2.connect(
     dbname="najackdo",
     user="najackdo",
     password="najackdo",
-    # host="localhost",
-    host="najackdo-database",
+    host="j11c105.p.ssafy.io",
+    # host="najackdo-database",
     port="5432"
 )
 
@@ -102,7 +102,7 @@ def need_to_getBook(local_book_count):
     try:
         with connection.cursor() as cursor:
             query = """
-            SELECT count(*) FROM books;
+            SELECT count(*) FROM test_books; 
             """
             
             cursor.execute(query) 
@@ -119,7 +119,7 @@ def get_book_data():
     try:
         with connection.cursor() as cursor:
             query = """
-            SELECT b.title FROM books as b;
+            SELECT b.title FROM test_books as b;
             """
             
             cursor.execute(query) 

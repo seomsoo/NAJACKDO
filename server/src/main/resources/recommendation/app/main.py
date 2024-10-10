@@ -8,9 +8,12 @@ import cv2
 import io
 import csv
 import easyocr
+import pytesseract
 import numpy as np
 import book_spine_detection
 import struct
+import time
+import clovar
 from shapely import wkb
 from sentence_transformers import SentenceTransformer
 from rapidfuzz import fuzz
@@ -23,7 +26,7 @@ from PIL import Image, ExifTags
 from math import log10
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime, timedelta 
-
+from rapidfuzz import process, fuzz 
 
 load_dotenv() 
 app = FastAPI()
@@ -161,128 +164,79 @@ async def quality_inspection(user_id: int = Form(...),
 
 @app.post("/item/bookSpineDetection")
 async def quality_inspection(imageFile: UploadFile = File(...)):
+    
+    
     # 책 리스트를 캐시 파일에서 가져옴
+
     book_list = book_spine_detection.get_book_from_csv()
+
     # 캐시 파일과 db의 책 갯수 비교 후, 업데이트
-    if dao.need_to_getBook(len(book_list)) == False:
+    if not dao.need_to_getBook(len(book_list)):
         book_list = dao.get_book_data()
-        #print(book_list)
         file_path = 'titles.csv'
 
         with open(file_path, mode='w', encoding='utf-8', newline='') as file:
             csv_writer = csv.writer(file)
-            csv_writer.writerow(['Title'])  # 헤더 작성 (필요한 경우)
-            for book in book_list:
-                csv_writer.writerow([book])  # 각 제목을 새로운 행으로 추가
-
-    
+            csv_writer.writerow(['Title'])  # 헤더 작성
+            csv_writer.writerows([[book] for book in book_list])  # 모든 제목을 한 번에 추가
 
     image_data = await imageFile.read()
     bw_img = Image.open(io.BytesIO(image_data)).convert("L")
     
-    for orientation in ExifTags.TAGS.keys():
-        if ExifTags.TAGS[orientation] == 'Orientation':
-            break
-
+    
+    book_list = [book[0] for book in book_list]
     # EXIF 데이터에서 Orientation 값 얻기
     exif = bw_img.getexif()
-    if exif is not None:
-        orientation = exif.get(orientation)
-        if orientation == 3:
-            bw_img = bw_img.rotate(180, expand=True)
-        elif orientation == 6:
-            bw_img = bw_img.rotate(270, expand=True)
-        elif orientation == 8:
-            bw_img = bw_img.rotate(90, expand=True)
+    orientation = exif.get(0x0112) if exif is not None else None  # 'Orientation'의 TAG 번호는 0x0112
+    orientation_map = {3: 180, 6: 270, 8: 90}
+    if orientation in orientation_map:
+        bw_img = bw_img.rotate(orientation_map[orientation], expand=True)
+
+    title_list2 = []
+    rotate_image = bw_img.rotate(90, expand=1)  # 90도 회전
+
+    titles = (rotate_image)
+    
+    # titles = ocr_reader.readtext(np.array(rotate_image))
     
     result = spine_model(bw_img,device="cpu")
     output = np.array(result[0].boxes.data)
-
-    title_list = []
-    title_list2 = [] 
-    rotate_list = [90]
-
-    for rotate in rotate_list:     
-        rotate_image = bw_img.rotate(rotate, expand=1)  
-        titles = ocr_reader.readtext(np.array(rotate_image))
-
-        # rotate_image.show()
-        if titles == []:
-            break
-            
-            # 타이틀을 길이에 따라 내림차순 정렬
-        # sorted_titles = sorted(titles, key=lambda x: len(x[1]), reverse=True)
-            
-        #     # 가장 긴 3개의 타이틀 선택
-        # num_titles_to_select = min(len(sorted_titles), 4)
-            
-        #     # 가장 긴 타이틀 선택
-        # longest_titles = sorted_titles[:num_titles_to_select]
-            
-        
-
-        for idx,title in enumerate(titles):
-        
-            if(len(title[1])<=1):
-                continue
-                # 모든 책 제목 리스트에서 rapidfuzz를 사용해 가장 가까운 책 제목 뽑아내, title_list에 추가
-            for bookTitle in book_list:
-                Qratio = fuzz.ratio(bookTitle[0],title[1])
-                if(Qratio>=50):
-                    title_list2.append(bookTitle[0])
-                    # print("일치율: "+ str(Qratio) + ", 인식된 제목: " + str(title[1]) + ", 인식된 책: " + str(bookTitle[0]))
-            
-    # print("결과")
-    # print(save_title)
-
-
-            
-    # 저장된 제목 리스트를 Spring 서버로 전송
-    unique_titles = list(set(title_list2))
     
     for idx, book in enumerate(output):
         crop_image = bw_img.crop((book[0],book[1],book[2],book[3]))
-        for rotate in rotate_list:     
-            rotate_image = crop_image.rotate(rotate, expand=1)  
-            titles = ocr_reader.readtext(np.array(rotate_image))
-
-            
-            if titles == []:
-                continue
-            
-            # 타이틀을 길이에 따라 내림차순 정렬
-            sorted_titles = sorted(titles, key=lambda x: len(x[1]), reverse=True)
-            
-            # 가장 긴 3개의 타이틀 선택
-            num_titles_to_select = min(len(sorted_titles), 4)
-            
-            # 가장 긴 타이틀 선택
-            longest_titles = sorted_titles[:num_titles_to_select]
-            
-            save_title = ""
-            save_Qratio = 0.0
-
-            for idx,title in enumerate(longest_titles):
-                if(len(title[1])<=1) :
+        rotate_image = crop_image.rotate(90, expand=1)  
+        titles = clovar.clovar_ocr(rotate_image)
+        if titles:
+            for title in titles:
+                if(len(title)<=4):
                     continue
-                # 모든 책 제목 리스트에서 rapidfuzz를 사용해 가장 가까운 책 제목 뽑아내, title_list에 추가
-                for bookTitle in unique_titles:
-                    Qratio = fuzz.ratio(bookTitle,title[1])
-                    if(Qratio > save_Qratio):
-                        save_Qratio=Qratio
-                        save_title=bookTitle
-                # print("일치율: "+ str(save_Qratio) + ", 인식된 제목: " + str(title[1]) + ", 인식된 책: " + str(save_title))
+                # matches = process.extract(title, book_list, limit=None, scorer=fuzz.ratio)
+                # for match in matches:
+                #     book_title, score, _ = match
+                #     print("book_title:" + book_title + "score: "+ str(score)+"원본 : "+title)
+                #     if score >= 60:  # 유사도 기준
+                #         title_list2.append(book_title)
+                for bookTitle in book_list:
+                    if(len(bookTitle)<6):
+                        continue
+                    Qratio = fuzz.ratio(bookTitle,title)
 
-        # print("결과")
-        print(save_title)
+                    if(Qratio>=30):
+                        title_list2.append(bookTitle)
+                    
+    # print(np.shape(book_list))
+    # print(titles)
+    # if titles:
+    #     recognized_titles = [title[1] for title in titles if len(title) > 4]
 
-        if(save_title==""):
-            continue
-        if(save_Qratio>=40):
-            title_list.append(save_title)
-            
-    # 저장된 제목 리스트를 Spring 서버로 전송
-    return {"titles": list(set(title_list))}
+    #     # rapidfuzz로 가장 가까운 책 제목 찾기
+        # for recognized_title in recognized_titles:
+        #     matches = process.extract(recognized_title, book_list, limit=None, scorer=fuzz.ratio)
+        #     for match in matches:
+        #         book_title, score, _ = match
+        #         if score >= 60:  # 유사도 기준
+        #             title_list2.append(book_title)
+    return {"titles": list(set(title_list2))}
 
 @app.get("/python/item/userrecommand/{userId}")
 async def recomm_books(userId : int):
