@@ -13,7 +13,6 @@ Pillow
 numpy
 python-multipart==0.0.10
 rapidfuzz
-easyocr
 shapely
 sentence_transformers
 tf_keras

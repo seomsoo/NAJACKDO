@@ -6,9 +6,7 @@ import uuid
 import dao
 import cv2
 import io
-import csv
-import easyocr
-import pytesseract
+import csvocr
 import numpy as np
 import book_spine_detection
 import struct
