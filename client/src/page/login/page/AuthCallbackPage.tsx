@@ -45,7 +45,7 @@ const useAuthCallback = () => {
   };
 
   setupNotifications();
-  
+
   useEffect(() => {
     initialize();
   }, []);
