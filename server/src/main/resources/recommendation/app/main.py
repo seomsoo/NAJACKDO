@@ -199,7 +199,7 @@ async def quality_inspection(imageFile: UploadFile = File(...)):
     output = np.array(result[0].boxes.data)
 
     title_list = []
-    title_list2 = []
+    title_list2 = [] 
     rotate_list = [90]
 
     for rotate in rotate_list:     
