@@ -1,10 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { postBookCaseByIds } from "api/bookcaseApi";
 import { BookCaseResponse, IBookDetail } from "atoms/Book.type";
+import AlertModal from "components/common/AlertModal";
 import { useState } from "react";
-import { HiOutlineCamera } from "react-icons/hi2";
-import { IoChevronBack } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom";
+import ApplyBookInfo from "../components/ApplyBookInfo";
 
 interface BookcaseApplyPageProps {
   recognizedBooks: BookCaseResponse;
@@ -13,10 +13,8 @@ interface BookcaseApplyPageProps {
 const BookcaseApplyPage = ({ recognizedBooks }: BookcaseApplyPageProps) => {
   console.log("recognizedBooks", recognizedBooks);
 
-  const navigate = useNavigate();
-
-  const location = useLocation();
-
+  const [isRegistOpen, setIsRegistOpen] = useState<boolean>(false);
+  const [isNoBookOpen, setIsNoBookOpen] = useState<boolean>(false);
   const [selectedBooks, setSelectedBooks] = useState<number[]>(
     recognizedBooks.bookDataList.map((book) => book.bookId)
   );
@@ -26,6 +24,7 @@ const BookcaseApplyPage = ({ recognizedBooks }: BookcaseApplyPageProps) => {
 
     onSuccess: () => {
       console.log("success");
+      setIsRegistOpen(true);
     },
     onError: (error) => {
       console.error("error", error);
@@ -42,59 +41,65 @@ const BookcaseApplyPage = ({ recognizedBooks }: BookcaseApplyPageProps) => {
     });
   };
 
+  const handleRegisterClick = () => {
+    if (selectedBooks.length === 0) {
+      setIsNoBookOpen(true);
+    } else {
+      mutate(selectedBooks);
+    }
+  };
+
   console.log("selectedBooks", selectedBooks);
 
   return (
     <div>
       <div className="px-[25px]">
         <div>
-          <p className="font-bold text-base text-center my-4">
-            등록 도서 정보 (총{" "}
-            {recognizedBooks.alreadyExistBooks.length + recognizedBooks.bookDataList.length}권 인식
-            완료)
+          <AlertModal
+            content="도서가 성공적으로 등록되었습니다."
+            open={isRegistOpen}
+            setOpen={setIsRegistOpen}
+            urlPath="/library/my-bookcase"
+          />
+          <AlertModal
+            content="등록할 책이 없습니다."
+            open={isNoBookOpen}
+            setOpen={setIsNoBookOpen}
+          />
+          <p className="font-bold text-center my-4 text-lg">
+            총 {recognizedBooks.alreadyExistBooks.length + recognizedBooks.bookDataList.length}권
+            인식
           </p>
-          <div className="space-y-4">
-            새로 인식된 도서
-            {recognizedBooks.bookDataList.map((book) => (
-              <div key={book.bookId} className="flex flex-col border p-4 rounded-md">
-                <label className="flex items-center">
-                  <input
-                    type="checkbox"
-                    checked={selectedBooks.includes(book.bookId)} // 체크 상태 설정
-                    onChange={() => handleCheckboxChange(book.bookId)} // 체크박스 변화 핸들러
-                    className="mr-2"
-                  />
-                  <img src={book.cover} alt={book.title} className="w-16 h-24 object-cover mb-2" />
-                  <div>
-                    <p className="font-bold">{book.title}</p>
-                    <p>{book.author}</p>
-                    <p>{book.isbn}</p>
-                    <p>{book.genre}</p>
-                  </div>
-                </label>
-              </div>
-            ))}
+          <div className="space-y-4 ">
+            <div className="text-center font-bold">새로 인식된 도서</div>
+            {recognizedBooks.bookDataList.length === 0 ? (
+              <p>새로 인식된 도서가 없습니다</p>
+            ) : (
+              recognizedBooks.bookDataList.map((book) => (
+                <ApplyBookInfo
+                  book={book}
+                  bookcase
+                  key={book.bookId}
+                  isChecked={selectedBooks.includes(book.bookId)}
+                  handleCheckboxChange={handleCheckboxChange}
+                />
+              ))
+            )}
           </div>
           <div className="space-y-4">
-            이미 등록된 도서
-            {recognizedBooks.alreadyExistBooks.map((book, index) => (
-              <div key={index} className="flex flex-col border p-4 rounded-md">
-                <img src={book.cover} alt={book.title} className="w-16 h-24 object-cover mb-2" />
-                <div>
-                  <p className="font-bold">{book.title}</p>
-                  <p>{book.author}</p>
-                  <p>{book.isbn}</p>
-                  <p>{book.genre}</p>
-                </div>
-              </div>
-            ))}
+            <div className="text-center pt-5 font-bold">이미 등록된 도서</div>
+            {recognizedBooks.alreadyExistBooks.length === 0 ? (
+              <p>인식된 도서 중 이미 있는 도서는 없습니다</p>
+            ) : (
+              recognizedBooks.alreadyExistBooks.map((book, index) => (
+                <ApplyBookInfo book={book} key={book.bookId} />
+              ))
+            )}
           </div>
         </div>
         <div className="flex flex-col justify-center mx-8 my-6">
           <button
-            onClick={() => {
-              mutate(selectedBooks);
-            }}
+            onClick={handleRegisterClick}
             className="bg-sub7 text-white font-bold text-sm rounded-lg w-full py-1.5"
           >
             등록하기(총 {selectedBooks.length}권 선택됨)

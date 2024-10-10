@@ -70,10 +70,18 @@ const BookcaseUploadPage = () => {
         className="cursor-pointer p-6 py-4 flex flex-row items-center"
       >
         <IoChevronBack className="text-2xl" color="#545454" />
-        <span className="font-bold text-2xl ml-2">도서 등록 - 책장 촬영</span>
+        {isSuccess ? (
+          <span className="font-bold text-2xl ml-2">도서 등록 - 도서 정보</span>
+        ) : (
+          <span className="font-bold text-2xl ml-2">도서 등록 - 책장 촬영</span>
+        )}
       </div>
-      {isSuccess ? ( // 성공 시 보여줄 컴포넌트
+      {isSuccess ? (
         <BookcaseApplyPage recognizedBooks={recognizedBooks} />
+      ) : isPending ? (
+        <div className="flex items-center justify-center h-[500px]">
+          <ClipLoading />
+        </div>
       ) : (
         <div className="w-full h-[500px] max-w-md p-4">
           <form
@@ -120,17 +128,13 @@ const BookcaseUploadPage = () => {
               />
             </div>
             <div className="px-6">
-              {isPending ? (
-                <ClipLoading />
-              ) : (
-                <button
-                  type="submit"
-                  disabled={isPending}
-                  className="text-center bg-sub7 w-full mt-10 rounded-xl text-white font-bold py-3 px-16 cursor-pointer"
-                >
-                  AI 인증 요청
-                </button>
-              )}
+              <button
+                type="submit"
+                disabled={isPending}
+                className="text-center bg-sub7 w-full mt-10 rounded-xl text-white font-bold py-3 px-16 cursor-pointer"
+              >
+                AI 인증 요청
+              </button>
             </div>
             {error && <p className="text-red-500">Error: 이미지 업로드 실패</p>}
           </form>
