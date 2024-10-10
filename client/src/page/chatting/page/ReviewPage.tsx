@@ -6,14 +6,8 @@ import CheckboxGroup from "../components/CheckboxGroup";
 import EmojiSelector from "../components/EmojiSelector";
 
 const ReviewPage = () => {
-  const {
-    rentalId,
-    ownerName,
-    customerName,
-    bookTitle,
-    bookImageUrl,
-    bookCount,
-  } = useLocation().state;
+  const { rentalId, ownerName, customerName, bookTitle, bookImageUrl, bookCount } =
+    useLocation().state;
   const { nickname } = useUserStore();
   const navigate = useNavigate();
   const goBack = () => {
@@ -31,9 +25,7 @@ const ReviewPage = () => {
 
   const [checkedItems, setCheckedItems] = useState(initialState);
 
-  const [selectedEmoji, setSelectedEmoji] = useState<"like" | "dislike" | null>(
-    null
-  );
+  const [selectedEmoji, setSelectedEmoji] = useState<"like" | "dislike" | null>(null);
 
   const checkboxOptions: {
     like: {
@@ -59,9 +51,7 @@ const ReviewPage = () => {
     ],
   };
 
-  const handleCheckboxChange = (
-    item: "clean" | "punctual" | "polite" | "responsive"
-  ) => {
+  const handleCheckboxChange = (item: "clean" | "punctual" | "polite" | "responsive") => {
     setCheckedItems((prevItems) => ({
       ...prevItems,
       [item]: !prevItems[item],
@@ -78,7 +68,7 @@ const ReviewPage = () => {
   const isAnyChecked = Object.values(checkedItems).some(Boolean);
 
   return (
-    <div>
+    <div className="pb-10">
       <header className="p-6 text-2xl font-semibold flex items-center">
         <button onClick={goBack}>
           <IoIosArrowBack />
@@ -88,17 +78,11 @@ const ReviewPage = () => {
 
       <section className="pb-4 border-b">
         <div className="flex ml-7 items-center">
-          <img
-            src={bookImageUrl}
-            alt={bookTitle}
-            className="object-cover rounded-xl w-16 h-16"
-          />
+          <img src={bookImageUrl} alt={bookTitle} className="object-cover rounded-xl w-16 h-16" />
           <div className="flex flex-col gap-2 ml-4 font-medium">
             <p className="text-gray-500 space-x-1">
               <span className="text-black">{bookTitle}</span>
-              <span className="text-sm">
-                {bookCount > 0 && `외 ${bookCount - 1}권`}
-              </span>
+              <span className="text-sm">{bookCount > 0 && `외 ${bookCount - 1}권`}</span>
             </p>
             <span className="text-xs">
               <span className="text-gray-500">거래한 이웃 </span>
@@ -117,10 +101,7 @@ const ReviewPage = () => {
           </span>
         </div>
 
-        <EmojiSelector
-          selectedEmoji={selectedEmoji}
-          onEmojiSelect={handleEmojiSelect}
-        />
+        <EmojiSelector selectedEmoji={selectedEmoji} onEmojiSelect={handleEmojiSelect} />
 
         {selectedEmoji && (
           <CheckboxGroup
