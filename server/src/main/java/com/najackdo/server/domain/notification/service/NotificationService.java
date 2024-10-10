@@ -93,13 +93,15 @@ public class NotificationService {
 			.setNotification(notification)
 			.build();
 
-		log.info("notificationEvent.getType().equals(NotificationType.CHAT start");
+		log.info("notificationEvent.getType().equals(NotificationType.CHAT) start");
 		// 알림이 채팅이면 알림 푸시 알람만 전송
 		if (notificationEvent.getType().equals(NotificationType.CHAT)) {
 			try {
+				log.info("firebaseMessaging.send(message)");
 				firebaseMessaging.send(message);
 				return;
 			} catch (FirebaseMessagingException e) {
+				log.error("FirebaseMessagingException", e);
 				throw new RuntimeException(e);
 			}
 		}
