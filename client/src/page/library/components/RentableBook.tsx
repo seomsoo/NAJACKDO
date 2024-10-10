@@ -1,12 +1,12 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { getNearAvailableBook } from "api/bookApi";
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { getNearAvailableBook } from 'api/bookApi';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "components/ui/accordion";
-import RentalBookCover from "./RentalBookCover";
+} from 'components/ui/accordion';
+import RentalBookCover from './RentalBookCover';
 
 interface RentableBookProps {
   bookId: number;
@@ -14,7 +14,7 @@ interface RentableBookProps {
 
 const RentableBook = ({ bookId }: RentableBookProps) => {
   const { data: nearAvailableBookData } = useSuspenseQuery({
-    queryKey: ["nearAvailableBook", bookId],
+    queryKey: ['nearAvailableBook', bookId],
     queryFn: () => getNearAvailableBook(bookId),
   });
 
@@ -41,7 +41,7 @@ const RentableBook = ({ bookId }: RentableBookProps) => {
         <Accordion type="single" collapsible className="mt-4">
           <AccordionItem value="item-1">
             <AccordionTrigger className="font-bold text-md" component="rental">
-              <p>대여 가능 도서</p>
+              <p className="mr-3">대여 가능 도서</p>
             </AccordionTrigger>
             <div className="grid grid-cols-4 gap-x-2 gap-y-5">
               {nearAvailableBookData.slice(0, 4).map((book, index) => {
