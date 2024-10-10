@@ -32,7 +32,7 @@ const BookDetailPage = () => {
           </div>
         </Suspense>
       </ErrorBoundary>
-      <div className={`mx-[25px] mt-10 ${isPwa ? "mb-[86px]" : "mb-4"}`}>
+      <div className="mx-[25px] mt-10">
         <p className="my-5 font-bold">추천 도서</p>
         {bookGenre && (
           <ErrorBoundary fallback={<SmallError />}>
