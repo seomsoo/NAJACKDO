@@ -1,9 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { postBookCaseByIds } from "api/bookcaseApi";
-import { BookCaseResponse, IBookDetail } from "atoms/Book.type";
+import { BookCaseResponse } from "atoms/Book.type";
 import AlertModal from "components/common/AlertModal";
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import ApplyBookInfo from "../components/ApplyBookInfo";
 
 interface BookcaseApplyPageProps {
@@ -67,13 +66,17 @@ const BookcaseApplyPage = ({ recognizedBooks }: BookcaseApplyPageProps) => {
             setOpen={setIsNoBookOpen}
           />
           <p className="font-bold text-center my-4 text-lg">
-            총 {recognizedBooks.alreadyExistBooks.length + recognizedBooks.bookDataList.length}권
-            인식
+            총{" "}
+            {recognizedBooks.alreadyExistBooks.length +
+              recognizedBooks.bookDataList.length}
+            권 인식
           </p>
           <div className="space-y-4 ">
             <div className="text-center font-bold">새로 인식된 도서</div>
             {recognizedBooks.bookDataList.length === 0 ? (
-              <p>새로 인식된 도서가 없습니다</p>
+              <p className="text-center text-red-500 text-sm">
+                새로 인식된 도서가 없습니다
+              </p>
             ) : (
               recognizedBooks.bookDataList.map((book) => (
                 <ApplyBookInfo
@@ -89,7 +92,9 @@ const BookcaseApplyPage = ({ recognizedBooks }: BookcaseApplyPageProps) => {
           <div className="space-y-4">
             <div className="text-center pt-5 font-bold">이미 등록된 도서</div>
             {recognizedBooks.alreadyExistBooks.length === 0 ? (
-              <p>인식된 도서 중 이미 있는 도서는 없습니다</p>
+              <p className="text-center text-red-500 text-sm">
+                인식된 도서 중 이미 있는 도서는 없습니다
+              </p>
             ) : (
               recognizedBooks.alreadyExistBooks.map((book, index) => (
                 <ApplyBookInfo book={book} key={book.bookId} />
@@ -100,7 +105,7 @@ const BookcaseApplyPage = ({ recognizedBooks }: BookcaseApplyPageProps) => {
         <div className="flex flex-col justify-center mx-8 my-6 pb-10">
           <button
             onClick={handleRegisterClick}
-            className="bg-sub7 text-white font-bold text-sm rounded-lg w-full py-1.5"
+            className="bg-sub7 text-white font-bold text-sm rounded-lg w-full py-15"
           >
             등록하기(총 {selectedBooks.length}권 선택됨)
           </button>
