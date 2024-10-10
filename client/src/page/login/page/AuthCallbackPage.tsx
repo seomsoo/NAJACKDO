@@ -43,9 +43,10 @@ const useAuthCallback = () => {
       navigate("/survey");
     }
   };
-  setupNotifications();
+
   useEffect(() => {
     initialize();
+    setupNotifications();
   }, []);
 };
 
