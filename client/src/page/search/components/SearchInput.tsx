@@ -1,4 +1,6 @@
+import AlertModal from "components/common/AlertModal";
 import { Input } from "components/ui/input";
+import { useState } from "react";
 import { IoIosArrowBack, IoIosSearch } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
@@ -9,6 +11,7 @@ interface SearchInputProps {
 
 const SearchInput = ({ handleSearchText, searchText }: SearchInputProps) => {
   const navigate = useNavigate();
+  const [open, setOpen] = useState<boolean>(false);
 
   const handleMoveBack = () => {
     if (window.location.pathname === "/search/result") {
@@ -20,7 +23,7 @@ const SearchInput = ({ handleSearchText, searchText }: SearchInputProps) => {
 
   const goSearchResult = () => {
     if (searchText === "") {
-      return alert("검색어를 입력해주세요.");
+      return setOpen(true);
     }
 
     navigate(`/search/result?keyword=${searchText}`);
@@ -28,6 +31,13 @@ const SearchInput = ({ handleSearchText, searchText }: SearchInputProps) => {
 
   return (
     <div className="flex flex-row items-center relative">
+      {open && (
+        <AlertModal
+          open={open}
+          setOpen={setOpen}
+          content="검색어를 입력해주세요."
+        />
+      )}
       <div onClick={handleMoveBack}>
         <IoIosArrowBack
           size={25}
