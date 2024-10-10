@@ -44,9 +44,10 @@ const useAuthCallback = () => {
     }
   };
 
+  setupNotifications();
+  
   useEffect(() => {
     initialize();
-    setupNotifications();
   }, []);
 };
 
