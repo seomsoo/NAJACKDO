@@ -102,11 +102,21 @@ const ChattingBox = ({
     }
   }, [messages]);
 
+  const [isPwa, setIsPwa] = useState(false);
+
+  useEffect(() => {
+    // iOS에서 PWA로 실행되고 있는지 확인
+    const checkPwaMode = window.matchMedia(
+      "(display-mode: standalone)"
+    ).matches;
+    setIsPwa(checkPwaMode);
+  }, []);
+
   return (
     <div className="mx-[25px]">
       <div
         className="flex-grow overflow-y-auto py-4 scrollbar-hide"
-        style={{ height: "calc(100vh - 290px)" }}
+        style={{ height: `calc(100vh - 290px + ${isPwa && "86px"})` }}
       >
         <div className="space-y-4">
           {chattingList.messages.map((chat, index) => {
@@ -143,7 +153,7 @@ const ChattingBox = ({
         <div ref={messagesEndRef} />
       </div>
       <form onSubmit={handleSendMessage}>
-        <div className="flex flex-row items-center my-4 fixed bottom-2">
+        <div className="flex flex-row items-center my-4 fixed bottom-2 bg-najackdo-background">
           <Input
             placeholder="메시지를 입력해주세요."
             className="bg-[#EAE7E3] border-none w-[310px]"
