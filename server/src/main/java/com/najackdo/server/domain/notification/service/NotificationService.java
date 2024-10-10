@@ -58,10 +58,8 @@ public class NotificationService {
 	@TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void registNotification(NotificationRegistEvent regist) {
-		log.info("registNotification");
 		com.najackdo.server.domain.notification.entity.Notification notification = com.najackdo.server.domain.notification.entity.Notification.createNotification(
 			regist);
-		log.info("notificationRepository.save(notification)");
 		notificationRepository.save(notification);
 	}
 
@@ -73,16 +71,12 @@ public class NotificationService {
 				() -> new BaseException(ErrorCode.NOT_FOUND_USER)
 			);
 
-		log.info("user.getFcmToken() == null start");
-
 		if (user.getFcmToken() == null) {
 			publisher.publishEvent(
 				new NotificationRegistEvent(user, notificationEvent.getType(), false, notificationEvent.getTitle(),
 					notificationEvent.getBody()));
 			throw new BaseException(ErrorCode.NO_HAD_FCMTOKEN);
 		}
-
-		log.info("user.getFcmToken() == null end");
 
 		Notification notification = Notification.builder()
 			.setTitle(notificationEvent.getTitle())
@@ -93,7 +87,6 @@ public class NotificationService {
 			.setNotification(notification)
 			.build();
 
-		log.info("notificationEvent.getType().equals(NotificationType.CHAT start");
 		// 알림이 채팅이면 알림 푸시 알람만 전송
 		if (notificationEvent.getType().equals(NotificationType.CHAT)) {
 			try {
@@ -103,9 +96,7 @@ public class NotificationService {
 				throw new RuntimeException(e);
 			}
 		}
-		log.info("notificationEvent.getType().equals(NotificationType.CHAT end");
 
-		log.info("NotificationRegistEvent start");
 		try {
 			firebaseMessaging.send(message);
 			publisher.publishEvent(
@@ -117,6 +108,5 @@ public class NotificationService {
 					notificationEvent.getBody()));
 			throw new BaseException(ErrorCode.NOT_SENDED_ALARM);
 		}
-		log.info("NotificationRegistEvent end");
 	}
 }

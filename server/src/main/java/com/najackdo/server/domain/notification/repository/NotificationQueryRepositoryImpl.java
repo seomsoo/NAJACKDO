@@ -37,7 +37,6 @@ public class NotificationQueryRepositoryImpl implements NotificationQueryReposit
                         )
                 ).from(notification)
                 .join(notification.user,user)
-                .where(notification.isRead.eq(false),user.id.eq(userId))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
