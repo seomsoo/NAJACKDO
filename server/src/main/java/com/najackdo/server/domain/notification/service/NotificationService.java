@@ -1,5 +1,15 @@
 package com.najackdo.server.domain.notification.service;
 
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.event.EventListener;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.event.TransactionPhase;
+import org.springframework.transaction.event.TransactionalEventListener;
+
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
@@ -7,32 +17,15 @@ import com.google.firebase.messaging.Notification;
 import com.najackdo.server.core.exception.BaseException;
 import com.najackdo.server.core.exception.ErrorCode;
 import com.najackdo.server.domain.notification.dto.NotificationDto;
-
 import com.najackdo.server.domain.notification.entity.NotificationType;
 import com.najackdo.server.domain.notification.event.NotificationEvent;
 import com.najackdo.server.domain.notification.event.NotificationRegistEvent;
 import com.najackdo.server.domain.notification.repository.NotificationRepository;
 import com.najackdo.server.domain.user.entity.User;
-import com.najackdo.server.domain.user.event.CashLogPaymentEvent;
 import com.najackdo.server.domain.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.event.EventListener;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.event.TransactionPhase;
-import org.springframework.transaction.event.TransactionalEventListener;
-import org.springframework.data.domain.Pageable;
-
-import java.util.List;
-import java.util.Optional;
-
-import static com.najackdo.server.domain.user.entity.CashLogType.PAYMENT;
 
 @RequiredArgsConstructor
 @Service
@@ -61,8 +54,8 @@ public class NotificationService {
 		return;
 	}
 
-	// 반납 알림
-	@EventListener
+	// 알림
+	@TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void registNotification(NotificationRegistEvent regist) {
 		com.najackdo.server.domain.notification.entity.Notification notification = com.najackdo.server.domain.notification.entity.Notification.createNotification(
@@ -82,9 +75,8 @@ public class NotificationService {
 			publisher.publishEvent(
 				new NotificationRegistEvent(user, notificationEvent.getType(), false, notificationEvent.getTitle(),
 					notificationEvent.getBody()));
-			new BaseException(ErrorCode.NO_HAD_FCMTOKEN);
+			throw new BaseException(ErrorCode.NO_HAD_FCMTOKEN);
 		}
-
 
 		Notification notification = Notification.builder()
 			.setTitle(notificationEvent.getTitle())
@@ -111,11 +103,10 @@ public class NotificationService {
 				new NotificationRegistEvent(user, notificationEvent.getType(), true, notificationEvent.getTitle(),
 					notificationEvent.getBody()));
 		} catch (FirebaseMessagingException e) {
-			e.printStackTrace();
 			publisher.publishEvent(
 				new NotificationRegistEvent(user, notificationEvent.getType(), false, notificationEvent.getTitle(),
 					notificationEvent.getBody()));
-			new BaseException(ErrorCode.NOT_SENDED_ALARM);
+			throw new BaseException(ErrorCode.NOT_SENDED_ALARM);
 		}
 	}
 }

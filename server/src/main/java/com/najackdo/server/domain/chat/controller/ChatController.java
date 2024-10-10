@@ -69,11 +69,14 @@ public class ChatController {
 			chatRepository.save(existingChat);
 
 			String displayMessage = "";
+			NotificationType notificationType = NotificationType.CHAT;
 
 			if (newMessage.getTalkType() == TalkType.PAY) {
 				displayMessage = "도서를 대여하였습니다..";
+				notificationType = NotificationType.BOOK_RENTAL_REQUEST;
 			} else if (newMessage.getTalkType() == TalkType.RETURN) {
 				displayMessage = "도서를 반납하였습니다.";
+				notificationType = NotificationType.BOOK_RETURN_REMINDER;
 			} else {
 				displayMessage = newMessage.getMessage();
 			}
@@ -83,11 +86,10 @@ public class ChatController {
 					chatDTO.getReceiverId(),
 					chatDTO.getSenderNickname(),
 					displayMessage,
-					NotificationType.CHAT));
+					notificationType));
 			} catch (Exception e) {
 				log.error("알림 전송 실패 : {}", e.getMessage());
 			}
-
 
 		} else {
 			// 새로운 대화방 생성
