@@ -1,25 +1,25 @@
 // src/App.tsx
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { getValid } from 'api/validApi';
-import Footer from 'components/common/Footer';
-import Header from 'components/common/Header';
-import NotFoundPage from 'components/common/NotFoundPage';
-import ScrollToTopButton from 'components/common/ScrollToTopButton';
-import LibraryRoute from 'components/routes/LibraryRoute';
-import MainRoute from 'components/routes/MainRoute';
-import ProfileRoute from 'components/routes/ProfileRoute';
-import { initializeApp } from 'firebase/app';
-import { getMessaging, getToken, onMessage } from 'firebase/messaging';
-import { useEffect, useState } from 'react';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { getValid } from "api/validApi";
+import Footer from "components/common/Footer";
+import Header from "components/common/Header";
+import NotFoundPage from "components/common/NotFoundPage";
+import ScrollToTopButton from "components/common/ScrollToTopButton";
+import LibraryRoute from "components/routes/LibraryRoute";
+import MainRoute from "components/routes/MainRoute";
+import ProfileRoute from "components/routes/ProfileRoute";
+import { initializeApp } from "firebase/app";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { useEffect } from "react";
 import {
   Route,
   Routes,
   useLocation,
   useMatch,
   useNavigate,
-} from 'react-router-dom';
-import { useAuthStore } from 'store/useAuthStore';
-import { useValidStore } from 'store/useValidStore';
+} from "react-router-dom";
+import { useAuthStore } from "store/useAuthStore";
+import { useValidStore } from "store/useValidStore";
 
 function App() {
   const firebaseConfig = {
@@ -42,7 +42,7 @@ function App() {
       // Request permission for notifications
       const permission = await Notification.requestPermission();
 
-      if (permission === 'granted') {
+      if (permission === "granted") {
         // Get the FCM token
         const token = await getToken(messaging, {
           vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY,
@@ -61,44 +61,35 @@ function App() {
   const currentPath = location.pathname;
   const queryClient = new QueryClient();
 
-  const popupPaths = ['/kapay/approve', '/kapay/cancel', '/kapay/fail'];
+  const popupPaths = ["/kapay/approve", "/kapay/cancel", "/kapay/fail"];
   const hideHeaderPaths = [
-    '/sign-in',
-    '/survey',
-    '/setting/location',
-    '/edit/location',
-    '/library',
+    "/sign-in",
+    "/survey",
+    "/setting/location",
+    "/edit/location",
+    "/library",
   ];
-  const isDetailPage = useMatch('/book/:bookId');
-  const isRentalPage = useMatch('/book/:bookId/rental');
-  const isChattingRoomPage = useMatch('/chat/:roomId');
+  const isDetailPage = useMatch("/book/:bookId");
+  const isRentalPage = useMatch("/book/:bookId/rental");
+  const isChattingRoomPage = useMatch("/chat/:roomId");
 
   const hideFooterPaths = [
-    '/sign-in',
-    '/survey',
-    '/setting/location',
-    '/404',
-    '',
+    "/sign-in",
+    "/survey",
+    "/setting/location",
+    "/404",
+    "",
   ];
 
   const isPopup = window.opener !== null && !window.opener.closed;
   const shouldHideHeaderFooter = popupPaths.includes(currentPath) && isPopup;
   const hideScrollTopButton = () => {
-    return location.pathname.split('/')[1] !== 'chat';
+    return location.pathname.split("/")[1] !== "chat";
   };
-  const [isPwa, setIsPwa] = useState(false);
 
   useEffect(() => {
-    // iOS에서 PWA로 실행되고 있는지 확인
-    const checkPwaMode = window.matchMedia(
-      '(display-mode: standalone)'
-    ).matches;
-    setIsPwa(checkPwaMode);
-  }, []);
-  
-  useEffect(() => {
     const isStandalone =
-      window.matchMedia('(display-mode: standalone)').matches ||
+      window.matchMedia("(display-mode: standalone)").matches ||
       (window.navigator as any).standalone;
 
     if (isStandalone) {
@@ -118,11 +109,11 @@ function App() {
       }
 
       if (
-        currentPath === '/sign-in' ||
-        currentPath === '/survey' ||
-        currentPath === '/setting/location'
+        currentPath === "/sign-in" ||
+        currentPath === "/survey" ||
+        currentPath === "/setting/location"
       ) {
-        navigate('/');
+        navigate("/");
         return;
       }
     }
@@ -137,7 +128,7 @@ function App() {
       try {
         // 로그인 안되어있을 때
         if (!accessToken) {
-          navigate('/sign-in');
+          navigate("/sign-in");
           return;
         }
 
@@ -146,19 +137,19 @@ function App() {
         const response = await getValid();
 
         if (!response.survey) {
-          navigate('/survey');
+          navigate("/survey");
           return;
         }
 
         if (!response.location) {
-          navigate('/setting/location');
+          navigate("/setting/location");
           return;
         }
 
         pathCheck(accessToken, response.survey, response.location, true);
       } catch (error) {
-        console.error('유효성 검사 실패', error);
-        navigate('/sign-in');
+        console.error("유효성 검사 실패", error);
+        navigate("/sign-in");
       }
     };
     checkValidation();
@@ -175,7 +166,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div
-        className={`h-full ${isChattingRoomPage || isPwa ? 'pb-0' : 'pb-[86px]'} relative`}
+        className={`h-full ${isChattingRoomPage ? "pb-0" : "pb-[86px]"} relative`}
       >
         {!isDetailPage &&
           !isRentalPage &&

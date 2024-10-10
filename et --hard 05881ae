@@ -1,0 +1,982 @@
+[33m05881ae[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdevelop[m[33m)[m Merge branch 'front/feat/rental-detail-updatePrice' into develop
+[33mf953f46[m [FIX] 가격 수정 키보드3
+[33m15531df[m Merge branch 'front/feat/rental-detail-updatePrice' into develop
+[33m43d88be[m [FIX] 가격 수정 키보드2
+[33mc4cdb26[m fdfd
+[33m0cf2f66[m f복구
+[33mfc54730[m dd
+[33mf027601[m ㅈㅅ
+[33mc14882b[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33md669d50[m swap mem
+[33m284799b[m Merge branch 'front/fix/UI' into 'develop'
+[33m4b7f62d[m dd
+[33m66f48a7[m [FIX] ui 수정
+[33m58cddc8[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33mb88a69a[m 도커 스왑 메모리
+[33m655dfff[m [FIX] docker
+[33m30015e5[m [FIX] docker-compose fastapi mem 제한 수정
+[33mf926253[m [FIX] docker-compose fastapi mem 제한 수정
+[33m760576c[m [FEAT] docker-compose fastapi 메모리 제한
+[33m03bf418[m Merge branch 'front/feat/fix' into 'develop'
+[33m6a1778e[m [FEAT] 알람 없을 때 컴포넌트 추가
+[33m7f2bbdd[m Merge branch 'front/feat/rental-detail-updatePrice' into develop
+[33m51d84e2[m Merge branch 'front/fix/ui' into 'develop'
+[33m5773aa2[m[33m ([m[1;31morigin/front/fix/ui[m[33m)[m ui오류
+[33me75d8e3[m [FIX] 가격 수정 키보드
+[33m21479b1[m Merge branch 'fix/front/display' into 'develop'
+[33m1318542[m [Fix] 디스플레이 수정
+[33m8cca8b2[m Merge branch 'front/feat/fix' into 'develop'
+[33ma85699b[m[33m ([m[1;31morigin/front/feat/fix[m[33m)[m [FIX] 책 등록 텍스트 검색 무한 스크롤 적용
+[33m7380088[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into developt pus h
+[33m34a1497[m [FIX] 책장 등록 시 이미 있는책 구분해서 반환
+[33m4338c31[m Merge branch 'front/feat/상태바배색' into 'develop'
+[33m8c79f67[m 상태바 배경색
+[33mcf6c417[m [FIX] fast-api서버 버전업
+[33m0050515[m Merge branch 'back/fix/recommandbookreturn' into 'develop'
+[33m0cd5285[m [FIX] 수정
+[33m088678d[m Merge branch 'front/feat/detail-heart' into develop
+[33m2b767b0[m[33m ([m[1;31morigin/front/feat/detail-heart[m[33m, [m[1;32mfront/feat/detail-heart[m[33m)[m [FIX] 하트 오류 수정
+[33me183cd2[m Merge branch 'front/fix/cart' into 'develop'
+[33m63e2d9e[m [FIX] 장바구니에 책 있을시 체크 안 뜨게 수정
+[33m5cb7501[m [FEAT] 스크롤 어느정도 내릴시 위로 올리기 버튼추가
+[33md9fdf24[m[33m ([m[1;31morigin/front/feat/grade-info[m[33m, [m[1;32mfront/feat/grade-info[m[33m)[m [FIX] 나작도 신뢰나무 안내 수정
+[33m13f59a3[m[33m ([m[1;31morigin/front/feat/bookcase-regist[m[33m)[m Merge branch 'front/feat/fix' into 'develop'
+[33m3e96a39[m [MERGE]
+[33m39a2c27[m [FEAT] 책장 등록
+[33m45a098d[m [FIX]추천 개수 조정
+[33m5fd9620[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into developt push ori
+[33me12e7d2[m [FIX] API 스펙 추가 책 제목
+[33m947de36[m Merge branch 'back/fix/spinedetectionapi' into 'develop'
+[33md3f4093[m [FIX] API 요청 번경
+[33mb214b9e[m[33m ([m[1;31morigin/75-be-api[m[33m)[m [FIX] 도커 컴포즈 수정
+[33mf263356[m Merge branch 'front/fix/ui' into 'develop'
+[33m0039f07[m [FIX] UI 보완
+[33m035d982[m [HOTFIX] 브랜치 'back/feat/bookcase-regist'을(를) 'develop'(으)로 병합
+[33mecf1822[m [FIX] bookids add api / fix stream
+[33m8a5960b[m [MERGE] 브랜치 'back/feat/bookcase-regist'을(를) 'develop'(으)로 병합
+[33m0791d5f[m [FIX] bookids로 추가하는 api
+[33m5cd5fff[m [FEAT] bookids로 추가하는 api
+[33m5c3d3fc[m Merge branch 'back/upgrade/spinedetection' into 'develop'
+[33m0ebfcbd[m [FIX] 책장 인식 성능 향상
+[33m7c14a47[m Merge branch 'front/fix/ui수정' into 'develop'
+[33m1285bac[m [Fix] ui 수정
+[33m04adebf[m []
+[33mea1e115[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into developt pushg
+[33m169b940[m FF
+[33m498cd8a[m Merge branch 'front/feat/main' into 'develop'
+[33mc1507c1[m [fix] lock.json
+[33m4f0e796[m Merge branch 'front/feat/main' into 'develop'
+[33mfc0fc2f[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33m9517d97[m [FEAT] 메인 추천페이지 ui 수정
+[33mf98b47c[m [FIX] 백엔드 로그 삭제
+[33mfa4da5b[m[33m ([m[1;32mfront/feat/cash-log[m[33m)[m [FEAT] 신뢰 나무 점수안내 모달
+[33mb0ebd4a[m [FIX] 추천 개수 수정
+[33me441723[m 추천 같은책 필터링
+[33mbd7fca0[m 하하
+[33m4232522[m Merge branch 'back/fix/recommandbug' into 'develop'
+[33mcb015d1[m [FIX] 버그 수정
+[33m01d4aaa[m Merge branch 'front/feat/fix' into 'develop'
+[33m3313da7[m [MERGE] front/feat/fix -> develop
+[33m8c11558[m [FIX] UI 수정
+[33mb8efd26[m Merge branch 'front/fix/history' into 'develop'
+[33m4282825[m [MERGE] # Conflicts: #   client/src/page/library/page/HistoryPage.tsx
+[33m247ad0e[m [Fix] 히스토리 페이지 ui 수정
+[33md441925[m [MERGE] 브랜치 'front/feat/recom-genre'을(를) 'develop'(으)로 병합
+[33mab3f63f[m [FEAT] 장르 추천 / 시연용 책 insert sql 파일
+[33maad120a[m[33m ([m[1;31morigin/front/feat/chatting-room[m[33m, [m[1;32mfront/feat/chatting-room[m[33m)[m [FIX] 채팅방 포기
+[33m9b1abfd[m [FIX] 채팅방 키보드 마지막
+[33m3510174[m [FIX] footer
+[33md5b5316[m [FIX] 채팅방 수정
+[33mb53f66a[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33m061d42c[m 임시 추천
+[33m2890db3[m 복구
+[33mf24c108[m [MERGE] 브랜치 'front/feat/recom-genre'을(를) 'develop'(으)로 병합
+[33m90d4fd7[m [MERGE] remote-tracking branch 'origin/develop' into front/feat/recom-genre
+[33m422ca7d[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33m30213fa[m [FIX] 키보드 오픈 시 푸터 없애기
+[33mc7a18e3[m[33m ([m[1;31morigin/front/feat/recom-genre[m[33m)[m [FEAT] 카테고리 추천 연결
+[33ma02f056[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into t push origin dedevelop
+[33m40399c1[m [FEAT] 메인화면 추천
+[33m56901f5[m [FIX] Footer 내려가
+[33m9635e34[m[33m ([m[1;31morigin/Back/fix/recommandbug[m[33m)[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33m68a1efb[m Merge branch 'front/feat/fix' into 'develop'
+[33md97d066[m [FEAT] Error Boundary 적용
+[33m7d6aa1c[m [FIX] 채팅방 키보드
+[33m3b8c884[m [FIX] 렌탈 유저북 상태 변경
+[33mafadaa6[m Update docker-compose.yml
+[33mb18f689[m Merge branch 'front/fix/ui' into 'develop'
+[33mb92986f[m [Fix] 위치 조금 수정
+[33mcb30b5b[m Merge branch 'front/feat/chatting-room' into develop
+[33mfa46a7f[m [FIX] footer 내려가
+[33m47936ba[m Merge branch 'back/fix/recommand' into 'develop'
+[33mdca2732[m [FIX] 예외 수정 및 속도 더 줄임
+[33m8a29826[m Merge branch 'front/feat/fix' into 'develop'
+[33ma88f981[m [STYLE] 주석 제거
+[33m609273e[m [FIX] 로딩 수정, 빈 배열 예외처리, 장바구니 에러 처리
+[33mcea6f06[m Merge branch 'front/feat/history' into 'develop'
+[33m6fc29d8[m [FIX] 히스토리 ui 수정
+[33mfeddbeb[m [FIX]
+[33mb48a574[m [FIX]
+[33m52898df[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C1t push o05 into develop
+[33mdb0a096[m [장바구니 수정]
+[33m94631a4[m Merge branch 'back/fix/recommandfix' into 'develop'
+[33ma9a4ed4[m [FIX] 너무 오래 걸리는 시간 수정 완료
+[33m81d94e1[m [FIX] 추천 1초대로 변경
+[33m904523d[m Merge branch 'front/feat/chatting-room' into develop
+[33m0fdaadf[m [FIX] footer 및 입력창 수정
+[33m2e48e63[m [MERGE] 브랜치 'front/feat/scroll-block'을(를) 'develop'(으)로 병합
+[33md2a8401[m [MERGE] remote-tracking branch 'origin/develop' into front/feat/scroll-block
+[33m1a5d366[m [FEAT] 스크롤 옵션 추가
+[33m0d4252f[m Merge branch 'front/feat/historyUi' into 'develop'
+[33m5244f50[m [FEAT] 히스토리 서재 ui 추가
+[33m87bbbcb[m Merge branch 'front/feat/fix' into 'develop'
+[33m9bb1006[m [FIX] 추천 로직 수정, 헤더 수정
+[33m4c8b222[m[33m ([m[1;31morigin/front/feat/scroll-block[m[33m)[m [FEAT] 확대 / 축소 방지
+[33m4ff79c6[m [MERGE]
+[33m3913212[m [FIX] 추천 장르 수정
+[33m22f5b1c[m Merge branch 'front/feat/chatting-room' into develop
+[33md7708bb[m [FIX] 채팅방 입력창 클릭시 확대 수정
+[33md668d93[m [FIX] 채팅방 키보드 화면 밀림 수정
+[33ma1db4a7[m 미안^^
+[33m6485d34[m [FIX]
+[33me8f53cb[m [FIX] 추천 수정
+[33ma7d29b9[m Merge branch 'front/feat/location-cache' into develop
+[33m19b42cf[m[33m ([m[1;31morigin/front/feat/location-cache[m[33m, [m[1;32mfront/feat/location-cache[m[33m)[m [FIX] 지역 설정 관련 캐시
+[33ma3837ef[m[33m ([m[1;31morigin/Back/fix/recommandfix[m[33m)[m [FIX] 알람읽음 처리 API get -> post
+[33m061974a[m Merge branch 'front/feat/fix' into 'develop'
+[33m13a5985[m [HOTFIX] 알림 수정 get -> post
+[33m0234b08[m Merge branch 'front/feat/fix' into 'develop'
+[33mfa8f277[m [FIX] UI 수정
+[33m66044c0[m Merge branch 'front/fix/otherprofile' into 'develop'
+[33m7128890[m [fix] 타인프로필 에러 수정
+[33me2f0d39[m [MERGE] 브랜치 'front/feat/category-api'을(를) 'develop'(으)로 병합
+[33m880afa5[m [FEAT] 카테고리 추천 api 연결
+[33m7b69af5[m Merge branch 'front/feat/fix' into 'develop'
+[33m69958c6[m [HOTFIX] scroll
+[33mec5f5cd[m Merge branch 'front/feat/fix' into 'develop'
+[33m9354549[m [HOTFIX] index.css 수정
+[33mc069948[m Merge branch 'front/feat/fix' into 'develop'
+[33ma7547f7[m [FIX] scroll
+[33m89cd76d[m Merge branch 'front/feat/historyui' into 'develop'
+[33mcb28fa0[m [MERGE] # Conflicts: #   client/src/page/alarm/page/AlarmPage.tsx #   client/src/page/library/page/OtherBookCasePage.tsx
+[33m828a447[m [FEAT] 에러페이지 추가 및 ui 수정
+[33m3ab54a5[m Merge branch 'front/feat/fix' into 'develop'
+[33m6c6dc84[m [FIX] 대여 가격 수정, 스크롤 막기 등 수정
+[33mb671b3e[m [FIX] 도커 컴포즈 파일
+[33m80bc17d[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33m69ce31e[m 으악
+[33m75a10dc[m Merge branch 'front/feat/chatting' into 'develop'
+[33m84f14c8[m [FIX] alertModal clickEvent 수정
+[33m7d43298[m [FIX] 도커 컴포즈
+[33m9e4f135[m f
+[33m6ba5834[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33me45a477[m [FEAT] 리뷰시 매너 점수 저장
+[33m1be70ce[m[33m ([m[1;31morigin/front/feat/location-modal[m[33m)[m [FIX] 지역 설정 및 상세페이지 모달
+[33m80f59fd[m Merge branch 'front/feat/bookcheck' into 'develop'
+[33m0a3af50[m [FEAT] 책 상세페이지 수정
+[33mf6f10e8[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-rt push origin dev	ecom-sub1/S11P21C105 into develop
+[33m6245ea0[m [FEAT] 검색 추천 연결
+[33m2618df0[m Merge branch 'front/feat/chatting' into 'develop'
+[33mae93f1a[m [FIX] UI 수정, 아이콘 수정
+[33m35ef693[m [MERGE] 브랜치 'back/fix/cashlog'을(를) 'develop'(으)로 병합
+[33m6b6ab02[m [FIX] cashlog type 수정
+[33m4fb21d4[m Merge branch 'front/feat/chatting' into 'develop'
+[33mc3479ba[m Merge branch 'front/feat/chatting' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into front/feat/chatting
+[33m6982596[m [HOTFIX] 대여 로직 수정
+[33mdef6ae8[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33me3f54ed[m [FIX] 장르 종류 수정
+[33madb9cd8[m [MERGE] 브랜치 'front/feat/search-infinite-scroll'을(를) 'develop'(으)로 병합
+[33meb4a2f1[m [FIX] 검색 스피너 추가
+[33ma7b06ed[m [MERGE] 브랜치 'front/feat/search-infinite-scroll'을(를) 'develop'(으)로 병합
+[33m29a80e2[m [FEAT] 검색 결과 무한스크롤
+[33mdfd7739[m Merge branch 'front/feat/chatting' into 'develop'
+[33m09a4f40[m [MERGE]
+[33m9a4fd38[m [FIX]  리뷰 카운트 수정
+[33mebcdba3[m Merge branch 'front/feat/review-count' into develop
+[33me83c04a[m[33m ([m[1;31morigin/front/feat/review-count[m[33m)[m [FIX] 리뷰 api 수정
+[33mb1171f0[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33m624fa1a[m [FIX] 이것저것
+[33m4ce004b[m [FIX] 리뷰 개수 카운트
+[33mdaa60b4[m [MERGE] 브랜치 'front/fix/item-cancel-icon'을(를) 'develop'(으)로 병합
+[33ma67f7b0[m [FIX] 캐시값 업데이트 되게 fix
+[33mea17f66[m Merge branch 'back/feat/userrecommand' into 'develop'
+[33mff3e3c7[m [FEAT] complete api
+[33mfec71e1[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33mb367fca[m [FIX] 리엑트 쿼리 수정
+[33m1b544dd[m Merge branch 'front/feat/header' into develop
+[33m9acd494[m[33m ([m[1;31morigin/front/feat/header[m[33m)[m [FIX] 상세페이지 제외하고 헤더 보이기
+[33mfabb0d4[m [FIX] 렌탈 기록 몽고 디비 기록 수정
+[33md37b8cd[m Merge branch 'develop' of https://lab.ssafyt push origin dev	.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33m9123ba8[m d
+[33ma3a76d2[m Merge branch 'front/feat/local-best' into 'develop'
+[33mc8d9657[m [FEAT] 지역 인기도서 연결
+[33m012a9e5[m [FIX] 확인 모달 text 변경
+[33m8e898be[m Merge branch 'front/feat/location-range-slider' into develop
+[33mfe62d0e[m[33m ([m[1;31morigin/front/feat/location-range-slider[m[33m)[m [FIX] slider
+[33mb0ff719[m [FIX] 몽고 디비 정보 저장 수정
+[33m2921e49[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33md990cbb[m [FIX] 도커 컴포즈 파일 수정
+[33mbeec71b[m Merge remote-tracking branch 'origin/develop' into develop
+[33m2c44227[m [FIX] aicheck input capture 속성 추가
+[33m3113863[m Merge branch 'develop' oft push origin dev	 https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33m074fefc[m [FEAT]
+[33mcb8599b[m [FIX] polygonpath
+[33m13be240[m Merge branch 'front/feat/chatting' into 'develop'
+[33m49a5575[m [FIX] ui 수정
+[33m5861a2d[m [MERGE] 브랜치 'front/fix/isbn-scanner'을(를) 'develop'(으)로 병합
+[33m229959d[m [FIX] isbn scanner 크기 조절
+[33m460a85c[m [FIX] 채팅은 알림 목록에 저장 X
+[33mf0944c8[m Merge branch 'devet pgit lop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33m62f4c84[m [FIX] 매너점수 로직 수정
+[33mdf95b1c[m Upload New File
+[33m844033f[m Add new directory
+[33m2c8b770[m Delete best.pt
+[33m503b317[m update model
+[33md8fdcbf[m [FIX] 도서 검색 페이징 처리
+[33m678c655[m Merge branch 'dt pevelop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33maf773c9[m [FIX] 베스트 셀러 기간 수정
+[33m424bcf0[m [FIX] search keyword
+[33md111e2d[m Merge branch 'front/feat/chatting' into 'develop'
+[33mf9ab4a8[m [MERGE]
+[33md7bd2e8[m [FIX] 모달 추가, 아이콘 사이즈 정리 등등
+[33mfb443eb[m [MERGE] 브랜치 'front/fix/history'을(를) 'develop'(으)로 병합
+[33m282fcbc[m [FEAT] 후기 남기기 버튼 로직 추가, rentalId 리페치 로직 추가
+[33m3ba9f02[m t push rogi indMerge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33m791570a[m [FIX] API 스펙변경
+[33m5ba3c36[m Merge branch 'front/feat/chatting' into 'develop'
+[33meda3045[m [FEAT] 좋아요 alert 모달, scrollbar npm
+[33m7da09a6[m erge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33mf2ea012[m [FEAT] 리뷰 가능 여부 체크
+[33m81153d7[m [MERGE] 브랜치 'front/fix/history'을(를) 'develop'(으)로 병합
+[33m839da8c[m [FIX] history
+[33m57bedea[m [MERGE] 브랜치 'back/feat/inter'을(를) 'develop'(으)로 병합
+[33m6967d88[m [FIX] bookid로 상세 조회 서비스 로직 수정
+[33m28b0d1e[m Merge branch 'front/feat/chatting' into 'develop'
+[33m403d17e[m [MERGE]
+[33m45927a2[m [FIX] 책장등록
+[33m24e96d0[m [FEAT] alert modal, confirm modal 추가
+[33m244936c[m [FIX]
+[33m22020a2[m [FEAT] API 완성
+[33m8bed45e[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-t push origin dev	sub1/S11P21C105 into develop
+[33m2ff0eb9[m [FIX] 채팅 알림 설정 변경
+[33m0c257da[m Merge branch 'front/feat/user-book-detail' into develop
+[33m855ae1a[m[33m ([m[1;31morigin/front/feat/user-book-detail[m[33m, [m[1;32mfront/feat/user-book-detail[m[33m)[m [FEAT] 책 클릭 이벤트
+[33mab73c41[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recomt-sub1/S11P21C105 into develop
+[33m0423c25[m 코치님 힘들어요 ㅠㅠ
+[33m901e7b6[m Merge branch 'front/feat/bestseller' into 'develop'
+[33mbc76b25[m [MERGE] # Conflicts: #   client/src/api/bookApi.ts
+[33m395c5a5[m Merge branch 'front/feat/baseprofile' into develop
+[33m82d0492[m[33m ([m[1;31morigin/front/feat/baseprofile[m[33m)[m [FIX] baseprofile
+[33m7ce7858[m [FEAT] 베스트셀러 연결완료결
+[33md6ad8b7[m Merge branch 'develop' of https://lab.ssafy.com/st push origin de11-bigdata-recom-sub1/S11P21C105 into develop
+[33m046c774[m [Infra[
+[33m9c13d5b[m Merge branch 'front/feat/user-book-detail' into develop
+[33m4e141c5[m [FIX] 상세 페이지 오너 프로필 및 책 제목 추가
+[33m84f7e9f[m Merge branch 'develop' of httpst push origin dev	://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33m84ed61d[m [FEAT] 내 지역 베스트 셀러
+[33mbb227b0[m Merge branch 'front/feat/chatting' into 'develop'
+[33m73cb480[m[33m ([m[1;31morigin/front/feat/chatting[m[33m)[m [MERGE]
+[33m287e3b8[m [MERGE]
+[33m1692728[m [FIX] 여러가지 수정
+[33m298c813[m[33m ([m[1;31morigin/Back/feat/userrecommand[m[33m)[m [FEAT] 채팅방 생성 시 카트 isDelete처리 수정
+[33m82120f5[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33mb1eabea[m [FIX] 알림 테스트
+[33mfb65c3e[m [MERGE] 브랜치 'front/feat/regex'을(를) 'develop'(으)로 병합
+[33m6a0cf81[m [FIX] 자동 완성 검색어 정규표현식 수정
+[33m04c1c79[m [MERGE] 브랜치 'back/feat/cart-duplicate'을(를) 'develop'(으)로 병합
+[33m6c8b955[m [FIX] 채팅방 생성 시 cart isdelete
+[33m53a7b4c[m [FEAT] 카트 중복 체크
+[33m525aef0[m [MERGE]  브랜치 'front/feat/loading'을(를) 'develop'(으)로 병합
+[33m3305aa6[m Merge branch 'develop' into front/feat/loading
+[33m92dba98[m [FEAT] 히스토리 페이지 디자인 , 타입 / 로딩 컴포넌트 적용
+[33m46e3db6[m [FIX]
+[33m566caa2[m [FIX] 리뷰 두쪽다 작성 시 채팅방 삭제
+[33m514c951[m Merge branch 'front/feat/manner-tree' into develop
+[33m6930c43[m[33m ([m[1;31morigin/front/feat/manner-tree[m[33m, [m[1;32mfront/feat/manner-tree[m[33m)[m [FIX] 프로필 받은 리뷰 수정
+[33m22dae27[m [FIX] 프로필 받은 리뷰 수정
+[33m5ad673f[m Merge branch 'front/feat/chatting' into 'develop'
+[33m6de61fc[m [MERGE]
+[33m894192f[m [FEAT] 로그아웃 세션 초기화, 검색 클릭 시 상세페이지 이동
+[33m8144e10[m [FIX] myleaf -> kapay / 검색창에서 뒤로 가기
+[33mc932026[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33m147f491[m [MERGE]
+[33mdcdb561[m Merge brancht push origin dev	: 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33m216c1a2[m [FIX] Near-Available
+[33mbb0be8f[m[33m ([m[1;31morigin/front/feat/rental-book-detail[m[33m, [m[1;32mfront/feat/rental-book-detail[m[33m)[m [FEAT] 대여가능 도서 조회 API
+[33ma4cff9a[m Merge branch 'front/fix/modify' into 'develop'
+[33m2428c98[m [FEAT] 로딩창 수정
+[33meeb77d2[m [FIX] 채팅
+[33mc241dfd[m Met push orirge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33m84e9855[m [FEAT] 채팅방
+[33m13c9876[m Merge branch 'front/feat/loading' into 'develop'
+[33mc6edda5[m [FEAT] 로딩 페이지 ui 추가
+[33m03b0543[m Merge branch 'back/feat/best-seller' into 'develop'
+[33m17274b2[m [FEAT] 베스트 셀러
+[33mc141c69[m Merge branch 'back/feat/best-seller' into 'develop'
+[33maf68f4f[m [FEAT] 쳇
+[33mf76e90b[m Merge branch 'front/feat/chatting' into 'develop'
+[33mdac3a7d[m [STYLE] tailwind config color 추가
+[33m85aca28[m Merge branch 'front/feat/chatting' into 'develop'
+[33m5222a8b[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into back/feat/best-seller
+[33mf832003[m [FEAT] 후기 rentalId
+[33m08b831e[m[33m ([m[1;31morigin/Back/feat/best-seller[m[33m)[m [FIX] 챗 최신 정렬 조건 추가
+[33m8c5a6b4[m Merge branch 'back/feat/best-seller' into 'develop'
+[33m31ddeb3[m [FIX] 채팅방에서 장바구니 상태조회할 때 렌탈 아이디도 담아서 없으면 null
+[33mec827ee[m Merge branch 'front/feat/chatting' into 'develop'
+[33m11b3425[m [FEAT] 상대방 버튼 실시간 활성화
+[33m3e3758d[m Merge branch 'back/feat/best-seller' into 'develop'
+[33m6884fe7[m [FIX] 채팅
+[33m8660ca5[m Merge branch 'back/feat/best-seller' into 'develop'
+[33m63d5e8e[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into back/feat/best-seller
+[33m9eafc81[m [FIX] 채팅인덱스 에러 개선
+[33m29f7396[m Merge branch 'back/feat/best-seller' into 'develop'
+[33mb413f8d[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into back/feat/best-seller
+[33m449a502[m [FIX] 레디스 저장 타입 수정
+[33mba8377d[m Merge branch 'back/feat/best-seller' into 'develop'
+[33m1ba4ff1[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into back/feat/best-seller
+[33md08c715[m [FIX] 페스트에이피아이 코드 수정
+[33m3c3ad61[m [MERGE]
+[33mda84943[m[33m ([m[1;31morigin/front/feat/review[m[33m)[m [FIX] 리뷰 페이지
+[33med4a980[m Merge branch 'front/feat/apply' into 'develop'
+[33m9349b11[m Merge branch 'develop' into 'front/feat/apply'
+[33m0c7d1ed[m[33m ([m[1;32mfront/feat/review[m[33m)[m [FIX] 사용자 리뷰 남기기
+[33m43980a3[m Merge branch 'front/feat/chatting' into 'develop'
+[33m7ba51dd[m [FEAT] 사용자 리뷰 남기기 ing
+[33m48a534e[m [FEAT] 남의 책장에서 책 선택해서 담기 완료
+[33m70c40ed[m [FEAT] 중간 푸시
+[33mbfcf27e[m [FIX] 이미지 경로
+[33me234ac9[m Merge branch 'back/feat/best-seller' into 'develop'
+[33ma79cec1[m [FEAT] 특정 책 주변에서 빌릴 수 있는 목록 조회
+[33m761d6f0[m [FIX] img_base_url
+[33m27439c1[m [FIX] image 경로 / getuserinfo 함수 수정
+[33m9a8b543[m [MERGE] branch 'front/feat/history' into develop
+[33m414356a[m[33m ([m[1;31morigin/front/feat/history[m[33m)[m [FEAT] 책 히스토리
+[33me26e38d[m Merge branch 'back/feat/best-seller' into 'develop'
+[33m2c021c8[m [FIX] LocationCacheRepository 수정
+[33mfbc73e5[m Merge branch 'front/feat/chatting' into 'develop'
+[33ma742f28[m [FEAT] 송금 완료, 반납 완료 컴포넌트 전송
+[33me614ad7[m [FIX] 채팅 메시지 타입 추가
+[33mae91395[m [FEAT] 서치 자동완성 눌러서 검색
+[33mbad3159[m Merge branch 'front/feat/favorite' into 'develop'
+[33mfabea2c[m [MERGE] # Conflicts: #   client/src/page/library/components/BookcaseContainer.tsx #   client/src/page/location/page/LocationPage.tsx
+[33mb5f21de[m [FEAT] 관심책,책장 클릭시 이동 완료
+[33m9a682ab[m Merge branch 'front/feat/bookcase' into develop
+[33m2930200[m[33m ([m[1;31morigin/front/feat/bookcase[m[33m, [m[1;32mfront/feat/bookcase[m[33m)[m [FEAT] 책장 라우트 이동
+[33ma578f69[m Merge branch 'back/feat/kapay-charge' into 'develop'
+[33m5cfadc9[m [FEAT] kakaopay base url 설정
+[33m10817c5[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33m63af521[m 으으ㅏ악
+[33md148328[m [MERGE] 브랜치 'back/feat/kapay-charge'을(를) 'develop'(으)로 병합
+[33m31523bc[m [FEAT] 카카오 페이 결제 후 유저 보유 캐쉬량 변경
+[33m3780a59[m [MERGE]
+[33mf1169f3[m[33m ([m[1;31morigin/front/feat/spent-time[m[33m, [m[1;32mfront/feat/spent-time[m[33m)[m [FIX] 체류시간 수정
+[33mce0a59a[m [FIX] 컬럼타입 수정
+[33mefdf4bd[m Merge branch 'front/feat/router' into 'develop'
+[33m4401d2d[m [fix] 빠진 라우터 넣기
+[33m03851b5[m Merge branch 'back/feat/rental-history' into 'develop'
+[33mbb4af49[m [FEAT] Rental History
+[33m8a33c81[m Merge branch 'front/feat/chatting' into 'develop'
+[33m891dd97[m [FEAT] 책 히스토리 탭 생성
+[33mc4775fd[m Merge branch 'front/feat/book' into 'develop'
+[33m018a2ef[m [FEAT] 책장에서 책클릭시 이동 완료
+[33mac5a13c[m Merge branch 'front/feat/chatting' into 'develop'
+[33m832cd81[m [MERGE]
+[33mc3189c3[m [FEAT] 대여 로직 완료
+[33m9afe81c[m [FIX] test용 코드 수정
+[33md095da3[m Merge branch 'front/fix/error-response' into develop
+[33mbeacec3[m [FEAT] kakaopay api 연결
+[33mcd4ce54[m [FEAT] 체류시간 api 연결1
+[33m7ce04c4[m[33m ([m[1;31morigin/Back/feat/rental-history[m[33m)[m Merge branch 'front/feat/aicheck' into 'develop'
+[33mc3c6599[m [MEREGE]  'develop' into front/feat/aicheck
+[33m9203559[m [FEAT] AI 인증 연결 완료
+[33m77047e3[m [FEAT] 제목 한글로 변경
+[33m8d0d0bc[m [FEAT] userId 추가
+[33m8e61925[m [FEAT] 커서 포인터 설정
+[33m0cdc2d4[m [FEAT] pythoninstance 추가
+[33m5404fbb[m [FEAT] 유저정보 있을시 다시 조회 X
+[33m44bb08c[m Merge branch 'front/fix/error-response' into 'develop'
+[33mde55955[m [FIX] 반납 api request 수정
+[33m53d2bdc[m [FIX] 시간설정
+[33m3a83588[m [MERGE]
+[33m832e291[m [DOCS] 스웨거 이너클래스 인식 안맞는 오류 설정
+[33me8c8930[m Merge branch 'back/feat/fixRental' into 'develop'
+[33m51557f7[m [FIX] 최근 검색어 삭제시 바로 반영
+[33m12ebf50[m [FIX] 최근 검색어 삭제시 바로 반영
+[33mcff2843[m Merge branch 'back/fix/api' into 'develop'
+[33m7e1f60d[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into back/fix/api
+[33m9911632[m [FIX] 웹소켓 CORS
+[33m8c8341d[m [FIX] spring api 호출 후 python api에 들어가게 수정 완료
+[33mad3f266[m Merge branch 'front/feat/user-book' into develop
+[33mf30ae94[m[33m ([m[1;31morigin/front/feat/user-book[m[33m)[m [FIX] 장바구니 사진  수정
+[33m9d40b4a[m Merge branch 'back/fix/api' into 'develop'
+[33m8e6ba0b[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into back/fix/api
+[33ma0c50fc[m [FIX] 이것저것 수정 카트 상태 추가
+[33mee6a82b[m [FIX] 장바구니 api 수정
+[33m740d40c[m [FIX] 나의 도서 상세페이지 수정
+[33m8009f9a[m Merge branch 'front/feat/chatting' into 'develop'
+[33me2187f6[m [FIX] route error 수정
+[33mbcce6b2[m Merge branch 'front/feat/chatting' into 'develop'
+[33mbdcc7de[m [FIX] merge error 해결
+[33m11e567e[m Merge branch 'front/feat/user-book' into 'develop'
+[33m576939e[m [MERGE]
+[33m9842259[m [FIX] 대여 도서 상세 페이지
+[33m6705800[m Merge branch 'front/feat/chatting' into 'develop'
+[33m3000591[m [MERGE]
+[33mcffab33[m [FEAT] route 정리
+[33m824bc48[m [FEAT] 상세페이지 연결
+[33ma4416e1[m Merge branch 'front/feat/chatting' into 'develop'
+[33mf61a56d[m [FIX] 최근검색어 클릭 검색 수정
+[33m065d293[m Merge branch 'front/feat/chatting' into 'develop'
+[33ma198261[m [FEAT] userInfo session 저장, chatting 진행중
+[33m4ee82d0[m Merge branch 'front/feat/aicheck' into 'develop'
+[33m52dce98[m [FEAT] Ai 사진 체크 진행중
+[33m3980738[m [MERGE] 브랜치 'front/feat/sign-out'을(를) 'develop'(으)로 병합
+[33ma166e95[m [FEAT] 로그아웃
+[33m8b85565[m [MERGE] 브랜치 'back/feat/getCart'을(를) 'develop'(으)로 병합
+[33m6b2c88a[m [FEAT] cartid 로 cart 조회
+[33m29f0958[m Merge branch 'back/fix/api' into 'develop'
+[33mda31e34[m [FIX] 책장 API 스펠 변경
+[33m085368d[m [FEAT] book damage detection 모델 업데이트 및 데이터 추가 수급
+[33m3f35bb2[m Merge branch 'back/fix/api' into 'develop'
+[33m1da1c3e[m [FIX] 책 검색 시 즐찾 여부 추가
+[33m9bfd904[m [REFACTOR] 몽고DB 관련 API 수정
+[33me9cd5fc[m [FIX] 채팅내역 BaseResponse로 감싸기
+[33m8f09088[m Merge branch 'front/feat/aicheck' into 'develop'
+[33m1504ebf[m [FEAT] AI인증 진행중
+[33m5372535[m [FIX] 로딩페이지 에러
+[33m85dab9c[m [MERGE] remote-tracking branch 'origin/develop' into develop
+[33m2521995[m [FIX] 누군가는 해야하는 의존성 정리 및 파일 정리
+[33m65f95f0[m Merge branch 'front/feat/chatting' into 'develop'
+[33m739aa33[m [HOTFIX] 배열 문제 해결
+[33m429844a[m Merge branch 'front/feat/chatting' into 'develop'
+[33mb8682fa[m [HOTFIX] 메시지 Index 문제 임시 해결
+[33m02f0c11[m Merge branch 'front/feat/chatting' into 'develop'
+[33m9213662[m [HOTFIX] 메시지가 없을 경우 처리
+[33mc75a6b6[m [HOTFIX] 인덱스 에러 수정
+[33mf27b300[m [FIX] package.json dependencies 수정
+[33m037fb02[m [HOTFIX] repository ID 타입 수정
+[33meb78097[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33m4b1e379[m [FEAT] 장바구니
+[33m8cd70e6[m [FIX] 채팅방 DTO 카트 ID 추가
+[33m4c4eac7[m Merge branch 'back/fix/api-spec' into 'develop'
+[33mef563df[m [책장 등록 인프라]
+[33mf59fe42[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33m2c1b46b[m[33m ([m[1;31morigin/front/feat/alarm[m[33m, [m[1;32mfront/feat/alarm[m[33m)[m [FIX] 알람 TYPE
+[33m7978115[m Merge branch 'front/feat/aiauth' into 'develop'
+[33m158dd6c[m [FEAT] 도서등록 ai인증가이드 ui
+[33mef1ed0a[m Merge remote-tracking branch 'refs/remotes/origin/develop' into develop
+[33me124fdf[m [FEAT] 책장 인식 기능 완성
+[33m05f1b18[m Merge branch 'front/feat/detail' into develop
+[33md6363b8[m[33m ([m[1;31morigin/front/feat/detail[m[33m, [m[1;32mfront/feat/detail[m[33m)[m [FEAT] 알람 api 연결
+[33mae0c7af[m Merge branch 'back/fix/api-spec' into 'develop'
+[33m0c4d06f[m 으으으아아아아악
+[33m88e1bc8[m Merge remote-tracking branch 'origin/develop' into develop
+[33ma15a291[m [FIX] rental api 수정
+[33m91d3660[m Merge remote-tracking branch 'refs/remotes/origin/develop' into develop
+[33m90bf4d1[m [FIX]
+[33mebf61e5[m [FEAT] book dml 추가
+[33mc255f9b[m Merge branch 'front/feat/bookdetail' into 'develop'
+[33m6d05cdd[m [FEAT] 책 등록 페이지 버튼 수정
+[33m197282b[m Merge branch 'front/feat/bookdetail' into 'develop'
+[33m9f01450[m [FEAT] 채팅 충
+[33mc3a2b42[m [FIX] 에러 수정
+[33ma8fe4db[m Merge branch 'front/feat/login' into 'develop'
+[33m7332558[m[33m ([m[1;31morigin/front/feat/login[m[33m)[m [FEAT] 설문조사페이지 수정
+[33m9a5f612[m [FE] UI 수정
+[33m8fb1782[m [FEAT] 설문조사페이지 풋터 제거
+[33m624e00e[m[33m ([m[1;31morigin/57-fe[m[33m)[m [FIX] 렌탈완료시 카트 isdelete 상태업데이트
+[33m1718d65[m [MERGE] 브랜치 'back/fix/myinfo'을(를) 'develop'(으)로 병합
+[33m9d64d4a[m [FIX] 유저 정보 조회 DTO 수정 : 리뷰 리스트 추가
+[33m1728afc[m[33m ([m[1;31morigin/front/feat/cash-log[m[33m)[m [FEAT] 책잎 사용 내역 API 연결 close #55
+[33m5199cfc[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into back/fix/api-spec
+[33m307e420[m[33m ([m[1;31morigin/back/fix/api-spec[m[33m)[m [FEAT] 채팅방 조회시 대표사진 추가
+[33m485702a[m[33m ([m[1;31morigin/55-api[m[33m)[m Merge branch 'front/feat/bookdetail' into 'develop'
+[33m2806edd[m[33m ([m[1;31morigin/front/feat/bookdetail[m[33m)[m [FEAT] 채팅 구현 중
+[33m38b0d8f[m Merge branch 'front/feat/bookdetail' into 'develop'
+[33m446fec4[m [MERGE]
+[33mcbfece5[m [FEAT] chat type, api 추가
+[33m6ab4c2e[m [FEAT] useTime hook
+[33me0aa13e[m [MERGE]브랜치 'back/feat/rentalfee-update'을(를) 'develop'(으)로 병합
+[33m58679e0[m [FIX] 일일 대여료 업데이트 api
+[33m7143b79[m Merge branch 'front/feat/othergrade' into 'develop'
+[33m1720356[m [FEAT] 신뢰나무 조회 연결
+[33m3b58e4f[m [FEAT] 기존 알람 조회 변경 및 알람 읽음 처리 API 추가
+[33mb35e969[m [HOTFIX] 채팅 DTO 스펙 변경
+[33md9b47d6[m [HOTFIX] 채팅
+[33m86655bb[m t Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33m98ca92b[m [CHAT]
+[33m0fc27a8[m Update WebSocketConfig.java
+[33mfdc8d24[m [HOTFIX]
+[33mdf27387[m [FIX] init mongo.js
+[33m7e579c0[m Merge branch 'front/feat/otherprofile' into 'develop'
+[33m21da9e6[m [FE] 타인 프로필 조회 api 연결
+[33mb335f72[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33mada60ad[m Merge branch 'front/feat/near-bookcase' into develop
+[33m62cbf72[m [MERGE]
+[33m29bbbf4[m[33m ([m[1;31morigin/front/feat/near-bookcase[m[33m)[m [FEAT] 주변 책장 조회 API 연결
+[33me8b48eaa[m [FEAT] isbn 등록 구현중
+[33mca396e3[m [FIX] InfoResponse id -> userId
+[33mabf2d9a[m [FIX] 컨트롤러 함수명 수정
+[33m531370d[m [FIX] log 삭제
+[33m0bc06b6[m [FEAT] usernickname 조회 response dto 수정
+[33m80b667d[m Merge branch 'back/feat/nearbooks' into develop
+[33m144cd92[m[33m ([m[1;31morigin/back/feat/nearbooks[m[33m)[m [FEAT] 근처 책장 페이징 처리
+[33m0ace31d[m Merge branch 'front/feat/book-detail' into develop
+[33m3d9139a[m[33m ([m[1;31morigin/front/feat/book-detail[m[33m)[m [FEAT] 도서 상세 조회 API 연결
+[33m5601568[m Merge branch 'back/feat/common-api' into 'develop'
+[33mf7968f4[m [FEAT] 도서 ISBN, 제목으로 조회
+[33m7ca2d59[m [FEAT] 유저 위치 정보 저장시 Redis에 저장 / 내가 설정한 위치에 있는 책장 리턴 해주는 api
+[33m3ff7efc[m Merge branch 'front/feat/follow' into 'develop'
+[33mb3a6134[m [FE] 팔로우 기능 수정
+[33m6496f10[m Merge branch 'back/feat/inspection' into 'develop'
+[33md6c71e5[m [MERGE]
+[33m21a20a2[m [FEAT] 주변 책장 조회 임시
+[33m5f08c8a[m [FEAT] 품질 검사 기능
+[33m50d8543[m Merge branch 'front/feat/bookdetail' into 'develop'
+[33me8f6a79[m [MERGE]
+[33mf7b6b59[m [FEAT] isbn 스캐너 구현
+[33mc7c9358[m [FEAT] 위치 기반 책장 api
+[33mc8cca1c[m [FEAT] 내 책장, 다른 유저 책장 구분 / 다른 유저 책장일경우 follow 여부 추가
+[33m2a74ea2[m Merge branch 'front/feat/profile' into 'develop'
+[33m4a7d6d6[m [FEAT] 프로필 페이지 API 연결
+[33m968de2a[m [FIX] User ActivityAreaSetting 관계 수정
+[33m24de398[m [MERGE]
+[33mbcb83f8[m [FIX] 회원가입시 지역 설정
+[33m681d19f[m [FIX] tag 이름 수정
+[33m1ca3895[m [MERGE] 브랜치 'back/feat/book'을(를) 'develop'(으)로 병합
+[33mc9d109b[m [FEAT] UserBook 상세 조회 api
+[33mfa10f0f[m 으ㅏㄱ:
+[33m1608980[m Merge remote-tracking branch 'refs/remotes/origin/develop' into develop
+[33m54ec53d[m [FIX] DELETE .ENV
+[33me6cb369[m Delete .env
+[33mfd9daf5[m [MERGE]
+[33m0d7d485[m 브랜치 'back/feat/book'을(를) 'develop'(으)로 병합
+[33m82a07ef[m [FIX] 도서 상세 엔티티 수정
+[33m2f9c529[m [MERGE]브랜치 'back/feat/book'을(를) 'develop'(으)로 병합
+[33m7405f84[m [FIX] 도서 상세 엔티티 수정
+[33mf54ba6e[m [FEAT] 도서 상세 조회 api
+[33m9d9afeb[m [FIX] 위치설정 컴포넌트화
+[33m5084ada[m [MERGE]브랜치 'back/feat/rental'을(를) 'develop'(으)로 병합
+[33mc481245[m [MERGE] 병합 충돌 해결
+[33m35a2aa7[m Merge branch 'front/feat/otherbookcase' into 'develop'
+[33md863c35[m [FEAT] 리뷰 등록 api
+[33m0d787ed[m [FE] 타인 책장 조회 api 연결
+[33m3a0c4f6[m Merge branch 'front/feat/notFound' into develop
+[33m6178f92[m [FEAT] 404 페이지
+[33ma860907[m [FEAT] 반납 api
+[33m6df8613[m [FIX] najackdo-notice.json 위치 변경
+[33ma122403[m Delete RestTemplateConfig.java
+[33mdb9dccf[m [FIX] 도커 컴포즈 버전 추가
+[33m3e4f481[m [FIX] 에러 코드 적용
+[33mf8c50ee[m [FEAT] 에러 코드 추가
+[33mddae023[m Merge branch 'back/feat/rentalBook' into 'develop'
+[33m8a40790[m Merge branch 'develop' into 'back/feat/rentalBook'
+[33m750ccda[m [FIX] 코드 리팩토링
+[33m79148c1[m Merge branch 'front/feat/otherbookcase' into 'develop'
+[33md6c54c3[m [FE] 서재에서 나의 책장 이미지 표시
+[33m2644c38[m [FEAT] rental api 작성
+[33ma0d01c6[m [FEAT] 알람 송신 및 알람 저장 완료
+[33mf6adf7e[m [FEAT] 책 조회 시 몽고디비에 데이터 저장
+[33mf45fcfd[m Merge branch 'back/feat/recommendation' into 'develop'
+[33m299a3a7[m [FEAT] 책 추천 특정 책 사이트 들어갔을 때
+[33mac6a7c5[m [FEAT] 렌탈 로직 작성
+[33ma1aab05[m [FEAT] 알람 조회 API 추가
+[33me686996[m Merge branch 'front/feat/bookcase' into 'develop'
+[33mf11159a[m [FE] 나의 책장 페이지 api 연결
+[33m60c5501[m [FIX] 머지 안된부분 수정
+[33m1f4ada3[m [FIX] 장바구니 api 연결
+[33m7ebe74f[m Merge branch 'develop' into back/feat/rentalBook
+[33mdf73bda[m [FEAT] 알람 이벤트처리
+[33m54c54f6[m [FEAT] 장바구니 api 연결중 close #46
+[33m72e9790[m [MERGE] 브랜치 'back/feat/chat'을(를) 'develop'(으)로 병합
+[33m3fbc7a7[m [FIX] 채팅방 생성 될때 유저들 저장되게 수정
+[33mc696c70[m[33m ([m[1;31morigin/front/feat/cartList[m[33m)[m [MERGE] 브랜치 'back/feat/book'을(를) 'develop'(으)로 병합
+[33m1b48d1f[m [FIX] 책장 조회 api 리턴 이미지 추가
+[33md948dc4[m [MERGE] 병합
+[33m6fe0549[m [FIX] 장바구니 조회 api 수정
+[33mb1ec7b5[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33m35c91eb[m Merge branch 'front/feat/location-range' into develop
+[33m490a280[m Merge branch 'back/feat/cart' into 'develop'
+[33m1445cd4[m [FIX] 가까운 순 지역 무한 스크롤
+[33m4e4ca77[m [FEAT] 장바구니 삭제 api 작성
+[33mba530a4[m [FIX] 지역 설정 post
+[33m324a8df[m [FEAT] 장바구니 조회 api 작성
+[33m98553ac[m Merge branch 'front/feat/mylibrary' into 'develop'
+[33md5f886a[m [FE] 책장 페이지 이름 수정
+[33mf654cba[m [FE] 책장 조회 API
+[33m2857ea1[m [FIX] 지역 범위 설정 폴리곤
+[33m6ddc241[m Merge branch 'front/feat/mylibrary' into 'develop'
+[33m00fb897[m [FE] type 파일 합치기
+[33m4808561[m Merge branch 'front/feat/pay' into 'develop'
+[33m222d85f[m [FEAT] 카카오페이 디자인
+[33mcfcde63[m [FEAT] 장바구니 조회
+[33md49d048[m [MERGE] 병합 충돌 해결
+[33mb9d7fb0[m Merge branch 'front/feat/pay' into 'develop'
+[33m2f3ad79[m [FIX] redirect fix
+[33mb0add5f[m [FIX] useQuery 오류 수정
+[33mf233118[m [FIX] react-query -> tanstack/react-query
+[33m612d535[m Merge branch 'front/feat/location-range' into 'develop'
+[33m7a0be0a[m [FEAT] 알람 구현 및 테스트, 리팩토링 종료, 알람 두번 오는 버그잇음
+[33m666cf05[m [FEAT] 지역 범위 진행중
+[33m774b5be[m Merge branch 'front/feat/pay' into 'develop'
+[33m595e2af[m [FIX] login valid state 수정
+[33m5c7a6eb[m [FEAT] 장바구니 책 추가 api 작성
+[33m03a4dad[m Merge branch 'front/feat/interest-user' into 'develop'
+[33mf3d7193[m [MERGE]
+[33m4fdf7e3[m [FE] Myfavorite 페이지 api 연결완료
+[33mf1ac1fc[m [FEAT] 나의 책장 조회
+[33me2cb6e3[m [FIX] 책장 API 스펙 변경 찐 최종
+[33m6ee4a5b[m [FIX] 책장 DTO  스펙변경
+[33m5c8782e[m [FIX] 책장 검색 DTO 스펙 변경
+[33m6fd49bf[m Merge branch 'front/feat/pay' into 'develop'
+[33m80ff57c[m [FIX] login redirect error 수정
+[33mcabf52d[m [FEAT] S3
+[33m92b9298[m Merge branch 'front/feat/login' into 'develop'
+[33m08fdbb6[m [FEAT] valid state에 따른 redirect 로직 작성
+[33m1e9a841[m Merge branch 'front/feat/login' into 'develop'
+[33me3f796c[m [FIX] env 파일 제거
+[33m9e5eb5d[m Merge branch 'front/feat/login' into 'develop'
+[33m73d44d2[m [MERGE]
+[33m8658199[m [FIX] git env 파일 제거
+[33m64db90d[m Merge branch 'front/feat/myfavoritebookcase' into 'develop'
+[33m8501c0b[m [FE] 관심 책장 리스트 조회 api 연결
+[33m13661a8[m [FEAT] 재 커밋
+[33m7c9ea2b[m Merge branch 'front/feat/near-location' into develop
+[33m817e57b[m [FIX] 주변 동 반환 close #35
+[33mb75d293[m Merge remote-tracking branch 'origin/develop' into develop
+[33m7dacd2e[m [FEAT] 유효성 검사 api 작성
+[33mcb8a550[m Delete application-auth.properties
+[33m66198d2[m erge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33m4e0d91d[m [DOCS] 스웨거https설정
+[33mf60f3cb[m [FEAT] 알람기능 완성 not tested
+[33mb59bd9e[m Merge branch 'front/feat/login' into 'develop'
+[33m75b4393[m [FIX] search 자동 완성 수정
+[33mf20b72e[m Merge branch 'front/feat/cart' into develop
+[33m9222fbf[m [FEAT] 장바구니 대여 신청 Drawer CLOSE ##18
+[33m152e9f8[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33mb581fde[m [DOCS] 스웨거https설정
+[33m3126d25[m [FEAT] 장바구니 대여기간 삭제 UI close #18
+[33m987fa45[m Merge branch 'front/feat/search' into 'develop'
+[33md81e1f8[m [MERGE]
+[33m552b022[m [FEAT] 검색 api 연결 완료
+[33m3313d5d[m [DOCS]
+[33m757e395[m Merge branch 'back/docs/swagger' into 'develop'
+[33ma8f3363[m [DOCS] 스웨거 적용
+[33m2ec24b5[m [FIX] test 주석
+[33mbb69dce[m [FIX]
+[33ma73776e[m [FIX] 나이 short -> String
+[33m5e50698[m Merge branch 'back/feat/survey' into develop
+[33md492b59[m [FIX] survey 수정
+[33m7eb1538[m Merge branch 'back/feat/survey' into 'develop'
+[33mf826fbc[m [FEAT] 닉네임만 조회 api / 닉네임 중복 확인 api / 업데이트 api / front - back 연결
+[33m3c9901f[m Merge branch 'front/feat/search' into 'develop'
+[33md5c7245[m [FEAT] 검색 api 연결
+[33m14808bc[m Merge branch 'back/feat/tablefix' into 'develop'
+[33mac60ac0[m [MERGE] 병합 충돌 해결
+[33m54eb6f3[m [MERGE] 병합 충돌 해결
+[33m7ae2498[m [FIX] 테이블 수정
+[33m0068f4e[m [FEAT] 검색 api 연결중
+[33maf9f298[m Merge branch 'front/feat/myfavoritebook' into 'develop'
+[33m6a0e281[m [FE] 내 관심 책 조회,추가,삭제 api 연동
+[33mda44a05[m [FE] line-clamp 패키지 설치
+[33m858c6fd[m [FE] line-clamp 패키지 설치
+[33m302cf61[m [FE] 주석 변경
+[33md2401f4[m [FIX] 관심도서 조회 최신순 정렬
+[33mf1d9aa4[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into back/feat/book-rental
+[33md9e0d4b[m [FIX] 테스트코드
+[33ma6fbd72[m Merge branch 'back/feat/book-rental' into 'develop'
+[33m48042d5[m [FEAT] 관심 책장
+[33m9a29c2a[m [MERGE]
+[33m30a5bf9[m [FIX] 위치 ^^
+[33m5990d01[m [FIX]
+[33m81a963e[m [FIX]
+[33m1aa7f7d[m [FIX] 긴급패치
+[33mbe0d903[m Merge branch 'back/feat/book-rental' into 'develop'
+[33mfe923f9[m :wq Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into back/feat/book-rental
+[33me87ef2f[m [FIX] search 자동완성 긴급패치
+[33m544c9ce[m Merge branch 'front/feat/search' into 'develop'
+[33ma28bd79[m [FEAT] 자동완성 검색어
+[33mee96e6b[m Merge branch 'back/fix/jwt' into develop
+[33m8462e0f[m[33m ([m[1;31morigin/back/fix/jwt[m[33m)[m [FIX] zustand 설정
+[33me1d6d74[m Merge branch 'front/feat/nav' into 'develop'
+[33mc650e3c[m [FEAT] 풋터 애니메이션 적용
+[33mec0e4f4[m [FEAT] ui 위치 조정
+[33m2bc6f9d[m [FEAT] 동네 조회 진행중
+[33mb41a99e[m [FIX] 검색 테스트 요청
+[33m981575f[m Merge branch 'front/feat/search' into 'develop'
+[33mb0c3618[m [FEAT] 검색 api 연결중
+[33med1e0d7[m Merge branch 'back/fix/book-regist' into 'develop'
+[33mb55b69a[m [MERGE]
+[33m22cf8ba[m Merge branch 'front/feat/Ui' into 'develop'
+[33m16cbc2e[m [FEAT] UI 폰트,위치 통일
+[33m961e49d[m [FEAT]지역 책 추천 페이지 추가
+[33mc26dec7[m [FIX] 도서 등록 수정 및 최근검색어 삭제 기능 구현
+[33m21736b8[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into front/feat/search
+[33m1429469[m [FIX] 유저 정보 GET api 수정
+[33m78b5eed[m[33m ([m[1;31morigin/back/feat/mypage[m[33m)[m [Merge] 병합 충돌 해결
+[33ma28add5[m Merge branch 'develop' into back/feat/mypage
+[33m602fb8e[m [MERGE]
+[33m3f2908c[m [FIX] service 워커 코드 스타일 수정
+[33mdac1cc6[m [MERGE]
+[33m4a65d28[m [FIX] 서비스 워커 white list 추가
+[33m8f5f79b[m [FIX] login 관련정보 수정
+[33m7fb73c4[m Merge branch 'front/feat/profileinfo' into 'develop'
+[33mc4af9d0[m[33m ([m[1;31morigin/front/feat/profileinfo[m[33m)[m [FEAT] 프로필 api 연결
+[33mfb90c5d[m [TEST] Client console
+[33m96bca13[m [FIX] git ignore
+[33mb667aab[m Merge branch 'back/api-test' into 'develop'
+[33m3801a80[m [MERGE]
+[33m4dfdf51[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into back/api-test
+[33m9208cc8[m [TEST] 검색 테스트 수정
+[33m8ecf1c1[m[33m ([m[1;31morigin/30-rest-docs-2[m[33m, [m[1;31morigin/30-rest-docs[m[33m)[m [FIX] SecurityConfig 수정
+[33me442327[m Delete WiredTiger.lock
+[33m69bc35a[m Merge branch 'front/feat/profileinfo' into 'develop'
+[33m26242c4[m [FEAT] 유저 정보 조회
+[33m3ff134a[m Merge branch 'back/feat/registBook' into develop
+[33m0c09609[m[33m ([m[1;31morigin/back/feat/registBook[m[33m)[m [FEAT] 이슈 연동 확인
+[33m9cca9eb[m [FEAT] search test
+[33md739cf9[m [FIX] login -> signin
+[33m34116aa[m Merge branch 'back/feat/recent-searches' into 'develop'
+[33mbc4ec62[m [FEAT] 검색 자동완성 구현
+[33mc16ee59[m [FEAT] 자동완성
+[33m7befe36[m [FIX] 프론트 설정 변경
+[33m09c4897[m [TEST] build test
+[33mdc4e4bb[m [FEAT] kakao url console test
+[33m5b7e3f8[m [FIX] clientapi 수정
+[33m153263c[m [FEAT] 내 책장 조회, 해당 사람 책장 조회 완료
+[33m6064ba1[m [FIX] 카페이  경로 수정
+[33m3e8b0bc[m [FEAT] 최근 검색어, 인기 검색어 구현
+[33m52d35d7[m [FIX] gradle 수정
+[33mc249d7a[m [FIX] gradle 수정
+[33m8c70dbd[m [FIX] final 추가
+[33m3c37dab[m Merge branch 'back/feat/location' into 'develop'
+[33m3092e5c[m [MERGE]
+[33mfea32c9[m [FEAT] location
+[33mfa2a775[m [FEAT] user 유효성 검증 테스트 추가
+[33m0ca8111[m Merge remote-tracking branch 'origin/develop' into develop
+[33m1cd2c14[m [FIX] 웹컨피그 수정
+[33mab939c1[m [FEAT] jenkins notification test
+[33m7984593[m [TEST]
+[33m62fe651[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33m27e7374[m [TEST]
+[33ma842505[m [FIX] docker-compose
+[33ma745d80[m [FIX] docker-compose
+[33m6ac98b6[m [FIX] docker networks 설정
+[33m6805d82[m [FIX] jwt
+[33mc5dbfe5[m [FIX] dev 프로퍼티 설정 수정
+[33m591e133[m [FIX] jenkins test
+[33mf237bbf[m [FIX] jenkins test
+[33mbc85aa4[m [FIX] jenkins test
+[33m4857b20[m [FIX] dockerfile 삭제
+[33m264ecd4[m Merge branch 'front/feat/apply' into 'develop'
+[33m83fa210[m [FEAT] 텍스트로 등록 추가, 추천 검색어 삭제
+[33m559fc7e[m Merge branch 'front/feat/chatting' into 'develop'
+[33mff4b09c[m [FEAT] 컴포넌트 분리
+[33mf9265a6[m 위치관련 API 작성
+[33m42c59a4[m Merge branch 'front/feat/chatting' into 'develop'
+[33mad20f06[m [FEAT] 채팅 구현
+[33mff5592e[m dev 수정
+[33m1dcf8c7[m jenkins test
+[33m8fcbedb[m [FIX] docker test
+[33m11a16e8[m [FIX] docker
+[33m8c5d3dc[m [FIX] docker 볼륨 이름 수정
+[33m68f3fa0[m [FIX] init - mongo 수정
+[33m7bf3575[m 데이터베이스 수정
+[33mea8f9dd[m 도커 설정 수정
+[33m2399cc6[m [FIX] jenkins test
+[33mdd8ff4a[m [FEAT] 위치 관련 API
+[33ma9ff99f[m [FIX] jenkins test
+[33mdf6a396[m [FIX] prod 경로 수정
+[33m50ef0b2[m [FIX] prod 경로 수정
+[33m47d66ca[m [FEAT] : 책 등록 API 완성 But Not Tested
+[33m555fd09[m Merge branch 'front/feat/review' into 'develop'
+[33m49277be[m [FEAT] 거래후기 페이지 UI 완성
+[33m0116291[m[33m ([m[1;31morigin/front/feat/nearLocation[m[33m)[m Merge branch 'front/feat/chatting' into 'develop'
+[33m3447d30[m [FIX] import 코드 누락 수정
+[33mee66436[m Merge branch 'front/feat/api' into 'develop'
+[33m7e5e471[m [FEAT] baseresponse 추가
+[33m5cf39cf[m [FEAT] baseresponse 추가
+[33m5a89667[m [FEAT] ADD BOOKS DUMP FILE
+[33mb225f9f[m [FEAT] netty macos 의존성 추가
+[33ma8666d5[m Merge branch 'develop' into back/feat/mypage
+[33m32a5c99[m Merge branch 'front/feat/review' into 'develop'
+[33m341ef67[m [FIX] DELETE NAME
+[33m83ad6b6[m [FEAT] 후기보내기 페이지 UI  진행중
+[33m40e1026[m ignore
+[33m594edcf[m Merge branch 'develop' into back/feat/mypage
+[33maa840e7[m Merge branch 'front/feat/chatting' into 'develop'
+[33m666556c[m [FEAT] 채팅 리스트
+[33m7b7b679[m Merge branch 'develop' into back/feat/registBook
+[33m4515dee[m [FIX] generated 제거
+[33m9f9ebaf[m [FIX] mongo init  setting
+[33m74939e6[m Merge branch 'develop' into back/feat/registBook
+[33mb7fcdfd[m [FIX] CI/CD 수정
+[33m630366d[m ignore
+[33mbaa2c04[m Apply .gitignore
+[33m9d4fcc9[m [MERGE]:
+[33m867d83e[m Your commit message
+[33md72450b[m git ignore
+[33mfa37f53[m Merge branch 'back/feat/chat' into 'develop'
+[33m60e8918[m Apply .gitignore
+[33m31e4b00[m Merge branch 'front/feat/otherbookcase' into 'develop'
+[33m6b92602[m [FEAT] 주석 제거
+[33m472761e[m [FEAT] 책장페이지 UI 완료
+[33m28b296a[m Merge branch 'front/feat/location' into develop
+[33mc4ee62b[m [FIX] 지역 설정 페이지 멀티폴리곤으로 수정 close #8
+[33mf6a51e6[m [FIX] application-dev.properties localhost로 수정
+[33mc5ebe7e[m Merge branch 'back/feat/chat' into 'develop'
+[33md6306ed[m [MERGE]
+[33m9646703[m [MERGE]
+[33m8bbd31d[m [MERGE]
+[33me7e1b88[m [FIX] 책 등록 로직 컨벤션 맞게 수정
+[33m6d56632[m Merge branch 'back/feat/chat' into 'develop'
+[33m548d36f[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into back/feat/chat
+[33m8b6e1c0[m [FEAT] 채팅 중간 커밋
+[33m0fd504f[m Merge branch 'front/feat/mainpage' into 'develop'
+[33m7d54830[m [FEAT] 메인페이지 ui 완성
+[33m391782f[m [FEAT] 장바구니 대여기간 수정 UI close #18
+[33mde476b1[m Merge branch 'front/feat/apply' into 'develop'
+[33mc266bbf[m [FEAT] ai 인증 페이지
+[33mfa049f6[m [FIX] BOOK API 경로 수정
+[33mb5fa7ef[m Merge branch 'front/feat/library' into 'develop'
+[33mc2aced5[m [MERGE]
+[33m779dc43[m [FEAT] 이미지 추가
+[33m6cce631[m [FEAT] 히스토리 페이지 UI 완료
+[33m790a3b3[m [FEAT] 책장 페이지 진행중
+[33mb945d8f[m [FEAT] MyFavorite 페이지 완성
+[33m0b56975[m [FEAT] 서재페이지 완성
+[33mfe71a0f[m [FEAT] 책장페이지  라우트 추가
+[33m709350d[m [FEAT] 폰트 굵기 추가
+[33m9b06de4[m [FEAT] User API / 유저 닉네임으로 조회
+[33m9f27b86[m Merge branch 'front/feat/apply' into 'develop'
+[33me1102ae[m [FIX] 충돌 해결
+[33m8c13e36[m Merge branch 'front/feat/apply' into 'develop'
+[33m258a42c[m [FEAT] 도서 등록 - 촬영 후 ui 완성
+[33mc53b07d[m [FEAT] 도서 등록 - 촬영 후 ui 완성
+[33mca7da6e[m [FIX] 프로필 페이지 UI 추가 close #20
+[33mc866337[m Merge branch 'front/feat/cart' into develop
+[33m10909cf[m [FEAT] 장바구니 페이지 UI close #18
+[33m01dfd6d[m [FEAT] Book API / 관심 책장 목록 조회 / 닉네임 책장 조회
+[33mc0aff80[m Merge branch 'front/feat/bookinfo' into 'develop'
+[33mbb07558[m [FEAT] 도서 상세 페이지 drawer
+[33ma84fc93[m [FIX] DOCKER COMPOSE PROD 파일 수정
+[33mf0cbade[m [FIX} 도커 컴포즈 prod에서 이름 제거
+[33m51a9a2d[m [FIX] FIX DOCKER COMPOSE FILE
+[33m2cd7454[m [FIX] mypage api 책장 조회
+[33m117e96f[m Merge branch '14-infra-docker-init' into 'develop'
+[33m3cf6443[m [FEAT] DOCKER 세팅
+[33m1883ff3[m [FEAT] MyPage crud 책장 조회
+[33m0d579f1[m Merge branch 'front/feat/bookinfo' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into front/feat/bookinfo
+[33m421f659[m Merge branch 'front/feat/library' into 'develop'
+[33m4527986[m [FEAT] 서재 UI 퍼블리싱
+[33m14379c2[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into front/feat/bookinfo
+[33m9518881[m Merge branch 'front/feat/apply' into 'develop'
+[33m142f15d[m [FEAT] 도서 등록 ui
+[33mc1efbcf[m Merge branch 'front/feat/myLeaf' into develop
+[33ma05a8d9[m [FEAT] 책잎 충전 페이지 UI close #15
+[33m359c12b[m [FIX] drawer 오픈시 스타일 깨지는거 수정
+[33m72ac406[m [FEAT] MyPage crud
+[33m2fd78c4[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into front/feat/bookinfo
+[33m109fa9d[m [FEAT] drawer
+[33me9cc566[m [FIX] 프로필 페이지 버튼 수정
+[33m39ba51e[m [FEAT] 책잎 사용 내역 페이지 UI close #15
+[33mec55930[m[33m ([m[1;31morigin/17-fe[m[33m)[m Merge branch 'front/feat/survey' into 'develop'
+[33mfe21d48[m [FEAT] 설문조사 단계 UI 완료
+[33mb500ba7[m [FEAT] 설문조사 스토어 추가
+[33m592bc09[m Merge branch 'front/feat/location' into develop
+[33m4fa5b1e[m [FIX] 지역 설정 페이지 UI 행정동 반환 close #8
+[33me87d0b5[m [FEAT] 수정
+[33m8711add[m Merge branch 'front/feat/survey' into 'develop'
+[33m748e045[m [FEAT] 설문조사 페이지 UI
+[33mefc1df1[m [FEAT] 애니메이션 추가
+[33m30caac7[m [FEAT] 폭죽애니메이션 설치
+[33mcc7ffb7[m Merge branch 'front/feat/bookinfo' into 'develop'
+[33m55fc407[m [FEAT] 대여 도서 상세 정보 페이지 ui
+[33m30ec77c[m [FEAT] 알람 페이지 UI close #10
+[33m96764eb[m Merge branch 'front/feat/survey' into 'develop'
+[33m0e77551[m [FEAT] 설문조사 페이지 UI
+[33m3a0ac9c[m Merge branch 'front/feat/login' into 'develop'
+[33md389090[m [FEAT] 카카오 로그인 구현
+[33m8df7f60[m [FIX] 깃 이그노어 수정
+[33mec31ed3[m [FIX] 깃 이그노어 수정
+[33m0a93a18[m [FEAT] 지역 조회 페이지 UI close #9
+[33m185f944[m [FEAT] 지역 설정  페이지 UI
+[33m64dcce7[m Merge branch 'front/feat/favorite' into develop
+[33mff7cbeb[m Merge branch 'front/feat/survey' into 'develop'
+[33mbba9023[m [FEAT] 설문조사 페이지 UI
+[33m44905da[m [FEAT] 좋아요리스트 페이지 UI
+[33mb9fdc7d[m [FEAT] 설문조사페이지 UI
+[33m863b401[m Merge branch 'back/feat/region' into 'develop'
+[33m5a9cb0c[m [MERGE]
+[33m0326d76[m Merge branch 'front/feat/bookinfo' into 'develop'
+[33ma84e5fd[m [FEAT] 도서 상세 정보 ui
+[33mdaf00c1[m 위치 기반 도메인 임시 작성 및 공간 DB 설정
+[33m767b190[m Merge branch 'back/feat/cashlog' into 'develop'
+[33me35fe2b[m Merge branch 'develop' into back/feat/cashlog
+[33mb20cad5[m [FEAT] 결제 서비스 로직 수정
+[33m837729c[m [FEAT] 유저 캐쉬 업데이트
+[33m8f3634d[m [FEAT] 캐쉬 로그 업데이트
+[33mea7b30f[m Merge branch 'front/feat/bookinfo' into 'develop'
+[33m6ed4923[m [FEAT] header 조건 추가
+[33mb5f267a[m [FEAT] 프로필 페이지 UI
+[33mb1e4333[m -feat: incomplete save
+[33mb9401a8[m [FIX] 결제 기능 수정
+[33ma84ed34[m Merge branch 'front/feat/login' into 'develop'
+[33mcbdeeee[m [FEAT] 로그인 페이지 ui 완성
+[33m1942a68[m Merge branch 'front/feat/search' into 'develop'
+[33m7010866[m [FEAT] 검색 결과 페이지 ui 완성
+[33mb99e879[m [FEAT] 검색 결과 페이지 ui 완성
+[33mcc787ad[m[33m ([m[1;31morigin/back/feat/kapay[m[33m)[m [MERGE] 병합처리
+[33m0f0e06e[m [FIX] 병합 후 안되는거 처리
+[33m4f781cd[m Merge branch 'front/feat/search' into 'develop'
+[33m24e83aa[m [FEAT] 검색 페이지 ui 완성
+[33m29f2716[m [FEAT] 카카오 페이 기능 페이지
+[33ma49580f[m [MERGE] 병합 충돌 해결
+[33m68a2bd9[m [FIX] 카카오 페이 기능 수정
+[33mb7324f1[m Merge branch 'front/feat/search' into 'develop'
+[33m96bd5c1[m [FEAT] 검색 페이지 ui 하는중
+[33mbf0de70[m [FIX] 쿼리 설정
+[33mb7c4f20[m [FIX] 카카오 페이 기능 수정
+[33m1174269[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into front/feat/search
+[33m2feebd8[m [FEAT] 카카오 페이 api 페이지 작성
+[33mf58a8f7[m [FEAT] 카카오 페이 api 결제 구현
+[33m610940c[m Merge branch 'back/feat/S3' into 'develop'
+[33m8497ca3[m [FEAT] S3, cloud-front
+[33me325928[m [FEAT] 로고 fix
+[33m5963769[m Merge branch 'front/feat/search' into 'develop'
+[33m364f6be[m [FIX] route 수정
+[33mda01bc0[m [FEAT] header, footer 추가
+[33mdce61cb[m [FIX] gitignore .idea 삭제
+[33m3eb4b6f[m Merge branch 'back/feat/OAuth' into 'develop'
+[33mb56f720[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into back/feat/OAuth
+[33m5d167b2[m [FEAT] Oauth
+[33md5e9484[m Merge branch 'back/feat/OAuth' into 'develop'
+[33m3611ff6[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into back/feat/OAuth
+[33m1719b38[m [FEAT] Oauth2
+[33m350a938[m [FEAT] footer, font, icon 이미지 추가
+[33m1fa07cb[m [MERGE]
+[33m097280b[m Oauth2 구현 중간 커밋
+[33ma993679[m [FEAT] 아이콘 추가, footer 추가
+[33m3059ed4[m [FEAT] cypress 설치
+[33m3156367[m [FEAT] jest 설치
+[33m301f330[m [FEAT] 리뷰 엔티티 / enum 작성
+[33m1eb700e[m Merge branch '2-be-entitiy-setting' into 'develop'
+[33ma3c6240[m [FIX] 엔티티 테이블 이름 수정
+[33m4d0426f[m Merge branch '2-be-entitiy-setting' into 'develop'
+[33mbb56fc7[m [FIX] 엔티티 기본값 설정
+[33m74ab9fd[m Merge branch '2-be-entitiy-setting' into 'develop'
+[33m0c17831[m [FEAT] 엔티티 작성
+[33m99a0a6d[m INIT
+[33m565aa9d[m [FIX] sentry test 주석
+[33mcfe7e9b[m [FEAT] sentry 적용
+[33m725c6f7[m Merge branch 'develop' of https://lab.ssafy.com/s11-bigdata-recom-sub1/S11P21C105 into develop
+[33mbf7456f[m Init
+[33m71209fe[m IDEA 설정
+[33m7eabea6[m [FIX] tsconfig es5 -> es6
+[33m026d313[m INIT
+[33m351dec6[m IDEA 설정
+[33m477e3f5[m Init
+[33mc69e22f[m [FEAT] storybook, axios, zustand, prettier 추가
+[33m1749e83[m shadcn 설치
+[33mf790a77[m 리액트 / PWA 설치
+[33m8625ccf[m[33m ([m[1;31morigin/master[m[33m)[m init
