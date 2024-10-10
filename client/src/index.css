@@ -65,11 +65,15 @@
   }
   body {
     @apply bg-[#F8F6F3] pretendard;
-    padding-top: env(safe-area-inset-top); /* 상단 노치 영역 */
-    padding-bottom: env(safe-area-inset-bottom); /* 하단 홈 인디케이터 */
-    padding-left: env(safe-area-inset-left); /* 왼쪽 안전 영역 */
-    padding-right: env(safe-area-inset-right); /* 오른쪽 안전 영역 */
+    min-height: calc(100% + env(safe-area-inset-top));
+    padding: env(safe-area-inset-top) env(safe-area-inset-right)
+      env(safe-area-inset-bottom) env(safe-area-inset-left);
+    /* padding-top: env(safe-area-inset-top); 
+      padding-bottom: env(safe-area-inset-bottom); 
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);  */
   }
+
   html {
     padding-bottom: 0px !important;
   }
