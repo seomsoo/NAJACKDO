@@ -97,7 +97,7 @@ const BookcaseApplyPage = ({ recognizedBooks }: BookcaseApplyPageProps) => {
             )}
           </div>
         </div>
-        <div className="flex flex-col justify-center mx-8 my-6">
+        <div className="flex flex-col justify-center mx-8 my-6 pb-10">
           <button
             onClick={handleRegisterClick}
             className="bg-sub7 text-white font-bold text-sm rounded-lg w-full py-1.5"
