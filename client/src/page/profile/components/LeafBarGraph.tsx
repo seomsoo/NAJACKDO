@@ -13,7 +13,7 @@ const LeafBarGraph = ({ ratio, value, label }: LeafBarGraphProps) => {
         <p className="col-span-2 text-xs text-nowrap font-medium ">{label}</p>
         <div
           className="col-span-8 h-[6px] ml-1 rounded-xl bg-sub4"
-          style={{ width: `${180 * ratio}px` }}
+          style={{ width: `${160 * ratio}px` }}
         />
         <div className="col-span-2 flex justify-end item-center">
           <p className="col-span-2 text-xs  font-medium  mr-1">

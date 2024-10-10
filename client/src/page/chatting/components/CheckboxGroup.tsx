@@ -86,7 +86,7 @@ function CheckboxGroup({
       ))}
 
       <button
-        className={`font-bold bg-sub7 text-white w-full text-lg mt-8 py-3 rounded-lg ${
+        className={`font-bold bg-sub7 text-white w-full text-lg mt-8 py-3 rounded-lg mb-5 ${
           isAnyChecked ? "opacity-100" : "opacity-50 cursor-not-allowed"
         }`}
         disabled={!isAnyChecked}
