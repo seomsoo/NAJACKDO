@@ -1,4 +1,5 @@
 import { postAiCheckBook } from "api/bookApi";
+import AlertModal from "components/common/AlertModal";
 import ClipLoading from "components/common/ClipLoading";
 import {
   Carousel,
@@ -18,9 +19,14 @@ const AICheckUploadPage = () => {
   const location = useLocation();
   const { userId, userBookId } = location.state; // AICheckPage에서 전달받은 값
 
+  const [open, setOpen] = useState<boolean>(false);
+  const [alertContent, setAlertContent] = useState<string>("");
+
   const [frontImage, setFrontImage] = useState<File | null>(null);
   const [backImage, setBackImage] = useState<File | null>(null);
-  const [frontImagePreview, setFrontImagePreview] = useState<string | null>(null);
+  const [frontImagePreview, setFrontImagePreview] = useState<string | null>(
+    null
+  );
   const [backImagePreview, setBackImagePreview] = useState<string | null>(null);
   const [carouselIndex, setCarouselIndex] = useState<number>(0);
   const [api, setApi] = useState<CarouselApi | null>(null);
@@ -34,7 +40,9 @@ const AICheckUploadPage = () => {
     }
   }, [api]);
 
-  const handleFrontImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFrontImageUpload = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files?.[0];
     if (file) {
       setFrontImage(file);
@@ -42,7 +50,9 @@ const AICheckUploadPage = () => {
     }
   };
 
-  const handleBackImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleBackImageUpload = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files?.[0];
     if (file) {
       setBackImage(file);
@@ -67,17 +77,22 @@ const AICheckUploadPage = () => {
           state: { resultData: response },
         });
       } catch (error) {
-        alert("AI 인증에 실패했습니다. 다시 시도해주세요.");
+        setOpen(true);
+        setAlertContent("AI 인증에 실패했습니다. 다시 시도해주세요.");
       } finally {
         setIsPending(false);
       }
     } else {
-      alert("이미지를 모두 업로드해주세요.");
+      setOpen(true);
+      setAlertContent("이미지를 모두 업로드해주세요.");
     }
   };
 
   return (
     <div>
+      {open && (
+        <AlertModal open={open} setOpen={setOpen} content={alertContent} />
+      )}
       {isPending ? (
         <div className="flex items-center justify-center h-[500px]">
           <ClipLoading />
@@ -107,7 +122,9 @@ const AICheckUploadPage = () => {
                   ) : (
                     <div className="flex flex-col items-center">
                       <p className="text-gray-500">도서 앞면 이미지 업로드</p>
-                      <p className="text-gray-400">(클릭하여 이미지를 선택하시거나 촬영해주세요)</p>
+                      <p className="text-gray-400">
+                        (클릭하여 이미지를 선택하시거나 촬영해주세요)
+                      </p>
                     </div>
                   )}
                   <input
@@ -136,7 +153,9 @@ const AICheckUploadPage = () => {
                   ) : (
                     <div className="flex flex-col items-center">
                       <p className="text-gray-500">도서 뒷면 이미지 업로드</p>
-                      <p className="text-gray-400">(클릭하여 이미지를 선택하시거나 촬영해주세요)</p>
+                      <p className="text-gray-400">
+                        (클릭하여 이미지를 선택하시거나 촬영해주세요)
+                      </p>
                     </div>
                   )}
                   <input
@@ -161,7 +180,10 @@ const AICheckUploadPage = () => {
               className="mr-3"
               color={carouselIndex === 0 ? "#000000" : "#888888"}
             />
-            <FaCircle size={10} color={carouselIndex === 1 ? "#000000" : "#888888"} />
+            <FaCircle
+              size={10}
+              color={carouselIndex === 1 ? "#000000" : "#888888"}
+            />
           </div>
 
           <div className="px-6">
