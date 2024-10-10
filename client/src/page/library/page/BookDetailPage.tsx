@@ -4,13 +4,23 @@ import SmallError from "components/common/SmallError";
 import BookInfo from "page/library/components/BookInfo";
 import DetailRecommendBook from "page/library/components/DetailRecommendBook";
 import RentableBook from "page/library/components/RentableBook";
-import { Fragment, Suspense, useState } from "react";
+import { Fragment, Suspense, useEffect, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useParams } from "react-router-dom";
 
 const BookDetailPage = () => {
   const { bookId } = useParams();
   const [bookGenre, setBookGenre] = useState<string>("");
+
+  const [isPwa, setIsPwa] = useState(false);
+
+  useEffect(() => {
+    // iOS에서 PWA로 실행되고 있는지 확인
+    const checkPwaMode = window.matchMedia(
+      "(display-mode: standalone)"
+    ).matches;
+    setIsPwa(checkPwaMode);
+  }, []);
 
   return (
     <Fragment>
@@ -22,8 +32,8 @@ const BookDetailPage = () => {
           </div>
         </Suspense>
       </ErrorBoundary>
-      <div className="mx-[25px] mt-10 mb-6">
-        <p className="my-5 font-bold ">추천 도서</p>
+      <div className={`mx-[25px] mt-10 ${isPwa ? "mb-[86px]" : "mb-4"}`}>
+        <p className="my-5 font-bold">추천 도서</p>
         {bookGenre && (
           <ErrorBoundary fallback={<SmallError />}>
             <Suspense fallback={<ClipLoading />}>

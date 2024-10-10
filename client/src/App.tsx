@@ -95,6 +95,7 @@ function App() {
     ).matches;
     setIsPwa(checkPwaMode);
   }, []);
+  
   useEffect(() => {
     const isStandalone =
       window.matchMedia('(display-mode: standalone)').matches ||
