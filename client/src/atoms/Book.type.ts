@@ -14,6 +14,11 @@ export interface IBookDetail {
   interest: boolean;
 }
 
+export interface BookCaseResponse {
+  alreadyExistBooks: IBookDetail[];
+  bookDataList: IBookDetail[];
+}
+
 export interface IUserBookDetail {
   ownerId: number;
   nickname: string;

@@ -53,7 +53,6 @@ const MainRoute = () => {
       <Route path="/apply/isbn" element={<ISBNScanPage />} />
       <Route path="/apply/bookcase/upload" element={<BookcaseUploadPage />} />
       <Route path="/apply/book" element={<BookApplyPage />} />
-      <Route path="/apply/bookcase" element={<BookcaseApplyPage />} />
       <Route path="/ai-check" element={<AICheckPage />} />
       <Route path="/ai-check/upload" element={<AICheckUploadPage />} />
       <Route path="/ai-check/result" element={<AICheckResultPage />} />

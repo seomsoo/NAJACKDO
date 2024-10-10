@@ -1,6 +1,6 @@
 import { BaseResponse } from "atoms/Base.type";
 import { IBookCase } from "atoms/BookCase.type";
-import { IBookDetail } from "atoms/Book.type";
+import { BookCaseResponse, IBookDetail } from "atoms/Book.type";
 import instance from "api/clientApi";
 
 // 나의 책장 조회 API 호출
@@ -68,8 +68,8 @@ export const deleteInterestBookCase = async (userId: number): Promise<void> => {
 };
 
 // 책장 사진으로 도서 리스트 반환
-export const postBookCaseImage = async (formData: FormData): Promise<IBookDetail[]> => {
-  const { data } = await instance.post<BaseResponse<IBookDetail[]>>(
+export const postBookCaseImage = async (formData: FormData): Promise<BookCaseResponse> => {
+  const { data } = await instance.post<BaseResponse<BookCaseResponse>>(
     "/book/regist-books",
     formData,
     {
