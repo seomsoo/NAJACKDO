@@ -6,6 +6,13 @@ from PIL import Image
 import requests
 import io
 import os
+from dotenv import load_dotenv
+
+
+
+load_dotenv() 
+
+
 api_url = os.getenv('API_URL')
 secret_key = os.getenv('SECRET_KEY')
 
