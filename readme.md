@@ -193,7 +193,7 @@
   <img alt='func5.1' src='./readme-image/UI/좋아요책.jpeg' height=300px style="padding-left: 20px;">
   <img alt='func5.1' src='./readme-image/UI/좋아요책장.jpeg' height=300px>
   <p style='font-size:16px;'>&emsp; 도서 대여 기록을 통해 사용자의 선호도를 수집합니다.</p>
-  <img alt='func5.1' src='./readme-image/UI//히스토리빌린.jpeg' height=300px style="padding-left: 20px;">
+  <img alt='func5.1' src='./readme-image/UI/히스토리빌린.jpeg' height=300px style="padding-left: 20px;">
   <img alt='func5.1' src='./readme-image/UI/히스토리빌려준.jpeg' height=300px>
   <br><br>
   
