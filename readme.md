@@ -62,6 +62,184 @@
 
 <br>
 
+# 📚 기능 소개
+
+### **1. 사용자 신뢰 기반 서비스**
+
+<p style="font-size:16px; font-weight:bold;">1.1 카카오 로그인</p>
+<p style="font-size:15px; font-weight:bold; margin-left:20px;">카카오 계정을 활용한 간편 가입/로그인을 지원합니다.</p>
+<p style="font-size:14px; margin-left:20px;">별도의 회원가입 절차 없이 소셜 로그인을 통해 빠르게 서비스를 시작할 수 있습니다.</p>
+<p align="center">
+  <img src="./readme-image/UI/카카오로그인.gif" height="550px">
+</p>
+  <br><br>
+<p style="font-size:16px; font-weight:bold;">1.2 마이 프로필</p>
+<p style="font-size:15px; font-weight:bold; margin-left:20px;">사용자의 기본 정보, 활동 내역, 거래 이력을 정리해 보여줍니다.</p>
+<p style="font-size:14px; margin-left:20px;">거래 상대방이 나의 신뢰도와 활동 내역을 한눈에 확인할 수 있습니다.</p>
+<p align="center">
+  <img src="./readme-image/UI/마이프로필.PNG" height="550px">
+ 
+</p>
+  <br><br>
+<p style="font-size:16px; font-weight:bold;">1.3 신뢰 나무</p>
+<p style="font-size:15px; font-weight:bold; margin-left:20px;">거래와 후기에 따라 신뢰도가 쌓이면 나무가 성장합니다.</p>
+<p style="font-size:14px; margin-left:20px;">사용자들은 긍정적인 거래 경험을 통해 게임화된 신뢰 관리를 체험할 수 있습니다.</p>
+<p align="center">
+  <img src="./readme-image/UI/신뢰나무.gif" height="550px">
+ 
+</p>
+  <br><br>
+<p style="font-size:16px; font-weight:bold;">1.4 카카오페이 포인트 충전</p>
+<p style="font-size:15px; font-weight:bold; margin-left:20px;">카카오페이를 통해 포인트를 충전하고, 이를 거래나 대여 결제에 활용할 수 있습니다</p>
+<p align="center">
+  <img src="./readme-image/UI/카카오페이.gif" height="550px">
+
+</p>
+<br>
+
+### **2. AI를 활용한 편리한 책 등록 및 품질 판단**
+
+<p style="font-size:16px; font-weight:bold;">2.1 YOLO V9과 OCR을 활용한 책 등록</p>
+<p style="font-size:15px; font-weight:bold; margin-left:20px;">단일 책 등록</p>
+<p style="font-size:14px; margin-left:20px;">텍스트 검색이나 ISBN 바코드 촬영을 통해 단일 도서를 간편하게 등록할 수 있습니다.</p>
+<p align="center">
+  <img src="./readme-image/UI/도서등록가이드.PNG" height="400px">
+  <img src="./readme-image/UI/도서등록2가지.jpg" height="400px">
+  <img src="./readme-image/UI/도서등록텍스트.jpg" height="400px">
+</p>
+
+<p align="center">
+  <img src="./readme-image/UI/도서등록바코드.jpg" height="400px">
+  <img src="./readme-image/UI/단일도서등록결과.jpg" height="400px">
+</p>
+  <p style='font-size:15px; font-weight:bold; margin-left:20px;'>책장 등록</p>
+  <p style='font-size:14px; font-weight:bold; margin-left:20px;'> 책장 사진을 찍으면 책등을 detection 하고, OCR을 통해 책등의 텍스트를 추출한다. 이후 DB의 책 제목 중 가장 유사한 책 정보를 제공합니다.</p>
+  <p align="center">
+  <img alt='func5.1' src='./readme-image/UI/책장등록.jpg' height=550px ">
+  <img alt='func5.1' src='./readme-image/UI/책장등록완료.jpg' height=550px>
+  </p>
+  <br><br>
+  <p style='font-size:16px; font-weight:bold; margin-left:20px'>2.2 YOLO V9을 기반으로 book damage Detection을 통한 책 품질 검사</p>
+  <p align="center">
+  <img alt='func5.1' src='./readme-image/UI/AI인증중.jpg' height=550px">
+  <img alt='func5.1' src='./readme-image/UI/AI인증완료.jpg' height=550px>
+</p>
+<br>
+  
+### **3. 도서 대여 거래 및 소통 기능**
+ <p style='font-size:16px; font-weight:bold; margin-left:20px;'>3.1 나의 서재</p>
+  <p style='font-size:16px; margin-left:20px;'> 내가 등록한 책장, 찜한 책, 대여/대출한 책의 기록을 한눈에 관리할 수 있습니다.</p>
+   <p align="center">
+  <img alt='func5.1' src='./readme-image/UI/나의서재.gif' height=550px">
+  </p>
+    <br><br>
+  <p style='font-size:16px; font-weight:bold; margin-left:20px;'>3.2 도서 검색</p>
+  <p style='font-size:16px; margin-left:20px;'> 책 제목이나 텍스트를 기반으로 빠르고 직관적인 검색 기능을 제공합니다.</p>
+   <p align="center">
+  <img alt='func5.1' src='./readme-image/UI/검색.gif' height=550px">
+  </p>
+    <br><br>
+  <p style='font-size:16px; font-weight:bold; margin-left:20px;'>3.3 책장 기준 장바구니 담기</p>
+  <p style='font-size:15px; margin-left:20px;'> 도서 상세페이지에서 책을 하나씩 장바구니에 담거나 유저의 책장에서 여러권을 한번에 장바구니에 담을 수 있습니다.</p>
+   <p align="center">
+  <img alt='func5.1' src='./readme-image/UI/책대여상세1.jpeg' height=400px">
+  <img alt='func5.1' src='./readme-image/UI/책장대여신청.jpeg' height=400px>
+  <img alt='func5.1' src='./readme-image/UI/장바구니.jpeg' height=400px>
+  </p>
+   <br><br>
+
+  <p style='font-size:16px; font-weight:bold; margin-left:20px;'>3.4 대출 신청을 통한 채팅방 자동 생성</p>
+  <p style='font-size:15px; margin-left:20px;'>도서 대출을 신청하면 장바구니를 기준으로 채팅방이 자동 생성됩니다.</p>
+  <p align="center">
+  <img alt='func5.1' src='./readme-image/UI/채팅방리스트.jpeg' height=400px">
+  <img alt='func5.1' src='./readme-image/UI/채팅방_초기.jpeg' height=400px>
+  <img alt='func5.1' src='./readme-image/UI/채팅방대여도서정보.jpeg' height=400px>
+  </p>
+  <br><br>
+  
+  <p style='font-size:16px; font-weight:bold; margin-left:20px;'>3.5 도서 대출 기간을 설정하고 알맞는 금액을 송금</p>
+  <p style='font-size:15px; margin-left:20px;'> 도서 대출 기간을 설정하고 책잎을 송금하면 대출 신청이 완료됩니다.</p>
+  <p align="center">
+  <img alt='func5.1' src='./readme-image/UI/채팅방_기간설정.jpeg' height=400px">
+  <img alt='func5.1' src='./readme-image/UI/채팅방_송금.jpeg' height=400px>
+  <img alt='func5.1' src='./readme-image/UI/채팅방_송금메세지.jpeg' height=400px>
+    </p>
+  <br><br>
+  
+  <p style='font-size:16px; font-weight:bold; margin-left:20px;'>3.6 책 반납 후 상호 매너 평가</p>
+  <p style='font-size:15px; margin-left:20px;'> 도서 대출 및 반납이 끝나면 상호 거래 후기를 남깁니다.</p>
+  <p align="center">
+  <img alt='func5.1' src='./readme-image/UI/채팅방_반납완료.jpeg' height=550px">
+  <img alt='func5.1' src='./readme-image/UI/거래후기.jpeg' height=550px>
+  </p>
+  <br><br>
+  
+  <p style='font-size:16px; font-weight:bold; margin-left:20px;'>3.7 알람 기능 </p>
+  <p style='font-size:15px; margin-left:20px;'> 푸시 알림을 통해 대출 및 반납 정보를 받을 수 있습니다.  
+  </p>
+    <p align="center">
+  <img alt='func5.1' src='./readme-image/UI/알람.png' height=550px">
+   </p>
+  
+<br>
+  
+### **4. 메타데이터를 기반으로 한 책 추천 기능**
+  <p style='font-size:16px;font-weight:bold; margin-left:20px;'>4.1 가입 시 정보 입력</p>
+  <p style='font-size:15px; margin-left:20px;'> 가입 시 연령, 성별, 관심 분야를 간단하게 선택하여 입력받습니다.</p>
+  <p align="center">
+  <img alt='func5.1' src='./readme-image/UI/연령.jpeg' height=400px">
+  <img alt='func5.1' src='./readme-image/UI/성별.jpeg' height=400px>  
+  <img alt='func5.1' src='./readme-image/UI/관심분야.jpeg' height=400px>  
+   </p>
+  <br><br>
+  
+  <p style='font-size:16px; font-weight:bold; margin-left:20px;'>4.2 사용자 선호도 수집</p>
+  <p style='font-size:15px; margin-left:20px;'> 좋아요 기능을 통해 사용자의 선호도를 수집합니다.</p>
+  <p align="center">
+  <img alt='func5.1' src='./readme-image/UI/좋아요책.jpeg' height=550px">
+  <img alt='func5.1' src='./readme-image/UI/좋아요책장.jpeg' height=550px>
+   </p>
+  <p style='font-size:15px; margin-left:20px;'> 도서 대여 기록을 통해 사용자의 선호도를 수집합니다.</p>
+  <p align="center">
+  <img alt='func5.1' src='./readme-image/UI/히스토리빌린.jpeg' height=550px">
+  <img alt='func5.1' src='./readme-image/UI/히스토리빌려준.jpeg' height=550px>
+  </p>
+  <br><br>
+  <p align="center">
+  <p style='font-size:16px; font-weight:bold; margin-left:20px;'>4.3 특정 책 패이지의 체류 시간</p>
+  <p style='font-size:15px; margin-left:20px;'> 도서 상세 페이지에 체류한 시간을 계산하여 데이터로 활용합니다.</p>
+   <p align="center">
+
+  <img alt='func5.1' src='./readme-image/UI/추천_상세.jpeg' height=550px>
+   </p>
+  </p>
+  <br>
+  
+  <p style='font-size:16px; font-weight:bold; margin-left:20px;'>4.4 메타데이터를 기반으로 한 책 추천</p>
+  <p align="center">
+  <img alt='func5.1' src='./readme-image/UI/추천_메인.jpeg' height=550px">
+  <img alt='func5.1' src='./readme-image/UI/추천_지역.jpeg' height=550px>
+   </p>
+    
+<br>
+  
+### **5. 위치 정보를 이용한 동네 기반 서비스**
+  <p style='font-size:16px; font-weight:bold; margin-left:20px;'>5.1 지역 및 범위 설정</p>
+  <p style='font-size:15px; margin-left:20px;'> 현재 나의 위치를 기반으로 가까운 동네 리스트를 보고 범위를 설정합니다.</p>
+  </p>
+ <p align="center">
+  <img alt='func5.1' src='./readme-image/UI/지역설정.jpeg' height=550px">
+  <img alt='func5.1' src='./readme-image/UI/지역범위.jpeg' height=550px>
+    </p>
+  <br><br>
+  
+  <p style='font-size:16px; font-weight:bold; margin-left:20px;'>5.2 위치 기반 책장 정보 </p>
+  <p style='font-size:15px; margin-left:20px;'>도서를 공유할 동네 사용자들의 책장을 볼 수 있습니다.</p>
+  <p align="center">
+  <img alt='func5.1' src='./readme-image/UI/주변책장.jpeg' height=550px">
+ </p>
+<br>
+
 # 📚 프로젝트 설계
 
 - ## 개발 환경
@@ -81,9 +259,9 @@
   <h3>Frontend</h3>
   <p>
   <img alt="typescript" src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white">
-  <img alt="HTML5" src="https://img.shields.io/badge/HTML5-E34F26.svg?&style=for-the-badge&logo=HTML5&logoColor=white"/>
   <img alt="React" src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black">
-  <img alt="CSS" src="https://img.shields.io/badge/CSS-1572B6.svg?&style=for-the-badge&logo=CSS3&logoColor=white"/>
+  <img alt="reactquery" src="https://img.shields.io/badge/reactquery-FF4154.svg?&style=for-the-badge&logo=reactquery&logoColor=white"/>
+    <img alt="zustand" src="https://img.shields.io/badge/zustand-yellow?style=for-the-badge&logo=zustand&logoColor=black">
   <img alt="Tailwind" src="https://img.shields.io/badge/TailwindCSS-38B2AC?style=for-the-badge&logoColor=white&logo=tailwindcss">
   <img alt="shadcn" src="https://img.shields.io/badge/shadcn/ui-000000?style=for-the-badge&logo=shadcn/ui&logoColor=white">
 
@@ -125,117 +303,6 @@
 
 <br>
   
-<br>
-
-# 📚 기능 소개
-
-### **1. AI를 활용한 편리한 책 등록 및 품질 판단**
-
-<p style="font-size:16px; font-weight:bold;">1.1 yolov9과 OCR을 활용한 책 등록</p>
-<p style="font-size:15px; font-weight:bold; margin-left:20px;">단일 책 등록</p>
-<p style="font-size:14px; margin-left:20px;">텍스트 검색이나 ISBN 바코드 촬영을 통해 단일 도서를 간편하게 등록할 수 있습니다.</p>
-<p align="center">
-  <img src="./readme-image/UI/도서등록가이드.png" height="400px">
-  <img src="./readme-image/UI/도서등록2가지.jpg" height="400px">
-  <img src="./readme-image/UI/도서등록텍스트.jpg" height="400px">
-</p>
-
-<p align="center">
-  <img src="./readme-image/UI/도서등록바코드.jpg" height="400px">
-  <img src="./readme-image/UI/단일도서등록결과.jpg" height="400px">
-</p>
-  <p style='font-size:15px; font-weight:bold; margin-left:20px;'>책장 등록</p>
-  <p style='font-size:14px; font-weight:bold; margin-left:20px;'> 책장 사진을 찍으면 책등을 detection 하고, OCR을 통해 책등의 텍스트를 추출한다. 이후 DB의 책 제목 중 가장 유사한 책 정보를 제공합니다.</p>
-  <p align="center">
-  <img alt='func5.1' src='./readme-image/UI/책장등록.jpg' height=550px ">
-  <img alt='func5.1' src='./readme-image/UI/책장등록완료.jpg' height=550px>
-  </p>
-  <br><br>
-  <p style='font-size:16px; font-weight:bold;margin-left:20px'>1.2 yolov9을 기반으로 book damage Detection을 통한 책 품질 검사</p>
-  <p align="center">
-  <img alt='func5.1' src='./readme-image/UI/AI인증중.jpg' height=550px style="padding-left: 20px;">
-  <img alt='func5.1' src='./readme-image/UI/AI인증완료.jpg' height=550px>
-</p>
-<br>
-  
-### **2. 도서 대여 거래 및 소통 기능**
-  <p style='font-size:16px; font-weight:bold; margin-left:20px;'>2.1 책장 기준 장바구니 담기</p>
-  <p style='font-size:16px; margin-left:20px;'> 도서 상세페이지에서 책을 하나씩 장바구니에 담거나 유저의 책장에서 여러권을 한번에 장바구니에 담을 수 있습니다.</p>
-   <p align="center"
-  <img alt='func5.1' src='./readme-image/UI/책대여상세1.jpeg' height=550px style="padding-left: 20px;">
-  <img alt='func5.1' src='./readme-image/UI/책장대여신청.jpeg' height=550px>
-  <img alt='func5.1' src='./readme-image/UI/장바구니.jpeg' height=550px>
-  </p>
-  <br><br>
-
-  <p style='font-size:16px; font-weight:bold;'>2.2 대출 신청을 통한 채팅방 자동 생성</p>
-  <p style='font-size:16px;'>&emsp; 도서 대출을 신청하면 장바구니를 기준으로 채팅방이 자동 생성됩니다.</p>
-  <img alt='func5.1' src='./readme-image/UI/채팅방리스트.jpeg' height=550px style="padding-left: 20px;">
-  <img alt='func5.1' src='./readme-image/UI/채팅방_초기.jpeg' height=550px>
-  <img alt='func5.1' src='./readme-image/UI/채팅방대여도서정보.jpeg' height=550px>
-  <br><br>
-  
-  <p style='font-size:16px; font-weight:bold;'>2.3 도서 대출 기간을 설정하고 알맞는 금액을 송금</p>
-  <p style='font-size:16px;'>&emsp; 도서 대출 기간을 설정하고 책잎을 송금하면 대출 신청이 완료됩니다.</p>
-  <img alt='func5.1' src='./readme-image/UI/채팅방_기간설정.jpeg' height=550px style="padding-left: 20px;">
-  <img alt='func5.1' src='./readme-image/UI/채팅방_송금.jpeg' height=550px>
-  <img alt='func5.1' src='./readme-image/UI/채팅방_송금메세지.jpeg' height=550px>
-  <br><br>
-  
-  <p style='font-size:16px; font-weight:bold;'>2.4 책 반납 후 상호 매너 평가</p>
-  <p style='font-size:16px;'>&emsp; 도서 대출 및 반납이 끝나면 상호 거래 후기를 남깁니다.</p>
-  <img alt='func5.1' src='./readme-image/UI/채팅방_반납완료.jpeg' height=550px style="padding-left: 20px;">
-  <img alt='func5.1' src='./readme-image/UI/거래후기.jpeg' height=550px>
-  <br><br>
-  
-  <p style='font-size:16px; font-weight:bold;'>2.5 알람 기능 </p>
-  <p style='font-size:16px;'>&emsp; 푸시 알림을 통해 대출 및 반납 정보를 받을 수 있습니다.  </p>
-  
-  <img alt='func5.1' src='./readme-image/UI/알람.png' height=550px style="padding-left: 20px;">
-  
-<br>
-  
-* ### **3.&nbsp; 메타데이터를 기반으로 한 책 추천 기능**
-  <p style='font-size:16px;font-weight:bold;'>3.1 가입 시 정보 입력</p>
-  <p style='font-size:16px;'>&emsp; 가입 시 연령, 성별, 관심 분야를 간단하게 선택하여 입력받습니다.</p>
-  <img alt='func5.1' src='./readme-image/UI/연령.jpeg' height=550px style="padding-left: 20px;">
-  <img alt='func5.1' src='./readme-image/UI/성별.jpeg' height=550px>  
-  <img alt='func5.1' src='./readme-image/UI/관심분야.jpeg' height=550px>  
-  <br><br>
-  
-  <p style='font-size:16px; font-weight:bold;'>3.2 사용자 선호도 수집</p>
-  <p style='font-size:16px;'>&emsp; 좋아요 기능을 통해 사용자의 선호도를 수집합니다.</p>
-  <img alt='func5.1' src='./readme-image/UI/좋아요책.jpeg' height=550px style="padding-left: 20px;">
-  <img alt='func5.1' src='./readme-image/UI/좋아요책장.jpeg' height=550px>
-  <p style='font-size:16px;'>&emsp; 도서 대여 기록을 통해 사용자의 선호도를 수집합니다.</p>
-  <img alt='func5.1' src='./readme-image/UI/히스토리빌린.jpeg' height=550px style="padding-left: 20px;">
-  <img alt='func5.1' src='./readme-image/UI/히스토리빌려준.jpeg' height=550px>
-  <br><br>
-  
-  <p style='font-size:16px; font-weight:bold;'>3.4 특정 책 패이지의 체류 시간</p>
-  <p style='font-size:16px;'>&emsp; 도서 상세 페이지에 체류한 시간을 계산하여 데이터로 활용합니다.</p>
-  <br>
-  
-  <p style='font-size:16px; font-weight:bold;'>3.5 메타데이터를 기반으로 한 책 추천</p>
-  <img alt='func5.1' src='./readme-image/UI/추천_메인.jpeg' height=550px style="padding-left: 20px;">
-  <img alt='func5.1' src='./readme-image/UI/추천_지역.jpeg' height=550px>
-  <img alt='func5.1' src='./readme-image/UI/추천_상세.jpeg' height=550px>
-    
-<br>
-  
-* ### **4.&nbsp; 위치 정보를 이용한 동네 기반 서비스**
-  <p style='font-size:16px; font-weight:bold;'>4.1 지역 및 범위 설정</p>
-  <p style='font-size:16px;'>&emsp; 현재 나의 위치를 기반으로 가까운 동네 리스트를 볼 수 있습니다.</p>
-  <p style='font-size:16px;'>&emsp; 책장을 공유할 지역과 그 범위를 설정합니다.</p>
-
-  <img alt='func5.1' src='./readme-image/UI/지역설정.jpeg' height=550px style="padding-left: 20px;">
-  <img alt='func5.1' src='./readme-image/UI/지역범위.jpeg' height=550px>
-  <br><br>
-  
-  <p style='font-size:16px; font-weight:bold;'>4.2 위치 기반 책장 정보 </p>
-  <p style='font-size:16px;'>&emsp; 도서를 공유할 수 동네 책장을 볼 수 있습니다.</p>
-  <img alt='func5.1' src='./readme-image/UI/주변책장.jpeg' height=550px style="padding-left: 20px;">
-
 <br>
 
 # 📚 산출물
